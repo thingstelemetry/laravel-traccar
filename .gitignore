@@ -6,3 +6,5 @@
 
 # Composer
 vendor
+build
+.phpunit.cache

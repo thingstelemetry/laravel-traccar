@@ -1,5 +1,5 @@
 {
-  "name": "tracktelemetry/traccar",
+  "name": "tracktelemetry/traccar-api",
   "description": "PHP and Laravel client for the Traccar API",
   "type": "library",
   "license": "MIT",
@@ -12,7 +12,11 @@
   ],
   "require": {
     "php": "^8.4",
-    "illuminate/support": "^12.32"
+    "illuminate/support": "^12.32.5"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.25.1",
+    "pestphp/pest": "^4.1.2"
   },
   "autoload": {
     "psr-4": {
@@ -25,7 +29,8 @@
     }
   },
   "scripts": {
-    "pint": "./vendor/bin/pint --parallel"
+    "pint": "./vendor/bin/pint --parallel",
+    "test": "./vendor/bin/pest"
   },
   "extra": {
     "laravel": {
@@ -36,7 +41,9 @@
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
-  "require-dev": {
-    "laravel/pint": "^1.25"
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   }
 }
