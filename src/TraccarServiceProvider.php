@@ -8,17 +8,28 @@ use Illuminate\Support\ServiceProvider;
 
 class TraccarServiceProvider extends ServiceProvider
 {
-    public function register()
+    /**
+     * Register the application services.
+     */
+    public function register(): void
     {
-
+        $this->app->bind(
+            abstract: TraccarConnector::class,
+            concrete: function (): TraccarConnector {
+                return new TraccarConnector(
+                    baseUrl: config()->string(key: 'traccar.base_url'),
+                    apiKey: config()->string(key: 'traccar.api_key')
+                );
+            }
+        );
     }
 
-    public function boot()
+    public function boot(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/traccar.php', 'traccar');
+        $this->mergeConfigFrom(path: __DIR__ . '/../config/traccar.php', key: 'traccar');
 
-        $this->publishes([
+        $this->publishes(paths: [
             __DIR__ . '/../config/traccar.php' => config_path('traccar.php'),
-        ], 'config');
+        ], groups: 'config');
     }
 }
