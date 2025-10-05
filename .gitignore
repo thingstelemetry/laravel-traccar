@@ -3,3 +3,6 @@
 
 # macOS-specific files
 .DS_Store
+
+# Composer
+vendor
