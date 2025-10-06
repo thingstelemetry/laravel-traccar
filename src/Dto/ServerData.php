@@ -34,7 +34,8 @@ class ServerData
         public bool $openIdEnabled,
         public bool $openIdForce,
         public string $version,
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {
