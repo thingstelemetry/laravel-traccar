@@ -26,30 +26,8 @@ class GetServerInformation extends Request
      *
      * @throws JsonException
      */
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): ServerData
     {
-        // Traccar returns the server info as a flat JSON object, not wrapped in a "data" key
-        $data = $response->json();
-
-        return new ServerData(
-            id: $data['id'],
-            registration: $data['registration'],
-            readonly: $data['readonly'],
-            deviceReadonly: $data['deviceReadonly'],
-            limitCommands: $data['limitCommands'],
-            map: $data['map'],
-            bingKey: $data['bingKey'],
-            mapUrl: $data['mapUrl'],
-            poiLayer: $data['poiLayer'],
-            latitude: $data['latitude'],
-            longitude: $data['longitude'],
-            zoom: $data['zoom'],
-            version: $data['version'],
-            forceSettings: $data['forceSettings'],
-            coordinateFormat: $data['coordinateFormat'],
-            openIdEnabled: $data['openIdEnabled'],
-            openIdForce: $data['openIdForce'],
-            attributes: $data['attributes'],
-        );
+        return ServerData::fromArray($response->json());
     }
 }
