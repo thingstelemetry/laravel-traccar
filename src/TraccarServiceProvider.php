@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TrackTelemetry\Traccar;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class TraccarServiceProvider extends ServiceProvider
@@ -17,8 +18,8 @@ class TraccarServiceProvider extends ServiceProvider
             abstract: TraccarConnector::class,
             concrete: function (): TraccarConnector {
                 return new TraccarConnector(
-                    baseUrl: config()->string(key: 'traccar.base_url'),
-                    apiKey: config()->string(key: 'traccar.api_key')
+                    baseUrl: Config::string(key: 'traccar.base_url'),
+                    apiKey: Config::string(key: 'traccar.api_key')
                 );
             }
         );
