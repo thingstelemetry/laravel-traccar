@@ -1,0 +1,108 @@
+---
+title: Update Server Information
+description: Update general Traccar server settings using typed DTOs and enums.
+---
+
+## Overview
+Use this endpoint to update global Traccar server settings such as the default map provider, coordinate format, and UI/unit preferences.
+
+- Method: PUT
+- Path: /server
+- Auth: Uses the connector credentials configured for this package
+
+The request/response is mapped to `TrackTelemetry\Traccar\Dto\ServerData` and its nested `TrackTelemetry\Traccar\Dto\ServerAttributes` with several enum-backed fields.
+
+Important: Always fetch the current server information first, then clone/copy the DTO before making changes. This preserves unknown/forward-compatible attributes and avoids accidentally resetting fields you didn’t intend to change.
+
+## Basic usage
+
+```php
+$serverData = \TrackTelemetry\Traccar\Facades\Server::getInformation();
+
+// Clone/copy the DTO so you can safely mutate values
+$data = \TrackTelemetry\Traccar\Dto\ServerData::fromArray($serverData->toArray());
+$data->map = \TrackTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
+$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
+
+$response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
+
+return $response->toArray();
+```
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside>
+    ServerAttributes keeps an `others` bucket for unrecognized keys; cloning from the latest DTO ensures these are preserved on update.
+</Aside>
+
+<Aside>
+    The DTOs use enums for several fields (Map, CoordinateFormat, and units). Assign the enum constants rather than raw strings.
+</Aside>
+
+## Common update cases
+
+Below are narrow examples showing how to update individual settings. In all cases, start by fetching the current DTO and cloning/copying it as shown above.
+
+- Update map provider
+
+```php
+$data->map = \TrackTelemetry\Traccar\Enums\Map::OSM; // OpenStreetMap
+```
+
+- Update speed unit
+
+```php
+$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::MILES_PER_HOUR; // mph
+```
+
+- Update distance unit
+
+```php
+$data->attributes->distanceUnit = \TrackTelemetry\Traccar\Enums\DistanceUnit::MILES; // mi
+```
+
+- Update altitude unit
+
+```php
+$data->attributes->altitudeUnit = \TrackTelemetry\Traccar\Enums\AltitudeUnit::FEET; // ft
+```
+
+- Update volume unit (e.g., fuel)
+
+```php
+$data->attributes->volumeUnit = \TrackTelemetry\Traccar\Enums\VolumeUnit::LITERS; // l
+```
+
+- Update coordinate format
+
+```php
+$data->coordinateFormat = \TrackTelemetry\Traccar\Enums\CoordinateFormat::DDM; // Degrees Decimal Minutes
+```
+
+- Update announcement/banner text
+
+```php
+$data->announcement = 'Planned maintenance on Saturday 02:00 UTC';
+```
+
+- Update multiple fields and send
+
+```php
+$data->map = \TrackTelemetry\Traccar\Enums\Map::GOOGLE_HYBRID;
+$data->coordinateFormat = \TrackTelemetry\Traccar\Enums\CoordinateFormat::DMS;
+$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KNOTS;
+$data->attributes->distanceUnit = \TrackTelemetry\Traccar\Enums\DistanceUnit::KILOMETERS;
+
+$response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
+```
+
+## Tips and pitfalls
+- Prefer cloning from the latest ServerData DTO instead of building a new one from scratch. This avoids dropping fields you don’t explicitly manage.
+- When switching to providers that require keys (e.g., Google, Bing), ensure the relevant attribute keys (e.g., `googleKey`, `bingMapsKey`) are set in `ServerAttributes` or server configuration.
+- Enum-backed fields fall back to sensible defaults when the server returns null/unknown values. Use the enums to avoid typos in raw strings.
+
+## Related
+- GET reference: `server/get-information`
+- Source: `src/Requests/UpdateServerInformation.php`
+- DTOs: `src/Dto/ServerData.php, src/Dto/ServerAttributes.php`
+- Enums: `src/Enums` (Map, CoordinateFormat, SpeedUnit, DistanceUnit, AltitudeUnit, VolumeUnit)
