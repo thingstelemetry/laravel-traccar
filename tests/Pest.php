@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Saloon\Config;
+use Saloon\Http\Faking\MockClient;
+use TrackTelemetry\Traccar\Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -13,8 +17,14 @@ declare(strict_types=1);
 |
 */
 
-pest()->uses(\TrackTelemetry\Traccar\Tests\TestCase::class)
+Config::preventStrayRequests();
+
+uses(TestCase::class)
     ->in('Feature');
+
+uses()
+    ->beforeEach(fn () => MockClient::destroyGlobal())
+    ->in(__DIR__);
 
 /*
 |--------------------------------------------------------------------------
