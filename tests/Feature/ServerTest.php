@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use TrackTelemetry\Traccar\Dto\ServerData;
 use TrackTelemetry\Traccar\Facades\Server;
 use TrackTelemetry\Traccar\Requests\GetServerInformation;
+use TrackTelemetry\Traccar\Requests\UpdateServerInformation;
 
 beforeEach(function () {
     $this->body = [
@@ -44,7 +46,6 @@ beforeEach(function () {
 });
 
 test(description: 'can get server information', closure: function () {
-
     MockClient::global(mockData: [
         GetServerInformation::class => MockResponse::make(body: $this->body)
     ]);
@@ -52,5 +53,16 @@ test(description: 'can get server information', closure: function () {
     $response = Server::getInformation();
 
     expect(value: $response)
-        ->toBeInstanceOf(class: \TrackTelemetry\Traccar\Dto\ServerData::class);
+        ->toBeInstanceOf(class: ServerData::class);
+});
+
+test(description: 'can update server information', closure: function () {
+    MockClient::global(mockData: [
+        UpdateServerInformation::class => MockResponse::make(body: $this->body)
+    ]);
+
+    $response = Server::updateInformation(ServerData::fromArray($this->body));
+
+    expect(value: $response)
+        ->toBeInstanceOf(class: ServerData::class);
 });

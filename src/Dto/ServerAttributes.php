@@ -9,7 +9,7 @@ use TrackTelemetry\Traccar\Enums\VolumeUnit;
 use TrackTelemetry\Traccar\Enums\AltitudeUnit;
 use TrackTelemetry\Traccar\Enums\DistanceUnit;
 
-readonly class ServerAttributes
+class ServerAttributes
 {
     public function __construct(
         public ?string $language = null,
@@ -134,5 +134,55 @@ readonly class ServerAttributes
             timezone: $timezone,
             others: $others,
         );
+    }
+
+    public function toArray(): array
+    {
+        return array_merge([
+            'language'                     => $this->language,
+            'mapGeofences'                 => $this->mapGeofences,
+            'mapLiveRoutes'                => $this->mapLiveRoutes,
+            'mapDirection'                 => $this->mapDirection,
+            'mapFollow'                    => $this->mapFollow,
+            'mapCluster'                   => $this->mapCluster,
+            'mapOnSelect'                  => $this->mapOnSelect,
+            'activeMapStyles'              => $this->activeMapStyles,
+            'devicePrimary'                => $this->devicePrimary,
+            'deviceSecondary'              => $this->deviceSecondary,
+            'soundEvents'                  => $this->soundEvents,
+            'soundAlarms'                  => $this->soundAlarms,
+            'positionItems'                => $this->positionItems,
+            'googleKey'                    => $this->googleKey,
+            'locationIqKey'                => $this->locationIqKey,
+            'mapboxAccessToken'            => $this->mapboxAccessToken,
+            'mapTilerKey'                  => $this->mapTilerKey,
+            'bingMapsKey'                  => $this->bingMapsKey,
+            'openWeatherKey'               => $this->openWeatherKey,
+            'tomTomKey'                    => $this->tomTomKey,
+            'hereKey'                      => $this->hereKey,
+            'notificationTokens'           => $this->notificationTokens,
+            'ui.disableSavedCommands'      => $this->uiDisableSavedCommands,
+            'ui.disableGroups'             => $this->uiDisableGroups,
+            'ui.disableAttributes'         => $this->uiDisableAttributes,
+            'ui.disableEvents'             => $this->uiDisableEvents,
+            'ui.disableVehicleFeatures'    => $this->uiDisableVehicleFeatures,
+            'ui.disableDrivers'            => $this->uiDisableDrivers,
+            'ui.disableComputedAttributes' => $this->uiDisableComputedAttributes,
+            'ui.disableCalendars'          => $this->uiDisableCalendars,
+            'ui.disableMaintenance'        => $this->uiDisableMaintenance,
+            'web.liveRouteLength'          => $this->webLiveRouteLength,
+            'mapLineWidth'                 => $this->mapLineWidth,
+            'mapLineOpacity'               => $this->mapLineOpacity,
+            'web.selectZoom'               => $this->webSelectZoom,
+            'web.maxZoom'                  => $this->webMaxZoom,
+            'iconScale'                    => $this->iconScale,
+            'navigationAppLink'            => $this->navigationAppLink,
+            'navigationAppTitle'           => $this->navigationAppTitle,
+            'speedUnit'                    => $this->speedUnit->value,
+            'distanceUnit'                 => $this->distanceUnit->value,
+            'altitudeUnit'                 => $this->altitudeUnit->value,
+            'volumeUnit'                   => $this->volumeUnit->value,
+            'timezone'                     => $this->timezone,
+        ], $this->others);
     }
 }

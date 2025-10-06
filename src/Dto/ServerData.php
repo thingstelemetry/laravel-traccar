@@ -7,7 +7,7 @@ namespace TrackTelemetry\Traccar\Dto;
 use TrackTelemetry\Traccar\Enums\Map;
 use TrackTelemetry\Traccar\Enums\CoordinateFormat;
 
-readonly class ServerData
+class ServerData
 {
     public function __construct(
         public int $id,
@@ -71,5 +71,38 @@ readonly class ServerData
             openIdForce: $data['openIdForce'],
             version: $data['version'],
         );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id'               => $this->id,
+            'attributes'       => $this->attributes->toArray(),
+            'registration'     => $this->registration,
+            'readonly'         => $this->readonly,
+            'deviceReadonly'   => $this->deviceReadonly,
+            'map'              => $this->map->value,
+            'bingKey'          => $this->bingKey,
+            'mapUrl'           => $this->mapUrl,
+            'overlayUrl'       => $this->overlayUrl,
+            'latitude'         => $this->latitude,
+            'longitude'        => $this->longitude,
+            'zoom'             => $this->zoom,
+            'forceSettings'    => $this->forceSettings,
+            'coordinateFormat' => $this->coordinateFormat->value,
+            'limitCommands'    => $this->limitCommands,
+            'disableReports'   => $this->disableReports,
+            'fixedEmail'       => $this->fixedEmail,
+            'poiLayer'         => $this->poiLayer,
+            'announcement'     => $this->announcement,
+            'emailEnabled'     => $this->emailEnabled,
+            'geocoderEnabled'  => $this->geocoderEnabled,
+            'textEnabled'      => $this->textEnabled,
+            'storageSpace'     => $this->storageSpace,
+            'newServer'        => $this->newServer,
+            'openIdEnabled'    => $this->openIdEnabled,
+            'openIdForce'      => $this->openIdForce,
+            'version'          => $this->version,
+        ];
     }
 }
