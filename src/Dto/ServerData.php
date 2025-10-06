@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace TrackTelemetry\Traccar\Dto;
 
-class ServerData
+use TrackTelemetry\Traccar\Enums\Map;
+use TrackTelemetry\Traccar\Enums\CoordinateFormat;
+
+readonly class ServerData
 {
     public function __construct(
         public int $id,
-        public array $attributes,
+        public ServerAttributes $attributes,
         public bool $registration,
         public bool $readonly,
         public bool $deviceReadonly,
-        public ?string $map,
+        public Map $map,
         public ?string $bingKey,
         public ?string $mapUrl,
         public ?string $overlayUrl,
@@ -20,7 +23,7 @@ class ServerData
         public float $longitude,
         public int $zoom,
         public bool $forceSettings,
-        public ?string $coordinateFormat,
+        public CoordinateFormat $coordinateFormat,
         public bool $limitCommands,
         public bool $disableReports,
         public bool $fixedEmail,
@@ -41,11 +44,11 @@ class ServerData
     {
         return new self(
             id: $data['id'],
-            attributes: $data['attributes'] ?? [],
+            attributes: ServerAttributes::fromArray($data['attributes']),
             registration: $data['registration'],
             readonly: $data['readonly'],
             deviceReadonly: $data['deviceReadonly'],
-            map: $data['map'] ?? null,
+            map: Map::tryFrom($data['map'] ?? '') ?? Map::default(),
             bingKey: $data['bingKey'] ?? null,
             mapUrl: $data['mapUrl'] ?? null,
             overlayUrl: $data['overlayUrl'] ?? null,
@@ -53,7 +56,7 @@ class ServerData
             longitude: $data['longitude'],
             zoom: $data['zoom'],
             forceSettings: $data['forceSettings'],
-            coordinateFormat: $data['coordinateFormat'] ?? null,
+            coordinateFormat:  CoordinateFormat::tryFrom($data['coordinateFormat'] ?? '') ?? CoordinateFormat::default(),
             limitCommands: $data['limitCommands'],
             disableReports: $data['disableReports'],
             fixedEmail: $data['fixedEmail'],

@@ -9,7 +9,7 @@ use TrackTelemetry\Traccar\Requests\GetServerInformation;
 
 beforeEach(function () {
     $this->body = [
-        "id"             => 1,
+        "id"               => 1,
         "attributes"       => [],
         "registration"     => false,
         "readonly"         => false,

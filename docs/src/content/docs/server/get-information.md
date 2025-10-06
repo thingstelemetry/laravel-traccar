@@ -23,7 +23,9 @@ $info = Server::getInformation(); // returns TrackTelemetry\Traccar\Dto\ServerDa
 // Example access
 $version = $info->version;
 $registrationEnabled = $info->registration;
-$mapProvider = $info->map; // e.g. "osm"
+$mapProvider = $info->map->value; // e.g. 'osm' (Map enum)
+$coordLabel = $info->coordinateFormat->label(); // human-readable
+$speedUnit = $info->attributes->speedUnit->value; // 'kn', 'kmh', or 'mph'
 ```
 
 The test suite includes a feature test that mocks this request to ensure it returns a ServerData DTO.
@@ -88,11 +90,11 @@ The response is mapped to TrackTelemetry\Traccar\Dto\ServerData with the followi
 | Field            | Type           | Description                                                                                           |
 |------------------|----------------|-------------------------------------------------------------------------------------------------------|
 | id               | integer        | Server entity identifier.                                                                             |
-| attributes       | object/map     | Arbitrary key-value attributes applied to the server.                                                 |
+| attributes       | ServerAttributes DTO | Typed server attributes and preferences. Includes units and UI flags. See below.                     |
 | registration     | boolean        | Whether new user registration is enabled.                                                             |
 | readonly         | boolean        | Whether the server is in read-only mode for configuration changes.                                    |
 | deviceReadonly   | boolean        | Whether devices are read-only (cannot be modified by users).                                          |
-| map              | string or null | Default map provider key (e.g., "osm", "bing"), if configured.                                        |
+| map              | Map enum       | Default map provider (enum). Use ->value for API key (e.g., 'osm') or ->label() for display.            |
 | bingKey          | string or null | API key for Bing Maps when Bing is used.                                                              |
 | mapUrl           | string or null | Custom map tiles base URL, if configured.                                                             |
 | overlayUrl       | string or null | Optional overlay tiles URL.                                                                           |
@@ -100,7 +102,7 @@ The response is mapped to TrackTelemetry\Traccar\Dto\ServerData with the followi
 | longitude        | number         | Default map center longitude.                                                                         |
 | zoom             | integer        | Default map zoom level.                                                                               |
 | forceSettings    | boolean        | If true, forces clients to use server-provided settings.                                              |
-| coordinateFormat | string or null | Preferred coordinate display format, if provided.                                                     |
+| coordinateFormat | CoordinateFormat enum | Preferred coordinate display format (enum). Use ->value or ->label() for display.                |
 | limitCommands    | boolean        | If true, limits command execution based on permissions/policies.                                      |
 | disableReports   | boolean        | If true, reporting features are disabled.                                                             |
 | fixedEmail       | boolean        | If true, email is fixed and cannot be changed by users.                                               |
@@ -114,6 +116,29 @@ The response is mapped to TrackTelemetry\Traccar\Dto\ServerData with the followi
 | openIdEnabled    | boolean        | Whether OpenID authentication is enabled.                                                             |
 | openIdForce      | boolean        | If true, OpenID auth is enforced for sign-in.                                                         |
 | version          | string         | Traccar server version string.                                                                        |
+
+### Typed fields and enums
+
+- Map (TrackTelemetry\\Traccar\\Enums\\Map)
+  - Values: 'openFreeMap', 'locationIqStreets', 'locationIqDark', 'osm', 'openTopoMap', 'carto', 'googleRoad', 'googleSatellite', 'googleHybrid', 'autoNavi', 'ordnanceSurvey'
+  - Defaults to: Map::LOCATION_IQ_STREETS when API value is null/unknown
+  - Tips: Use ->value for the raw key (e.g., 'osm') or ->label() for a human-friendly name
+
+- CoordinateFormat (TrackTelemetry\\Traccar\\Enums\\CoordinateFormat)
+  - Values: 'dd' (Decimal Degrees), 'ddm' (Degrees Decimal Minutes), 'dms' (Degrees Minutes Seconds)
+  - Default: CoordinateFormat::DD
+
+- ServerAttributes (TrackTelemetry\\Traccar\\Dto\\ServerAttributes)
+  - Contains optional UI and preference fields such as language, map settings, and units
+  - Units are strongly typed enums with sensible defaults if missing:
+    - speedUnit: SpeedUnit ('kn', 'kmh', 'mph') — default SpeedUnit::KNOTS
+    - distanceUnit: DistanceUnit ('km', 'mi', 'nmi') — default DistanceUnit::KILOMETERS
+    - altitudeUnit: AltitudeUnit ('m', 'ft') — default AltitudeUnit::METERS
+    - volumeUnit: VolumeUnit ('l', 'gal') — default VolumeUnit::LITERS
+    - timezone: string — default 'UTC'
+  - Any unknown/extra keys from the API are preserved in attributes->others for forward compatibility
+
+Note on defaults: For enum-backed fields, the DTO safely falls back to a sensible default when the API provides null or an unrecognized value. This allows you to rely on consistent types across your application.
 
 ### Error handling
 - Authentication or connectivity issues will result in an exception from the underlying connector. Use try/catch when calling Server::getInformation() if you need to handle failures gracefully.
