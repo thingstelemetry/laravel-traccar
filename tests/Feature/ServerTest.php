@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-//use TrackTelemetry\Traccar\Facades\Server;
-use TrackTelemetry\Traccar\Endpoints\Server;
+use TrackTelemetry\Traccar\Facades\Server;
 use TrackTelemetry\Traccar\Requests\GetServerInformation;
 
 beforeEach(function () {
@@ -37,8 +36,8 @@ test(description: 'can get server information', closure: function () {
         GetServerInformation::class => MockResponse::make(body: $this->body)
     ]);
 
-    $response = (new Server())->getInformation();
+    $response = Server::getInformation();
 
     expect(value: $response)
         ->toBeInstanceOf(class: \TrackTelemetry\Traccar\Dto\ServerData::class);
-})->skip('Fix Facade issues.');
+});
