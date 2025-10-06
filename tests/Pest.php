@@ -20,7 +20,7 @@ use TrackTelemetry\Traccar\Tests\TestCase;
 Config::preventStrayRequests();
 
 uses(TestCase::class)
-    ->in('Feature');
+    ->in('Feature', 'Unit');
 
 uses()
     ->beforeEach(fn () => MockClient::destroyGlobal())

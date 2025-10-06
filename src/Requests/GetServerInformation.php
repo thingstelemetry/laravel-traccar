@@ -28,7 +28,8 @@ class GetServerInformation extends Request
      */
     public function createDtoFromResponse(Response $response): mixed
     {
-        $data = $response->json()['data'];
+        // Traccar returns the server info as a flat JSON object, not wrapped in a "data" key
+        $data = $response->json();
 
         return new ServerData(
             id: $data['id'],

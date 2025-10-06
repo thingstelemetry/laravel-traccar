@@ -39,7 +39,7 @@ class TraccarConnector extends Connector
      */
     protected function defaultAuth(): TokenAuthenticator
     {
-        return new TokenAuthenticator($this->apiKey);
+        return new TokenAuthenticator(token: $this->apiKey);
     }
 
     /**
