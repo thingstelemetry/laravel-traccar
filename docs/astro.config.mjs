@@ -14,7 +14,7 @@ export default defineConfig({
               {
                   label: 'Guides',
                   items: [
-                      { label: 'Example Guide', slug: 'guides/getting-started' },
+                     { label: 'Getting Started', slug: 'guides/getting-started' },
                   ],
               },
               {

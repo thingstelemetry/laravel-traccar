@@ -44,11 +44,11 @@ readonly class ServerData
     {
         return new self(
             id: $data['id'],
-            attributes: ServerAttributes::fromArray($data['attributes']),
+            attributes: ServerAttributes::fromArray(data: $data['attributes'] ?? []),
             registration: $data['registration'],
             readonly: $data['readonly'],
             deviceReadonly: $data['deviceReadonly'],
-            map: Map::tryFrom($data['map'] ?? '') ?? Map::default(),
+            map: Map::tryFrom(value: $data['map'] ?? '') ?? Map::default(),
             bingKey: $data['bingKey'] ?? null,
             mapUrl: $data['mapUrl'] ?? null,
             overlayUrl: $data['overlayUrl'] ?? null,
@@ -56,7 +56,7 @@ readonly class ServerData
             longitude: $data['longitude'],
             zoom: $data['zoom'],
             forceSettings: $data['forceSettings'],
-            coordinateFormat:  CoordinateFormat::tryFrom($data['coordinateFormat'] ?? '') ?? CoordinateFormat::default(),
+            coordinateFormat:  CoordinateFormat::tryFrom(value: $data['coordinateFormat'] ?? '') ?? CoordinateFormat::default(),
             limitCommands: $data['limitCommands'],
             disableReports: $data['disableReports'],
             fixedEmail: $data['fixedEmail'],
