@@ -26,17 +26,6 @@ $registrationEnabled = $info->registration;
 $mapProvider = $info->map; // e.g. "osm"
 ```
 
-- Low-level request (if you are working with the connector directly):
-
-```php
-use TrackTelemetry\Traccar\TraccarConnector;
-use TrackTelemetry\Traccar\Requests\GetServerInformation;
-
-$connector = app(TraccarConnector::class);
-$response = $connector->send(new GetServerInformation());
-$info = $response->dtoOrFail(); // ServerData
-```
-
 The test suite includes a feature test that mocks this request to ensure it returns a ServerData DTO.
 
 ## Example response
