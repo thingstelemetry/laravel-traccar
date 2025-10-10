@@ -15,18 +15,37 @@ hero:
       link: https://github.com/tracktelemetry/laravel-traccar
 
 features:
-  - icon: 🚀
-    title: Integrate Fast
-    details: Install the package, set traccar `api_key` and start implementing business logic.
-  - icon: ✅  
-    title: Comprehensive API
-    details: Access all Traccar API features directly through the package in your application
-  - icon: 🧑🏾‍💻
-    title: Developer Experience
-    details: Access fast setup, stadardized Data Transfer Objects and error handling.
-  - icon: 🧭
-    title: Docs & Test
-    details: The package is well documented and tested with core edge case well covered.
+  - icon: 🔄
+    title: Real-Time Sync
+    details: Effortlessly fetch and synchronize devices, positions, and events with Traccar in real time.
+
+  - icon: 🔐
+    title: Secure Authentication
+    details: Handles Traccar API authentication with tokens or credentials, keeping your integration safe and simple.
+
+  - icon: ⚙️
+    title: Configurable Endpoints
+    details: Easily customize base URLs, API keys, and connection options via environment variables.
+
+  - icon: 🧩
+    title: Extendable Architecture
+    details: Designed with Laravel service container bindings, allowing you to override or extend functionality as needed.
+
+  - icon: 🕵🏾‍♂️
+    title: Detailed Logging
+    details: Built-in logging helps you trace requests, responses, and errors for easy debugging.
+
+  - icon: 🧱
+    title: Fluent API Design
+    details: Interact with Traccar resources using expressive methods aligned with Laravel’s syntax.
+
+  - icon: 🧰
+    title: Helper Commands
+    details: Artisan commands for testing connections, listing devices, and syncing data out of the box.
+
+  - icon: 📦
+    title: Ready for Production
+    details: Built with maintainability and scalability in mind, ideal for enterprise and fleet solutions.
 ---
 
 

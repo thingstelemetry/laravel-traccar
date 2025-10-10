@@ -1,6 +1,6 @@
 # Get Server Information
 
-The Get Server Information endpoint returns general information about your Traccar server instance. This includes feature flags (e.g., whether registration is enabled), default map settings (map provider, center, zoom), version details, and storage space metrics. Use this endpoint to adapt your client UI/UX and behavior based on the server configuration.
+Get general information about your Traccar server instance. This includes feature flags (e.g., whether registration is enabled), default map settings (map provider, center, zoom), version details, and storage space metrics. Use this endpoint to adapt your client UI/UX and behavior based on the server configuration.
 
 ## How to use
 
@@ -9,7 +9,8 @@ You can access the endpoint through the provided Laravel facade. The request ret
 ```php
 use TrackTelemetry\Traccar\Facades\Server;
 
-$info = Server::getInformation(); // returns TrackTelemetry\Traccar\Dto\ServerData
+// returns TrackTelemetry\Traccar\Dto\ServerData
+$info = Server::getInformation(); 
 
 // Example access
 $version = $info->version;

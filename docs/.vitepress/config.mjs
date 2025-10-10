@@ -26,6 +26,7 @@ export default defineConfig({
                 text: 'Introduction',
                 collapsed: false,
                 items: [
+                    {text: 'About Traccar', link: '/introduction/about-traccar'},
                     {text: 'Getting Started', link: '/introduction/getting-started'},
                 ]
             },

@@ -6,3 +6,16 @@
 
     --vp-sidebar-width: 320px;
 }
+
+.content-container img {
+    border-radius: 1rem;
+    border: 1px solid #1F2937;
+    display: block;                /* avoids inline-gap issues */
+    max-width: 100%;               /* responsive images */
+    height: auto;
+    object-fit: cover;             /* keeps aspect while filling */
+}
+
+.content-container h1:not(:first-of-type) {
+    margin-top: 2.5rem;
+}

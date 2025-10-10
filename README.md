@@ -1,18 +1,23 @@
 # TrackTelemetry Traccar PHP SDK
 
-A lightweight PHP and Laravel package that provides a seamless way to interact with the Traccar API.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/njoguamos/laravel-paystack.svg?style=flat-square)](https://packagist.org/packages/njoguamos/laravel-paystack)
+![GitHub Actions Test Status](https://img.shields.io/github/actions/workflow/status/njoguamos/laravel-paystack/tests.yml?logo=github&label=Tests)
+[![Total Downloads](https://img.shields.io/packagist/dt/njoguamos/laravel-paystack.svg?style=flat-square)](https://packagist.org/packages/NjoguAmos/laravel-paystack)
 
-- Namespace: `TrackTelemetry\Traccar`
-- Laravel-ready via auto-discovery (Service Provider included)
-- Vanilla PHP friendly
+![Traccar Screenshot](./docs/introduction/traccar-home-page.webp)
+
+**Track Telemetry Laravel Traccar** is a Laravel specific composer package that simplifies integration with the Traccar GPS tracking platform. It provides an elegant, expressive API to interact with Traccar’s REST endpoints.
+
 
 ## Requirements
-- PHP >= 8.0
-- Composer
+
+| Version | PHP    | Composer | Laravel |
+|---------|--------|----------|---------|
+| 1.x     | >= 8.4 | Required | >= 11.x |
 
 ## Installation
 
-Install via Composer:
+You can install the package via Composer
 
 ```
 composer require tracktelemetry/traccar
@@ -24,49 +29,56 @@ composer require tracktelemetry/traccar
 - `TRACCAR_API_KEY` – Your Traccar API token
 - `TRACCAR_BASE_URL` – Base API URL (default `https://demo.traccar.org/api`)
 
-### PHP (non-Laravel)
-You can load the provided config file directly or pass values to the client:
 
+## Configuration
+
+You can publish the configuration by running the following command:
+
+```bash
+php artisan vendor:publish --tag=config --provider="TrackTelemetry\\Traccar\\TraccarServiceProvider"
 ```
 
-### Laravel
-This package supports Laravel package auto-discovery.
+# Usage
 
-1. Publish the configuration (optional):
-   ```bash
-   php artisan vendor:publish --tag=config --provider="TrackTelemetry\\Traccar\\TraccarServiceProvider"
-   ```
+Here is a quick example of how to get server information.
 
-2. Set your environment variables in `.env`:
-   ```dotenv
-   TRACCAR_API_KEY=your-api-key
-   TRACCAR_BASE_URL=https://your-traccar-host/api
-   ```
+```php
+use TrackTelemetry\Traccar\Facades\Traccar;
 
-3. Resolve the client from the container or use type-hinting:
-   ```php
-   use TrackTelemetry\Traccar\TraccarClient;
+// returns TrackTelemetry\Traccar\Dto\ServerData
+$info = Server::getInformation(); 
 
-   // Via helper
-   $client = app(TraccarClient::class);
-   $devices = $client->get('devices');
+$version = $info->version; // '6.10'
+$speedUnit = $info->attributes->speedUnit->value; // 'kn', 'kmh', or 'mph'
+$timezone = $info->attributes->timezone; // e.g. 'UTC'
+````
 
-   // Or via constructor injection in your classes/controllers
-   public function __construct(private TraccarClient $traccar) {}
-   ```
+## Full Documentation
+The full documentation can be found [on Track Telemetry Website](https://traccar.tracktelemetry.com/).
 
-## Usage
+## Testing
 
-// TODO
-
-## Tests
-
-Run PHPUnit:
-
+```bash
+composer test
 ```
-vendor/bin/pest
-```
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Contributing
+
+Please see [Contribution Guidelines](https://github.com/tracktelemetry/.github/blob/main/CONTRIBUTING) for details.
+
+## Security Vulnerabilities
+
+Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+
+## Credits
+
+- [Njogu Amos](https://github.com/njoguamos)
+- [All Contributors](../../contributors)
 
 ## License
 
-MIT
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
