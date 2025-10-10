@@ -8,7 +8,7 @@ export default defineConfig({
     head: [
         [
             'script',
-            { defer: '', 'data-domain': 'traccar.tracktelemetry.com', src: 'https://st.artisanelevated.com/js/script.js' }
+            { defer: '', 'data-domain': 'traccar.tracktelemetry.com', src: 'https://stats.tracktelemetry.com/js/script.js' }
         ],
     ],
     themeConfig: {
