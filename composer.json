@@ -53,7 +53,7 @@
         "serve": [
             "Composer\\Config::disableProcessTimeout",
             "@build",
-            "@php vendor/bin/testbench serve --ansi"
+            "@php vendor/bin/testbench serve --host=0.0.0.0 --ansi"
         ],
         "lint": [
             "@php vendor/bin/pint --ansi"
@@ -75,5 +75,14 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
-    }
+    },
+  "archive": {
+    "exclude": [
+      "/tests",
+      "/.github",
+      "/docker-compose.yml",
+      "/.gitignore",
+      "workbench"
+    ]
+  }
 }
