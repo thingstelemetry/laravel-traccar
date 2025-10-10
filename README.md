@@ -68,7 +68,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Contributing
 
-Please see [Contribution Guidelines](https://github.com/tracktelemetry/.github/blob/main/CONTRIBUTING) for details.
+Please see [Contribution Guidelines](https://github.com/tracktelemetry/.github/blob/main/CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
