@@ -79,3 +79,25 @@ php artisan vendor:publish --tag=config --provider="TrackTelemetry\\Traccar\\Tra
 
   ```
 </details>
+
+
+## Usage
+
+```php
+use TrackTelemetry\Traccar\Facades\Server;
+
+// returns TrackTelemetry\Traccar\Dto\ServerData
+$info = Server::getInformation(); 
+
+
+$version = $info->version; // 6.10
+$mapProvider = $info->map->label(); // Google Satellite
+$speedUnit = $info->attributes->speedUnit->value; // kmh
+$speedUnit = $info->attributes->speedUnit->label(); // Kilometers per Hour (km/h)
+$timezone = $info->attributes->timezone; // UTC
+$others = $info->attributes->others; // ['otherKey' => 'otherValue']
+```
+
+> [!IMPORTANT]
+> All responses are DTOs, so you can access their properties directly.
+> IDE autocompletion is available for all DTOs.

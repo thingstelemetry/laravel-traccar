@@ -12,17 +12,12 @@ use TrackTelemetry\Traccar\Facades\Server;
 // returns TrackTelemetry\Traccar\Dto\ServerData
 $info = Server::getInformation(); 
 
-// Example access
-$version = $info->version;
-$registrationEnabled = $info->registration;
-$mapProvider = $info->map->value; // e.g. 'locationIqStreets' (Map enum)
-$coordLabel = $info->coordinateFormat->label(); // human-readable
-$speedUnit = $info->attributes->speedUnit->value; // 'kn', 'kmh', or 'mph'
-$distanceUnit = $info->attributes->distanceUnit->value; // 'km', 'mi', or 'nmi'
-$altitudeUnit = $info->attributes->altitudeUnit->value; // 'm' or 'ft'
-$volumeUnit = $info->attributes->volumeUnit->value; // 'ltr', 'usGal', or 'impGal'
-$timezone = $info->attributes->timezone; // e.g. 'UTC'
-$others = $info->attributes->others; // all remaining custom attributes
+$version = $info->version; // 6.10
+$mapProvider = $info->map->label(); // Google Satellite
+$speedUnit = $info->attributes->speedUnit->value; // kmh
+$speedUnit = $info->attributes->speedUnit->label(); // Kilometers per Hour (km/h)
+$timezone = $info->attributes->timezone; // UTC
+$others = $info->attributes->others; // ['otherKey' => 'otherValue']
 ```
 
 The test suite includes a feature test that mocks this request to ensure it returns a ServerData DTO.
