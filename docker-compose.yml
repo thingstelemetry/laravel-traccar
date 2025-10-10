@@ -1,0 +1,22 @@
+services:
+  vitepress:
+    image: node:22-alpine
+    container_name: traccar-vitepress-docs
+    working_dir: /app/docs
+    volumes:
+      - ./docs:/app/docs
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npx vitepress dev --host 0.0.0.0"
+    environment:
+      - NODE_ENV=development
+
+  composer:
+    image: php:8.4-cli
+    container_name: traccar-composer-app
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "8000:8000"
+    command: sh -c "apt-get update && apt-get install -y git unzip && php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\" && php composer-setup.php && php -r \"unlink('composer-setup.php');\" && php composer.phar install && php composer.phar serve --host=0.0.0.0 --port=8000"

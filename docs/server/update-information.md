@@ -1,16 +1,12 @@
----
-title: Update Server Information
-description: Update general Traccar server settings using typed DTOs and enums.
----
+# Update Server Information
 
-## Overview
 Use this endpoint to update global Traccar server settings such as the default map provider, coordinate format, and UI/unit preferences.
 
 The request/response is mapped to `TrackTelemetry\Traccar\Dto\ServerData` and its nested `TrackTelemetry\Traccar\Dto\ServerAttributes` with several enum-backed fields.
 
 Important: Always fetch the current server information first, then clone/copy the DTO before making changes. This preserves unknown/forward-compatible attributes and avoids accidentally resetting fields you didn’t intend to change.
 
-## Basic usage
+## How to use
 
 ```php
 $serverData = \TrackTelemetry\Traccar\Facades\Server::getInformation();
@@ -25,15 +21,11 @@ $response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
 return $response->toArray();
 ```
 
-import { Aside } from '@astrojs/starlight/components';
+> [!IMPORTANT]
+> ServerAttributes keeps an `others` bucket for unrecognized keys; cloning from the latest DTO ensures these are preserved on update.
 
-<Aside>
-    ServerAttributes keeps an `others` bucket for unrecognized keys; cloning from the latest DTO ensures these are preserved on update.
-</Aside>
-
-<Aside>
-    The DTOs use enums for several fields (Map, CoordinateFormat, and units). Assign the enum constants rather than raw strings.
-</Aside>
+> [!IMPORTANT]
+> The DTOs use enums for several fields (Map, CoordinateFormat, and units). Assign the enum constants rather than raw strings.
 
 ## Common update cases
 
@@ -92,9 +84,8 @@ $data->attributes->distanceUnit = \TrackTelemetry\Traccar\Enums\DistanceUnit::KI
 $response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
 ```
 
-<Aside type="caution" title="Null Field withh be updated">
-    The `updateInformation` will update the mission attributes to explicit null.
-</Aside>
+> [!IMPORTANT]
+> The `updateInformation` will update the mission attributes to explicit null.
 
 
 ## Tips and pitfalls
