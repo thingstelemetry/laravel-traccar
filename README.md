@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This package is still under development and the API may change. Track Telemetry bears no responsibility for any damages caused by using this package.
+
 # TrackTelemetry Traccar PHP SDK
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/njoguamos/laravel-paystack.svg?style=flat-square)](https://packagist.org/packages/njoguamos/laravel-paystack)

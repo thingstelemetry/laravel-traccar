@@ -2,7 +2,7 @@
 
 Traccar is a modern GPS tracking platform that can track GPS devices enables real-time. A GPS device can be associated with a vehicle, asset, person etc.
 
-![Traccar Screenshot](./traccar-home-page.webp)
+![Traccar Screenshot](./../images/traccar-home-page.webp)
 
 ## Traccar Features
 
