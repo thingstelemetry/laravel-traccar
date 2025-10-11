@@ -1,19 +1,44 @@
-# Get Devices for a User
+# Get Devices (by user, ids, uniqueIds, or combined)
 
-Fetch the list of devices assigned to a specific user from your Traccar server.
+Fetch devices from your Traccar server by user ID, by device IDs, by unique IDs, or using combined filters.
 
 > [!WARNING]
+> Standard users can only use this operation with their own `userId`. Admins or managers may request devices for any user.
 > Without any params, returns a list of the user's devices
-> Standard users can use this only with their own userId
 
-## Request
+## Usage
 
-Use the `TrackTelemetry\Traccar\Facades\Device::getForUser($userId)` method to retrieve a user's devices.
+### 1) For a given user
 
 ```php
 use TrackTelemetry\Traccar\Facades\Device;
 
-$devices = Device::getForUser(userId: 2, id: [1,2], uniqueId: ['1234567890', '0987654321']); // Illuminate\Support\Collection of DeviceData
+$userId = 123;
+$devices = Device::get(userId: $userId); // Illuminate\Support\Collection of DeviceData
+```
+
+### 2) By device IDs
+
+```php
+use TrackTelemetry\Traccar\Facades\Device;
+
+$devices = Device::get(ids: [6, 7]); // Illuminate\Support\Collection of DeviceData
+```
+
+### 3) By uniqueIds
+
+```php
+use TrackTelemetry\Traccar\Facades\Device;
+
+$devices = Device::get(uniqueIds: ['ABC123', 'XYZ789']); // Illuminate\Support\Collection of DeviceData
+```
+
+### 4) Combined filters (userId + ids + uniqueIds)
+
+```php
+use TrackTelemetry\Traccar\Facades\Device;
+
+$devices = Device::get(userId: 123, ids: [6], uniqueIds: ['ABC123']); // Illuminate\Support\Collection of DeviceData
 ```
 
 ## Results
@@ -23,9 +48,9 @@ The response is a `Illuminate\Support\Collection<int, TrackTelemetry\Traccar\Dto
 ```php
 $first = $devices->first();
 
-$name = $first->name;                 // "Truck 1"
-$status = $first->status->label();    // "Online"
-$category = $first->category->value;  // "truck"
+$name = $first->name;                 // \"Truck 1\"
+$status = $first->status->label();    // \"Online\"
+$category = $first->category->value;  // \"truck\"
 $lastSeen = $first->lastUpdate?->toIso8601String();
 
 // Attributes (typed)
@@ -40,10 +65,6 @@ $speedLimit = $first->attributes->speedLimit; // 80.0 (knots)
   Enum representing device category/type.
 - `attributes` → [`DeviceAttributesData`](./../reference/dto/device-attributes-data)
   Typed DTO for device attributes.
-
-## Permissions
-- Standard users: Only allowed to call this with their own `userId`.
-- Admins/Managers: May fetch devices for any `userId`.
 
 ## Important Links
 - [Traccar Fetch a list of Devices](https://www.traccar.org/api-reference/#tag/Device/paths/~1devices/get)
