@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'index');
+Route::view('/', 'home.index')->name('home');
 
 Route::get('/server', function () {
-    $response = \TrackTelemetry\Traccar\Facades\Server::getInformation();
-
-    return $response->toArray();
-});
+    return view(
+        view: 'server.get-information',
+        data: ['information' => \TrackTelemetry\Traccar\Facades\Server::getInformation()]
+    );
+})->name('server.get-information');
 
 Route::get('/server/update', function () {
     $serverData = \TrackTelemetry\Traccar\Facades\Server::getInformation();

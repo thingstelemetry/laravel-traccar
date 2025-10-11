@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace TrackTelemetry\Traccar\Dto;
 
 use TrackTelemetry\Traccar\Enums\Map;
+use TrackTelemetry\Traccar\Support\StorageInfo;
 use TrackTelemetry\Traccar\Enums\CoordinateFormat;
 
 class ServerData
 {
     public function __construct(
         public int $id,
-        public ServerAttributes $attributes,
+        public ServerAttributesData $attributes,
         public bool $registration,
         public bool $readonly,
         public bool $deviceReadonly,
@@ -32,7 +33,7 @@ class ServerData
         public bool $emailEnabled,
         public bool $geocoderEnabled,
         public bool $textEnabled,
-        public array $storageSpace,
+        public StorageInfo $storageSpace,
         public bool $newServer,
         public bool $openIdEnabled,
         public bool $openIdForce,
@@ -44,7 +45,7 @@ class ServerData
     {
         return new self(
             id: $data['id'],
-            attributes: ServerAttributes::fromArray(data: $data['attributes'] ?? []),
+            attributes: ServerAttributesData::fromArray(data: $data['attributes'] ?? []),
             registration: $data['registration'],
             readonly: $data['readonly'],
             deviceReadonly: $data['deviceReadonly'],
@@ -56,7 +57,7 @@ class ServerData
             longitude: $data['longitude'],
             zoom: $data['zoom'],
             forceSettings: $data['forceSettings'],
-            coordinateFormat:  CoordinateFormat::tryFrom(value: $data['coordinateFormat'] ?? '') ?? CoordinateFormat::default(),
+            coordinateFormat: CoordinateFormat::tryFrom(value: $data['coordinateFormat'] ?? '') ?? CoordinateFormat::default(),
             limitCommands: $data['limitCommands'],
             disableReports: $data['disableReports'],
             fixedEmail: $data['fixedEmail'],
@@ -65,7 +66,7 @@ class ServerData
             emailEnabled: $data['emailEnabled'],
             geocoderEnabled: $data['geocoderEnabled'],
             textEnabled: $data['textEnabled'],
-            storageSpace: $data['storageSpace'] ?? [],
+            storageSpace: new StorageInfo(storageSpace: $data['storageSpace']),
             newServer: $data['newServer'],
             openIdEnabled: $data['openIdEnabled'],
             openIdForce: $data['openIdForce'],
@@ -98,7 +99,7 @@ class ServerData
             'emailEnabled'     => $this->emailEnabled,
             'geocoderEnabled'  => $this->geocoderEnabled,
             'textEnabled'      => $this->textEnabled,
-            'storageSpace'     => $this->storageSpace,
+            'storageSpace'     => $this->storageSpace->toArray(),
             'newServer'        => $this->newServer,
             'openIdEnabled'    => $this->openIdEnabled,
             'openIdForce'      => $this->openIdForce,
