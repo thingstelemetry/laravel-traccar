@@ -15,11 +15,11 @@ workbench:
   health: false
   discovers:
     web: true
-    api: true
+    api: false
     commands: true
     components: false
     factories: true
-    views: false
+    views: true
   build:
     - asset-publish
     - create-sqlite-db

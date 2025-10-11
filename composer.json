@@ -82,7 +82,8 @@
       "/.github",
       "/docker-compose.yml",
       "/.gitignore",
-      "workbench"
+      "workbench",
+      "/testbench.yaml"
     ]
   }
 }

@@ -11,8 +11,11 @@ use TrackTelemetry\Traccar\Requests\UpdateServerInformation;
 
 beforeEach(function () {
     $this->body = [
-        "id"               => 1,
-        "attributes"       => [],
+        "id"         => 1,
+        "attributes" => [
+            'speedUnit'    => 'kmh',
+            'distanceUnit' => 'km',
+        ],
         "registration"     => false,
         "readonly"         => false,
         "deviceReadonly"   => false,
@@ -36,7 +39,8 @@ beforeEach(function () {
         "storageSpace"     => [
             0 => 40778186752,
             1 => 245107195904,
-            2 => 38552756224,
+            2 => 324235,
+            3 => 38552756224,
         ],
         "newServer"     => false,
         "openIdEnabled" => false,

@@ -9,7 +9,7 @@ use TrackTelemetry\Traccar\Enums\VolumeUnit;
 use TrackTelemetry\Traccar\Enums\AltitudeUnit;
 use TrackTelemetry\Traccar\Enums\DistanceUnit;
 
-class ServerAttributes
+class ServerAttributesData
 {
     public function __construct(
         public ?string $language = null,
@@ -58,9 +58,6 @@ class ServerAttributes
         public AltitudeUnit    $altitudeUnit = AltitudeUnit::METERS,
         public VolumeUnit      $volumeUnit = VolumeUnit::LITERS,
         public string          $timezone = 'UTC',
-
-        // Any unrecognized attributes
-        public array            $others = [],
     ) {
     }
 
@@ -71,21 +68,6 @@ class ServerAttributes
         $altitudeUnit = AltitudeUnit::tryFrom($data['altitudeUnit'] ?? '') ?? AltitudeUnit::default();
         $volumeUnit = VolumeUnit::tryFrom($data['volumeUnit'] ?? '') ?? VolumeUnit::default();
         $timezone = $data['timezone'] ?? 'UTC';
-
-        $knownKeys = [
-            'language', 'mapGeofences', 'mapLiveRoutes', 'mapDirection', 'mapFollow',
-            'mapCluster', 'mapOnSelect', 'activeMapStyles', 'devicePrimary', 'deviceSecondary',
-            'soundEvents', 'soundAlarms', 'positionItems', 'googleKey', 'locationIqKey',
-            'mapboxAccessToken', 'mapTilerKey', 'bingMapsKey', 'openWeatherKey', 'tomTomKey',
-            'hereKey', 'notificationTokens', 'ui.disableSavedCommands', 'ui.disableGroups',
-            'ui.disableAttributes', 'ui.disableEvents', 'ui.disableVehicleFeatures', 'ui.disableDrivers',
-            'ui.disableComputedAttributes', 'ui.disableCalendars', 'ui.disableMaintenance',
-            'web.liveRouteLength', 'mapLineWidth', 'mapLineOpacity', 'web.selectZoom', 'web.maxZoom',
-            'iconScale', 'navigationAppLink', 'navigationAppTitle',
-            'speedUnit', 'distanceUnit', 'altitudeUnit', 'volumeUnit', 'timezone',
-        ];
-
-        $others = array_diff_key($data, array_flip($knownKeys));
 
         return new self(
             language: $data['language'] ?? null,
@@ -132,13 +114,12 @@ class ServerAttributes
             altitudeUnit: $altitudeUnit,
             volumeUnit: $volumeUnit,
             timezone: $timezone,
-            others: $others,
         );
     }
 
     public function toArray(): array
     {
-        return array_merge([
+        return [
             'language'                     => $this->language,
             'mapGeofences'                 => $this->mapGeofences,
             'mapLiveRoutes'                => $this->mapLiveRoutes,
@@ -183,6 +164,6 @@ class ServerAttributes
             'altitudeUnit'                 => $this->altitudeUnit->value,
             'volumeUnit'                   => $this->volumeUnit->value,
             'timezone'                     => $this->timezone,
-        ], $this->others);
+        ];
     }
 }

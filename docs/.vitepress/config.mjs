@@ -24,7 +24,6 @@ export default defineConfig({
         sidebar: [
             {
                 text: 'Introduction',
-                collapsed: false,
                 items: [
                     {text: 'About Traccar', link: '/introduction/about-traccar'},
                     {text: 'Getting Started', link: '/introduction/getting-started'},
@@ -32,10 +31,21 @@ export default defineConfig({
             },
             {
                 text: 'Server',
-                collapsed: true,
                 items: [
                     {text: 'Get Information', link: '/server/get-information'},
                     {text: 'Update Information', link: '/server/update-information'},
+                ]
+            },
+            {
+                text: 'DTO Reference',
+                items: [
+                    {text: 'ServerData', link: '/reference/dto/server-data'},
+                ]
+            },
+            {
+                text: 'Enums Reference',
+                items: [
+                    {text: 'Map', link: '/reference/enums/map'},
                 ]
             },
         ],
