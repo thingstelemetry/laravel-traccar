@@ -6,6 +6,8 @@ namespace TrackTelemetry\Traccar\Endpoints;
 
 use Illuminate\Support\Collection;
 use TrackTelemetry\Traccar\Traccar;
+use TrackTelemetry\Traccar\Dto\DeviceData;
+use TrackTelemetry\Traccar\Requests\CreateDevice;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Requests\GetForUserDevices;
 
@@ -42,4 +44,15 @@ class Device extends Traccar
         return $response->dtoOrFail();
     }
 
+    /**
+     * Create a new device.
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function create(DeviceData $data): DeviceData
+    {
+        $response = $this->connector->send(request: new CreateDevice(data: $data));
+
+        return $response->dtoOrFail();
+    }
 }

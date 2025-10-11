@@ -3,8 +3,8 @@
 Fetch devices from your Traccar server by user ID, by device IDs, by unique IDs, or using combined filters.
 
 > [!WARNING]
-> Standard users can only use this operation with their own `userId`. Admins or managers may request devices for any user.
-> Without any params, returns a list of the user's devices
+> - Standard users can only use this operation with their own `userId`. Admins or managers may request devices for any user.
+> - Without any params, returns a list of the user's devices
 
 ## Usage
 

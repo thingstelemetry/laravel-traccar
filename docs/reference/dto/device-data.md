@@ -1,104 +1,125 @@
-# Device Data Dto Reference
+# Device Data DTO Reference
 
-The `TrackTelemetry\Traccar\Dto\DeviceData` represents a Traccar device entity. It provides typed access to device metadata and timestamps. 
+The `TrackTelemetry\Traccar\Dto\DeviceData` represents a Traccar device entity with typed fields and sensible defaults. It is used for both reading devices and constructing payloads (e.g., for creating a device).
+
 
 ```php
 use TrackTelemetry\Traccar\Facades\Device;
 
-$devices = Device::getAll(); // Illuminate\Support\Collection of DeviceData
+$devices = Device::getAll(); // Illuminate\Support\Collection<DeviceData>
 $device = $devices->first();
 ```
 
-## `id` → `integer`
+Creating a new DTO for create operations
 
-Traccar device identifier.
 ```php
-$device->id; // 2551
+use TrackTelemetry\Traccar\Dto\DeviceData;
+use TrackTelemetry\Traccar\Dto\DeviceAttributesData;
+use TrackTelemetry\Traccar\Enums\DeviceCategory;
+use TrackTelemetry\Traccar\Enums\DeviceStatus;
+
+$dto = new DeviceData(
+    name: 'My Vehicle',
+    uniqueId: '8346436046093', // IMEI or serial recommended
+    attributes: new DeviceAttributesData(speedLimit: 80),
+);
 ```
 
-## `name` → `string`
+Fields
 
+## `id` → `integer`|`null`
+Traccar device identifier. Null until the device is created by the server.
+
+  ```php
+  $device->id; // 2551
+  ```
+
+## `name` → `string`
 Human-friendly device name.
+
 ```php
 $device->name; // "Company Truck 12"
 ```
 
 ## `uniqueId` → `string`
+Unique device identifier. IMEI, serial number or other id. It has to match the identifier device reports to the server.
 
-Unique device identifier (e.g., IMEI or tracker ID).
 ```php
-$device->uniqueId; // "356612345678901"
+$device->uniqueId; // "3567395245678901"
 ```
+  
+> [!IMPORTANT]
+> The uniqueId must be unique across all devices in the Traccar instance. Traccar uses the uniqueId to match incoming positions with the device they belong to.
 
-## `status` → [`DeviceStatus`](../enums/device-status)
+## `attributes` → `DeviceAttributesData`
+Typed device attribute bag. See the dedicated reference.
+  
+```php
+$attrs = $device->attributes; // instance of DeviceAttributesData
+$attrs->toArray(); // array<string, mixed>
+  ```
 
+## `status` → `DeviceStatus` (default: UNKNOWN)
 Device connection status.
+
 ```php
 $device->status->value; // "online"
 $device->status->label(); // "Online"
 ```
 
-## `disabled` → `boolean`
-
+## `disabled` → `boolean` (default: false)
 Whether the device is disabled in Traccar.
+
 ```php
 $device->disabled; // false
 ```
 
-## `lastUpdate` → `string|null` (ISO 8601) cast to `CarbonImmutable|null`
+## `lastUpdate` → `CarbonImmutable`|`null` (ISO 8601 parsed)
+Timestamp of the device’s last update. Parsed to `CarbonImmutable` when present; `null` if missing or unparsable.
 
-Timestamp of the device’s last update. Parsed to `CarbonImmutable` when present; `null` if missing.
 ```php
 $device->lastUpdate?->toIso8601String(); // "2019-08-24T14:15:22Z"
 ```
 
-## `positionId` → `integer|null`
-
+## `positionId` → `integer`|`null`
 Latest known position record ID for this device.
+
 ```php
 $device->positionId; // 987654
 ```
 
-## `groupId` → `integer|null`
-
+## `groupId` → `integer`|`null`
 Group identifier if the device belongs to a Traccar group.
+
 ```php
 $device->groupId; // 42
 ```
 
-## `phone` → `string|null`
-
+## `phone` → `string`|`null`
 Associated SIM or contact phone number.
+
 ```php
 $device->phone; // "+1234567890"
 ```
 
-## `model` → `string|null`
-
+## `model` → `string`|`null`
 Device model or tracker model identifier.
+
 ```php
 $device->model; // "TK103"
 ```
 
-## `contact` → `string|null`
-
+## `contact` → `string`|`null`
 Optional contact person or label for the device.
+
 ```php
 $device->contact; // "John Doe"
 ```
 
-## `category` → [`DeviceCategory`](../enums/device-category)
-
+## `category` → `DeviceCategory` (default: DEFAULT)
 Device category/classification.
+
 ```php
 $device->category->value; // "car"
 $device->category->label(); // "Car"
-```
-
-## `attributes` → [`DeviceAttributesData`](./device-attributes-data)
-
-Typed device-specific attributes. Instance of `TrackTelemetry\\Traccar\\Dto\\DeviceAttributesData`.
-```php
-$attrs = $device->attributes; // instance of DeviceAttributesData
-$attrs->toArray(); // array<string, mixed>
 ```
