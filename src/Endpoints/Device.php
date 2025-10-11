@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace TrackTelemetry\Traccar\Endpoints;
 
 use Illuminate\Support\Collection;
-use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Traccar;
+use TrackTelemetry\Traccar\Requests\GetAllDevices;
 
 class Device extends Traccar
 {

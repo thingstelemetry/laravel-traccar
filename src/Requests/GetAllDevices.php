@@ -8,6 +8,7 @@ use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use TrackTelemetry\Traccar\Dto\DeviceData;
 
 class GetAllDevices extends Request
@@ -25,10 +26,12 @@ class GetAllDevices extends Request
     /**
      *
      * @throws JsonException
+     *
+     * @return Collection<DeviceData|mixed>
      */
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
-        return collect($response->json())
-            ->map(fn($device) => DeviceData::fromArray($device));
+        return collect(value: $response->json())
+            ->map(callback: fn ($device) => DeviceData::fromArray(data: $device));
     }
 }

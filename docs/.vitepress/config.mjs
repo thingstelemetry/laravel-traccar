@@ -59,6 +59,7 @@ export default defineConfig({
                     {text: 'Altitude Unit', link: '/reference/enums/altitude-unit'},
                     {text: 'Speed Unit', link: '/reference/enums/speed-unit'},
                     {text: 'Volume Unit', link: '/reference/enums/volume-unit'},
+                    {text: 'Device Status', link: '/reference/enums/device-status'},
                 ]
             },
         ],

@@ -30,11 +30,12 @@ Unique device identifier (e.g., IMEI or tracker ID).
 $device->uniqueId; // "356612345678901"
 ```
 
-## `status` → `string`
+## `status` → [`DeviceStatus`](../enums/device-status)
 
-Device connection status (e.g., "online", "offline").
+Device connection status.
 ```php
-$device->status; // "online"
+$device->status->value; // "online"
+$device->status->label(); // "Online"
 ```
 
 ## `disabled` → `boolean`
@@ -93,9 +94,10 @@ Device category/classification (e.g., "car", "truck", "person").
 $device->category; // "car"
 ```
 
-## `attributes` → `[Device Attributes Data](./device-attributes-data)`
+## `attributes` → [`DeviceAttributesData`](./device-attributes-data)
 
-Device specific attributes. Instance of `TrackTelemetry\Traccar\Dto\DeviceAttributesData`.
+Typed device-specific attributes. Instance of `TrackTelemetry\\Traccar\\Dto\\DeviceAttributesData`.
 ```php
-$attrs = $device->attributes; // TrackTelemetry\Traccar\Dto\DeviceAttributesData
+$attrs = $device->attributes; // instance of DeviceAttributesData
+$attrs->toArray(); // array<string, mixed>
 ```
