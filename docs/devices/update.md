@@ -52,9 +52,10 @@ $speedLimit = $updated->attributes->speedLimit; // 90.0
 ### 400 - Key (groupid)=(123456) is not present in table "tc_groups"
 
 ```shell
-Bad Request (400) Response: org.traccar.storage.StorageException: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "tc_devices_uniqueid_key" Detail: Key (uniqueid)=(AX3WX9XT6ZYMPQWJ) already exists
+Bad Request (400) Response: org.traccar.storage.StorageException: org.postgresql.util.PSQLException: ERROR: insert or update on table "tc_devices" violates foreign key constraint "fk_devices_groupid" Detail: Key (groupid)=(123456) is not present in table "tc_groups". 
 ```
-This means a device with the given `uniqueid` already exists in the server. Get the device details instead or use a different `uniqueid`.
+
+This means that the `groupId` does not exist in the server. Use the group api to get the list of available groups.
 
 
 ## Important Links

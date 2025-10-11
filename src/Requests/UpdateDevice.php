@@ -8,6 +8,7 @@ use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use InvalidArgumentException;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Traits\Body\HasJsonBody;
 use TrackTelemetry\Traccar\Dto\DeviceData;
@@ -20,6 +21,9 @@ class UpdateDevice extends Request implements HasBody
 
     public function __construct(public DeviceData $data)
     {
+        if (is_null($data->id)) {
+            throw new InvalidArgumentException(message: 'Device ID is required for update operations.');
+        }
     }
 
     /**
@@ -37,7 +41,7 @@ class UpdateDevice extends Request implements HasBody
      */
     public function createDtoFromResponse(Response $response): DeviceData
     {
-        return DeviceData::fromArray($response->json());
+        return DeviceData::fromArray(data: $response->json());
     }
 
     /**
