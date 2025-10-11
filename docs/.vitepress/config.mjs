@@ -45,6 +45,8 @@ export default defineConfig({
                 items: [
                     {text: 'Server Data', link: '/reference/dto/server-data'},
                     {text: 'Server Attribute Data', link: '/reference/dto/server-attributes-data'},
+                    {text: 'Device Data', link: '/reference/dto/device-data'},
+                    {text: 'Device Attribute Data', link: '/reference/dto/device-attributes-data'},
                 ]
             },
             {
