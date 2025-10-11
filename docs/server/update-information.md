@@ -22,9 +22,6 @@ return $response->toArray();
 ```
 
 > [!IMPORTANT]
-> ServerAttributes keeps an `others` bucket for unrecognized keys; cloning from the latest DTO ensures these are preserved on update.
-
-> [!IMPORTANT]
 > The DTOs use enums for several fields (Map, CoordinateFormat, and units). Assign the enum constants rather than raw strings.
 
 ## Common update cases

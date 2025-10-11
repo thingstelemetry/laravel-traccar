@@ -1,0 +1,33 @@
+# CoordinateFormat Enum Reference
+
+The `TrackTelemetry\Traccar\Enums\CoordinateFormat` enum defines how Traccar server coordinates are displayed and formatted.
+
+## Enum Cases
+
+| Case  | Value   | Description                                              |
+|-------|---------|----------------------------------------------------------|
+| `DD`  | `'dd'`  | Decimal Degrees, e.g., 51.1789, -1.8262                  |
+| `DDM` | `'ddm'` | Degrees Decimal Minutes, e.g., 51°10.734′ N, 1°49.572′ W |
+| `DMS` | `'dms'` | Degrees Minutes Seconds, e.g., 51°10′44″ N, 1°49′34″ W   |
+
+## Methods
+
+### `public static function default(): self`
+
+Returns the default coordinate format (`DD`).
+
+### `public function label(): string`
+
+Returns a human-readable label for the format (e.g., `"Decimal Degrees (DD)"`).
+
+## Example
+
+```php
+use TrackTelemetry\Traccar\Enums\CoordinateFormat;
+
+$format = CoordinateFormat::DMS;
+echo $format->label(); // Degrees Minutes Seconds (DMS)
+
+$default = CoordinateFormat::default();
+echo $default->value; // dd
+```

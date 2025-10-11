@@ -46,6 +46,11 @@ export default defineConfig({
                 text: 'Enums Reference',
                 items: [
                     {text: 'Map', link: '/reference/enums/map'},
+                    {text: 'Coordinate Format', link: '/reference/enums/coordinate-format'},
+                    {text: 'Distance Unit', link: '/reference/enums/distance-unit'},
+                    {text: 'Altitude Unit', link: '/reference/enums/altitude-unit'},
+                    {text: 'Speed Unit', link: '/reference/enums/speed-unit'},
+                    {text: 'Volume Unit', link: '/reference/enums/volume-unit'},
                 ]
             },
         ],
