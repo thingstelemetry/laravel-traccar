@@ -2,6 +2,17 @@
 
 The `TrackTelemetry\Traccar\Enums\DistanceUnit` enum defines supported Traccar distance measurement units.
 
+## Example
+
+```php
+use TrackTelemetry\Traccar\Enums\DistanceUnit;
+
+$unit = DistanceUnit::MILES;
+$unit->value; // km
+$unit->name; // MILES
+$unit->label(); // Miles (mi)
+```
+
 ## Enum Cases
 
 | Case             | Value   | Description                |
@@ -9,6 +20,9 @@ The `TrackTelemetry\Traccar\Enums\DistanceUnit` enum defines supported Traccar d
 | `KILOMETERS`     | `'km'`  | Kilometers                 |
 | `MILES`          | `'mi'`  | Miles                      |
 | `NAUTICAL_MILES` | `'nmi'` | Nautical miles (sea miles) |
+
+> [!IMPORTANT]
+> The enum values have been derived from the [Traccar source code](https://github.com/traccar/traccar-web/blob/61e5c5d7b14487f898a01e25d890efdf7b260cbc/src/settings/ServerPage.jsx#L132-L140).
 
 ## Methods
 
@@ -19,18 +33,3 @@ Returns the default unit (`KILOMETERS`).
 ### `public function label(): string`
 
 Returns a human-readable label (e.g., `"Miles (mi)"`).
-
-## Example
-
-```php
-use TrackTelemetry\Traccar\Enums\DistanceUnit;
-
-$unit = DistanceUnit::MILES;
-echo $unit->label(); // Miles (mi)
-
-$default = DistanceUnit::default();
-echo $default->value; // km
-```
-
-> [!IMPORTANT]
-> The enum values have been derived from the [Traccar source code](https://github.com/traccar/traccar-web/blob/61e5c5d7b14487f898a01e25d890efdf7b260cbc/src/settings/ServerPage.jsx#L132-L140).

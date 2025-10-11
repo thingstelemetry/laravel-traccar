@@ -5,6 +5,9 @@ export default defineConfig({
     title: "Laravel Traccar",
     description: "A Laravel package for Traccar payment integration",
     lastUpdated: false,
+    sitemap: {
+        hostname: 'https://traccar.tracktelemetry.com'
+    },
     head: [
         [
             'script',
@@ -40,7 +43,8 @@ export default defineConfig({
                 text: 'DTO Reference',
                 collapsed: true,
                 items: [
-                    {text: 'ServerData', link: '/reference/dto/server-data'},
+                    {text: 'Server Data', link: '/reference/dto/server-data'},
+                    {text: 'Server Attribute Data', link: '/reference/dto/server-attributes-data'},
                 ]
             },
             {
