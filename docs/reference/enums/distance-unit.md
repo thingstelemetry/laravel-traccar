@@ -31,3 +31,6 @@ echo $unit->label(); // Miles (mi)
 $default = DistanceUnit::default();
 echo $default->value; // km
 ```
+
+> [!IMPORTANT]
+> The enum values have been derived from the [Traccar source code](https://github.com/traccar/traccar-web/blob/61e5c5d7b14487f898a01e25d890efdf7b260cbc/src/settings/ServerPage.jsx#L132-L140).

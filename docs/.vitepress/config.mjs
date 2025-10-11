@@ -38,12 +38,14 @@ export default defineConfig({
             },
             {
                 text: 'DTO Reference',
+                collapsed: true,
                 items: [
                     {text: 'ServerData', link: '/reference/dto/server-data'},
                 ]
             },
             {
                 text: 'Enums Reference',
+                collapsed: true,
                 items: [
                     {text: 'Map', link: '/reference/enums/map'},
                     {text: 'Coordinate Format', link: '/reference/enums/coordinate-format'},

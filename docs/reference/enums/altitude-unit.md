@@ -30,3 +30,6 @@ echo $unit->label(); // Feet
 $default = AltitudeUnit::default();
 echo $default->value; // m
 ```
+
+> [!IMPORTANT]
+> The enum values have been derived from the [Traccar source code](https://github.com/traccar/traccar-web/blob/61e5c5d7b14487f898a01e25d890efdf7b260cbc/src/settings/ServerPage.jsx#L144-L151).

@@ -40,5 +40,5 @@ $default = Map::default();
 echo $default->value; // locationIqStreets
 ```
 
-> [!NOTE]
-> There is no traccar API for the map. The values have been derived from the [Traccar source code](https://github.com/traccar/traccar-web/blob/master/src/map/core/useMapStyles.js).
+> [!IMPORTANT]
+> The enum values have been derived from the [Traccar source code](https://github.com/traccar/traccar-web/blob/master/src/map/core/useMapStyles.js).
