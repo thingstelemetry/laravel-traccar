@@ -35,3 +35,12 @@ Route::get('/server/update', function () {
 Route::get('/devices/all', function () {
     dump(\TrackTelemetry\Traccar\Facades\Device::getAll()) ;
 });
+
+Route::get('/devices', function () {
+
+    dump(\TrackTelemetry\Traccar\Facades\Device::get(
+        userId: request('userId'),
+        ids: request('ids'),
+        uniqueIds: request('uniqueIds')
+    )) ;
+});

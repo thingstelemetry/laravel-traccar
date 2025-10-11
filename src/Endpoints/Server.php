@@ -18,9 +18,7 @@ class Server extends Traccar
      */
     public function getInformation(): ServerData
     {
-        $response = $this->connector->send(
-            request: new GetServerInformation()
-        );
+        $response = $this->connector->send(request: new GetServerInformation());
 
         return $response->dtoOrFail();
     }
@@ -32,9 +30,7 @@ class Server extends Traccar
      */
     public function updateInformation(ServerData $data): ServerData
     {
-        $response = $this->connector->send(
-            request: new UpdateServerInformation($data)
-        );
+        $response = $this->connector->send(request: new UpdateServerInformation($data));
 
         return $response->dtoOrFail();
     }
