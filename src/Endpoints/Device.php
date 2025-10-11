@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use TrackTelemetry\Traccar\Traccar;
 use TrackTelemetry\Traccar\Dto\DeviceData;
 use TrackTelemetry\Traccar\Requests\CreateDevice;
+use TrackTelemetry\Traccar\Requests\UpdateDevice;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Requests\GetForUserDevices;
 
@@ -52,6 +53,18 @@ class Device extends Traccar
     public function create(DeviceData $data): DeviceData
     {
         $response = $this->connector->send(request: new CreateDevice(data: $data));
+
+        return $response->dtoOrFail();
+    }
+
+    /**
+     * Update an existing device.
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function update(DeviceData $data): DeviceData
+    {
+        $response = $this->connector->send(request: new UpdateDevice(data: $data));
 
         return $response->dtoOrFail();
     }

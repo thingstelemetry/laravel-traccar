@@ -11,6 +11,7 @@ use TrackTelemetry\Traccar\Facades\Device;
 use TrackTelemetry\Traccar\Enums\DeviceStatus;
 use TrackTelemetry\Traccar\Enums\DeviceCategory;
 use TrackTelemetry\Traccar\Requests\CreateDevice;
+use TrackTelemetry\Traccar\Requests\UpdateDevice;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Dto\DeviceAttributesData;
 use TrackTelemetry\Traccar\Requests\GetForUserDevices;
@@ -186,17 +187,7 @@ it(description: 'can create a device', closure: function () {
         fuelIncreaseThreshold: $created['attributes']['fuelIncreaseThreshold'],
     );
 
-    $requestData = new DeviceData(
-        name: $created['name'],
-        uniqueId: $created['uniqueId'],
-        status: DeviceStatus::UNKNOWN,
-        disabled: $created['disabled'],
-        lastUpdate: $created['lastUpdate'],
-        phone: $created['phone'],
-        model: $created['model'],
-        category: DeviceCategory::CAR,
-        attributes: $attributes,
-    );
+    $requestData = DeviceData::fromArray($created);
 
     $response = Device::create(data: $requestData);
 
@@ -204,5 +195,38 @@ it(description: 'can create a device', closure: function () {
         ->toBeInstanceOf(class: DeviceData::class)
         ->and(value: $response->status)->toEqual(expected: DeviceStatus::UNKNOWN)
         ->and(value: $response->category)->toEqual(expected: DeviceCategory::CAR)
+        ->and(value: $response->attributes->speedLimit)->toBeFloat();
+});
+
+it(description: 'can update a device', closure: function () {
+    $updated = [
+        'id'         => 6,
+        'name'       => 'Truck 1 - Updated',
+        'uniqueId'   => 'ABC123',
+        'status'     => DeviceStatus::ONLINE->value,
+        'disabled'   => false,
+        'lastUpdate' => '2019-08-24T14:15:22Z',
+        'positionId' => 123,
+        'groupId'    => 1,
+        'phone'      => '+123456789',
+        'model'      => 'TK103',
+        'contact'    => 'Ops',
+        'category'   => DeviceCategory::TRUCK->value,
+        'attributes' => [
+            'speedLimit' => 90.0,
+        ],
+    ];
+
+    MockClient::global(mockData: [
+        UpdateDevice::class => MockResponse::make($updated),
+    ]);
+
+    $data = DeviceData::fromArray($updated);
+
+    $response = Device::update(data: $data);
+
+    expect(value: $response)
+        ->toBeInstanceOf(class: DeviceData::class)
+        ->and(value: $response->name)->toEqual(expected: 'Truck 1 - Updated')
         ->and(value: $response->attributes->speedLimit)->toBeFloat();
 });

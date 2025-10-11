@@ -46,6 +46,7 @@ export default defineConfig({
                     {text: 'Get All Devices', link: '/devices/get-all'},
                     {text: 'Get User Devices', link: '/devices/get-for-user'},
                     {text: 'Create Device', link: '/devices/create'},
+                    {text: 'Update Device', link: '/devices/update'},
                 ]
             },
             {

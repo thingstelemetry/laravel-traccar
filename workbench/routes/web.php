@@ -36,7 +36,7 @@ Route::get('/devices/all', function () {
 
 Route::get('/devices', function () {
 
-    $userId = request('userId') ? (int) request('userId') : null;
+    $userId = request('userId') ? (int)request('userId') : null;
     $ids = request('ids') ? explode(',', request('ids')) : null;
     $uniqueIds = request('uniqueIds') ? explode(',', request('uniqueIds')) : null;
 
@@ -72,4 +72,24 @@ Route::get('/devices/create', function () {
     $device = \TrackTelemetry\Traccar\Facades\Device::create($deviceData);
 
     dump($device);
+});
+
+Route::get('/devices/update', function () {
+
+    // 1) Get an existing device (example: by uniqueId)
+    $devices = \TrackTelemetry\Traccar\Facades\Device::get(uniqueIds: ['AX3WX9XT6ZYMPQWJ']);
+    $device = $devices->first(); // TrackTelemetry\Traccar\Dto\DeviceData
+
+    // 2) Clone the DTO so you can safely mutate values
+    $data = \TrackTelemetry\Traccar\Dto\DeviceData::fromArray($device->toArray());
+
+    // 3) Update the clone as needed
+    $data->name = 'Truck 1 - Updated';
+    $data->attributes->speedLimit = 90.0;
+    $data->groupId = 123456;
+
+    // 4) Send the updated DTO
+    $updated = \TrackTelemetry\Traccar\Facades\Device::update($data); //
+
+    dump($updated);
 });
