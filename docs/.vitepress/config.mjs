@@ -47,6 +47,7 @@ export default defineConfig({
                     {text: 'Get User Devices', link: '/devices/get-for-user'},
                     {text: 'Create Device', link: '/devices/create'},
                     {text: 'Update Device', link: '/devices/update'},
+                    {text: 'Upload/Update Device Image', link: '/devices/update-image'},
                     {text: 'Update Totals (Distance & Hours)', link: '/devices/accumulators'},
                     {text: 'Delete Device', link: '/devices/delete'},
                 ]

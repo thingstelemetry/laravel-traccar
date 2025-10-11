@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace TrackTelemetry\Traccar\Endpoints;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use TrackTelemetry\Traccar\Traccar;
+use Illuminate\Validation\Rules\File;
 use TrackTelemetry\Traccar\Enums\Status;
+use Illuminate\Support\Facades\Validator;
 use TrackTelemetry\Traccar\Dto\DeviceData;
+use Illuminate\Validation\ValidationException;
 use TrackTelemetry\Traccar\Requests\CreateDevice;
 use TrackTelemetry\Traccar\Requests\DeleteDevice;
 use TrackTelemetry\Traccar\Requests\UpdateDevice;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Requests\GetForUserDevices;
+use TrackTelemetry\Traccar\Requests\UpdateDeviceImage;
 use TrackTelemetry\Traccar\Requests\UpdateDeviceTotals;
+use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 class Device extends Traccar
 {
@@ -100,6 +106,51 @@ class Device extends Traccar
     public function delete(int $id): Status
     {
         $response = $this->connector->send(request: new DeleteDevice(id: $id));
+
+        return $response->dtoOrFail();
+    }
+
+    /**
+     * Upload/Update device image.
+     *
+     * Validates the image before sending to Traccar and streams the raw bytes with the correct
+     * Content-Type header as required by the Traccar API (Consumes: image/*).
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     * @throws ValidationException
+     */
+    public function updateImage(int $deviceId, UploadedFile|SymfonyFile|string $file): string
+    {
+        // Normalize to Symfony File for consistent API
+        if (is_string($file)) {
+            $file = new SymfonyFile($file);
+        }
+
+        $data = [
+            'device_id' => $deviceId,
+            'file'      => $file,
+        ];
+
+        $rules = [
+            'device_id' => ['required', 'integer', 'min:1'],
+            'file'      => ['required', File::image(allowSvg: true)->max(500)],
+        ];
+
+        Validator::make($data, $rules)->validate();
+
+        $mimeType = $file instanceof SymfonyFile
+            ? ($file->getMimeType() ?? 'application/octet-stream')
+            : 'application/octet-stream';
+
+        $contents = file_get_contents($file->getPathname());
+
+        $response = $this->connector->send(
+            request: new UpdateDeviceImage(
+                deviceId: $deviceId,
+                mimeType: $mimeType,
+                contents: $contents,
+            )
+        );
 
         return $response->dtoOrFail();
     }

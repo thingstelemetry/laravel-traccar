@@ -36,7 +36,7 @@ Route::get('/devices/all', function () {
 
 Route::get('/devices', function () {
 
-    $userId = request('userId') ? (int)request('userId') : null;
+    $userId = request('userId') ? (int) request('userId') : null;
     $ids = request('ids') ? explode(',', request('ids')) : null;
     $uniqueIds = request('uniqueIds') ? explode(',', request('uniqueIds')) : null;
 
@@ -78,7 +78,7 @@ Route::get('/devices/update', function () {
 
     // 1) Get an existing device (example: by uniqueId)
     $devices = \TrackTelemetry\Traccar\Facades\Device::get(uniqueIds: ['AX3WX9XT6ZYMPQWJ']);
-    $device = $devices->first(); // TrackTelemetry\\Traccar\\Dto\\DeviceData
+    $device = $devices->first(); // TrackTelemetry\Traccar\Dto\DeviceData
 
     // 2) Clone the DTO so you can safely mutate values
     $data = \TrackTelemetry\Traccar\Dto\DeviceData::fromArray($device->toArray());
@@ -103,4 +103,32 @@ Route::get('/devices/update-totals', function () {
     );
 
     dump($status);
+});
+
+Route::get('/devices/update-image', function () {
+    $deviceId = request('deviceId') ? (int) request('deviceId') : 2;
+    $url = 'https://github.com/tracktelemetry.png';
+
+    $contents = @file_get_contents($url);
+    if ($contents === false) {
+        abort(500, 'Failed to download test image.');
+    }
+
+    // Write to a temporary file with .png extension to aid MIME detection
+    $tmp = tempnam(sys_get_temp_dir(), 'traccar_img_');
+    $tmpPng = $tmp.'.png';
+    @rename($tmp, $tmpPng);
+
+    file_put_contents($tmpPng, $contents);
+
+    try {
+        $filename = \TrackTelemetry\Traccar\Facades\Device::updateImage(
+            deviceId: $deviceId,
+            file: $tmpPng,
+        );
+    } finally {
+        @unlink($tmpPng);
+    }
+
+    dump(['deviceId' => $deviceId, 'filename' => $filename]);
 });

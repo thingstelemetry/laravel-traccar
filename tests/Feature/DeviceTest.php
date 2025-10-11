@@ -3,12 +3,14 @@
 declare(strict_types=1);
 
 use Carbon\CarbonImmutable;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use TrackTelemetry\Traccar\Enums\Status;
 use TrackTelemetry\Traccar\Dto\DeviceData;
 use TrackTelemetry\Traccar\Facades\Device;
+use Illuminate\Validation\ValidationException;
 use TrackTelemetry\Traccar\Enums\DeviceStatus;
 use TrackTelemetry\Traccar\Enums\DeviceCategory;
 use TrackTelemetry\Traccar\Requests\CreateDevice;
@@ -17,6 +19,7 @@ use TrackTelemetry\Traccar\Requests\UpdateDevice;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Dto\DeviceAttributesData;
 use TrackTelemetry\Traccar\Requests\GetForUserDevices;
+use TrackTelemetry\Traccar\Requests\UpdateDeviceImage;
 use TrackTelemetry\Traccar\Requests\UpdateDeviceTotals;
 
 beforeEach(closure: function () {
@@ -190,7 +193,7 @@ it(description: 'can create a device', closure: function () {
         fuelIncreaseThreshold: $created['attributes']['fuelIncreaseThreshold'],
     );
 
-    $requestData = DeviceData::fromArray($created);
+    $requestData = DeviceData::fromArray(data: $created);
 
     $response = Device::create(data: $requestData);
 
@@ -224,7 +227,7 @@ it(description: 'can update a device', closure: function () {
         UpdateDevice::class => MockResponse::make($updated),
     ]);
 
-    $data = DeviceData::fromArray($updated);
+    $data = DeviceData::fromArray(data: $updated);
 
     $response = Device::update(data: $data);
 
@@ -244,6 +247,35 @@ it(description: 'can delete a device', closure: function () {
     expect(value: $status)
         ->toBeInstanceOf(class: Status::class)
         ->and(value: $status)->toEqual(expected: Status::SUCCESS);
+});
+
+it(description: 'can upload a device image', closure: function () {
+    MockClient::global(mockData: [
+        UpdateDeviceImage::class => MockResponse::make('device.png'),
+    ]);
+
+    $uploaded = UploadedFile::fake()->image(name: 'device.png', width: 1, height: 1);
+
+    $filename = Device::updateImage(deviceId: 6, file: $uploaded);
+
+    expect(value: $filename)
+        ->toBeString()
+        ->toEqual(expected: 'device.png');
+});
+
+it(description: 'rejects non-image mime types when uploading device image', closure: function () {
+    $uploaded = UploadedFile::fake()->create(name: 'notes.txt', kilobytes: 1, mimeType: 'text/plain');
+
+    expect(value: fn () => Device::updateImage(deviceId: 6, file: $uploaded))
+        ->toThrow(exception: ValidationException::class);
+});
+
+it(description: 'rejects image larger than 500000 bytes', closure: function () {
+    // 501 KB ~ 513,024 bytes which is > 500,000 bytes
+    $uploaded = UploadedFile::fake()->create(name: 'large.png', kilobytes: 501, mimeType: 'image/png');
+
+    expect(value: fn () => Device::updateImage(deviceId: 6, file: $uploaded))
+        ->toThrow(exception: ValidationException::class);
 });
 
 it(description: 'can update device totals (distance and hours)', closure: function () {
