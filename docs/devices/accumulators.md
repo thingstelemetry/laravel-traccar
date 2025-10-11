@@ -23,19 +23,6 @@ if ($status === Status::SUCCESS) {
 }
 ```
 
-## Request Details
-
-- Endpoint: `PUT /devices/{id}`
-- Body:
-
-```json
-{
-  "deviceId": 6,
-  "totalDistance": 12345.6,
-  "hours": 789.0
-}
-```
-
 ## Results
 
 The response is a `TrackTelemetry\Traccar\Enums\Status` enum. A 204 response is treated as success.
