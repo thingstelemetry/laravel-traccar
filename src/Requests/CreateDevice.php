@@ -23,8 +23,8 @@ class CreateDevice extends Request implements HasBody
     }
 
     /**
-     * Resolves and returns the API endpoint for initializing a transaction.
-     */
+     * Resolves and returns the API endpoint for creating a device.
+    */
     public function resolveEndpoint(): string
     {
         return '/devices';

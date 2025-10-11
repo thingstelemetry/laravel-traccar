@@ -4,7 +4,7 @@ Create a device on your Traccar server.
 
 > [!IMPORTANT]
 > - uniqueId must be unique, use device IMEI. If not available, it means another device is registered
-> - Avoid setting `positionId` and `groupId` unless you the exact values.
+> - Avoid setting `positionId` and `groupId` unless you know the exact values.
 > - `id` attributes is ignored if set. Traccar will generate a new ID.
 
 ## Usage
@@ -44,8 +44,6 @@ $device = Device::create($deviceData); // returns TrackTelemetry\Traccar\Dto\Dev
 The response is a `TrackTelemetry\Traccar\Dto\DeviceData>`.
 
 ```php
-$first = $devices->first();
-
 $name = $device->name;                 // "Truck 1"
 $status = $device->status->label();    // "Online"
 $category = $device->category->value;  // "truck"

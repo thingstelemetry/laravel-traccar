@@ -62,7 +62,6 @@ Route::get('/devices/create', function () {
         uniqueId: mb_strtoupper(Illuminate\Support\Str::random()),
         status: \TrackTelemetry\Traccar\Enums\DeviceStatus::UNKNOWN, // ignored on create
         disabled: false,
-        positionId: 102000,
         phone: '+254722000000',
         model: 'Teltonika FMB920',
         contact: 'Track Telemetry Developer',
