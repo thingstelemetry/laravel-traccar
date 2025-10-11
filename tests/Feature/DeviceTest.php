@@ -270,8 +270,8 @@ it(description: 'rejects non-image mime types when uploading device image', clos
         ->toThrow(exception: ValidationException::class);
 });
 
-it(description: 'rejects image larger than 500000 bytes', closure: function () {
-    // 501 KB ~ 513,024 bytes which is > 500,000 bytes
+it(description: 'rejects image larger than 500 KB', closure: function () {
+    // 501 KB = 513,024 bytes, which exceeds the 500 KB (512,000 bytes) limit
     $uploaded = UploadedFile::fake()->create(name: 'large.png', kilobytes: 501, mimeType: 'image/png');
 
     expect(value: fn () => Device::updateImage(deviceId: 6, file: $uploaded))
