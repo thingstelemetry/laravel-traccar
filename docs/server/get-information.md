@@ -29,13 +29,13 @@ $others = $info->attributes->others; // ['otherKey' => 'otherValue']
 
 While most field are casted into a string or ints, some are casted into a DTO/Service class.
 
-- **`ServerAttributesData`** → [`TrackTelemetry\Traccar\Dto\ServerAttributesData`](./src/Dto/ServerAttributesData.php)  
+- **`ServerAttributesData`** → [`TrackTelemetry\Traccar\Dto\ServerAttributesData`](./#todo)  
   *Data Transfer Object for Traccar server attributes.*
 
 - **`map`** → [`TrackTelemetry\Traccar\Enums\Map`](./../reference/enums/map)  
   *Enum representing available map providers.*
 
-- **`coordinateFormat`** → [`TrackTelemetry\Traccar\Enums\CoordinateFormat`](./src/Enums/CoordinateFormat.php)  
+- **`coordinateFormat`** → [`TrackTelemetry\Traccar\Enums\CoordinateFormat`](./#todo)  
   *Enum defining how coordinates are displayed or formatted.*
 
 - **`storage`** → [`TrackTelemetry\Traccar\Support\StorageInfo`](./src/Support/StorageInfo.php)  
