@@ -6,7 +6,9 @@ namespace TrackTelemetry\Traccar\Dto;
 
 use Throwable;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Log;
 use TrackTelemetry\Traccar\Enums\DeviceStatus;
+use TrackTelemetry\Traccar\Enums\DeviceCategory;
 
 class DeviceData
 {
@@ -22,7 +24,7 @@ class DeviceData
         public ?string $phone,
         public ?string $model,
         public ?string $contact,
-        public ?string $category,
+        public DeviceCategory $category,
         /** @var array<string,mixed> */
         public DeviceAttributesData $attributes,
     ) {
@@ -37,7 +39,7 @@ class DeviceData
             try {
                 $lastUpdate = CarbonImmutable::parse($rawLastUpdate);
             } catch (Throwable $e) {
-                error_log('Failed to parse lastUpdate: ' . $e->getMessage());
+                Log::info("Failed to parse {$data['uniqueId']} Device lastUpdate: ".$e->getMessage());
             }
         }
 
@@ -53,7 +55,7 @@ class DeviceData
             phone: $data['phone'] ?? null,
             model: $data['model'] ?? null,
             contact: $data['contact'] ?? null,
-            category: $data['category'] ?? null,
+            category: DeviceCategory::tryFrom((string) ($data['category'] ?? '')) ?? DeviceCategory::default(),
             attributes: DeviceAttributesData::fromArray(data: $data['attributes'] ?? []),
         );
     }
@@ -72,7 +74,7 @@ class DeviceData
             'phone'      => $this->phone,
             'model'      => $this->model,
             'contact'    => $this->contact,
-            'category'   => $this->category,
+            'category'   => $this->category->value,
             'attributes' => $this->attributes->toArray(),
         ];
     }

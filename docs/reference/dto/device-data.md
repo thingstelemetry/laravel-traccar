@@ -87,11 +87,12 @@ Optional contact person or label for the device.
 $device->contact; // "John Doe"
 ```
 
-## `category` → `string|null`
+## `category` → [`DeviceCategory`](../enums/device-category)
 
-Device category/classification (e.g., "car", "truck", "person").
+Device category/classification.
 ```php
-$device->category; // "car"
+$device->category->value; // "car"
+$device->category->label(); // "Car"
 ```
 
 ## `attributes` → [`DeviceAttributesData`](./device-attributes-data)
