@@ -17,6 +17,7 @@ use TrackTelemetry\Traccar\Requests\UpdateDevice;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Dto\DeviceAttributesData;
 use TrackTelemetry\Traccar\Requests\GetForUserDevices;
+use TrackTelemetry\Traccar\Requests\UpdateDeviceTotals;
 
 beforeEach(closure: function () {
     $this->devices = [
@@ -239,6 +240,18 @@ it(description: 'can delete a device', closure: function () {
     ]);
 
     $status = Device::delete(id: 6);
+
+    expect(value: $status)
+        ->toBeInstanceOf(class: Status::class)
+        ->and(value: $status)->toEqual(expected: Status::SUCCESS);
+});
+
+it(description: 'can update device totals (distance and hours)', closure: function () {
+    MockClient::global(mockData: [
+        UpdateDeviceTotals::class => MockResponse::make(body: '', status: 204),
+    ]);
+
+    $status = Device::updateTotals(deviceId: 6, totalDistance: 12345.6, hours: 789.0);
 
     expect(value: $status)
         ->toBeInstanceOf(class: Status::class)
