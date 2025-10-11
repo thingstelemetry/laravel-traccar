@@ -16,7 +16,7 @@ class GetAllDevices extends Request
     protected Method $method = Method::GET;
 
     /**
-     * Resolves and returns the API endpoint for initializing a transaction.
+     + Resolves and returns the API endpoint for fetching devices.
      */
     public function resolveEndpoint(): string
     {
@@ -27,6 +27,7 @@ class GetAllDevices extends Request
      * Create DTO collection from the response.
      *
      * @return Collection<int, DeviceData>
+     *
      * @throws JsonException
      */
     public function createDtoFromResponse(Response $response): mixed

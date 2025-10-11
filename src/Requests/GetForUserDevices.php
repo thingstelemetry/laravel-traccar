@@ -16,14 +16,14 @@ class GetForUserDevices extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        public ?int   $userId = null,
-        public ?array   $ids = null,
-        public ?array   $uniqueIds = null,
+        public ?int $userId = null,
+        public ?array $ids = null,
+        public ?array $uniqueIds = null,
     ) {
     }
 
     /**
-     * Resolves and returns the API endpoint for initializing a transaction.
+     * Resolves and returns the API endpoint for fetching devices.
      */
     public function resolveEndpoint(): string
     {
@@ -46,7 +46,7 @@ class GetForUserDevices extends Request
         $query = '';
 
         if ($this->userId) {
-            $query = 'userId=' . $this->userId;
+            $query = 'userId='.$this->userId;
         }
 
         if ($this->ids) {
@@ -54,7 +54,7 @@ class GetForUserDevices extends Request
                 ->map(fn ($id) => "id={$id}")
                 ->join('&');
 
-            $query .= $ids;
+            $query .= ($query ? '&' : '').$ids;
         }
 
         if ($this->uniqueIds) {
@@ -62,7 +62,7 @@ class GetForUserDevices extends Request
                 ->map(fn ($id) => "uniqueId={$id}")
                 ->join('&');
 
-            $query .= $uniqueIds;
+            $query .= ($query ? '&' : '').$uniqueIds;
         }
 
         return $query;

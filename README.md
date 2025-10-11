@@ -5,7 +5,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tracktelemetry/laravel-traccar.svg?style=flat-square)](https://packagist.org/packages/tracktelemetry/laravel-traccar)
 ![GitHub Actions Test Status](https://img.shields.io/github/actions/workflow/status/tracktelemetry/laravel-traccar/tests.yml?logo=github&label=Tests)
-[![Total Downloads](https://img.shields.io/packagist/dt/tracktelemetry/laravel-traccar.svg?style=flat-square)](https://packagist.org/packages/NjoguAmos/laravel-traccar)
++[![Total Downloads](https://img.shields.io/packagist/dt/tracktelemetry/laravel-traccar.svg?style=flat-square)](https://packagist.org/packages/tracktelemetry/laravel-traccar)
 
 ![Traccar Screenshot](./docs/introduction/traccar-home-page.webp)
 

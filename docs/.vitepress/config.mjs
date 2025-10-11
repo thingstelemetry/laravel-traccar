@@ -40,11 +40,12 @@ export default defineConfig({
                     {text: 'Update Information', link: '/server/update-information'},
                 ]
             },
-            {
+{
                 text: 'Devices',
                 items: [
                     {text: 'Get All Devices', link: '/devices/get-all'},
                     {text: 'Get User Devices', link: '/devices/get-for-user'},
+                    {text: 'Create Device', link: '/devices/create'},
                 ]
             },
             {

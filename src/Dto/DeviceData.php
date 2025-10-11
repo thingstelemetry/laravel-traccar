@@ -13,20 +13,19 @@ use TrackTelemetry\Traccar\Enums\DeviceCategory;
 class DeviceData
 {
     public function __construct(
-        public int $id,
         public string $name,
         public string $uniqueId,
-        public DeviceStatus $status,
-        public bool $disabled,
-        public ?CarbonImmutable $lastUpdate,
-        public ?int $positionId,
-        public ?int $groupId,
-        public ?string $phone,
-        public ?string $model,
-        public ?string $contact,
-        public DeviceCategory $category,
-        /** @var array<string,mixed> */
         public DeviceAttributesData $attributes,
+        public ?int $id = null,
+        public DeviceStatus $status = DeviceStatus::UNKNOWN,
+        public bool $disabled = false,
+        public ?CarbonImmutable $lastUpdate = null,
+        public ?int $positionId = null,
+        public ?int $groupId = null,
+        public ?string $phone = null,
+        public ?string $model = null,
+        public ?string $contact = null,
+        public DeviceCategory $category = DeviceCategory::DEFAULT,
     ) {
     }
 
@@ -44,14 +43,14 @@ class DeviceData
         }
 
         return new self(
-            id: (int) $data['id'],
+            id: array_key_exists(key: 'id', array: $data) ? (is_null($data['id']) ? null : (int) $data['id']) : null,
             name: (string) ($data['name'] ?? ''),
             uniqueId: (string) ($data['uniqueId'] ?? ''),
             status: DeviceStatus::tryFrom((string) ($data['status'] ?? '')) ?? DeviceStatus::default(),
             disabled: (bool) ($data['disabled'] ?? false),
             lastUpdate: $lastUpdate,
-            positionId: array_key_exists('positionId', $data) ? (is_null($data['positionId']) ? null : (int) $data['positionId']) : null,
-            groupId: array_key_exists('groupId', $data) ? (is_null($data['groupId']) ? null : (int) $data['groupId']) : null,
+            positionId: array_key_exists(key: 'positionId', array: $data) ? (is_null($data['positionId']) ? null : (int) $data['positionId']) : null,
+            groupId: array_key_exists(key: 'groupId', array: $data) ? (is_null($data['groupId']) ? null : (int) $data['groupId']) : null,
             phone: $data['phone'] ?? null,
             model: $data['model'] ?? null,
             contact: $data['contact'] ?? null,

@@ -6,9 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/server');
 
-
 Route::get('/server', function () {
-    dump(\TrackTelemetry\Traccar\Facades\Server::getInformation()->toArray()) ;
+    dump(\TrackTelemetry\Traccar\Facades\Server::getInformation()->toArray());
 });
 
 Route::get('/server/update', function () {
@@ -31,16 +30,46 @@ Route::get('/server/update', function () {
     dd($response);
 });
 
-
 Route::get('/devices/all', function () {
-    dump(\TrackTelemetry\Traccar\Facades\Device::getAll()) ;
+    dump(\TrackTelemetry\Traccar\Facades\Device::getAll());
 });
 
 Route::get('/devices', function () {
 
+    $userId = request('userId') ? (int) request('userId') : null;
+    $ids = request('ids') ? explode(',', request('ids')) : null;
+    $uniqueIds = request('uniqueIds') ? explode(',', request('uniqueIds')) : null;
+
     dump(\TrackTelemetry\Traccar\Facades\Device::get(
-        userId: request('userId'),
-        ids: request('ids'),
-        uniqueIds: request('uniqueIds')
-    )) ;
+        userId: $userId,
+        ids: $ids,
+        uniqueIds: $uniqueIds
+    ));
+});
+
+Route::get('/devices/create', function () {
+
+    $attributes = new \TrackTelemetry\Traccar\Dto\DeviceAttributesData(
+        speedLimit: 80,
+        fuelDropThreshold: 5.0,
+        fuelIncreaseThreshold: 10,
+        reportIgnoreOdometer: false,
+        devicePassword: '34235',
+    );
+
+    $deviceData = new \TrackTelemetry\Traccar\Dto\DeviceData(
+        name: 'My Vehicle',
+        uniqueId: mb_strtoupper(Illuminate\Support\Str::random()),
+        status: \TrackTelemetry\Traccar\Enums\DeviceStatus::UNKNOWN, // ignored on create
+        disabled: false,
+        phone: '+254722000000',
+        model: 'Teltonika FMB920',
+        contact: 'Track Telemetry Developer',
+        category: \TrackTelemetry\Traccar\Enums\DeviceCategory::CAR,
+        attributes: $attributes,
+    );
+
+    $device = \TrackTelemetry\Traccar\Facades\Device::create($deviceData);
+
+    dump($device);
 });
