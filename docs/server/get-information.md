@@ -38,7 +38,7 @@ While most field are casted into a string or ints, some are casted into a DTO/Se
 - **`coordinateFormat`** → [`TrackTelemetry\Traccar\Enums\CoordinateFormat`](./#todo)  
   *Enum defining how coordinates are displayed or formatted.*
 
-- **`storage`** → [`TrackTelemetry\Traccar\Support\StorageInfo`](./src/Support/StorageInfo.php)  
+- **`storage`** → [`TrackTelemetry\Traccar\Support\StorageInfo`](./#todo)  
   *Service class representing storage information (total, free, etc.).*
 > [!IMPORTANT]
 > Refer to the [ServerData DTO documentation](./../reference/dto/server-data) for more details on the DTO structure.
