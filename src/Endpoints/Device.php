@@ -6,8 +6,10 @@ namespace TrackTelemetry\Traccar\Endpoints;
 
 use Illuminate\Support\Collection;
 use TrackTelemetry\Traccar\Traccar;
+use TrackTelemetry\Traccar\Enums\Status;
 use TrackTelemetry\Traccar\Dto\DeviceData;
 use TrackTelemetry\Traccar\Requests\CreateDevice;
+use TrackTelemetry\Traccar\Requests\DeleteDevice;
 use TrackTelemetry\Traccar\Requests\UpdateDevice;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Requests\GetForUserDevices;
@@ -65,6 +67,18 @@ class Device extends Traccar
     public function update(DeviceData $data): DeviceData
     {
         $response = $this->connector->send(request: new UpdateDevice(data: $data));
+
+        return $response->dtoOrFail();
+    }
+
+    /**
+     * Delete a device by ID.
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function delete(int $id): Status
+    {
+        $response = $this->connector->send(request: new DeleteDevice(id: $id));
 
         return $response->dtoOrFail();
     }

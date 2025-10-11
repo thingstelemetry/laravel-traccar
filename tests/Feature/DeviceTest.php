@@ -6,11 +6,13 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use TrackTelemetry\Traccar\Enums\Status;
 use TrackTelemetry\Traccar\Dto\DeviceData;
 use TrackTelemetry\Traccar\Facades\Device;
 use TrackTelemetry\Traccar\Enums\DeviceStatus;
 use TrackTelemetry\Traccar\Enums\DeviceCategory;
 use TrackTelemetry\Traccar\Requests\CreateDevice;
+use TrackTelemetry\Traccar\Requests\DeleteDevice;
 use TrackTelemetry\Traccar\Requests\UpdateDevice;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Dto\DeviceAttributesData;
@@ -229,4 +231,16 @@ it(description: 'can update a device', closure: function () {
         ->toBeInstanceOf(class: DeviceData::class)
         ->and(value: $response->name)->toEqual(expected: 'Truck 1 - Updated')
         ->and(value: $response->attributes->speedLimit)->toBeFloat();
+});
+
+it(description: 'can delete a device', closure: function () {
+    MockClient::global(mockData: [
+        DeleteDevice::class => MockResponse::make(body: '', status: 204),
+    ]);
+
+    $status = Device::delete(id: 6);
+
+    expect(value: $status)
+        ->toBeInstanceOf(class: Status::class)
+        ->and(value: $status)->toEqual(expected: Status::SUCCESS);
 });

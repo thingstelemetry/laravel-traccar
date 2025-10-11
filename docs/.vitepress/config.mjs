@@ -40,13 +40,14 @@ export default defineConfig({
                     {text: 'Update Information', link: '/server/update-information'},
                 ]
             },
-{
+            {
                 text: 'Devices',
                 items: [
                     {text: 'Get All Devices', link: '/devices/get-all'},
                     {text: 'Get User Devices', link: '/devices/get-for-user'},
                     {text: 'Create Device', link: '/devices/create'},
                     {text: 'Update Device', link: '/devices/update'},
+                    {text: 'Delete Device', link: '/devices/delete'},
                 ]
             },
             {
@@ -71,6 +72,7 @@ export default defineConfig({
                     {text: 'Volume Unit', link: '/reference/enums/volume-unit'},
                     {text: 'Device Status', link: '/reference/enums/device-status'},
                     {text: 'Device Category', link: '/reference/enums/device-category'},
+                    {text: 'Status', link: '/reference/enums/status'},
                 ]
             },
         ],
