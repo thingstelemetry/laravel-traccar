@@ -4,23 +4,25 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'home.index')->name('home');
+Route::redirect('/', '/server');
 
 Route::get('/server', function () {
-    return view(
-        view: 'server.get-information',
-        data: ['information' => \TrackTelemetry\Traccar\Facades\Server::getInformation()]
-    );
-})->name('server.get-information');
+    dump(\TrackTelemetry\Traccar\Facades\Server::getInformation()->toArray()) ;
+});
 
 Route::get('/server/update', function () {
+    // Get info
     $serverData = \TrackTelemetry\Traccar\Facades\Server::getInformation();
 
+    // Clone
     $data = \TrackTelemetry\Traccar\Dto\ServerData::fromArray($serverData->toArray());
+
+    // Update
     $data->map = \TrackTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
     $data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
 
+    // Send
     $response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
 
-    return $response->toArray();
+    dd($response);
 });

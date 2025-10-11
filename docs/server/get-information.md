@@ -4,7 +4,7 @@ Get general about your Traccar server instance into your laravel application.
 
 ## Request
 
-Use the `TrackTelemetry\Traccar\Facades\Server` facade to get information about your Traccar server instance.
+Use the `TrackTelemetry\Traccar\Facades\Server::getInformation()` method to get information about your Traccar server instance.
 
 ```php
 use TrackTelemetry\Traccar\Facades\Server;
@@ -22,7 +22,6 @@ $mapProvider = $info->map->label(); // Google Satellite
 $speedUnit = $info->attributes->speedUnit->value; // kmh
 $speedUnit = $info->attributes->speedUnit->label(); // Kilometers per Hour (km/h)
 $timezone = $info->attributes->timezone; // UTC
-$others = $info->attributes->others; // ['otherKey' => 'otherValue']
 ```
 
 ### Key Results Items

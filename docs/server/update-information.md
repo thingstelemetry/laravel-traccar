@@ -1,97 +1,91 @@
 # Update Server Information
 
-Use this endpoint to update global Traccar server settings such as the default map provider, coordinate format, and UI/unit preferences.
+Update your Traccar server instance information.
 
-The request/response is mapped to `TrackTelemetry\Traccar\Dto\ServerData` and its nested `TrackTelemetry\Traccar\Dto\ServerAttributes` with several enum-backed fields.
+## Request
 
-Important: Always fetch the current server information first, then clone/copy the DTO before making changes. This preserves unknown/forward-compatible attributes and avoids accidentally resetting fields you didn’t intend to change.
+To update Traccar server information, follow the steps below.
 
-## How to use
+#### 1. Get the current server information.
 
 ```php
-$serverData = \TrackTelemetry\Traccar\Facades\Server::getInformation();
+$serverData = \TrackTelemetry\Traccar\Facades\Server::updateInformation();
+```
 
-// Clone/copy the DTO so you can safely mutate values
+#### 2. Clone the DTO so you can safely mutate values.
+
+```php
 $data = \TrackTelemetry\Traccar\Dto\ServerData::fromArray($serverData->toArray());
+```
+
+#### 3. Update the new DTO as needed.
+
+```php
 $data->map = \TrackTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
 $data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
-
-$response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
-
-return $response->toArray();
 ```
-
 > [!IMPORTANT]
-> The DTOs use enums for several fields (Map, CoordinateFormat, and units). Assign the enum constants rather than raw strings.
+> Only update the fields you want to change.
 
-## Common update cases
-
-Below are narrow examples showing how to update individual settings. In all cases, start by fetching the current DTO and cloning/copying it as shown above.
-
-- Update map provider
+#### 4. Send the updated DTO to the server  method.
 
 ```php
-$data->map = \TrackTelemetry\Traccar\Enums\Map::OSM; // OpenStreetMap
+$response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
 ```
 
-- Update speed unit
+## Full Example
 
 ```php
-$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::MILES_PER_HOUR; // mph
-```
+// Get the current server information
+$serverData = \TrackTelemetry\Traccar\Facades\Server::updateInformation();
 
-- Update distance unit
+// Clone
+$data = \TrackTelemetry\Traccar\Dto\ServerData::fromArray($serverData->toArray());
 
-```php
-$data->attributes->distanceUnit = \TrackTelemetry\Traccar\Enums\DistanceUnit::MILES; // mi
-```
-
-- Update altitude unit
-
-```php
-$data->attributes->altitudeUnit = \TrackTelemetry\Traccar\Enums\AltitudeUnit::FEET; // ft
-```
-
-- Update volume unit (e.g., fuel)
-
-```php
-$data->attributes->volumeUnit = \TrackTelemetry\Traccar\Enums\VolumeUnit::LITERS; // l
-```
-
-- Update coordinate format
-
-```php
-$data->coordinateFormat = \TrackTelemetry\Traccar\Enums\CoordinateFormat::DDM; // Degrees Decimal Minutes
-```
-
-- Update announcement/banner text
-
-```php
+// Updated
+$data->map = \TrackTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
+$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
+$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::MILES_PER_HOUR;
+$data->attributes->distanceUnit = \TrackTelemetry\Traccar\Enums\DistanceUnit::MILES;
+$data->attributes->altitudeUnit = \TrackTelemetry\Traccar\Enums\AltitudeUnit::FEET; 
+$data->attributes->volumeUnit = \TrackTelemetry\Traccar\Enums\VolumeUnit::LITERS; 
+$data->coordinateFormat = \TrackTelemetry\Traccar\Enums\CoordinateFormat::DDM;
 $data->announcement = 'Planned maintenance on Saturday 02:00 UTC';
-```
+$data->attributes->timezone = 'Africa/Nairobi';
+$data->fixedEmail = false;
+$data->bingKey = 'your-bing-key';
 
-- Update multiple fields and send
-
-```php
-$data->map = \TrackTelemetry\Traccar\Enums\Map::GOOGLE_HYBRID;
-$data->coordinateFormat = \TrackTelemetry\Traccar\Enums\CoordinateFormat::DMS;
-$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KNOTS;
-$data->attributes->distanceUnit = \TrackTelemetry\Traccar\Enums\DistanceUnit::KILOMETERS;
-
+// Send
 $response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
 ```
 
 > [!IMPORTANT]
-> The `updateInformation` will update the mission attributes to explicit null.
+> This process preserves unknown/forward-compatible attributes and avoids accidentally resetting fields you didn’t intend to change.
 
+## Results
 
-## Tips and pitfalls
-- Prefer cloning from the latest ServerData DTO instead of building a new one from scratch. This avoids dropping fields you don’t explicitly manage.
-- When switching to providers that require keys (e.g., Google, Bing), ensure the relevant attribute keys (e.g., `googleKey`, `bingMapsKey`) are set in `ServerAttributes` or server configuration.
-- Enum-backed fields fall back to sensible defaults when the server returns null/unknown values. Use the enums to avoid typos in raw strings.
+The response is a instance of ` TrackTelemetry\Traccar\Dto\ServerData` DTO class
 
-## Related
-- GET reference: `server/get-information`
-- Source: `src/Requests/UpdateServerInformation.php`
-- DTOs: `src/Dto/ServerData.php, src/Dto/ServerAttributes.php`
-- Enums: `src/Enums` (Map, CoordinateFormat, SpeedUnit, DistanceUnit, AltitudeUnit, VolumeUnit)
+```php
+$version = $info->version; // "6.10"
+$mapProvider = $info->map->label(); // "Google Satellite"
+$speedUnitValue = $info->attributes->speedUnit->value; // "kmh"
+$speedUnitLabel = $info->attributes->speedUnit->label(); // "Kilometers per Hour (km/h)"
+$timezone = $info->attributes->timezone; // "Africa/Nairobi"
+```
+
+## Traccar UI Side Effect
+
+When `updateInformation` is called, some configuration values are updated to default `null` or `false` values. 
+
+### Before: Null & False Attributes Hidden
+![Traccar UI Side Effect](./traccar-server-attributes-before-running-update.webp)
+
+### After: Null & False Attributes Visible
+![Traccar UI Side Effect](./traccar-server-attributes-after-running-update.webp)
+
+This caused them to show up on Traccar UI. This however, does not affect the actual server configuration.
+
+## Important Links
+- [Traccar Fetch Server information Documentation](https://www.traccar.org/api-reference/#tag/Server/paths/~1server/put)
+- [ServerData DTO documentation](./../reference/dto/server-data)
