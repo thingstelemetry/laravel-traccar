@@ -46,7 +46,6 @@ $lastSeen = $updated->lastUpdate?->toIso8601String();
 $speedLimit = $updated->attributes->speedLimit; // 90.0
 ```
 
-
 ## Errors
 
 ### 400 - Key (groupid)=(123456) is not present in table "tc_groups"

@@ -13,6 +13,7 @@ use TrackTelemetry\Traccar\Requests\DeleteDevice;
 use TrackTelemetry\Traccar\Requests\UpdateDevice;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Requests\GetForUserDevices;
+use TrackTelemetry\Traccar\Requests\UpdateDeviceTotals;
 
 class Device extends Traccar
 {
@@ -67,6 +68,26 @@ class Device extends Traccar
     public function update(DeviceData $data): DeviceData
     {
         $response = $this->connector->send(request: new UpdateDevice(data: $data));
+
+        return $response->dtoOrFail();
+    }
+
+    /**
+     * Update total distance and hours of the Device.
+     *
+     * Note: The path parameter `id` must equal the body `deviceId`.
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function updateTotals(int $deviceId, float $totalDistance, float $hours): Status
+    {
+        $response = $this->connector->send(
+            request: new UpdateDeviceTotals(
+                deviceId: $deviceId,
+                totalDistance: $totalDistance,
+                hours: $hours,
+            )
+        );
 
         return $response->dtoOrFail();
     }

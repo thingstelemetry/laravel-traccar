@@ -78,7 +78,7 @@ Route::get('/devices/update', function () {
 
     // 1) Get an existing device (example: by uniqueId)
     $devices = \TrackTelemetry\Traccar\Facades\Device::get(uniqueIds: ['AX3WX9XT6ZYMPQWJ']);
-    $device = $devices->first(); // TrackTelemetry\Traccar\Dto\DeviceData
+    $device = $devices->first(); // TrackTelemetry\\Traccar\\Dto\\DeviceData
 
     // 2) Clone the DTO so you can safely mutate values
     $data = \TrackTelemetry\Traccar\Dto\DeviceData::fromArray($device->toArray());
@@ -92,4 +92,15 @@ Route::get('/devices/update', function () {
     $updated = \TrackTelemetry\Traccar\Facades\Device::update($data); //
 
     dump($updated);
+});
+
+Route::get('/devices/update-totals', function () {
+
+    $status = \TrackTelemetry\Traccar\Facades\Device::updateTotals(
+        deviceId: 2,
+        totalDistance: rand(1000, 100000),
+        hours: rand(1, 100),
+    );
+
+    dump($status);
 });
