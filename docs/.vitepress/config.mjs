@@ -40,11 +40,19 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Devices',
+                items: [
+                    {text: 'Get All Devices', link: '/devices/get-all'},
+                ]
+            },
+            {
                 text: 'DTO Reference',
                 collapsed: true,
                 items: [
                     {text: 'Server Data', link: '/reference/dto/server-data'},
                     {text: 'Server Attribute Data', link: '/reference/dto/server-attributes-data'},
+                    {text: 'Device Data', link: '/reference/dto/device-data'},
+                    {text: 'Device Attribute Data', link: '/reference/dto/device-attributes-data'},
                 ]
             },
             {
@@ -57,6 +65,8 @@ export default defineConfig({
                     {text: 'Altitude Unit', link: '/reference/enums/altitude-unit'},
                     {text: 'Speed Unit', link: '/reference/enums/speed-unit'},
                     {text: 'Volume Unit', link: '/reference/enums/volume-unit'},
+                    {text: 'Device Status', link: '/reference/enums/device-status'},
+                    {text: 'Device Category', link: '/reference/enums/device-category'},
                 ]
             },
         ],
