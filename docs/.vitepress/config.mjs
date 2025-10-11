@@ -44,6 +44,7 @@ export default defineConfig({
                 text: 'Devices',
                 items: [
                     {text: 'Get All Devices', link: '/devices/get-all'},
+                    {text: 'Get User Devices', link: '/devices/get-for-user'},
                 ]
             },
             {

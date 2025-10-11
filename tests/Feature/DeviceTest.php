@@ -12,8 +12,9 @@ use TrackTelemetry\Traccar\Enums\DeviceStatus;
 use TrackTelemetry\Traccar\Enums\DeviceCategory;
 use TrackTelemetry\Traccar\Requests\GetAllDevices;
 use TrackTelemetry\Traccar\Dto\DeviceAttributesData;
+use TrackTelemetry\Traccar\Requests\GetForUserDevices;
 
-beforeEach(function () {
+beforeEach(closure: function () {
     $this->devices = [
         [
             'id'         => 6,
@@ -50,23 +51,108 @@ beforeEach(function () {
     ];
 });
 
-it('can get all devices', function () {
-    MockClient::global([
+it(description: 'can get all devices', closure: function () {
+    MockClient::global(mockData: [
         GetAllDevices::class => MockResponse::make($this->devices),
     ]);
 
     $response = Device::getAll();
 
-    expect($response)
-        ->toBeInstanceOf(Collection::class)
-        ->and($response)->toHaveCount(2);
+    expect(value: $response)
+        ->toBeInstanceOf(class: Collection::class)
+        ->and(value: $response)->toHaveCount(count: 2);
 
     $first = $response->first();
-    expect($first)
-        ->toBeInstanceOf(DeviceData::class)
-        ->and($first->status)->toEqual(DeviceStatus::ONLINE)
-        ->and($first->category)->toEqual(DeviceCategory::TRUCK)
-        ->and($first->lastUpdate)->toBeInstanceOf(CarbonImmutable::class)
-        ->and($first->attributes)->toBeInstanceOf(DeviceAttributesData::class)
-        ->and($first->attributes->speedLimit)->toBeFloat();
+    expect(value: $first)
+        ->toBeInstanceOf(class: DeviceData::class)
+        ->and(value: $first->status)->toEqual(expected: DeviceStatus::ONLINE)
+        ->and(value: $first->category)->toEqual(expected: DeviceCategory::TRUCK)
+        ->and(value: $first->lastUpdate)->toBeInstanceOf(class: CarbonImmutable::class)
+        ->and(value: $first->attributes)->toBeInstanceOf(class: DeviceAttributesData::class)
+        ->and(value: $first->attributes->speedLimit)->toBeFloat();
+});
+
+it(description: 'can get devices for a specific user', closure: function () {
+    MockClient::global(mockData: [
+        GetForUserDevices::class => MockResponse::make($this->devices),
+    ]);
+
+    $userId = 42;
+    $response = Device::get(userId: $userId);
+
+    expect(value: $response)
+        ->toBeInstanceOf(class: Collection::class)
+        ->and(value: $response)->toHaveCount(count: 2);
+
+    $first = $response->first();
+    expect(value: $first)
+        ->toBeInstanceOf(class: DeviceData::class)
+        ->and(value: $first->status)->toEqual(expected: DeviceStatus::ONLINE)
+        ->and(value: $first->category)->toEqual(expected: DeviceCategory::TRUCK)
+        ->and(value: $first->lastUpdate)->toBeInstanceOf(class: CarbonImmutable::class)
+        ->and(value: $first->attributes)->toBeInstanceOf(class: DeviceAttributesData::class)
+        ->and(value: $first->attributes->speedLimit)->toBeFloat();
+});
+
+it(description: 'can get devices by ids', closure: function () {
+    MockClient::global(mockData: [
+        GetForUserDevices::class => MockResponse::make($this->devices),
+    ]);
+
+    $response = Device::get(ids: [6, 7]);
+
+    expect(value: $response)
+        ->toBeInstanceOf(class: Collection::class)
+        ->and(value: $response)->toHaveCount(count: 2);
+
+    $first = $response->first();
+    expect(value: $first)
+        ->toBeInstanceOf(class: DeviceData::class)
+        ->and(value: $first->status)->toEqual(expected: DeviceStatus::ONLINE)
+        ->and(value: $first->category)->toEqual(expected: DeviceCategory::TRUCK)
+        ->and(value: $first->lastUpdate)->toBeInstanceOf(class: CarbonImmutable::class)
+        ->and(value: $first->attributes)->toBeInstanceOf(class: DeviceAttributesData::class)
+        ->and(value: $first->attributes->speedLimit)->toBeFloat();
+});
+
+it(description: 'can get devices by uniqueIds', closure: function () {
+    MockClient::global(mockData: [
+        GetForUserDevices::class => MockResponse::make($this->devices),
+    ]);
+
+    $response = Device::get(uniqueIds: ['ABC123', 'XYZ789']);
+
+    expect(value: $response)
+        ->toBeInstanceOf(class: Collection::class)
+        ->and(value: $response)->toHaveCount(count: 2);
+
+    $first = $response->first();
+    expect(value: $first)
+        ->toBeInstanceOf(class: DeviceData::class)
+        ->and(value: $first->status)->toEqual(expected: DeviceStatus::ONLINE)
+        ->and(value: $first->category)->toEqual(expected: DeviceCategory::TRUCK)
+        ->and(value: $first->lastUpdate)->toBeInstanceOf(class: CarbonImmutable::class)
+        ->and(value: $first->attributes)->toBeInstanceOf(class: DeviceAttributesData::class)
+        ->and(value: $first->attributes->speedLimit)->toBeFloat();
+});
+
+it(description: 'can get devices with combined filters', closure: function () {
+    MockClient::global(mockData: [
+        GetForUserDevices::class => MockResponse::make($this->devices),
+    ]);
+
+    $response = Device::get(userId: 42, ids: [6], uniqueIds: ['XYZ789']);
+
+    expect(value: $response)
+        ->toBeInstanceOf(class: Collection::class)
+        ->and(value: $response)->toHaveCount(count: 2);
+
+    $first = $response->first();
+    expect(value: $first)
+        ->toBeInstanceOf(class: DeviceData::class)
+        ->and(value: $first->status)->toEqual(expected: DeviceStatus::ONLINE)
+        ->and(value: $first->category)->toEqual(expected: DeviceCategory::TRUCK)
+        ->and(value: $first->lastUpdate)->toBeInstanceOf(class: CarbonImmutable::class)
+        ->and(value: $first->attributes)->toBeInstanceOf(class: DeviceAttributesData::class)
+        ->and(value: $first->attributes->speedLimit)->toBeFloat();
 });
