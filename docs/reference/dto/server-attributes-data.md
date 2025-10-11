@@ -2,6 +2,9 @@
 
 The `TrackTelemetry\Traccar\Dto\ServerAttributesData` represents the **configurable preferences and UI behavior** of a Traccar server instance. It provides structured access to map display settings, unit preferences, API keys, and user interface controls defined in the Traccar configuration.
 
+> [!WARNING]
+> These attributes may not be exhaustively documented. Please let us know if you find any missing attributes or better make a PR.
+
 ```php
 use TrackTelemetry\Traccar\Facades\Server;
 
@@ -118,6 +121,22 @@ $attributes->notificationTokens; // "TOKEN1,TOKEN2"
 Flags controlling which UI sections or features are hidden/disabled in the web interface.
 ```php
 $attributes->uiDisableGroups; // false
+```
+
+## `disableShare` → `boolean`
+
+Disable Device Sharing
+
+```php
+$attributes->disableShare; // false
+```
+
+## `darkMode` → `boolean`
+
+Enable Dark Mode for the Traccar web UI.
+
+```php
+$attributes->darkMode; // false
 ```
 
 ## `webLiveRouteLength` → `integer|null`
