@@ -29,6 +29,7 @@ export default defineConfig({
                 text: 'Introduction',
                 items: [
                     {text: 'About Traccar', link: '/introduction/about-traccar'},
+                    {text: 'Generate Token', link: '/introduction/generate-bearer-token'},
                     {text: 'Getting Started', link: '/introduction/getting-started'},
                 ]
             },

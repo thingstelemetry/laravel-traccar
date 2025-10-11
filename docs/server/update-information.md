@@ -79,10 +79,10 @@ $timezone = $info->attributes->timezone; // "Africa/Nairobi"
 When `updateInformation` is called, some configuration values are updated to default `null` or `false` values. 
 
 ### Before: Null & False Attributes Hidden
-![Traccar UI Side Effect](./traccar-server-attributes-before-running-update.webp)
+![Traccar UI Side Effect](./../images/traccar-server-attributes-before-running-update.webp)
 
 ### After: Null & False Attributes Visible
-![Traccar UI Side Effect](./traccar-server-attributes-after-running-update.webp)
+![Traccar UI Side Effect](./../images/traccar-server-attributes-after-running-update.webp)
 
 This caused them to show up on Traccar UI. This however, does not affect the actual server configuration.
 
