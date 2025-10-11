@@ -78,18 +78,18 @@ Secondary attribute displayed under device name.
 $attributes->deviceSecondary; // "status"
 ```
 
-## `soundEvents` → `string|null`
+## `soundEvents` → `mixed`
 
 Event notification sound identifier.
 ```php
-$attributes->soundEvents; // "alert.mp3"
+$attributes->soundEvents; // "??"
 ```
 
-## `soundAlarms` → `string|null`
+## `soundAlarms` → `mixed`
 
 Alarm notification sound file or key.
 ```php
-$attributes->soundAlarms; // "alarm.mp3"
+$attributes->soundAlarms; // "??"
 ```
 
 ## `positionItems` → `string|null`
