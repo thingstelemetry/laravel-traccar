@@ -13,7 +13,7 @@ use TrackTelemetry\Traccar\Enums\Status;
 use TrackTelemetry\Traccar\Facades\Device;
 
 $deviceId = 6;
-$totalDistance = 12345.6; // kilometers
+$totalDistance = 12345.6; // in meters
 $hours = 789.0; // hours
 
 $status = Device::updateTotals(deviceId: $deviceId, totalDistance: $totalDistance, hours: $hours); // TrackTelemetry\Traccar\Enums\Status
@@ -44,6 +44,7 @@ This means the device does not have any positions recorded in the database. Reco
 
 
 ## Important Links
+- [Traccar Update total distance and hours of the Device](https://www.traccar.org/api-reference/#tag/Devices/paths/~1devices~1%7Bid%7D~1accumulators/put)
 - [DeviceData DTO reference](./../reference/dto/device-data)
 - [Status enum reference](./../reference/enums/status)
 - [Traccar DeviceResource Source](https://github.com/traccar/traccar/blob/e7b9cce18104b4894f98007bf33c7e2e2008de2a/src/main/java/org/traccar/api/resource/DeviceResource.java#L150-L188)
