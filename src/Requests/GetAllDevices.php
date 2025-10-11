@@ -24,14 +24,14 @@ class GetAllDevices extends Request
     }
 
     /**
+     * Create DTO collection from the response.
      *
+     * @return Collection<int, DeviceData>
      * @throws JsonException
-     *
-     * @return Collection<DeviceData|mixed>
      */
-    public function createDtoFromResponse(Response $response): Collection
+    public function createDtoFromResponse(Response $response): mixed
     {
-        return collect(value: $response->json())
-            ->map(callback: fn ($device) => DeviceData::fromArray(data: $device));
+        return collect($response->json())
+            ->map(fn ($device) => DeviceData::fromArray($device));
     }
 }

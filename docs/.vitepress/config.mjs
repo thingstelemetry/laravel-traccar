@@ -40,6 +40,12 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Devices',
+                items: [
+                    {text: 'Get All Devices', link: '/devices/get-all'},
+                ]
+            },
+            {
                 text: 'DTO Reference',
                 collapsed: true,
                 items: [
