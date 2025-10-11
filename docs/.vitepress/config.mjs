@@ -5,6 +5,9 @@ export default defineConfig({
     title: "Laravel Traccar",
     description: "A Laravel package for Traccar payment integration",
     lastUpdated: false,
+    sitemap: {
+        hostname: 'https://traccar.tracktelemetry.com'
+    },
     head: [
         [
             'script',
@@ -38,14 +41,22 @@ export default defineConfig({
             },
             {
                 text: 'DTO Reference',
+                collapsed: true,
                 items: [
-                    {text: 'ServerData', link: '/reference/dto/server-data'},
+                    {text: 'Server Data', link: '/reference/dto/server-data'},
+                    {text: 'Server Attribute Data', link: '/reference/dto/server-attributes-data'},
                 ]
             },
             {
                 text: 'Enums Reference',
+                collapsed: true,
                 items: [
                     {text: 'Map', link: '/reference/enums/map'},
+                    {text: 'Coordinate Format', link: '/reference/enums/coordinate-format'},
+                    {text: 'Distance Unit', link: '/reference/enums/distance-unit'},
+                    {text: 'Altitude Unit', link: '/reference/enums/altitude-unit'},
+                    {text: 'Speed Unit', link: '/reference/enums/speed-unit'},
+                    {text: 'Volume Unit', link: '/reference/enums/volume-unit'},
                 ]
             },
         ],
