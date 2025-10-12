@@ -1,6 +1,6 @@
 # Share Device Location
 
-Generate a temporary url token that allows sharing a specific device. Other can open the url and see the device location as longs as the token is has not expired.
+Generate a temporary url token that allows sharing a specific device. Other can open the url and see the device location as long as the token is has not expired.
 
 > [!IMPORTANT]
 > The server will not allow  sharing when `ServerAttributesData` -> [`disableShare`](./../reference/dto/server-attributes-data#disableshare-→-boolean) is enabled.
