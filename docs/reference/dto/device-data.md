@@ -25,8 +25,6 @@ $dto = new DeviceData(
 );
 ```
 
-Fields
-
 ## `id` → `integer`|`null`
 Traccar device identifier. Null until the device is created by the server.
 

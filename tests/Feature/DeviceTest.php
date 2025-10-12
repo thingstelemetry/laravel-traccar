@@ -12,7 +12,9 @@ use TrackTelemetry\Traccar\Dto\DeviceData;
 use TrackTelemetry\Traccar\Facades\Device;
 use Illuminate\Validation\ValidationException;
 use TrackTelemetry\Traccar\Enums\DeviceStatus;
+use TrackTelemetry\Traccar\Dto\DeviceShareData;
 use TrackTelemetry\Traccar\Enums\DeviceCategory;
+use TrackTelemetry\Traccar\Requests\ShareDevice;
 use TrackTelemetry\Traccar\Requests\CreateDevice;
 use TrackTelemetry\Traccar\Requests\DeleteDevice;
 use TrackTelemetry\Traccar\Requests\UpdateDevice;
@@ -247,6 +249,22 @@ it(description: 'can delete a device', closure: function () {
     expect(value: $status)
         ->toBeInstanceOf(class: Status::class)
         ->and(value: $status)->toEqual(expected: Status::SUCCESS);
+});
+
+it(description: 'can share a device', closure: function () {
+    MockClient::global(mockData: [
+        ShareDevice::class => MockResponse::make('token-abc-123'),
+    ]);
+
+    $share = Device::share(deviceId: 6, expiration: CarbonImmutable::parse('2030-12-31T23:59:59Z'));
+
+    expect(value: $share)
+        ->toBeInstanceOf(class: DeviceShareData::class)
+        ->and(value: $share->token)->toEqual(expected: 'token-abc-123')
+        ->and(value: $share->deviceId)->toEqual(expected: 6)
+        ->and(value: $share->expiration)->toBeInstanceOf(class: CarbonImmutable::class)
+        ->and(value: $share->expiration->toIso8601String())->toEqual(expected: '2030-12-31T23:59:59+00:00')
+        ->and(value: $share->url)->toContain('/?token=token-abc-123');
 });
 
 it(description: 'can upload a device image', closure: function () {

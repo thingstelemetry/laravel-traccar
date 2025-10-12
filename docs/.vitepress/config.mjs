@@ -47,6 +47,7 @@ export default defineConfig({
                     {text: 'Get User Devices', link: '/devices/get-for-user'},
                     {text: 'Create Device', link: '/devices/create'},
                     {text: 'Update Device', link: '/devices/update'},
+                    {text: 'Share Device', link: '/devices/share-location'},
                     {text: 'Upload/Update Device Image', link: '/devices/update-image'},
                     {text: 'Update Totals (Distance & Hours)', link: '/devices/accumulators'},
                     {text: 'Delete Device', link: '/devices/delete'},
@@ -60,6 +61,7 @@ export default defineConfig({
                     {text: 'Server Attribute Data', link: '/reference/dto/server-attributes-data'},
                     {text: 'Device Data', link: '/reference/dto/device-data'},
                     {text: 'Device Attribute Data', link: '/reference/dto/device-attributes-data'},
+                    {text: 'Device Share Data', link: '/reference/dto/device-share-data'},
                 ]
             },
             {

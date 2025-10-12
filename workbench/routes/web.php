@@ -132,3 +132,14 @@ Route::get('/devices/update-image', function () {
 
     dump(['deviceId' => $deviceId, 'filename' => $filename]);
 });
+
+Route::get('/devices/share', function () {
+    $deviceId = request('deviceId') ? (int) request('deviceId') : 2;
+    $hours = request('hours') ? (int) request('hours') : 12;
+
+    $expiration = \Carbon\CarbonImmutable::now()->addHours($hours);
+
+    $share = \TrackTelemetry\Traccar\Facades\Device::share(deviceId: $deviceId, expiration: $expiration);
+
+    dump($share->toArray());
+});
