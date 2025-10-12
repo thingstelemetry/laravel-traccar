@@ -57,7 +57,8 @@ class Server extends Traccar
 
             return $response->dtoOrFail();
         } catch (FatalRequestException $e) {
-            if (str_contains($e->getMessage(), 'Empty reply from server')) {
+            // cURL error 52: Empty reply from server
+            if ($e->getCode() === 52) {
                 return new StatusData(status: Status::SUCCESS);
             }
 
