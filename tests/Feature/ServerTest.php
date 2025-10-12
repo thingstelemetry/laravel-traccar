@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
+use Saloon\Http\PendingRequest;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use TrackTelemetry\Traccar\Enums\Status;
 use TrackTelemetry\Traccar\Dto\ServerData;
+use TrackTelemetry\Traccar\Dto\StatusData;
 use TrackTelemetry\Traccar\Facades\Server;
+use TrackTelemetry\Traccar\Requests\RebootServer;
+use Saloon\Exceptions\Request\FatalRequestException;
 use TrackTelemetry\Traccar\Requests\GetServerInformation;
 use TrackTelemetry\Traccar\Requests\UpdateServerInformation;
 
@@ -69,4 +74,33 @@ test(description: 'can update server information', closure: function () {
 
     expect(value: $response)
         ->toBeInstanceOf(class: ServerData::class);
+});
+
+test(description: 'can reboot server', closure: function () {
+    MockClient::global(mockData: [
+        RebootServer::class => MockResponse::make(body: '', status: 204)
+    ]);
+
+    $result = Server::reboot();
+
+    expect(value: $result)
+        ->toBeInstanceOf(class: StatusData::class)
+        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+});
+
+test(description: 'treats empty reply as successful reboot', closure: function () {
+    MockClient::global(mockData: [
+        RebootServer::class => function (PendingRequest $pending) {
+            throw new FatalRequestException(
+                originalException: new RuntimeException(message: 'Empty reply from server', code: 52),
+                pendingRequest: $pending
+            );
+        }
+    ]);
+
+    $result = Server::reboot();
+
+    expect(value: $result)
+        ->toBeInstanceOf(class: StatusData::class)
+        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
 });

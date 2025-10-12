@@ -2,6 +2,9 @@
 
 Update your Traccar server instance information.
 
+> [!IMPORTANT]
+> This endpoint is restricted to admin users only on the Traccar server.
+
 ## Request
 
 To update Traccar server information, follow the steps below.
