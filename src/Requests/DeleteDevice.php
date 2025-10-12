@@ -8,6 +8,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use TrackTelemetry\Traccar\Enums\Status;
+use TrackTelemetry\Traccar\Dto\StatusData;
 
 class DeleteDevice extends Request
 {
@@ -28,8 +29,8 @@ class DeleteDevice extends Request
     /**
      * Return an enum status from the response.
      */
-    public function createDtoFromResponse(Response $response): Status
+    public function createDtoFromResponse(Response $response): StatusData
     {
-        return Status::SUCCESS;
+        return new StatusData(status: Status::SUCCESS);
     }
 }

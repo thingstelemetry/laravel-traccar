@@ -8,26 +8,27 @@ Delete an existing device from your Traccar server.
 ## Usage
 
 ```php
+use TrackTelemetry\Traccar\Dto\StatusData;
 use TrackTelemetry\Traccar\Facades\Device;
 use TrackTelemetry\Traccar\Enums\Status;
 
 $deviceId = 6;
 
-$status = Device::delete(id: $deviceId); // returns TrackTelemetry\Traccar\Enums\Status
+$result = Device::delete(id: $deviceId); // returns TrackTelemetry\Traccar\Dto\StatusData
 
-if ($status === Status::SUCCESS) {
+if ($result->status === Status::SUCCESS) {
     // Successfully deleted
 }
 ```
 
 ## Results
 
-The response is a `TrackTelemetry\Traccar\Enums\Status` enum.
+The response is a `TrackTelemetry\Traccar\Dto\StatusData` object containing a `TrackTelemetry\Traccar\Enums\Status`.
 
 ```php
-$status->value; // 'success' or 'failure'
-$status->name;  // 'SUCCESS' or 'FAILURE'
-$status->label(); // 'Success' or 'Failure'
+$result->status->value; // 'success' or 'failure'
+$result->status->name;  // 'SUCCESS' or 'FAILURE'
+$result->status->label(); // 'Success' or 'Failure'
 ```
 
 ## Important Links

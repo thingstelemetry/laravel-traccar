@@ -9,10 +9,11 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use TrackTelemetry\Traccar\Traccar;
 use Illuminate\Validation\Rules\File;
-use TrackTelemetry\Traccar\Enums\Status;
 use Illuminate\Support\Facades\Validator;
 use TrackTelemetry\Traccar\Dto\DeviceData;
+use TrackTelemetry\Traccar\Dto\StatusData;
 use Illuminate\Validation\ValidationException;
+use TrackTelemetry\Traccar\Dto\DeviceShareData;
 use TrackTelemetry\Traccar\Requests\ShareDevice;
 use TrackTelemetry\Traccar\Requests\CreateDevice;
 use TrackTelemetry\Traccar\Requests\DeleteDevice;
@@ -87,7 +88,7 @@ class Device extends Traccar
      *
      * @throws \Saloon\Exceptions\SaloonException
      */
-    public function updateTotals(int $deviceId, float $totalDistance, float $hours): Status
+    public function updateTotals(int $deviceId, float $totalDistance, float $hours): StatusData
     {
         $response = $this->connector->send(
             request: new UpdateDeviceTotals(
@@ -105,7 +106,7 @@ class Device extends Traccar
      *
      * @throws \Saloon\Exceptions\SaloonException
      */
-    public function delete(int $id): Status
+    public function delete(int $id): StatusData
     {
         $response = $this->connector->send(request: new DeleteDevice(id: $id));
 
@@ -165,7 +166,7 @@ class Device extends Traccar
      *
      * @throws \Saloon\Exceptions\SaloonException
      */
-    public function share(int $deviceId, CarbonInterface $expiration): \TrackTelemetry\Traccar\Dto\DeviceShareData
+    public function share(int $deviceId, CarbonInterface $expiration): DeviceShareData
     {
         $response = $this->connector->send(
             request: new ShareDevice(
