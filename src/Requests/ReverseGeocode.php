@@ -25,7 +25,7 @@ class ReverseGeocode extends Request
 
     public function createDtoFromResponse(Response $response): string
     {
-        return mb_trim((string) $response->body());
+        return mb_trim($response->body());
     }
 
     /**

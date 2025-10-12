@@ -4,7 +4,7 @@ Upload a file into Traccar's web root via `/server/file/{path}`.
 
 > [!IMPORTANT]
 > This endpoint is restricted to admin users only on the Traccar server.
-> YOu can upload file on any type .i.e mimes `*/*`
+> You can upload files of any MIME type (i.e., `*/*`).
 
 ## Request
 

@@ -28,7 +28,7 @@ class Server extends Traccar
     /**
      * Get server information
      *
-     * @throws \\Saloon\\Exceptions\\SaloonException
+     * @throws \Saloon\Exceptions\SaloonException
      */
     public function getInformation(): ServerData
     {
@@ -40,7 +40,7 @@ class Server extends Traccar
     /**
      * Update server information
      *
-     * @throws \\Saloon\\Exceptions\\SaloonException
+     * @throws \Saloon\Exceptions\SaloonException
      */
     public function updateInformation(ServerData $data): ServerData
     {
@@ -58,7 +58,7 @@ class Server extends Traccar
      * causing an "Empty reply from server" (cURL error 52). We treat that specific
      * scenario as a successful initiation of reboot and return a success status.
      *
-     * @throws \\Saloon\\Exceptions\\SaloonException
+     * @throws \Saloon\Exceptions\SaloonException
      */
     public function reboot(): StatusData
     {
@@ -77,10 +77,9 @@ class Server extends Traccar
     }
 
     /**
-     * Scenario 1: Cache endpoint
-     * GET /server/cache
+     * Cache
      *
-     * @throws \\Saloon\\Exceptions\\SaloonException
+     * @throws \Saloon\Exceptions\SaloonException
      */
     public function cache(): string
     {
@@ -90,10 +89,9 @@ class Server extends Traccar
     }
 
     /**
-     * Scenario 2: Garbage Collector
-     * GET /server/gc
+     * Trigger Garbage Collector
      *
-     * @throws \\Saloon\\Exceptions\\SaloonException
+     * @throws \Saloon\Exceptions\SaloonException
      */
     public function gc(): StatusData
     {
@@ -103,14 +101,12 @@ class Server extends Traccar
     }
 
     /**
-     * Scenario 3: File upload
-     * POST /server/file/{path}
      *
      * Accepts Laravel UploadedFile, Symfony File, or a filesystem path string. Sends the file
      * bytes to Traccar with the detected MIME type. No admin validation is enforced client-side;
      * Traccar server will handle permissions.
      *
-     * @throws \\Saloon\\Exceptions\\SaloonException
+     * @throws \Saloon\Exceptions\SaloonException
      * @throws ValidationException
      */
     public function uploadFile(string $path, UploadedFile|SymfonyFile|string $file): StatusData
@@ -134,7 +130,13 @@ class Server extends Traccar
             ? ($file->getMimeType() ?: 'application/octet-stream')
             : 'application/octet-stream';
 
-        $contents = file_get_contents($file->getPathname());
+        $contents = file_get_contents(filename: $file->getPathname());
+
+        if ($contents === false) {
+            throw ValidationException::withMessages([
+                    'file' => ['Unable to read file contents.'],
+                ]);
+        }
 
         $response = $this->connector->send(
             request: new UploadServerFile(
@@ -148,12 +150,11 @@ class Server extends Traccar
     }
 
     /**
-     * Scenario 4: Timezones (no admin required)
-     * GET /server/timezones
+     * Get timezones
      *
      * @return Collection<int, string>
      *
-     * @throws \\Saloon\\Exceptions\\SaloonException
+     * @throws \Saloon\Exceptions\SaloonException
      */
     public function timezones(): Collection
     {
@@ -163,10 +164,9 @@ class Server extends Traccar
     }
 
     /**
-     * Scenario 5: Geocode (no admin required)
-     * GET /server/geocode?latitude=...&longitude=...
+     * Geocode coordinates
      *
-     * @throws \\Saloon\\Exceptions\\SaloonException
+     * @throws \Saloon\Exceptions\SaloonException
      */
     public function geocode(float $latitude, float $longitude): string
     {
