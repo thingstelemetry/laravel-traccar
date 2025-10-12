@@ -39,6 +39,11 @@ export default defineConfig({
                     {text: 'Get Information', link: '/server/get-information'},
                     {text: 'Update Information', link: '/server/update-information'},
                     {text: 'Reboot', link: '/server/reboot'},
+                    {text: 'Cache', link: '/server/cache'},
+                    {text: 'Garbage Collector', link: '/server/gc'},
+                    {text: 'Upload File', link: '/server/upload-file'},
+                    {text: 'Timezones', link: '/server/timezones'},
+                    {text: 'Reverse Geocode', link: '/server/geocode'},
                 ]
             },
 {
