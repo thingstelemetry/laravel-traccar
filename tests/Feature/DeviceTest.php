@@ -9,6 +9,7 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use TrackTelemetry\Traccar\Enums\Status;
 use TrackTelemetry\Traccar\Dto\DeviceData;
+use TrackTelemetry\Traccar\Dto\StatusData;
 use TrackTelemetry\Traccar\Facades\Device;
 use Illuminate\Validation\ValidationException;
 use TrackTelemetry\Traccar\Enums\DeviceStatus;
@@ -244,11 +245,11 @@ it(description: 'can delete a device', closure: function () {
         DeleteDevice::class => MockResponse::make(body: '', status: 204),
     ]);
 
-    $status = Device::delete(id: 6);
+    $result = Device::delete(id: 6);
 
-    expect(value: $status)
-        ->toBeInstanceOf(class: Status::class)
-        ->and(value: $status)->toEqual(expected: Status::SUCCESS);
+    expect(value: $result)
+        ->toBeInstanceOf(class: StatusData::class)
+        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
 });
 
 it(description: 'can share a device', closure: function () {
@@ -301,9 +302,9 @@ it(description: 'can update device totals (distance and hours)', closure: functi
         UpdateDeviceTotals::class => MockResponse::make(body: '', status: 204),
     ]);
 
-    $status = Device::updateTotals(deviceId: 6, totalDistance: 12345.6, hours: 789.0);
+    $result = Device::updateTotals(deviceId: 6, totalDistance: 12345.6, hours: 789.0);
 
-    expect(value: $status)
-        ->toBeInstanceOf(class: Status::class)
-        ->and(value: $status)->toEqual(expected: Status::SUCCESS);
+    expect(value: $result)
+        ->toBeInstanceOf(class: StatusData::class)
+        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
 });

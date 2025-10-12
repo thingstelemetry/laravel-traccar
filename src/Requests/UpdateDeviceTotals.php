@@ -10,6 +10,7 @@ use Saloon\Http\Response;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Traits\Body\HasJsonBody;
 use TrackTelemetry\Traccar\Enums\Status;
+use TrackTelemetry\Traccar\Dto\StatusData;
 
 class UpdateDeviceTotals extends Request implements HasBody
 {
@@ -35,9 +36,9 @@ class UpdateDeviceTotals extends Request implements HasBody
     /**
      * Return a status enum from the response.
      */
-    public function createDtoFromResponse(Response $response): Status
+    public function createDtoFromResponse(Response $response): StatusData
     {
-        return Status::SUCCESS;
+        return new StatusData(status: Status::SUCCESS);
     }
 
     /**
