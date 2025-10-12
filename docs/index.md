@@ -8,7 +8,7 @@ hero:
   tagline: Seamless manage a traccar instance from a Laravel application
   actions:
     - theme: brand
-      text: Get Started Start
+      text: Get Started
       link: /introduction/getting-started
     - theme: alt
       text: Source Code
