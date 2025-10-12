@@ -35,6 +35,55 @@ Route::get('/server/reboot', function () {
     dump($result);
 });
 
+Route::get('/server/cache', function () {
+    $cache = \TrackTelemetry\Traccar\Facades\Server::cache();
+
+    dump($cache);
+});
+
+// Scenario 2: Garbage Collector test route
+Route::get('/server/gc', function () {
+    $result = \TrackTelemetry\Traccar\Facades\Server::gc();
+
+    dump($result);
+});
+
+// Scenario 3: File upload test route
+Route::get('/server/upload', function () {
+    $path = request('path', 'web/readme.txt');
+
+    $contents = 'Uploaded via workbench at ' . now()->toIso8601String();
+
+    $tmp = tempnam(sys_get_temp_dir(), 'traccar_upload_');
+    $tmpTxt = $tmp . '.txt';
+    @rename($tmp, $tmpTxt);
+    file_put_contents($tmpTxt, $contents);
+
+    try {
+        $result = \TrackTelemetry\Traccar\Facades\Server::uploadFile(path: $path, file: $tmpTxt);
+    } finally {
+        @unlink($tmpTxt);
+    }
+
+    dump(['path' => $path, 'status' => $result->status->value]);
+});
+
+Route::get('/server/timezones', function () {
+    $zones = \TrackTelemetry\Traccar\Facades\Server::timezones();
+
+    // Show a subset to keep output small
+    dump($zones);
+});
+
+Route::get('/server/geocode', function () {
+    $lat = request()->has('lat') ? (float) request('lat') : (request()->has('latitude') ? (float) request('latitude') : -1.286389);
+    $lng = request()->has('lng') ? (float) request('lng') : (request()->has('longitude') ? (float) request('longitude') : 36.817223);
+
+    $address = \TrackTelemetry\Traccar\Facades\Server::geocode(latitude: $lat, longitude: $lng);
+
+    dump($address);
+});
+
 Route::get('/devices/all', function () {
     dump(\TrackTelemetry\Traccar\Facades\Device::getAll());
 });
