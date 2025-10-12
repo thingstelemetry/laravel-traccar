@@ -29,4 +29,17 @@ class RebootServer extends Request
     {
         return new StatusData(status: Status::SUCCESS);
     }
+
+    /**
+     * Override headers to accept any content, since the server may return no content
+     * or terminate the connection immediately during reboot.
+     *
+     * @return array<string, string>
+     */
+    protected function defaultHeaders(): array
+    {
+        return [
+            'Accept' => '*/*',
+        ];
+    }
 }
