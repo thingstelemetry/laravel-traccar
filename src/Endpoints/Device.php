@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TrackTelemetry\Traccar\Endpoints;
 
+use Carbon\CarbonInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use TrackTelemetry\Traccar\Traccar;
@@ -12,6 +13,7 @@ use TrackTelemetry\Traccar\Enums\Status;
 use Illuminate\Support\Facades\Validator;
 use TrackTelemetry\Traccar\Dto\DeviceData;
 use Illuminate\Validation\ValidationException;
+use TrackTelemetry\Traccar\Requests\ShareDevice;
 use TrackTelemetry\Traccar\Requests\CreateDevice;
 use TrackTelemetry\Traccar\Requests\DeleteDevice;
 use TrackTelemetry\Traccar\Requests\UpdateDevice;
@@ -149,6 +151,26 @@ class Device extends Traccar
                 deviceId: $deviceId,
                 mimeType: $mimeType,
                 contents: $contents,
+            )
+        );
+
+        return $response->dtoOrFail();
+    }
+
+    /**
+     * Share a device and receive a temporary access token.
+     *
+     * Accepts a Carbon instance for expiration and converts it to ISO-8601 before submitting
+     * as application/x-www-form-urlencoded data as expected by Traccar.
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function share(int $deviceId, CarbonInterface $expiration): \TrackTelemetry\Traccar\Dto\DeviceShareData
+    {
+        $response = $this->connector->send(
+            request: new ShareDevice(
+                deviceId: $deviceId,
+                expiration: $expiration,
             )
         );
 
