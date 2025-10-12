@@ -30,6 +30,11 @@ Route::get('/server/update', function () {
     dd($response);
 });
 
+Route::get('/server/reboot', function () {
+    $result = \TrackTelemetry\Traccar\Facades\Server::reboot();
+    dump($result);
+});
+
 Route::get('/devices/all', function () {
     dump(\TrackTelemetry\Traccar\Facades\Device::getAll());
 });

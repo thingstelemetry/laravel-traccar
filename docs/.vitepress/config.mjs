@@ -38,6 +38,7 @@ export default defineConfig({
                 items: [
                     {text: 'Get Information', link: '/server/get-information'},
                     {text: 'Update Information', link: '/server/update-information'},
+                    {text: 'Reboot', link: '/server/reboot'},
                 ]
             },
 {
