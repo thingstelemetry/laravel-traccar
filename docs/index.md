@@ -8,7 +8,7 @@ hero:
   tagline: Seamless manage a traccar instance from a Laravel application
   actions:
     - theme: brand
-      text: Quick Start
+      text: Get Started Start
       link: /introduction/getting-started
     - theme: alt
       text: Source Code
@@ -47,5 +47,3 @@ features:
     title: Ready for Production
     details: Built with maintainability and scalability in mind, ideal for enterprise and fleet solutions.
 ---
-
-
