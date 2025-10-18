@@ -7,7 +7,7 @@
 ![GitHub Actions Test Status](https://img.shields.io/github/actions/workflow/status/tracktelemetry/laravel-traccar/tests.yml?logo=github&label=Tests)
 +[![Total Downloads](https://img.shields.io/packagist/dt/tracktelemetry/laravel-traccar.svg?style=flat-square)](https://packagist.org/packages/tracktelemetry/laravel-traccar)
 
-![Traccar Screenshot](./docs/introduction/traccar-home-page.webp)
+![Traccar Screenshot](./docs/images/traccar-home-page.webp)
 
 **Track Telemetry Laravel Traccar** is a Laravel specific composer package that simplifies integration with the Traccar GPS tracking platform. It provides an elegant, expressive API to interact with Traccar’s REST endpoints.
 
