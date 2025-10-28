@@ -9,3 +9,4 @@ vendor
 build
 .phpunit.cache
 .DS_Store
+workbench/storage
