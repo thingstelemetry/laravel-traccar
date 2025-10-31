@@ -194,3 +194,11 @@ Route::prefix('/devices')->group(function () {
         dump($share->toArray());
     });
 });
+
+Route::prefix('/events')->group(function () {
+    Route::get('/{id}', function (int $id) {
+        $event = \TrackTelemetry\Traccar\Facades\Event::get(id: $id);
+
+        dump($event->toArray());
+    });
+});
