@@ -35,6 +35,7 @@ export default defineConfig({
             },
             {
                 text: 'Server',
+                collapsed: true,
                 items: [
                     {text: 'Get Information', link: '/server/get-information'},
                     {text: 'Update Information', link: '/server/update-information'},
@@ -48,6 +49,7 @@ export default defineConfig({
             },
 {
                 text: 'Devices',
+                collapsed: true,
                 items: [
                     {text: 'Get All Devices', link: '/devices/get-all'},
                     {text: 'Get User Devices', link: '/devices/get-for-user'},
