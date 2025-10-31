@@ -12,16 +12,10 @@ To update Traccar server information, follow the steps below.
 #### 1. Get the current server information.
 
 ```php
-$serverData = \TrackTelemetry\Traccar\Facades\Server::updateInformation();
+$data = \TrackTelemetry\Traccar\Facades\Server::updateInformation();
 ```
 
-#### 2. Clone the DTO so you can safely mutate values.
-
-```php
-$data = \TrackTelemetry\Traccar\Dto\ServerData::fromArray($serverData->toArray());
-```
-
-#### 3. Update the new DTO as needed.
+#### 2. Update the new DTO as needed.
 
 ```php
 $data->map = \TrackTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
@@ -30,7 +24,7 @@ $data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KILOMETE
 > [!IMPORTANT]
 > Only update the fields you want to change.
 
-#### 4. Send the updated DTO to the server  method.
+#### 3. Send the updated DTO to the server  method.
 
 ```php
 $response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
@@ -40,10 +34,7 @@ $response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
 
 ```php
 // Get the current server information
-$serverData = \TrackTelemetry\Traccar\Facades\Server::updateInformation();
-
-// Clone
-$data = \TrackTelemetry\Traccar\Dto\ServerData::fromArray($serverData->toArray());
+$data = \TrackTelemetry\Traccar\Facades\Server::updateInformation();
 
 // Updated
 $data->map = \TrackTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;

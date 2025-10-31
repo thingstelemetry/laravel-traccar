@@ -20,16 +20,13 @@ use TrackTelemetry\Traccar\Facades\Device;
 
 // 1) Get an existing device (example: by uniqueId)
 $devices = Device::get(uniqueIds: ['ABC123']);
-$device = $devices->first(); // TrackTelemetry\Traccar\Dto\DeviceData
+$data = $devices->first(); // TrackTelemetry\Traccar\Dto\DeviceData
 
-// 2) Clone the DTO so you can safely mutate values
-$data = DeviceData::fromArray($device->toArray());
-
-// 3) Update the clone as needed
+// 2) Update the fields you want to change
 $data->name = 'Truck 1 - Updated';
 $data->attributes->speedLimit = 90.0;
 
-// 4) Send the updated DTO
+// 3) Send the updated DTO
 $updated = Device::update($data); // returns TrackTelemetry\Traccar\Dto\DeviceData
 ```
 

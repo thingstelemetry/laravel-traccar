@@ -10,6 +10,8 @@ services:
     command: sh -c "npm install && npx vitepress dev --host 0.0.0.0"
     environment:
       - NODE_ENV=development
+    labels:
+      - dev.orbstack.domains=traccar.tracktelemetry.local
 
   composer:
     image: php:8.4-cli
@@ -20,3 +22,5 @@ services:
     ports:
       - "8000:8000"
     command: sh -c "apt-get update && apt-get install -y git unzip && php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\" && php composer-setup.php && php -r \"unlink('composer-setup.php');\" && php composer.phar install && php composer.phar serve --host=0.0.0.0 --port=8000"
+    labels:
+      - dev.orbstack.domains=test.tracktelemetry.local
