@@ -202,3 +202,11 @@ Route::prefix('/events')->group(function () {
         dump($event->toArray());
     });
 });
+
+Route::prefix('/users')->group(function () {
+    Route::get('/{id}', function (int $id) {
+        $user = \TrackTelemetry\Traccar\Facades\User::get(id: $id);
+
+        dump($user->toArray());
+    });
+});

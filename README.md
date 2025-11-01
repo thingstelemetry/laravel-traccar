@@ -38,7 +38,7 @@ composer require tracktelemetry/traccar
 You can publish the configuration by running the following command:
 
 ```bash
-php artisan vendor:publish --tag=config --provider="TrackTelemetry\\Traccar\\TraccarServiceProvider"
+php artisan vendor:publish --tag=config --provider="TrackTelemetry\Traccar\TraccarServiceProvider"
 ```
 
 # Usage

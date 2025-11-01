@@ -49,7 +49,7 @@ TRACCAR_BASE_URL=https://your-traccar-host/api
 You can publish the `traccar.php` configuration by running the following command:
 
 ```bash
-php artisan vendor:publish --tag=config --provider="TrackTelemetry\\Traccar\\TraccarServiceProvider"
+php artisan vendor:publish --tag=config --provider="TrackTelemetry\Traccar\TraccarServiceProvider"
 ```
 
 <details>
