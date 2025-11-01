@@ -45,6 +45,7 @@ export default defineConfig({
                     {text: 'Upload File', link: '/server/upload-file'},
                     {text: 'Timezones', link: '/server/timezones'},
                     {text: 'Reverse Geocode', link: '/server/geocode'},
+                    {text: 'Statistics', link: '/server/statistics'},
                 ]
             },
             {
@@ -91,6 +92,7 @@ export default defineConfig({
                     {text: 'Event Data', link: '/reference/dto/event-data'},
                     {text: 'User Data', link: '/reference/dto/user-data'},
                     {text: 'User Attributes Data', link: '/reference/dto/user-attributes-data'},
+                    {text: 'Server Statistics Data', link: '/reference/dto/server-statistics-data'},
                 ]
             },
             {

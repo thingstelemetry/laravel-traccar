@@ -60,6 +60,6 @@ $created->attributes->toArray();
 ```
 
 ## Important Links
-- Traccar Create User: https://www.traccar.org/api-reference/#tag/Users/paths/~1users/post
+- [Traccar Create User](https://www.traccar.org/api-reference/#tag/Users/paths/~1users/post)
 - [UserData DTO reference](./../reference/dto/user-data)
 - [UserAttributesData DTO reference](./../reference/dto/user-attributes-data)

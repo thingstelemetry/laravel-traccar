@@ -26,12 +26,9 @@ class GetAllUsers extends Request
      */
     public function createDtoFromResponse(Response $response): array
     {
-        $json = $response->json();
-
-        if (! is_array($json)) {
-            return [];
-        }
-
-        return array_map(fn ($u) => UserData::fromArray((array) $u), $json);
+        return array_map(
+            callback: fn ($u) => UserData::fromArray(data: (array) $u),
+            array: $response->json()
+        );
     }
 }
