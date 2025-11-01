@@ -47,6 +47,13 @@ export default defineConfig({
                     {text: 'Reverse Geocode', link: '/server/geocode'},
                 ]
             },
+            {
+                text: 'Events',
+                collapsed: true,
+                items: [
+                    {text: 'Get Information', link: '/events/get-information'},
+                ]
+            },
 {
                 text: 'Devices',
                 collapsed: true,
@@ -70,6 +77,7 @@ export default defineConfig({
                     {text: 'Device Data', link: '/reference/dto/device-data'},
                     {text: 'Device Attribute Data', link: '/reference/dto/device-attributes-data'},
                     {text: 'Device Share Data', link: '/reference/dto/device-share-data'},
+                    {text: 'Event Data', link: '/reference/dto/event-data'},
                 ]
             },
             {
