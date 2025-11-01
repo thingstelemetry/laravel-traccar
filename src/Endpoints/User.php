@@ -8,10 +8,10 @@ use TrackTelemetry\Traccar\Traccar;
 use TrackTelemetry\Traccar\Dto\UserData;
 use TrackTelemetry\Traccar\Dto\StatusData;
 use TrackTelemetry\Traccar\Requests\GetUser;
-use TrackTelemetry\Traccar\Requests\GetAllUsers;
 use TrackTelemetry\Traccar\Requests\CreateUser;
-use TrackTelemetry\Traccar\Requests\UpdateUser;
 use TrackTelemetry\Traccar\Requests\DeleteUser;
+use TrackTelemetry\Traccar\Requests\UpdateUser;
+use TrackTelemetry\Traccar\Requests\GetAllUsers;
 
 class User extends Traccar
 {

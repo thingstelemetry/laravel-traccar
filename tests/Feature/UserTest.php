@@ -3,69 +3,69 @@
 declare(strict_types=1);
 
 use Carbon\CarbonImmutable;
-use Saloon\Exceptions\Request\Statuses\NotFoundException;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use TrackTelemetry\Traccar\Dto\UserData;
-use TrackTelemetry\Traccar\Facades\User;
-use TrackTelemetry\Traccar\Enums\Status;
-use TrackTelemetry\Traccar\Dto\StatusData;
 use TrackTelemetry\Traccar\Enums\Map;
-use TrackTelemetry\Traccar\Enums\CoordinateFormat;
-use TrackTelemetry\Traccar\Dto\UserAttributesData;
-use TrackTelemetry\Traccar\Requests\GetAllUsers;
+use TrackTelemetry\Traccar\Dto\UserData;
+use TrackTelemetry\Traccar\Enums\Status;
+use TrackTelemetry\Traccar\Facades\User;
+use TrackTelemetry\Traccar\Dto\StatusData;
 use TrackTelemetry\Traccar\Requests\GetUser;
 use TrackTelemetry\Traccar\Requests\CreateUser;
-use TrackTelemetry\Traccar\Requests\UpdateUser;
 use TrackTelemetry\Traccar\Requests\DeleteUser;
+use TrackTelemetry\Traccar\Requests\UpdateUser;
+use TrackTelemetry\Traccar\Requests\GetAllUsers;
+use TrackTelemetry\Traccar\Dto\UserAttributesData;
+use TrackTelemetry\Traccar\Enums\CoordinateFormat;
+use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 beforeEach(function () {
     $this->users = [
         [
-            'id' => 6,
-            'name' => 'Jane Doe',
-            'email' => 'jane@example.com',
-            'phone' => '+15551234567',
-            'readonly' => false,
-            'administrator' => false,
-            'map' => 'osm',
-            'latitude' => 0.0,
-            'longitude' => 0.0,
-            'zoom' => 0,
-            'password' => null,
+            'id'               => 6,
+            'name'             => 'Jane Doe',
+            'email'            => 'jane@example.com',
+            'phone'            => '+15551234567',
+            'readonly'         => false,
+            'administrator'    => false,
+            'map'              => 'osm',
+            'latitude'         => 0.0,
+            'longitude'        => 0.0,
+            'zoom'             => 0,
+            'password'         => null,
             'coordinateFormat' => 'dd',
-            'disabled' => false,
-            'expirationTime' => null,
-            'deviceLimit' => 0,
-            'userLimit' => 0,
-            'deviceReadonly' => false,
-            'limitCommands' => false,
-            'fixedEmail' => false,
-            'poiLayer' => null,
-            'attributes' => [],
+            'disabled'         => false,
+            'expirationTime'   => null,
+            'deviceLimit'      => 0,
+            'userLimit'        => 0,
+            'deviceReadonly'   => false,
+            'limitCommands'    => false,
+            'fixedEmail'       => false,
+            'poiLayer'         => null,
+            'attributes'       => [],
         ],
         [
-            'id' => 7,
-            'name' => 'John Smith',
-            'email' => 'john@example.com',
-            'phone' => null,
-            'readonly' => true,
-            'administrator' => false,
-            'map' => 'osm',
-            'latitude' => 0.0,
-            'longitude' => 0.0,
-            'zoom' => 0,
-            'password' => null,
+            'id'               => 7,
+            'name'             => 'John Smith',
+            'email'            => 'john@example.com',
+            'phone'            => null,
+            'readonly'         => true,
+            'administrator'    => false,
+            'map'              => 'osm',
+            'latitude'         => 0.0,
+            'longitude'        => 0.0,
+            'zoom'             => 0,
+            'password'         => null,
             'coordinateFormat' => 'ddm',
-            'disabled' => false,
-            'expirationTime' => null,
-            'deviceLimit' => 10,
-            'userLimit' => 1,
-            'deviceReadonly' => false,
-            'limitCommands' => true,
-            'fixedEmail' => true,
-            'poiLayer' => null,
-            'attributes' => [],
+            'disabled'         => false,
+            'expirationTime'   => null,
+            'deviceLimit'      => 10,
+            'userLimit'        => 1,
+            'deviceReadonly'   => false,
+            'limitCommands'    => true,
+            'fixedEmail'       => true,
+            'poiLayer'         => null,
+            'attributes'       => [],
         ],
     ];
 });
@@ -103,26 +103,26 @@ it(description: 'can get a user by id', closure: function () {
 
 it(description: 'can create a user', closure: function () {
     $created = [
-        'id' => 8,
-        'name' => 'Alice',
-        'email' => 'alice@example.com',
-        'phone' => '+15557654321',
-        'readonly' => false,
-        'administrator' => false,
-        'map' => 'osm',
-        'latitude' => 0.0,
-        'longitude' => 0.0,
-        'zoom' => 0,
-        'password' => null,
+        'id'               => 8,
+        'name'             => 'Alice',
+        'email'            => 'alice@example.com',
+        'phone'            => '+15557654321',
+        'readonly'         => false,
+        'administrator'    => false,
+        'map'              => 'osm',
+        'latitude'         => 0.0,
+        'longitude'        => 0.0,
+        'zoom'             => 0,
+        'password'         => null,
         'coordinateFormat' => 'dd',
-        'disabled' => false,
-        'deviceLimit' => 0,
-        'userLimit' => 0,
-        'deviceReadonly' => false,
-        'limitCommands' => false,
-        'fixedEmail' => false,
-        'poiLayer' => null,
-        'attributes' => [],
+        'disabled'         => false,
+        'deviceLimit'      => 0,
+        'userLimit'        => 0,
+        'deviceReadonly'   => false,
+        'limitCommands'    => false,
+        'fixedEmail'       => false,
+        'poiLayer'         => null,
+        'attributes'       => [],
     ];
 
     MockClient::global([
