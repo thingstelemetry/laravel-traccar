@@ -32,5 +32,5 @@ $result->status->label(); // 'Success' or 'Failure'
 ```
 
 ## Important Links
-- Traccar Delete User: https://www.traccar.org/api-reference/#tag/Users/paths/~1users~1%7Bid%7D/delete
+- [Traccar Delete User](https://www.traccar.org/api-reference/#tag/Users/paths/~1users~1%7Bid%7D/delete)
 - [Status enum reference](./../reference/enums/status)

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TrackTelemetry\Traccar\Endpoints;
 
+use Carbon\CarbonInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use TrackTelemetry\Traccar\Traccar;
@@ -16,8 +17,10 @@ use TrackTelemetry\Traccar\Requests\RebootServer;
 use TrackTelemetry\Traccar\Requests\GetServerCache;
 use TrackTelemetry\Traccar\Requests\ReverseGeocode;
 use Saloon\Exceptions\Request\FatalRequestException;
+use TrackTelemetry\Traccar\Dto\ServerStatisticsData;
 use TrackTelemetry\Traccar\Requests\UploadServerFile;
 use TrackTelemetry\Traccar\Requests\GetServerTimezones;
+use TrackTelemetry\Traccar\Requests\GetServerStatistics;
 use TrackTelemetry\Traccar\Requests\RunGarbageCollector;
 use TrackTelemetry\Traccar\Requests\GetServerInformation;
 use TrackTelemetry\Traccar\Requests\UpdateServerInformation;
@@ -171,6 +174,19 @@ class Server extends Traccar
     public function geocode(float $latitude, float $longitude): string
     {
         $response = $this->connector->send(request: new ReverseGeocode(latitude: $latitude, longitude: $longitude));
+
+        return $response->dtoOrFail();
+    }
+    /**
+     * Get aggregated server statistics between two timestamps.
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function statistics(CarbonInterface $from, CarbonInterface $to): ServerStatisticsData
+    {
+        $response = $this->connector->send(
+            request: new GetServerStatistics(from: $from, to: $to)
+        );
 
         return $response->dtoOrFail();
     }

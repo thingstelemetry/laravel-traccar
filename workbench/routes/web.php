@@ -80,6 +80,16 @@ Route::prefix('/server')->group(function () {
 
         dump($address);
     });
+
+    Route::get('/statistics', function () {
+
+        $stats = \TrackTelemetry\Traccar\Facades\Server::statistics(
+            from: \Carbon\CarbonImmutable::parse(time: '01 Oct 2025'),
+            to: \Carbon\CarbonImmutable::parse(time: '31 Nov 2025')
+        );
+
+        dump($stats);
+    });
 });
 
 Route::prefix('/devices')->group(function () {

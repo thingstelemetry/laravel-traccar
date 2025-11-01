@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Carbon\CarbonImmutable;
 use Saloon\Http\PendingRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -15,8 +16,10 @@ use TrackTelemetry\Traccar\Requests\RebootServer;
 use TrackTelemetry\Traccar\Requests\GetServerCache;
 use TrackTelemetry\Traccar\Requests\ReverseGeocode;
 use Saloon\Exceptions\Request\FatalRequestException;
+use TrackTelemetry\Traccar\Dto\ServerStatisticsData;
 use TrackTelemetry\Traccar\Requests\UploadServerFile;
 use TrackTelemetry\Traccar\Requests\GetServerTimezones;
+use TrackTelemetry\Traccar\Requests\GetServerStatistics;
 use TrackTelemetry\Traccar\Requests\RunGarbageCollector;
 use TrackTelemetry\Traccar\Requests\GetServerInformation;
 use TrackTelemetry\Traccar\Requests\UpdateServerInformation;
@@ -174,4 +177,32 @@ it(description: 'can reverse geocode coordinates', closure: function () {
     expect(value: $address)
         ->toBeString()
         ->toEqual(expected: 'Nairobi, Kenya');
+});
+
+it(description: 'can fetch server statistics between dates', closure: function () {
+    $payload = [
+        [
+            'captureTime'      => '2019-08-24T14:15:22Z',
+            'activeUsers'      => 2,
+            'activeDevices'    => 5,
+            'requests'         => 120,
+            'messagesReceived' => 450,
+            'messagesStored'   => 440,
+        ],
+    ];
+
+    MockClient::global(mockData: [
+        GetServerStatistics::class => MockResponse::make($payload),
+    ]);
+
+    $from = CarbonImmutable::parse(time: '2019-08-24T00:00:00Z');
+    $to = CarbonImmutable::parse(time: '2019-08-25T00:00:00Z');
+
+    $stats = Server::statistics(from: $from, to: $to);
+
+    expect(value: $stats)
+        ->toBeInstanceOf(class: ServerStatisticsData::class)
+        ->and(value: $stats->captureTime)->toBeInstanceOf(class: CarbonImmutable::class)
+        ->and(value: $stats->activeUsers)->toEqual(expected: 2)
+        ->and(value: $stats->messagesStored)->toEqual(expected: 440);
 });

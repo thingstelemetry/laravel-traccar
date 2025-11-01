@@ -3,7 +3,7 @@
 Update an existing user on your Traccar server.
 
 > [!IMPORTANT]
-> Recommended workflow: fetch the user DTO first, modify only the fields you need, then send the updated DTO. This avoids accidental resets.
+> **Recommended workflow**: fetch the user DTO first, modify only the fields you need, then send the updated DTO. This avoids accidental resets.
 
 ## Usage
 
@@ -28,11 +28,11 @@ $updated = User::update($user); // returns TrackTelemetry\Traccar\Dto\UserData
 ## Results
 
 ```php
-$updated->id;         // 42
-$updated->name;       // "Jane Doe (Updated)"
+$updated->id; // 42
+$updated->name; // "Jane Doe (Updated)"
 $updated->map->value; // e.g., "osm"
 ```
 
 ## Important Links
-- Traccar Update User: https://www.traccar.org/api-reference/#tag/Users/paths/~1users~1%7Bid%7D/put
+- [Traccar Update User](https://www.traccar.org/api-reference/#tag/Users/paths/~1users~1%7Bid%7D/put)
 - [UserData DTO reference](./../reference/dto/user-data)
