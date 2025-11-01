@@ -204,13 +204,13 @@ Route::prefix('/events')->group(function () {
 });
 
 Route::prefix('/users')->group(function () {
-
-
     Route::get('/all', function () {
         $users = \TrackTelemetry\Traccar\Facades\User::all();
 
         dump($users);
     });
+
+    // TODO: Add create, update, delete routes
 
     Route::get('/{id}', function (int $id) {
         $user = \TrackTelemetry\Traccar\Facades\User::get(id: $id);
