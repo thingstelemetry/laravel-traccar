@@ -48,6 +48,13 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Users',
+                collapsed: true,
+                items: [
+                    {text: 'Get Information', link: '/users/get-information'},
+                ]
+            },
+            {
                 text: 'Events',
                 collapsed: true,
                 items: [
@@ -78,6 +85,8 @@ export default defineConfig({
                     {text: 'Device Attribute Data', link: '/reference/dto/device-attributes-data'},
                     {text: 'Device Share Data', link: '/reference/dto/device-share-data'},
                     {text: 'Event Data', link: '/reference/dto/event-data'},
+                    {text: 'User Data', link: '/reference/dto/user-data'},
+                    {text: 'User Attributes Data', link: '/reference/dto/user-attributes-data'},
                 ]
             },
             {
