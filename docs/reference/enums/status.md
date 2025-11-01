@@ -1,11 +1,11 @@
 # Status Enum Reference
 
-The `TrackTelemetry\Traccar\Enums\Status` enum represents a boolean-like operation result for actions such as deleting a device.
+The `ThingsTelemetry\Traccar\Enums\Status` enum represents a boolean-like operation result for actions such as deleting a device.
 
 ## Example
 
 ```php
-use TrackTelemetry\Traccar\Enums\Status;
+use ThingsTelemetry\Traccar\Enums\Status;
 
 $status = Status::SUCCESS;
 $status->value; // 'success'

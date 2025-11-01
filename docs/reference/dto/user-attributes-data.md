@@ -1,6 +1,6 @@
 # User Attributes Data DTO Reference
 
-The `TrackTelemetry\\Traccar\\Dto\\UserAttributesData` provides typed access to user-specific attributes supported by Traccar. All fields are optional; booleans default to `false`, numbers and strings default to `null`.
+The `ThingsTelemetry\\Traccar\\Dto\\UserAttributesData` provides typed access to user-specific attributes supported by Traccar. All fields are optional; booleans default to `false`, numbers and strings default to `null`.
 
 ```php
 $attrs = $user->attributes; // UserAttributesData
@@ -52,7 +52,7 @@ $raw = $attrs->toArray();   // array<string, mixed>
 
 ### Example
 ```php
-use TrackTelemetry\\Traccar\\Dto\\UserAttributesData;
+use ThingsTelemetry\\Traccar\\Dto\\UserAttributesData;
 
 $attrs = new UserAttributesData(
     mapGeofences: true,

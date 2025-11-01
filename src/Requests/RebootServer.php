@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use TrackTelemetry\Traccar\Enums\Status;
-use TrackTelemetry\Traccar\Dto\StatusData;
+use ThingsTelemetry\Traccar\Enums\Status;
+use ThingsTelemetry\Traccar\Dto\StatusData;
 
 class RebootServer extends Request
 {

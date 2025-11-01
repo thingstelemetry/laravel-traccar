@@ -1,11 +1,11 @@
 # Map Enum Reference
 
-The `TrackTelemetry\Traccar\Enums\Map` enum defines the available map providers supported by the Traccar integration. It provides a clear, typed way to reference map layers used for visualization within the system.
+The `ThingsTelemetry\Traccar\Enums\Map` enum defines the available map providers supported by the Traccar integration. It provides a clear, typed way to reference map layers used for visualization within the system.
 
 ## Example
 
 ```php
-use TrackTelemetry\Traccar\Enums\Map;
+use ThingsTelemetry\Traccar\Enums\Map;
 
 $map = Map::GOOGLE_SATELLITE;
 $map->value; // googleSatellite

@@ -7,10 +7,10 @@ Fetch the server cache state.
 
 ## Request
 
-Use the `TrackTelemetry\Traccar\Facades\Server::cache()` method to read the cache string from Traccar.
+Use the `ThingsTelemetry\Traccar\Facades\Server::cache()` method to read the cache string from Traccar.
 
 ```php
-use TrackTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Facades\Server;
 
 $cache = Server::cache();
 ```

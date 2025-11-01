@@ -1,11 +1,11 @@
 # CoordinateFormat Enum Reference
 
-The `TrackTelemetry\Traccar\Enums\CoordinateFormat` enum defines how Traccar server coordinates are displayed and formatted.
+The `ThingsTelemetry\Traccar\Enums\CoordinateFormat` enum defines how Traccar server coordinates are displayed and formatted.
 
 ## Example
 
 ```php
-use TrackTelemetry\Traccar\Enums\CoordinateFormat;
+use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
 
 $format = CoordinateFormat::DMS;
 $format->value; // dms

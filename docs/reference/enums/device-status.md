@@ -1,11 +1,11 @@
 # DeviceStatus Enum Reference
 
-The `TrackTelemetry\Traccar\Enums\DeviceStatus` enum represents a device connection status as reported by Traccar.
+The `ThingsTelemetry\Traccar\Enums\DeviceStatus` enum represents a device connection status as reported by Traccar.
 
 ## Example
 
 ```php
-use TrackTelemetry\Traccar\Enums\DeviceStatus;
+use ThingsTelemetry\Traccar\Enums\DeviceStatus;
 
 $status = DeviceStatus::ONLINE;
 $status->value; // online

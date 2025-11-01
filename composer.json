@@ -1,16 +1,9 @@
 {
-    "name": "tracktelemetry/traccar-api",
+    "name": "thingstelemetry/traccar-api",
     "description": "PHP and Laravel client for the Traccar API",
     "type": "library",
     "license": "MIT",
-    "keywords": [
-        "traccar",
-        "gps",
-        "tracking",
-        "laravel",
-        "php",
-        "api"
-    ],
+    "keywords": [ "traccar", "gps", "tracking", "laravel", "php", "api", "iot"],
     "authors": [
         {
             "name": "Njogu Amos",
@@ -29,12 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "TrackTelemetry\\Traccar\\": "src/"
+            "ThingsTelemetry\\Traccar\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TrackTelemetry\\Traccar\\Tests\\": "tests/",
+            "ThingsTelemetry\\Traccar\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/",
             "Workbench\\Database\\Factories\\": "workbench/database/factories/",
             "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
@@ -62,10 +55,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TrackTelemetry\\Traccar\\TraccarServiceProvider"
+                "ThingsTelemetry\\Traccar\\TraccarServiceProvider"
             ],
             "aliases": {
-                "Server": "TrackTelemetry\\Traccar\\Facades\\Server"
+                "Server": "ThingsTelemetry\\Traccar\\Facades\\Server"
             }
         }
     },

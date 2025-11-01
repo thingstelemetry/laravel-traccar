@@ -1,11 +1,11 @@
 # DeviceCategory Enum Reference
 
-The `TrackTelemetry\Traccar\Enums\DeviceCategory` enum represents the Traccar device category values.
+The `ThingsTelemetry\Traccar\Enums\DeviceCategory` enum represents the Traccar device category values.
 
 ## Example
 
 ```php
-use TrackTelemetry\Traccar\Enums\DeviceCategory;
+use ThingsTelemetry\Traccar\Enums\DeviceCategory;
 
 $cat = DeviceCategory::TRUCK;
 $cat->value; // truck

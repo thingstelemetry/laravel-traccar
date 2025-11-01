@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Dto;
+namespace ThingsTelemetry\Traccar\Dto;
 
 use Carbon\CarbonInterface;
 

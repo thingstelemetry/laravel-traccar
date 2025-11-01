@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Endpoints;
+namespace ThingsTelemetry\Traccar\Endpoints;
 
-use TrackTelemetry\Traccar\Traccar;
-use TrackTelemetry\Traccar\Dto\EventData;
-use TrackTelemetry\Traccar\Requests\GetEvent;
+use ThingsTelemetry\Traccar\Traccar;
+use ThingsTelemetry\Traccar\Dto\EventData;
+use ThingsTelemetry\Traccar\Requests\GetEvent;
 
 class Event extends Traccar
 {

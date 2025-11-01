@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Support;
+namespace ThingsTelemetry\Traccar\Support;
 
 class StorageInfo
 {

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use TrackTelemetry\Traccar\Support\Mount;
-use TrackTelemetry\Traccar\Support\StorageInfo;
+use ThingsTelemetry\Traccar\Support\Mount;
+use ThingsTelemetry\Traccar\Support\StorageInfo;
 
 it(description: 'creates mounts correctly from numeric array', closure: function () {
     $data = [100, 200, 300, 600];

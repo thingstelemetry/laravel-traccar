@@ -5,9 +5,9 @@ declare(strict_types=1);
 use Carbon\CarbonImmutable;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use TrackTelemetry\Traccar\Dto\EventData;
-use TrackTelemetry\Traccar\Facades\Event;
-use TrackTelemetry\Traccar\Requests\GetEvent;
+use ThingsTelemetry\Traccar\Dto\EventData;
+use ThingsTelemetry\Traccar\Facades\Event;
+use ThingsTelemetry\Traccar\Requests\GetEvent;
 
 it(description: 'can retrieve an event by id', closure: function () {
     $payload = [

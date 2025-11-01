@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Dto;
+namespace ThingsTelemetry\Traccar\Dto;
 
-use TrackTelemetry\Traccar\Enums\Status;
+use ThingsTelemetry\Traccar\Enums\Status;
 
 class StatusData
 {

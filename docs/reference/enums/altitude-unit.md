@@ -1,11 +1,11 @@
 # AltitudeUnit Enum Reference
 
-The `TrackTelemetry\Traccar\Enums\AltitudeUnit` enum defines Traccar Server altitude measurement units.
+The `ThingsTelemetry\Traccar\Enums\AltitudeUnit` enum defines Traccar Server altitude measurement units.
 
 ## Example
 
 ```php
-use TrackTelemetry\Traccar\Enums\AltitudeUnit;
+use ThingsTelemetry\Traccar\Enums\AltitudeUnit;
 
 $unit = AltitudeUnit::FEET;
 $unit->value; // 'ft'

@@ -4,17 +4,17 @@ Get general about your Traccar server instance into your laravel application.
 
 ## Request
 
-Use the `TrackTelemetry\Traccar\Facades\Server::getInformation()` method to get information about your Traccar server instance.
+Use the `ThingsTelemetry\Traccar\Facades\Server::getInformation()` method to get information about your Traccar server instance.
 
 ```php
-use TrackTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Facades\Server;
 
 $info = Server::getInformation(); 
 ```
 
 ## Results
 
-The response is a instance of ` TrackTelemetry\Traccar\Dto\ServerData` DTO class
+The response is a instance of ` ThingsTelemetry\Traccar\Dto\ServerData` DTO class
 
 ```php
 $version = $info->version; // 6.10
@@ -28,16 +28,16 @@ $timezone = $info->attributes->timezone; // UTC
 
 While most field are casted into a string or ints, some are casted into a DTO/Service class.
 
-- **`ServerAttributesData`** → [`TrackTelemetry\Traccar\Dto\ServerAttributesData`](./../reference/dto/server-data)  
+- **`ServerAttributesData`** → [`ThingsTelemetry\Traccar\Dto\ServerAttributesData`](./../reference/dto/server-data)  
   *Data Transfer Object for Traccar server attributes.*
 
-- **`map`** → [`TrackTelemetry\Traccar\Enums\Map`](./../reference/enums/map)  
+- **`map`** → [`ThingsTelemetry\Traccar\Enums\Map`](./../reference/enums/map)  
   *Enum representing available map providers.*
 
-- **`coordinateFormat`** → [`TrackTelemetry\Traccar\Enums\CoordinateFormat`](./../reference/enums/coordinate-format)  
+- **`coordinateFormat`** → [`ThingsTelemetry\Traccar\Enums\CoordinateFormat`](./../reference/enums/coordinate-format)  
   *Enum defining how coordinates are displayed or formatted.*
 
-- **`storage`** → [`TrackTelemetry\Traccar\Support\StorageInfo`](./../reference/enums/map)  
+- **`storage`** → [`ThingsTelemetry\Traccar\Support\StorageInfo`](./../reference/enums/map)  
   *Service class representing storage information (total, free, etc.).*
 > [!IMPORTANT]
 > Refer to the [ServerData DTO documentation](./../reference/dto/server-data) for more details on the DTO structure.

@@ -1,10 +1,10 @@
 # Server Data Dto Reference
 
-The `TrackTelemetry\Traccar\Dto\ServerData` represents the Traccar server configuration and system metadata. This class provides typed access to server attributes, map preferences, storage information, and other settings.
+The `ThingsTelemetry\Traccar\Dto\ServerData` represents the Traccar server configuration and system metadata. This class provides typed access to server attributes, map preferences, storage information, and other settings.
 
 
 ```php
-use TrackTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Facades\Server;
 
 $info = Server::getInformation(); 
 ```
@@ -18,7 +18,7 @@ $id = $info->id; // 1
 
 ## `attributes` → [`ServerAttributesData`](./server-attributes-data)
 
-Typed server attributes & preferences (units, timezones, UI flags). Instance of `TrackTelemetry\Traccar\Dto\ServerAttributesData`
+Typed server attributes & preferences (units, timezones, UI flags). Instance of `ThingsTelemetry\Traccar\Dto\ServerAttributesData`
 ```php
 $attributes = $info->attributes; // instance of ServerAttributesData
 ```
@@ -48,7 +48,7 @@ $info->deviceReadonly; // true
 
 ## `map` → [`Map`](../enums/map)
 
-Traccar map provider (enum). Instance of `TrackTelemetry\Traccar\Enums\Map`
+Traccar map provider (enum). Instance of `ThingsTelemetry\Traccar\Enums\Map`
 ```php
 $info->map->value;   // "osm"
 $info->map->label(); // "OpenStreetMap"
@@ -105,7 +105,7 @@ $info->forceSettings; // true
 
 ## `coordinateFormat` → [`CoordinateFormat`](../enums/coordinate-format)
 
-Preferred coordinate display format (enum). Instance of `TrackTelemetry\Traccar\Enums\CoordinateFormat`
+Preferred coordinate display format (enum). Instance of `ThingsTelemetry\Traccar\Enums\CoordinateFormat`
 ```php
 $info->coordinateFormat->value;   // "dd"
 $info->coordinateFormat->label(); // "Decimal Degrees"
@@ -169,7 +169,7 @@ $info->textEnabled; // false
 
 ## `storageSpace` → `StorageInfo`
 
-Instance of `TrackTelemetry\Traccar\Support` structured storage class.
+Instance of `ThingsTelemetry\Traccar\Support` structured storage class.
 ```php
 $info->storageSpace->formatted();
 // [

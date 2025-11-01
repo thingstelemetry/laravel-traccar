@@ -1,9 +1,9 @@
 # Event Data DTO Reference
 
-The `TrackTelemetry\Traccar\Dto\EventData` represents a Traccar event entity. Events describe state changes or notable conditions detected by the server (e.g., geofence enter/exit, ignition on/off, overspeed, etc.).
+The `ThingsTelemetry\Traccar\Dto\EventData` represents a Traccar event entity. Events describe state changes or notable conditions detected by the server (e.g., geofence enter/exit, ignition on/off, overspeed, etc.).
 
 ```php
-use TrackTelemetry\Traccar\Facades\Event;
+use ThingsTelemetry\Traccar\Facades\Event;
 
 $event = Event::get(1234); // EventData
 ```

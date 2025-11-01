@@ -12,27 +12,27 @@ Update an existing device on your Traccar server.
 ## Usage
 
 ```php
-use TrackTelemetry\Traccar\Dto\DeviceData;
-use TrackTelemetry\Traccar\Dto\DeviceAttributesData;
-use TrackTelemetry\Traccar\Enums\DeviceCategory;
-use TrackTelemetry\Traccar\Enums\DeviceStatus;
-use TrackTelemetry\Traccar\Facades\Device;
+use ThingsTelemetry\Traccar\Dto\DeviceData;
+use ThingsTelemetry\Traccar\Dto\DeviceAttributesData;
+use ThingsTelemetry\Traccar\Enums\DeviceCategory;
+use ThingsTelemetry\Traccar\Enums\DeviceStatus;
+use ThingsTelemetry\Traccar\Facades\Device;
 
 // 1) Get an existing device (example: by uniqueId)
 $devices = Device::get(uniqueIds: ['ABC123']);
-$data = $devices->first(); // TrackTelemetry\Traccar\Dto\DeviceData
+$data = $devices->first(); // ThingsTelemetry\Traccar\Dto\DeviceData
 
 // 2) Update the fields you want to change
 $data->name = 'Truck 1 - Updated';
 $data->attributes->speedLimit = 90.0;
 
 // 3) Send the updated DTO
-$updated = Device::update($data); // returns TrackTelemetry\Traccar\Dto\DeviceData
+$updated = Device::update($data); // returns ThingsTelemetry\Traccar\Dto\DeviceData
 ```
 
 ## Results
 
-The response is a `TrackTelemetry\Traccar\Dto\DeviceData` instance.
+The response is a `ThingsTelemetry\Traccar\Dto\DeviceData` instance.
 
 ```php
 $name = $updated->name;                  // "Truck 1 - Updated"

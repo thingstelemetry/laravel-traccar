@@ -5,7 +5,7 @@ Retrieve the list of timezones supported by the server. No admin privileges are 
 ## Request
 
 ```php
-use TrackTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Facades\Server;
 
 $zones = Server::timezones(); // Illuminate\Support\Collection of strings
 ```

@@ -1,12 +1,12 @@
 # Server Attributes Data Dto Reference
 
-The `TrackTelemetry\Traccar\Dto\ServerAttributesData` represents the **configurable preferences and UI behavior** of a Traccar server instance. It provides structured access to map display settings, unit preferences, API keys, and user interface controls defined in the Traccar configuration.
+The `ThingsTelemetry\Traccar\Dto\ServerAttributesData` represents the **configurable preferences and UI behavior** of a Traccar server instance. It provides structured access to map display settings, unit preferences, API keys, and user interface controls defined in the Traccar configuration.
 
 > [!WARNING]
 > These attributes may not be exhaustively documented. Please let us know if you find any missing attributes or better make a PR.
 
 ```php
-use TrackTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Facades\Server;
 
 $attributes = Server::getInformation()->attributes;
 ```

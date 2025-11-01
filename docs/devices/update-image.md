@@ -13,7 +13,7 @@ Upload or update a device image on your Traccar server.
 ## Usage (application)
 
 ```php
-use TrackTelemetry\Traccar\Facades\Device;
+use ThingsTelemetry\Traccar\Facades\Device;
 use Illuminate\Http\UploadedFile;
 
 // From a controller/form request, you typically receive an Illuminate\Http\UploadedFile

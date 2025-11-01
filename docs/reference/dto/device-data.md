@@ -1,10 +1,10 @@
 # Device Data DTO Reference
 
-The `TrackTelemetry\Traccar\Dto\DeviceData` represents a Traccar device entity with typed fields and sensible defaults. It is used for both reading devices and constructing payloads (e.g., for creating a device).
+The `ThingsTelemetry\Traccar\Dto\DeviceData` represents a Traccar device entity with typed fields and sensible defaults. It is used for both reading devices and constructing payloads (e.g., for creating a device).
 
 
 ```php
-use TrackTelemetry\Traccar\Facades\Device;
+use ThingsTelemetry\Traccar\Facades\Device;
 
 $devices = Device::getAll(); // Illuminate\Support\Collection<DeviceData>
 $device = $devices->first();
@@ -13,10 +13,10 @@ $device = $devices->first();
 Creating a new DTO for create operations
 
 ```php
-use TrackTelemetry\Traccar\Dto\DeviceData;
-use TrackTelemetry\Traccar\Dto\DeviceAttributesData;
-use TrackTelemetry\Traccar\Enums\DeviceCategory;
-use TrackTelemetry\Traccar\Enums\DeviceStatus;
+use ThingsTelemetry\Traccar\Dto\DeviceData;
+use ThingsTelemetry\Traccar\Dto\DeviceAttributesData;
+use ThingsTelemetry\Traccar\Enums\DeviceCategory;
+use ThingsTelemetry\Traccar\Enums\DeviceStatus;
 
 $dto = new DeviceData(
     name: 'My Vehicle',

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests;
 
 use JsonException;
 use Saloon\Enums\Method;
@@ -11,7 +11,7 @@ use Saloon\Http\Response;
 use InvalidArgumentException;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Traits\Body\HasJsonBody;
-use TrackTelemetry\Traccar\Dto\UserData;
+use ThingsTelemetry\Traccar\Dto\UserData;
 
 class UpdateUser extends Request implements HasBody
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use TrackTelemetry\Traccar\Support\Mount;
+use ThingsTelemetry\Traccar\Support\Mount;
 
 it(description: 'stores free and total values correctly', closure: function () {
     $mount = new Mount(free: 500, total: 1000);

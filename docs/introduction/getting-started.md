@@ -1,6 +1,6 @@
 # Getting Started
 
-**Track Telemetry Laravel Traccar** is a Laravel specific composer package that simplifies integration with the Traccar GPS tracking platform. It provides an elegant, expressive API to interact with Traccar’s REST endpoints.
+**Things Telemetry Laravel Traccar** is a Laravel specific composer package that simplifies integration with the Traccar GPS tracking platform. It provides an elegant, expressive API to interact with Traccar’s REST endpoints.
 
 
 ## Why This Package?
@@ -32,7 +32,7 @@
 You can install the package via Composer
 
 ```
-composer require tracktelemetry/traccar
+composer require thingstelemetry/traccar
 ```
 
 ## Environment variables
@@ -49,7 +49,7 @@ TRACCAR_BASE_URL=https://your-traccar-host/api
 You can publish the `traccar.php` configuration by running the following command:
 
 ```bash
-php artisan vendor:publish --tag=config --provider="TrackTelemetry\Traccar\TraccarServiceProvider"
+php artisan vendor:publish --tag=config --provider="ThingsTelemetry\Traccar\TraccarServiceProvider"
 ```
 
 <details>
@@ -84,9 +84,9 @@ php artisan vendor:publish --tag=config --provider="TrackTelemetry\Traccar\Tracc
 ## Usage
 
 ```php
-use TrackTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Facades\Server;
 
-// returns TrackTelemetry\Traccar\Dto\ServerData
+// returns ThingsTelemetry\Traccar\Dto\ServerData
 $info = Server::getInformation(); 
 
 

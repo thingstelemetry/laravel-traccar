@@ -8,21 +8,21 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use TrackTelemetry\Traccar\Enums\Status;
-use TrackTelemetry\Traccar\Dto\ServerData;
-use TrackTelemetry\Traccar\Dto\StatusData;
-use TrackTelemetry\Traccar\Facades\Server;
-use TrackTelemetry\Traccar\Requests\RebootServer;
-use TrackTelemetry\Traccar\Requests\GetServerCache;
-use TrackTelemetry\Traccar\Requests\ReverseGeocode;
+use ThingsTelemetry\Traccar\Enums\Status;
+use ThingsTelemetry\Traccar\Dto\ServerData;
+use ThingsTelemetry\Traccar\Dto\StatusData;
+use ThingsTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Requests\RebootServer;
+use ThingsTelemetry\Traccar\Requests\GetServerCache;
+use ThingsTelemetry\Traccar\Requests\ReverseGeocode;
 use Saloon\Exceptions\Request\FatalRequestException;
-use TrackTelemetry\Traccar\Dto\ServerStatisticsData;
-use TrackTelemetry\Traccar\Requests\UploadServerFile;
-use TrackTelemetry\Traccar\Requests\GetServerTimezones;
-use TrackTelemetry\Traccar\Requests\GetServerStatistics;
-use TrackTelemetry\Traccar\Requests\RunGarbageCollector;
-use TrackTelemetry\Traccar\Requests\GetServerInformation;
-use TrackTelemetry\Traccar\Requests\UpdateServerInformation;
+use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
+use ThingsTelemetry\Traccar\Requests\UploadServerFile;
+use ThingsTelemetry\Traccar\Requests\GetServerTimezones;
+use ThingsTelemetry\Traccar\Requests\GetServerStatistics;
+use ThingsTelemetry\Traccar\Requests\RunGarbageCollector;
+use ThingsTelemetry\Traccar\Requests\GetServerInformation;
+use ThingsTelemetry\Traccar\Requests\UpdateServerInformation;
 
 beforeEach(closure: function () {
     $this->body = [

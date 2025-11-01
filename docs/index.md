@@ -12,7 +12,7 @@ hero:
       link: /introduction/getting-started
     - theme: alt
       text: Source Code
-      link: https://github.com/tracktelemetry/laravel-traccar
+      link: https://github.com/thingstelemetry/laravel-traccar
 
 features:
   - icon: 🔄

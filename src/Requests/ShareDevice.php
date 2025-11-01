@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -10,7 +10,7 @@ use Saloon\Http\Response;
 use Carbon\CarbonInterface;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Traits\Body\HasFormBody;
-use TrackTelemetry\Traccar\Dto\DeviceShareData;
+use ThingsTelemetry\Traccar\Dto\DeviceShareData;
 
 class ShareDevice extends Request implements HasBody
 {

@@ -7,17 +7,17 @@ Fetch a specific user by ID from your Traccar server.
 
 ## Request
 
-Use the `TrackTelemetry\Traccar\Facades\User::get(int $id)` method to retrieve a single user.
+Use the `ThingsTelemetry\Traccar\Facades\User::get(int $id)` method to retrieve a single user.
 
 ```php
-use TrackTelemetry\Traccar\Facades\User;
+use ThingsTelemetry\Traccar\Facades\User;
 
-$user = User::get(42); // TrackTelemetry\Traccar\Dto\UserData
+$user = User::get(42); // ThingsTelemetry\Traccar\Dto\UserData
 ```
 
 ## Result
 
-The response is an instance of `TrackTelemetry\Traccar\Dto\UserData`.
+The response is an instance of `ThingsTelemetry\Traccar\Dto\UserData`.
 
 ```php
 $user->id; // 42

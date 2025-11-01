@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests;
 
 use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Illuminate\Support\Collection;
-use TrackTelemetry\Traccar\Dto\DeviceData;
+use ThingsTelemetry\Traccar\Dto\DeviceData;
 
 class GetForUserDevices extends Request
 {

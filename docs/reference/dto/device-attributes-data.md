@@ -1,11 +1,11 @@
 # Device Attributes Data Dto Reference
 
-The `TrackTelemetry\Traccar\Dto\DeviceAttributesData` represents additional, device-specific attributes provided by Traccar. These can control reporting behavior, visuals, thresholds, and forwarding.
+The `ThingsTelemetry\Traccar\Dto\DeviceAttributesData` represents additional, device-specific attributes provided by Traccar. These can control reporting behavior, visuals, thresholds, and forwarding.
 
 ```php
-use TrackTelemetry\Traccar\Facades\Device;
+use ThingsTelemetry\Traccar\Facades\Device;
 
-// TrackTelemetry\Traccar\Dto\DeviceAttributesData;
+// ThingsTelemetry\Traccar\Dto\DeviceAttributesData;
 $attributes = Device::getAll()->first()->attributes
 ```
 

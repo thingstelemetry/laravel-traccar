@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Enums;
+namespace ThingsTelemetry\Traccar\Enums;
 
 enum DistanceUnit: string
 {

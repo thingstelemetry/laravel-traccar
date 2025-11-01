@@ -9,39 +9,39 @@ Route::redirect('/', '/server');
 
 Route::prefix('/server')->group(function () {
     Route::get('/', function () {
-        dump(\TrackTelemetry\Traccar\Facades\Server::getInformation()->toArray());
+        dump(\ThingsTelemetry\Traccar\Facades\Server::getInformation()->toArray());
     });
 
     Route::get('/update', function () {
         // Get info
-        $data = \TrackTelemetry\Traccar\Facades\Server::getInformation();
+        $data = \ThingsTelemetry\Traccar\Facades\Server::getInformation();
 
         // Update
-        $data->map = \TrackTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
-        $data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
-        $data->attributes->distanceUnit = \TrackTelemetry\Traccar\Enums\DistanceUnit::KILOMETERS;
-        $data->attributes->altitudeUnit = \TrackTelemetry\Traccar\Enums\AltitudeUnit::METERS;
-        $data->attributes->volumeUnit = \TrackTelemetry\Traccar\Enums\VolumeUnit::LITERS;
+        $data->map = \ThingsTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
+        $data->attributes->speedUnit = \ThingsTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
+        $data->attributes->distanceUnit = \ThingsTelemetry\Traccar\Enums\DistanceUnit::KILOMETERS;
+        $data->attributes->altitudeUnit = \ThingsTelemetry\Traccar\Enums\AltitudeUnit::METERS;
+        $data->attributes->volumeUnit = \ThingsTelemetry\Traccar\Enums\VolumeUnit::LITERS;
 
         // Send
-        $response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
+        $response = \ThingsTelemetry\Traccar\Facades\Server::updateInformation($data);
 
         dd($response);
     });
 
     Route::get('/reboot', function () {
-        $result = \TrackTelemetry\Traccar\Facades\Server::reboot();
+        $result = \ThingsTelemetry\Traccar\Facades\Server::reboot();
         dump($result);
     });
 
     Route::get('/cache', function () {
-        $cache = \TrackTelemetry\Traccar\Facades\Server::cache();
+        $cache = \ThingsTelemetry\Traccar\Facades\Server::cache();
 
         dump($cache);
     });
 
     Route::get('/gc', function () {
-        $result = \TrackTelemetry\Traccar\Facades\Server::gc();
+        $result = \ThingsTelemetry\Traccar\Facades\Server::gc();
 
         dump($result);
     });
@@ -57,7 +57,7 @@ Route::prefix('/server')->group(function () {
         file_put_contents($tmpTxt, $contents);
 
         try {
-            $result = \TrackTelemetry\Traccar\Facades\Server::uploadFile(path: $path, file: $tmpTxt);
+            $result = \ThingsTelemetry\Traccar\Facades\Server::uploadFile(path: $path, file: $tmpTxt);
         } finally {
             @unlink($tmpTxt);
         }
@@ -66,7 +66,7 @@ Route::prefix('/server')->group(function () {
     });
 
     Route::get('/timezones', function () {
-        $zones = \TrackTelemetry\Traccar\Facades\Server::timezones();
+        $zones = \ThingsTelemetry\Traccar\Facades\Server::timezones();
 
         // Show a subset to keep output small
         dump($zones);
@@ -76,14 +76,14 @@ Route::prefix('/server')->group(function () {
         $lat = request()->has('lat') ? (float)request('lat') : (request()->has('latitude') ? (float)request('latitude') : -1.286389);
         $lng = request()->has('lng') ? (float)request('lng') : (request()->has('longitude') ? (float)request('longitude') : 36.817223);
 
-        $address = \TrackTelemetry\Traccar\Facades\Server::geocode(latitude: $lat, longitude: $lng);
+        $address = \ThingsTelemetry\Traccar\Facades\Server::geocode(latitude: $lat, longitude: $lng);
 
         dump($address);
     });
 
     Route::get('/statistics', function () {
 
-        $stats = \TrackTelemetry\Traccar\Facades\Server::statistics(
+        $stats = \ThingsTelemetry\Traccar\Facades\Server::statistics(
             from: \Carbon\CarbonImmutable::parse(time: '01 Oct 2025'),
             to: \Carbon\CarbonImmutable::parse(time: '31 Nov 2025')
         );
@@ -99,7 +99,7 @@ Route::prefix('/devices')->group(function () {
         $ids = request('ids') ? explode(',', request('ids')) : null;
         $uniqueIds = request('uniqueIds') ? explode(',', request('uniqueIds')) : null;
 
-        dump(\TrackTelemetry\Traccar\Facades\Device::get(
+        dump(\ThingsTelemetry\Traccar\Facades\Device::get(
             userId: $userId,
             ids: $ids,
             uniqueIds: $uniqueIds
@@ -107,12 +107,12 @@ Route::prefix('/devices')->group(function () {
     });
 
     Route::get('/all', function () {
-        dump(\TrackTelemetry\Traccar\Facades\Device::getAll());
+        dump(\ThingsTelemetry\Traccar\Facades\Device::getAll());
     });
 
     Route::get('/create', function () {
 
-        $attributes = new \TrackTelemetry\Traccar\Dto\DeviceAttributesData(
+        $attributes = new \ThingsTelemetry\Traccar\Dto\DeviceAttributesData(
             speedLimit: 80,
             fuelDropThreshold: 5.0,
             fuelIncreaseThreshold: 10,
@@ -120,19 +120,19 @@ Route::prefix('/devices')->group(function () {
             devicePassword: '34235',
         );
 
-        $deviceData = new \TrackTelemetry\Traccar\Dto\DeviceData(
+        $deviceData = new \ThingsTelemetry\Traccar\Dto\DeviceData(
             name: 'My Vehicle',
             uniqueId: mb_strtoupper(Illuminate\Support\Str::random()),
-            status: \TrackTelemetry\Traccar\Enums\DeviceStatus::UNKNOWN, // ignored on create
+            attributes: $attributes, // ignored on create
+            status: \ThingsTelemetry\Traccar\Enums\DeviceStatus::UNKNOWN,
             disabled: false,
             phone: '+254722000000',
             model: 'Teltonika FMB920',
-            contact: 'Track Telemetry Developer',
-            category: \TrackTelemetry\Traccar\Enums\DeviceCategory::CAR,
-            attributes: $attributes,
+            contact: 'Thigs Telemetry Developer',
+            category: \ThingsTelemetry\Traccar\Enums\DeviceCategory::CAR,
         );
 
-        $device = \TrackTelemetry\Traccar\Facades\Device::create($deviceData);
+        $device = \ThingsTelemetry\Traccar\Facades\Device::create($deviceData);
 
         dump($device);
     });
@@ -140,8 +140,8 @@ Route::prefix('/devices')->group(function () {
     Route::get('/update', function () {
 
         // 1) Get an existing device (example: by uniqueId)
-        $devices = \TrackTelemetry\Traccar\Facades\Device::get(uniqueIds: ['AX3WX9XT6ZYMPQWJ']);
-        $data = $devices->first(); // TrackTelemetry\Traccar\Dto\DeviceData
+        $devices = \ThingsTelemetry\Traccar\Facades\Device::get(uniqueIds: ['AX3WX9XT6ZYMPQWJ']);
+        $data = $devices->first(); // ThingsTelemetry\Traccar\Dto\DeviceData
 
         // 2) Update the DTO properties
         $data->name = 'Truck 1 - Updated';
@@ -149,14 +149,14 @@ Route::prefix('/devices')->group(function () {
         $data->groupId = 123456;
 
         // 3) Send the updated DTO
-        $updated = \TrackTelemetry\Traccar\Facades\Device::update($data); //
+        $updated = \ThingsTelemetry\Traccar\Facades\Device::update($data); //
 
         dump($updated);
     });
 
     Route::get('/update-totals', function () {
 
-        $status = \TrackTelemetry\Traccar\Facades\Device::updateTotals(
+        $status = \ThingsTelemetry\Traccar\Facades\Device::updateTotals(
             deviceId: 2,
             totalDistance: rand(1000, 100000),
             hours: rand(1, 100),
@@ -167,7 +167,7 @@ Route::prefix('/devices')->group(function () {
 
     Route::get('/update-image', function () {
         $deviceId = request('deviceId') ? (int)request('deviceId') : 2;
-        $url = 'https://github.com/tracktelemetry.png';
+        $url = 'https://github.com/thingstelemetry.png';
 
         $contents = @file_get_contents($url);
         if ($contents === false) {
@@ -182,7 +182,7 @@ Route::prefix('/devices')->group(function () {
         file_put_contents($tmpPng, $contents);
 
         try {
-            $filename = \TrackTelemetry\Traccar\Facades\Device::updateImage(
+            $filename = \ThingsTelemetry\Traccar\Facades\Device::updateImage(
                 deviceId: $deviceId,
                 file: $tmpPng,
             );
@@ -199,7 +199,7 @@ Route::prefix('/devices')->group(function () {
 
         $expiration = \Carbon\CarbonImmutable::now()->addHours($hours);
 
-        $share = \TrackTelemetry\Traccar\Facades\Device::share(deviceId: $deviceId, expiration: $expiration);
+        $share = \ThingsTelemetry\Traccar\Facades\Device::share(deviceId: $deviceId, expiration: $expiration);
 
         dump($share->toArray());
     });
@@ -207,7 +207,7 @@ Route::prefix('/devices')->group(function () {
 
 Route::prefix('/events')->group(function () {
     Route::get('/{id}', function (int $id) {
-        $event = \TrackTelemetry\Traccar\Facades\Event::get(id: $id);
+        $event = \ThingsTelemetry\Traccar\Facades\Event::get(id: $id);
 
         dump($event->toArray());
     });
@@ -215,31 +215,31 @@ Route::prefix('/events')->group(function () {
 
 Route::prefix('/users')->group(function () {
     Route::get('/all', function () {
-        $users = \TrackTelemetry\Traccar\Facades\User::all();
+        $users = \ThingsTelemetry\Traccar\Facades\User::all();
 
         dump($users);
     });
 
     Route::get('/create', function () {
 
-        $attributes = new \TrackTelemetry\Traccar\Dto\UserAttributesData(
+        $attributes = new \ThingsTelemetry\Traccar\Dto\UserAttributesData(
             language: 'en',
             mapGeofences: true,
         );
 
-        $data = new \TrackTelemetry\Traccar\Dto\UserData(
+        $data = new \ThingsTelemetry\Traccar\Dto\UserData(
             id: 0, // ignored on create
             name: fake()->name(),
             email: fake()->email(),
             phone: fake()->e164PhoneNumber(),
             readonly: false,
             administrator: false,
-            map: \TrackTelemetry\Traccar\Enums\Map::OSM,
+            map: \ThingsTelemetry\Traccar\Enums\Map::OSM,
             latitude: 0.0,
             longitude: 0.0,
             zoom: 0,
             password: 'secret',
-            coordinateFormat: \TrackTelemetry\Traccar\Enums\CoordinateFormat::DD,
+            coordinateFormat: \ThingsTelemetry\Traccar\Enums\CoordinateFormat::DD,
             disabled: false,
             expirationTime: null,
             deviceLimit: 0,
@@ -251,32 +251,32 @@ Route::prefix('/users')->group(function () {
             attributes: $attributes,
         );
 
-        $created = \TrackTelemetry\Traccar\Facades\User::create($data);
+        $created = \ThingsTelemetry\Traccar\Facades\User::create($data);
 
         dd($created);
     });
 
     Route::get('/update/{id}', function (int $id) {
-        $data = \TrackTelemetry\Traccar\Facades\User::get(id: $id);
+        $data = \ThingsTelemetry\Traccar\Facades\User::get(id: $id);
 
         $data->email = fake()->email();
         $data->phone = fake()->e164PhoneNumber();
         $data->name = fake()->name();
         $data->disabled = true;
 
-        $updated = \TrackTelemetry\Traccar\Facades\User::update($data);
+        $updated = \ThingsTelemetry\Traccar\Facades\User::update($data);
 
         dd($updated);
     });
 
     Route::get('/delete/{id}', function (int $id) {
-        $data = \TrackTelemetry\Traccar\Facades\User::delete(id: $id);
+        $data = \ThingsTelemetry\Traccar\Facades\User::delete(id: $id);
 
         dd($data);
     });
 
     Route::get('/{id}', function (int $id) {
-        $user = \TrackTelemetry\Traccar\Facades\User::get(id: $id);
+        $user = \ThingsTelemetry\Traccar\Facades\User::get(id: $id);
 
         dump($user->toArray());
     });

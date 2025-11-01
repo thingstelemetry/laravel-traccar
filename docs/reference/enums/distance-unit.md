@@ -1,11 +1,11 @@
 # DistanceUnit Enum Reference
 
-The `TrackTelemetry\Traccar\Enums\DistanceUnit` enum defines supported Traccar distance measurement units.
+The `ThingsTelemetry\Traccar\Enums\DistanceUnit` enum defines supported Traccar distance measurement units.
 
 ## Example
 
 ```php
-use TrackTelemetry\Traccar\Enums\DistanceUnit;
+use ThingsTelemetry\Traccar\Enums\DistanceUnit;
 
 $unit = DistanceUnit::MILES;
 $unit->value; // km

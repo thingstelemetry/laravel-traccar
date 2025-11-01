@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Dto;
+namespace ThingsTelemetry\Traccar\Dto;
 
-use TrackTelemetry\Traccar\Enums\Map;
-use TrackTelemetry\Traccar\Support\StorageInfo;
-use TrackTelemetry\Traccar\Enums\CoordinateFormat;
+use ThingsTelemetry\Traccar\Enums\Map;
+use ThingsTelemetry\Traccar\Support\StorageInfo;
+use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
 
 class ServerData
 {

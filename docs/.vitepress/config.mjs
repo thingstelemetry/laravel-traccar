@@ -3,15 +3,15 @@ import {defineConfig} from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
     title: "Laravel Traccar",
-    description: "A Laravel package for Traccar payment integration",
+    description: "A Laravel package for Traccar integration",
     lastUpdated: false,
     sitemap: {
-        hostname: 'https://traccar.tracktelemetry.com'
+        hostname: 'https://traccar.thingstelemetry.com'
     },
     head: [
         [
             'script',
-            { defer: '', 'data-domain': 'traccar.tracktelemetry.com', src: 'https://stats.tracktelemetry.com/js/script.js' }
+            { defer: '', 'data-domain': 'traccar.thingstelemetry.com', src: 'https://stats.thingstelemetry.com/js/script.js' }
         ],
     ],
     themeConfig: {
@@ -113,7 +113,7 @@ export default defineConfig({
         ],
 
         socialLinks: [
-            {icon: 'github', link: 'https://github.com/tracktelemetry/laravel-traccar'}
+            {icon: 'github', link: 'https://github.com/thingstelemetry/laravel-traccar'}
         ],
 
         footer: {

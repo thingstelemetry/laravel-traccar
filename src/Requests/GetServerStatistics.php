@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests;
 
 use JsonException;
 use Saloon\Enums\Method;
@@ -10,7 +10,7 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Arr;
-use TrackTelemetry\Traccar\Dto\ServerStatisticsData;
+use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 class GetServerStatistics extends Request

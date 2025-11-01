@@ -1,12 +1,12 @@
 # VolumeUnit Enum Reference
 
-The `TrackTelemetry\Traccar\Enums\VolumeUnit` enum defines Traccar server fuel/volume measurement units.
+The `ThingsTelemetry\Traccar\Enums\VolumeUnit` enum defines Traccar server fuel/volume measurement units.
 
 
 ## Example
 
 ```php
-use TrackTelemetry\Traccar\Enums\VolumeUnit;
+use ThingsTelemetry\Traccar\Enums\VolumeUnit;
 
 $unit = VolumeUnit::IMPERIAL_GALLON;
 $unit->value; // impGal

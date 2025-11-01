@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Dto;
+namespace ThingsTelemetry\Traccar\Dto;
 
 use Throwable;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Log;
-use TrackTelemetry\Traccar\Enums\Map;
-use TrackTelemetry\Traccar\Enums\CoordinateFormat;
+use ThingsTelemetry\Traccar\Enums\Map;
+use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
 
 class UserData
 {

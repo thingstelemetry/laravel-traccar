@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Saloon\Http\Auth\TokenAuthenticator;
-use TrackTelemetry\Traccar\TraccarConnector;
+use ThingsTelemetry\Traccar\TraccarConnector;
 
 beforeEach(closure: function (): void {
     $this->baseUrl = 'https://demo.traccar.org/api';

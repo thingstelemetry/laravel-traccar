@@ -5,18 +5,18 @@ declare(strict_types=1);
 use Carbon\CarbonImmutable;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use TrackTelemetry\Traccar\Enums\Map;
-use TrackTelemetry\Traccar\Dto\UserData;
-use TrackTelemetry\Traccar\Enums\Status;
-use TrackTelemetry\Traccar\Facades\User;
-use TrackTelemetry\Traccar\Dto\StatusData;
-use TrackTelemetry\Traccar\Requests\GetUser;
-use TrackTelemetry\Traccar\Requests\CreateUser;
-use TrackTelemetry\Traccar\Requests\DeleteUser;
-use TrackTelemetry\Traccar\Requests\UpdateUser;
-use TrackTelemetry\Traccar\Requests\GetAllUsers;
-use TrackTelemetry\Traccar\Dto\UserAttributesData;
-use TrackTelemetry\Traccar\Enums\CoordinateFormat;
+use ThingsTelemetry\Traccar\Enums\Map;
+use ThingsTelemetry\Traccar\Dto\UserData;
+use ThingsTelemetry\Traccar\Enums\Status;
+use ThingsTelemetry\Traccar\Facades\User;
+use ThingsTelemetry\Traccar\Dto\StatusData;
+use ThingsTelemetry\Traccar\Requests\GetUser;
+use ThingsTelemetry\Traccar\Requests\CreateUser;
+use ThingsTelemetry\Traccar\Requests\DeleteUser;
+use ThingsTelemetry\Traccar\Requests\UpdateUser;
+use ThingsTelemetry\Traccar\Requests\GetAllUsers;
+use ThingsTelemetry\Traccar\Dto\UserAttributesData;
+use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 beforeEach(function () {
@@ -294,7 +294,7 @@ it(description: 'can retrieve all users', closure: function () {
     ];
 
     MockClient::global(mockData: [
-        \TrackTelemetry\Traccar\Requests\GetAllUsers::class => MockResponse::make($payload),
+        \ThingsTelemetry\Traccar\Requests\GetAllUsers::class => MockResponse::make($payload),
     ]);
 
     $users = User::all();

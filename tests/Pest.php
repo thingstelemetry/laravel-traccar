@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
-use TrackTelemetry\Traccar\Tests\TestCase;
+use ThingsTelemetry\Traccar\Tests\TestCase;
 
 /*
 |--------------------------------------------------------------------------

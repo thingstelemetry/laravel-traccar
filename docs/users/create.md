@@ -9,11 +9,11 @@ Create a user on your Traccar server.
 ## Usage
 
 ```php
-use TrackTelemetry\Traccar\Dto\UserData;
-use TrackTelemetry\Traccar\Dto\UserAttributesData;
-use TrackTelemetry\Traccar\Enums\Map;
-use TrackTelemetry\Traccar\Enums\CoordinateFormat;
-use TrackTelemetry\Traccar\Facades\User;
+use ThingsTelemetry\Traccar\Dto\UserData;
+use ThingsTelemetry\Traccar\Dto\UserAttributesData;
+use ThingsTelemetry\Traccar\Enums\Map;
+use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
+use ThingsTelemetry\Traccar\Facades\User;
 
 $attributes = new UserAttributesData(
     language: 'en',
@@ -44,12 +44,12 @@ $data = new UserData(
     attributes: $attributes,
 );
 
-$created = User::create($data); // returns TrackTelemetry\Traccar\Dto\UserData
+$created = User::create($data); // returns ThingsTelemetry\Traccar\Dto\UserData
 ```
 
 ## Results
 
-The response is a `TrackTelemetry\Traccar\Dto\UserData` instance.
+The response is a `ThingsTelemetry\Traccar\Dto\UserData` instance.
 
 ```php
 $created->id;            // int

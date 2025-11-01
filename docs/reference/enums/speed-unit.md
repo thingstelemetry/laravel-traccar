@@ -1,11 +1,11 @@
 # SpeedUnit Enum Reference
 
-The `TrackTelemetry\Traccar\Enums\SpeedUnit` enum defines Traccar server speed measurement units.
+The `ThingsTelemetry\Traccar\Enums\SpeedUnit` enum defines Traccar server speed measurement units.
 
 ## Example
 
 ```php
-use TrackTelemetry\Traccar\Enums\SpeedUnit;
+use ThingsTelemetry\Traccar\Enums\SpeedUnit;
 
 $unit = SpeedUnit::KILOMETERS_PER_HOUR;
 $unit->value; // kmh

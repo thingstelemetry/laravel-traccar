@@ -11,7 +11,7 @@ Upload a file into Traccar's web root via `/server/file/{path}`.
 You can upload from a Laravel `UploadedFile`, a Symfony `File`, or a filesystem path string.
 
 ```php
-use TrackTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Facades\Server;
 use Illuminate\Http\UploadedFile;
 
 // Example using UploadedFile (e.g., from an incoming request)
@@ -24,7 +24,7 @@ $result = Server::uploadFile(path: 'web/assets/readme.txt', file: base_path('rea
 
 ## Results
 
-The response is an instance of `TrackTelemetry\Traccar\Dto\StatusData`.
+The response is an instance of `ThingsTelemetry\Traccar\Dto\StatusData`.
 
 ```php
 $status = $result->status->value; // "success"

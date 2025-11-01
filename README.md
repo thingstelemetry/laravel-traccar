@@ -1,15 +1,15 @@
 > [!IMPORTANT]
-> This package is still under development and the API may change. Track Telemetry bears no responsibility for any damages caused by using this package.
+> This package is still under development and the API may change. Things Telemetry bears no responsibility for any damage caused by using this package.
 
-# TrackTelemetry Traccar PHP SDK
+# Things Telemetry Traccar PHP SDK
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/tracktelemetry/laravel-traccar.svg?style=flat-square)](https://packagist.org/packages/tracktelemetry/laravel-traccar)
-![GitHub Actions Test Status](https://img.shields.io/github/actions/workflow/status/tracktelemetry/laravel-traccar/tests.yml?logo=github&label=Tests)
-+[![Total Downloads](https://img.shields.io/packagist/dt/tracktelemetry/laravel-traccar.svg?style=flat-square)](https://packagist.org/packages/tracktelemetry/laravel-traccar)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/thingstelemetry/laravel-traccar.svg?style=flat-square)](https://packagist.org/packages/thingstelemetry/laravel-traccar)
+![GitHub Actions Test Status](https://img.shields.io/github/actions/workflow/status/thingstelemetry/laravel-traccar/tests.yml?logo=github&label=Tests)
++[![Total Downloads](https://img.shields.io/packagist/dt/thingstelemetry/laravel-traccar.svg?style=flat-square)](https://packagist.org/packages/thingstelemetry/laravel-traccar)
 
 ![Traccar Screenshot](./docs/images/traccar-home-page.webp)
 
-**Track Telemetry Laravel Traccar** is a Laravel specific composer package that simplifies integration with the Traccar GPS tracking platform. It provides an elegant, expressive API to interact with Traccar’s REST endpoints.
+**Things Telemetry Laravel Traccar** is a Laravel-specific composer package that simplifies integration with the Traccar GPS tracking platform. It provides an elegant, expressive API to interact with Traccar’s REST endpoints.
 
 
 ## Requirements
@@ -23,7 +23,7 @@
 You can install the package via Composer
 
 ```
-composer require tracktelemetry/traccar
+composer require thingstelemetry/traccar
 ```
 
 ## Configuration
@@ -38,7 +38,7 @@ composer require tracktelemetry/traccar
 You can publish the configuration by running the following command:
 
 ```bash
-php artisan vendor:publish --tag=config --provider="TrackTelemetry\Traccar\TraccarServiceProvider"
+php artisan vendor:publish --tag=config --provider="ThingsTelemetry\Traccar\TraccarServiceProvider"
 ```
 
 # Usage
@@ -46,9 +46,9 @@ php artisan vendor:publish --tag=config --provider="TrackTelemetry\Traccar\Tracc
 Here is a quick example of how to get server information.
 
 ```php
-use TrackTelemetry\Traccar\Facades\Traccar;
+use ThingsTelemetry\Traccar\Facades\Server;
 
-// returns TrackTelemetry\Traccar\Dto\ServerData
+// returns ThingsTelemetry\Traccar\Dto\ServerData
 $info = Server::getInformation(); 
 
 $version = $info->version; // '6.10'
@@ -57,7 +57,7 @@ $timezone = $info->attributes->timezone; // e.g. 'UTC'
 ````
 
 ## Full Documentation
-The full documentation can be found [on Track Telemetry Website](https://traccar.tracktelemetry.com/).
+The full documentation can be found [on Things Telemetry Website](https://traccar.thingstelemetry.com?source=GitHubRepoReadme).
 
 ## Testing
 
@@ -71,7 +71,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Contributing
 
-Please see [Contribution Guidelines](https://github.com/tracktelemetry/.github/blob/main/CONTRIBUTING.md) for details.
+Please see [Contribution Guidelines](https://github.com/thingstelemetry/.github/blob/main/CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 

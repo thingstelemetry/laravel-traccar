@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Dto;
+namespace ThingsTelemetry\Traccar\Dto;
 
-use TrackTelemetry\Traccar\Enums\SpeedUnit;
-use TrackTelemetry\Traccar\Enums\VolumeUnit;
-use TrackTelemetry\Traccar\Enums\AltitudeUnit;
-use TrackTelemetry\Traccar\Enums\DistanceUnit;
+use ThingsTelemetry\Traccar\Enums\SpeedUnit;
+use ThingsTelemetry\Traccar\Enums\VolumeUnit;
+use ThingsTelemetry\Traccar\Enums\AltitudeUnit;
+use ThingsTelemetry\Traccar\Enums\DistanceUnit;
 
 class ServerAttributesData
 {

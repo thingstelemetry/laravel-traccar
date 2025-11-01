@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Endpoints;
+namespace ThingsTelemetry\Traccar\Endpoints;
 
-use TrackTelemetry\Traccar\Traccar;
-use TrackTelemetry\Traccar\Dto\UserData;
-use TrackTelemetry\Traccar\Dto\StatusData;
-use TrackTelemetry\Traccar\Requests\GetUser;
-use TrackTelemetry\Traccar\Requests\CreateUser;
-use TrackTelemetry\Traccar\Requests\DeleteUser;
-use TrackTelemetry\Traccar\Requests\UpdateUser;
-use TrackTelemetry\Traccar\Requests\GetAllUsers;
+use ThingsTelemetry\Traccar\Traccar;
+use ThingsTelemetry\Traccar\Dto\UserData;
+use ThingsTelemetry\Traccar\Dto\StatusData;
+use ThingsTelemetry\Traccar\Requests\GetUser;
+use ThingsTelemetry\Traccar\Requests\CreateUser;
+use ThingsTelemetry\Traccar\Requests\DeleteUser;
+use ThingsTelemetry\Traccar\Requests\UpdateUser;
+use ThingsTelemetry\Traccar\Requests\GetAllUsers;
 
 class User extends Traccar
 {

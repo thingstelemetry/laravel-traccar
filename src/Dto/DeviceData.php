@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Dto;
+namespace ThingsTelemetry\Traccar\Dto;
 
 use Throwable;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Log;
-use TrackTelemetry\Traccar\Enums\DeviceStatus;
-use TrackTelemetry\Traccar\Enums\DeviceCategory;
+use ThingsTelemetry\Traccar\Enums\DeviceStatus;
+use ThingsTelemetry\Traccar\Enums\DeviceCategory;
 
 class DeviceData
 {

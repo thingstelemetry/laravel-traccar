@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar;
+namespace ThingsTelemetry\Traccar;
 
 use Saloon\Http\Connector;
 use Saloon\Http\Auth\TokenAuthenticator;

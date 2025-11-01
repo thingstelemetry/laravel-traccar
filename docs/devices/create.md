@@ -10,11 +10,11 @@ Create a device on your Traccar server.
 ## Usage
 
 ```php
-use TrackTelemetry\Traccar\Enums\DeviceCategory;
-use TrackTelemetry\Traccar\Enums\DeviceStatus;
-use TrackTelemetry\Traccar\Dto\DeviceData;
-use TrackTelemetry\Traccar\Dto\DeviceAttributesData;
-use TrackTelemetry\Traccar\Facades\Device;
+use ThingsTelemetry\Traccar\Enums\DeviceCategory;
+use ThingsTelemetry\Traccar\Enums\DeviceStatus;
+use ThingsTelemetry\Traccar\Dto\DeviceData;
+use ThingsTelemetry\Traccar\Dto\DeviceAttributesData;
+use ThingsTelemetry\Traccar\Facades\Device;
 
 $attributes = new DeviceAttributesData(
     speedLimit: 80,
@@ -31,17 +31,17 @@ $deviceData = new DeviceData(
     disabled: false,
     phone: '+254722000000',
     model: 'Teltonika FMB920',
-    contact: 'Track Telemetry Developer',
+    contact: 'Things Telemetry Developer',
     category: DeviceCategory::CAR,
     attributes: $attributes,
 );
 
-$device = Device::create($deviceData); // returns TrackTelemetry\Traccar\Dto\DeviceData
+$device = Device::create($deviceData); // returns ThingsTelemetry\Traccar\Dto\DeviceData
 ```
 
 ## Results
 
-The response is a `TrackTelemetry\Traccar\Dto\DeviceData>`.
+The response is a `ThingsTelemetry\Traccar\Dto\DeviceData>`.
 
 ```php
 $name = $device->name;                 // "Truck 1"

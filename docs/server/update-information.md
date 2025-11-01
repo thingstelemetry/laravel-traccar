@@ -12,14 +12,14 @@ To update Traccar server information, follow the steps below.
 #### 1. Get the current server information.
 
 ```php
-$data = \TrackTelemetry\Traccar\Facades\Server::updateInformation();
+$data = \ThingsTelemetry\Traccar\Facades\Server::updateInformation();
 ```
 
 #### 2. Update the new DTO as needed.
 
 ```php
-$data->map = \TrackTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
-$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
+$data->map = \ThingsTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
+$data->attributes->speedUnit = \ThingsTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
 ```
 > [!IMPORTANT]
 > Only update the fields you want to change.
@@ -27,30 +27,30 @@ $data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KILOMETE
 #### 3. Send the updated DTO to the server  method.
 
 ```php
-$response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
+$response = \ThingsTelemetry\Traccar\Facades\Server::updateInformation($data);
 ```
 
 ## Full Example
 
 ```php
 // Get the current server information
-$data = \TrackTelemetry\Traccar\Facades\Server::updateInformation();
+$data = \ThingsTelemetry\Traccar\Facades\Server::updateInformation();
 
 // Updated
-$data->map = \TrackTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
-$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
-$data->attributes->speedUnit = \TrackTelemetry\Traccar\Enums\SpeedUnit::MILES_PER_HOUR;
-$data->attributes->distanceUnit = \TrackTelemetry\Traccar\Enums\DistanceUnit::MILES;
-$data->attributes->altitudeUnit = \TrackTelemetry\Traccar\Enums\AltitudeUnit::FEET; 
-$data->attributes->volumeUnit = \TrackTelemetry\Traccar\Enums\VolumeUnit::LITERS; 
-$data->coordinateFormat = \TrackTelemetry\Traccar\Enums\CoordinateFormat::DDM;
+$data->map = \ThingsTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
+$data->attributes->speedUnit = \ThingsTelemetry\Traccar\Enums\SpeedUnit::KILOMETERS_PER_HOUR;
+$data->attributes->speedUnit = \ThingsTelemetry\Traccar\Enums\SpeedUnit::MILES_PER_HOUR;
+$data->attributes->distanceUnit = \ThingsTelemetry\Traccar\Enums\DistanceUnit::MILES;
+$data->attributes->altitudeUnit = \ThingsTelemetry\Traccar\Enums\AltitudeUnit::FEET; 
+$data->attributes->volumeUnit = \ThingsTelemetry\Traccar\Enums\VolumeUnit::LITERS; 
+$data->coordinateFormat = \ThingsTelemetry\Traccar\Enums\CoordinateFormat::DDM;
 $data->announcement = 'Planned maintenance on Saturday 02:00 UTC';
 $data->attributes->timezone = 'Africa/Nairobi';
 $data->fixedEmail = false;
 $data->bingKey = 'your-bing-key';
 
 // Send
-$response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
+$response = \ThingsTelemetry\Traccar\Facades\Server::updateInformation($data);
 ```
 
 > [!IMPORTANT]
@@ -58,7 +58,7 @@ $response = \TrackTelemetry\Traccar\Facades\Server::updateInformation($data);
 
 ## Results
 
-The response is a instance of ` TrackTelemetry\Traccar\Dto\ServerData` DTO class
+The response is a instance of ` ThingsTelemetry\Traccar\Dto\ServerData` DTO class
 
 ```php
 $version = $info->version; // "6.10"

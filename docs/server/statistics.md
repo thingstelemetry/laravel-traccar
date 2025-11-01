@@ -6,7 +6,7 @@ Fetch aggregated server statistics for a time range.
 
 ```php
 use Carbon\CarbonImmutable;
-use TrackTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Facades\Server;
 
 $from = CarbonImmutable::parse('01 June 2025');
 $to   = CarbonImmutable::parse('25 Nov 2025');

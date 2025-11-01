@@ -1,9 +1,9 @@
 # User Data DTO Reference
 
-The `TrackTelemetry\Traccar\Dto\UserData` represents a Traccar user entity.
+The `ThingsTelemetry\Traccar\Dto\UserData` represents a Traccar user entity.
 
 ```php
-use TrackTelemetry\Traccar\Facades\User;
+use ThingsTelemetry\Traccar\Facades\User;
 
 $user = User::get(42); // UserData
 ```

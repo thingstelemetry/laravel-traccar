@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests;
 
 use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use TrackTelemetry\Traccar\Dto\EventData;
+use ThingsTelemetry\Traccar\Dto\EventData;
 
 class GetEvent extends Request
 {

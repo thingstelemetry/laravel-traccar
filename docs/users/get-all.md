@@ -7,17 +7,17 @@ Fetch all users from your Traccar server.
 
 ## Request
 
-Use the `TrackTelemetry\Traccar\Facades\User::all()` method to retrieve all users.
+Use the `ThingsTelemetry\Traccar\Facades\User::all()` method to retrieve all users.
 
 ```php
-use TrackTelemetry\Traccar\Facades\User;
+use ThingsTelemetry\Traccar\Facades\User;
 
-$users = User::all(); // array of TrackTelemetry\Traccar\Dto\UserData
+$users = User::all(); // array of ThingsTelemetry\Traccar\Dto\UserData
 ```
 
 ## Result
 
-Returns an array of `TrackTelemetry\Traccar\Dto\UserData` instances.
+Returns an array of `ThingsTelemetry\Traccar\Dto\UserData` instances.
 
 ```php
 $first = $users[0];

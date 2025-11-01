@@ -4,17 +4,17 @@ Fetch a specific event by its ID from your Traccar server.
 
 ## Request
 
-Use the `TrackTelemetry\Traccar\Facades\Event::get(int $id)` method to retrieve a single event.
+Use the `ThingsTelemetry\Traccar\Facades\Event::get(int $id)` method to retrieve a single event.
 
 ```php
-use TrackTelemetry\Traccar\Facades\Event;
+use ThingsTelemetry\Traccar\Facades\Event;
 
-$event = Event::get(1234); // TrackTelemetry\Traccar\Dto\EventData
+$event = Event::get(1234); // ThingsTelemetry\Traccar\Dto\EventData
 ```
 
 ## Result
 
-The response is an instance of `TrackTelemetry\Traccar\Dto\EventData`.
+The response is an instance of `ThingsTelemetry\Traccar\Dto\EventData`.
 
 ```php
 $id         = $event->id; / 1234

@@ -9,15 +9,15 @@ Update the total distance and engine hours for a specific device.
 ## Usage
 
 ```php
-use TrackTelemetry\Traccar\Dto\StatusData;
-use TrackTelemetry\Traccar\Enums\Status;
-use TrackTelemetry\Traccar\Facades\Device;
+use ThingsTelemetry\Traccar\Dto\StatusData;
+use ThingsTelemetry\Traccar\Enums\Status;
+use ThingsTelemetry\Traccar\Facades\Device;
 
 $deviceId = 6;
 $totalDistance = 12345.6; // in meters
 $hours = 789.0; // hours
 
-$result = Device::updateTotals(deviceId: $deviceId, totalDistance: $totalDistance, hours: $hours); // returns TrackTelemetry\Traccar\Dto\StatusData
+$result = Device::updateTotals(deviceId: $deviceId, totalDistance: $totalDistance, hours: $hours); // returns ThingsTelemetry\Traccar\Dto\StatusData
 
 if ($result->status === Status::SUCCESS) {
     // Totals updated successfully
@@ -26,7 +26,7 @@ if ($result->status === Status::SUCCESS) {
 
 ## Results
 
-The response is a `TrackTelemetry\Traccar\Dto\StatusData` object containing a `TrackTelemetry\Traccar\Enums\Status`. A 204 response is treated as success.
+The response is a `ThingsTelemetry\Traccar\Dto\StatusData` object containing a `ThingsTelemetry\Traccar\Enums\Status`. A 204 response is treated as success.
 
 ```php
 $result->status->value; // 'success' or 'failure'

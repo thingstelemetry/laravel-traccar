@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests;
 
 use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use TrackTelemetry\Traccar\Dto\UserData;
+use ThingsTelemetry\Traccar\Dto\UserData;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 class GetUser extends Request

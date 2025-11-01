@@ -9,11 +9,11 @@ Generate a temporary url token that allows sharing a specific device. Other can 
 
 ```php
 use Carbon\CarbonImmutable;
-use TrackTelemetry\Traccar\Facades\Device;
+use ThingsTelemetry\Traccar\Facades\Device;
 
 $expiration = CarbonImmutable::now()->addHours(12);
 
-$share = Device::share(deviceId: 6, expiration: $expiration); // TrackTelemetry\Traccar\Dto\DeviceShareData
+$share = Device::share(deviceId: 6, expiration: $expiration); // ThingsTelemetry\Traccar\Dto\DeviceShareData
 ```
 
 - expiration is a Carbon instance and will be converted to ISO-8601 automatically.
@@ -21,7 +21,7 @@ $share = Device::share(deviceId: 6, expiration: $expiration); // TrackTelemetry\
 
 ## Results
 
-The response is a `TrackTelemetry\Traccar\Dto\DeviceShareData` instance.
+The response is a `ThingsTelemetry\Traccar\Dto\DeviceShareData` instance.
 
 ```php
 $token = $share->token; // 'eyJhbGciOi...'

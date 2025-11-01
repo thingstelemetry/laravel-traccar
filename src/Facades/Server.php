@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Facades;
+namespace ThingsTelemetry\Traccar\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \TrackTelemetry\Traccar\Endpoints\Server
+ * @see \ThingsTelemetry\Traccar\Endpoints\Server
  */
 class Server extends Facade
 {
@@ -16,6 +16,6 @@ class Server extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return \TrackTelemetry\Traccar\Endpoints\Server::class;
+        return \ThingsTelemetry\Traccar\Endpoints\Server::class;
     }
 }

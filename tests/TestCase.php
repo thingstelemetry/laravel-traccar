@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Tests;
+namespace ThingsTelemetry\Traccar\Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
@@ -17,7 +17,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
-            \TrackTelemetry\Traccar\TraccarServiceProvider::class,
+            \ThingsTelemetry\Traccar\TraccarServiceProvider::class,
         ];
     }
 

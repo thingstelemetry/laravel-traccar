@@ -8,7 +8,7 @@ Convert coordinates (latitude, longitude) to a human-readable address.
 ## Request
 
 ```php
-use TrackTelemetry\Traccar\Facades\Server;
+use ThingsTelemetry\Traccar\Facades\Server;
 
 $address = Server::geocode(latitude: -1.286389, longitude: 36.817223);
 ```

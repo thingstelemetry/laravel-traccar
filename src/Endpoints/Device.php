@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace TrackTelemetry\Traccar\Endpoints;
+namespace ThingsTelemetry\Traccar\Endpoints;
 
 use Carbon\CarbonInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
-use TrackTelemetry\Traccar\Traccar;
+use ThingsTelemetry\Traccar\Traccar;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Validator;
-use TrackTelemetry\Traccar\Dto\DeviceData;
-use TrackTelemetry\Traccar\Dto\StatusData;
+use ThingsTelemetry\Traccar\Dto\DeviceData;
+use ThingsTelemetry\Traccar\Dto\StatusData;
 use Illuminate\Validation\ValidationException;
-use TrackTelemetry\Traccar\Dto\DeviceShareData;
-use TrackTelemetry\Traccar\Requests\ShareDevice;
-use TrackTelemetry\Traccar\Requests\CreateDevice;
-use TrackTelemetry\Traccar\Requests\DeleteDevice;
-use TrackTelemetry\Traccar\Requests\UpdateDevice;
-use TrackTelemetry\Traccar\Requests\GetAllDevices;
-use TrackTelemetry\Traccar\Requests\GetForUserDevices;
-use TrackTelemetry\Traccar\Requests\UpdateDeviceImage;
-use TrackTelemetry\Traccar\Requests\UpdateDeviceTotals;
+use ThingsTelemetry\Traccar\Dto\DeviceShareData;
+use ThingsTelemetry\Traccar\Requests\ShareDevice;
+use ThingsTelemetry\Traccar\Requests\CreateDevice;
+use ThingsTelemetry\Traccar\Requests\DeleteDevice;
+use ThingsTelemetry\Traccar\Requests\UpdateDevice;
+use ThingsTelemetry\Traccar\Requests\GetAllDevices;
+use ThingsTelemetry\Traccar\Requests\GetForUserDevices;
+use ThingsTelemetry\Traccar\Requests\UpdateDeviceImage;
+use ThingsTelemetry\Traccar\Requests\UpdateDeviceTotals;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 class Device extends Traccar
