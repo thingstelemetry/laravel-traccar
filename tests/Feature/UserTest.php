@@ -34,7 +34,7 @@ it(description: 'can retrieve a user by id', closure: function () {
         'limitCommands'    => true,
         'fixedEmail'       => true,
         'poiLayer'         => 'poi-layer',
-        'attributes'       => ['notify' => true],
+        'attributes'       => ['ui.disableGroups' => true],
     ];
 
     MockClient::global(mockData: [
@@ -50,7 +50,7 @@ it(description: 'can retrieve a user by id', closure: function () {
         ->and(value: $user->expirationTime)->toBeInstanceOf(class: CarbonImmutable::class)
         ->and(value: $user->expirationTime->toIso8601String())->toEqual(expected: '2019-08-24T14:15:22+00:00')
         ->and(value: $user->attributes->toArray())
-        ->toHaveKey(key: 'notify', value: true);
+        ->toHaveKey(key: 'ui.disableGroups', value: true);
 });
 
 it(description: 'throws JsonException on invalid JSON response', closure: function () {
