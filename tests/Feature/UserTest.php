@@ -61,6 +61,68 @@ it(description: 'throws JsonException on invalid JSON response', closure: functi
     expect(value: fn () => User::get(1))->toThrow(exception: JsonException::class);
 });
 
+it(description: 'can retrieve all users', closure: function () {
+    $payload = [
+        [
+            'id'               => 1,
+            'name'             => 'Alice',
+            'email'            => 'alice@example.com',
+            'phone'            => null,
+            'readonly'         => false,
+            'administrator'    => false,
+            'map'              => 'osm',
+            'latitude'         => 0,
+            'longitude'        => 0,
+            'zoom'             => 10,
+            'password'         => null,
+            'coordinateFormat' => 'dd',
+            'disabled'         => false,
+            'expirationTime'   => null,
+            'deviceLimit'      => 0,
+            'userLimit'        => 0,
+            'deviceReadonly'   => false,
+            'limitCommands'    => false,
+            'fixedEmail'       => false,
+            'poiLayer'         => null,
+            'attributes'       => [],
+        ],
+        [
+            'id'               => 2,
+            'name'             => 'Bob',
+            'email'            => 'bob@example.com',
+            'phone'            => null,
+            'readonly'         => false,
+            'administrator'    => false,
+            'map'              => 'osm',
+            'latitude'         => 0,
+            'longitude'        => 0,
+            'zoom'             => 10,
+            'password'         => null,
+            'coordinateFormat' => 'dd',
+            'disabled'         => false,
+            'expirationTime'   => null,
+            'deviceLimit'      => 0,
+            'userLimit'        => 0,
+            'deviceReadonly'   => false,
+            'limitCommands'    => false,
+            'fixedEmail'       => false,
+            'poiLayer'         => null,
+            'attributes'       => [],
+        ],
+    ];
+
+    MockClient::global(mockData: [
+        \TrackTelemetry\Traccar\Requests\GetAllUsers::class => MockResponse::make($payload),
+    ]);
+
+    $users = User::all();
+
+    expect($users)
+        ->toBeArray()
+        ->and(count($users))->toBe(2)
+        ->and($users[0])->toBeInstanceOf(UserData::class);
+});
+
 it(description: 'throws NotFoundException when user is missing', closure: function () {
     MockClient::global(mockData: [
         GetUser::class => MockResponse::make([], 200),

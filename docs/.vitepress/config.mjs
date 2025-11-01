@@ -52,6 +52,7 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                     {text: 'Get Information', link: '/users/get-information'},
+                    {text: 'Get All', link: '/users/get-all'},
                 ]
             },
             {
