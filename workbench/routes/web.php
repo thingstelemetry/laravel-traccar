@@ -204,12 +204,65 @@ Route::prefix('/events')->group(function () {
 });
 
 Route::prefix('/users')->group(function () {
-
-
     Route::get('/all', function () {
         $users = \TrackTelemetry\Traccar\Facades\User::all();
 
         dump($users);
+    });
+
+    Route::get('/create', function () {
+
+        $attributes = new \TrackTelemetry\Traccar\Dto\UserAttributesData(
+            language: 'en',
+            mapGeofences: true,
+        );
+
+        $data = new \TrackTelemetry\Traccar\Dto\UserData(
+            id: 0, // ignored on create
+            name: fake()->name(),
+            email: fake()->email(),
+            phone: fake()->e164PhoneNumber(),
+            readonly: false,
+            administrator: false,
+            map: \TrackTelemetry\Traccar\Enums\Map::OSM,
+            latitude: 0.0,
+            longitude: 0.0,
+            zoom: 0,
+            password: 'secret',
+            coordinateFormat: \TrackTelemetry\Traccar\Enums\CoordinateFormat::DD,
+            disabled: false,
+            expirationTime: null,
+            deviceLimit: 0,
+            userLimit: 0,
+            deviceReadonly: false,
+            limitCommands: false,
+            fixedEmail: false,
+            poiLayer: null,
+            attributes: $attributes,
+        );
+
+        $created = \TrackTelemetry\Traccar\Facades\User::create($data);
+
+        dd($created);
+    });
+
+    Route::get('/update/{id}', function (int $id) {
+        $data = \TrackTelemetry\Traccar\Facades\User::get(id: $id);
+
+        $data->email = fake()->email();
+        $data->phone = fake()->e164PhoneNumber();
+        $data->name = fake()->name();
+        $data->disabled = true;
+
+        $updated = \TrackTelemetry\Traccar\Facades\User::update($data);
+
+        dd($updated);
+    });
+
+    Route::get('/delete/{id}', function (int $id) {
+        $data = \TrackTelemetry\Traccar\Facades\User::delete(id: $id);
+
+        dd($data);
     });
 
     Route::get('/{id}', function (int $id) {

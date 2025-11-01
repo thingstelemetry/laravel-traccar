@@ -53,6 +53,9 @@ export default defineConfig({
                 items: [
                     {text: 'Get Information', link: '/users/get-information'},
                     {text: 'Get All', link: '/users/get-all'},
+                    {text: 'Create User', link: '/users/create'},
+                    {text: 'Update User', link: '/users/update'},
+                    {text: 'Delete User', link: '/users/delete'},
                 ]
             },
             {
