@@ -58,7 +58,7 @@ $response = \ThingsTelemetry\Traccar\Facades\Server::updateInformation($data);
 
 ## Results
 
-The response is a instance of ` ThingsTelemetry\Traccar\Dto\ServerData` DTO class
+The response is an instance of `ThingsTelemetry\Traccar\Dto\ServerData` DTO class
 
 ```php
 $version = $info->version; // "6.10"
