@@ -12,7 +12,7 @@ To update Traccar server information, follow the steps below.
 #### 1. Get the current server information.
 
 ```php
-$data = \ThingsTelemetry\Traccar\Facades\Server::updateInformation();
+$data = \ThingsTelemetry\Traccar\Facades\Server::getInformation();
 ```
 
 #### 2. Update the new DTO as needed.
@@ -58,7 +58,7 @@ $response = \ThingsTelemetry\Traccar\Facades\Server::updateInformation($data);
 
 ## Results
 
-The response is a instance of ` ThingsTelemetry\Traccar\Dto\ServerData` DTO class
+The response is an instance of `ThingsTelemetry\Traccar\Dto\ServerData` DTO class
 
 ```php
 $version = $info->version; // "6.10"

@@ -10,9 +10,8 @@ Fetch the server cache state.
 Use the `ThingsTelemetry\Traccar\Facades\Server::cache()` method to read the cache string from Traccar.
 
 ```php
-use ThingsTelemetry\Traccar\Facades\Server;
 
-$cache = Server::cache();
+$cache = \ThingsTelemetry\Traccar\Facades\Server::cache();
 ```
 
 ## Results

@@ -10,9 +10,8 @@ Trigger the JVM garbage collector on the Traccar server.
 Use the `ThingsTelemetry\Traccar\Facades\Server::gc()` method to execute GC.
 
 ```php
-use ThingsTelemetry\Traccar\Facades\Server;
 
-$result = Server::gc();
+$result = \ThingsTelemetry\Traccar\Facades\Server::gc();
 ```
 
 ## Results
