@@ -7,14 +7,13 @@ Get general about your Traccar server instance into your laravel application.
 Use the `ThingsTelemetry\Traccar\Facades\Server::getInformation()` method to get information about your Traccar server instance.
 
 ```php
-use ThingsTelemetry\Traccar\Facades\Server;
 
-$info = Server::getInformation(); 
+$info = \ThingsTelemetry\Traccar\Facades\Server::getInformation(); 
 ```
 
 ## Results
 
-The response is a instance of ` ThingsTelemetry\Traccar\Dto\ServerData` DTO class
+The response is an instance of ` ThingsTelemetry\Traccar\Dto\ServerData` DTO class
 
 ```php
 $version = $info->version; // 6.10
@@ -26,7 +25,7 @@ $timezone = $info->attributes->timezone; // UTC
 
 ### Key Results Items
 
-While most field are casted into a string or ints, some are casted into a DTO/Service class.
+While most fields are casted into a string or ints, some are casted into a DTO/Service class.
 
 - **`ServerAttributesData`** → [`ThingsTelemetry\Traccar\Dto\ServerAttributesData`](./../reference/dto/server-data)  
   *Data Transfer Object for Traccar server attributes.*

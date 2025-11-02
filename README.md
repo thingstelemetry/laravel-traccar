@@ -23,7 +23,7 @@
 You can install the package via Composer
 
 ```
-composer require thingstelemetry/traccar
+composer require thingstelemetry/laravel-traccar
 ```
 
 ## Configuration
@@ -67,7 +67,7 @@ composer test
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [RELEASE NOTES](https://github.com/thingstelemetry/laravel-traccar/releases) for more information on what has changed recently.
 
 ## Contributing
 

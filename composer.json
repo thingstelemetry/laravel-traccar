@@ -1,5 +1,5 @@
 {
-    "name": "thingstelemetry/traccar-api",
+    "name": "thingstelemetry/laravel-traccar",
     "description": "PHP and Laravel client for the Traccar API",
     "type": "library",
     "license": "MIT",
