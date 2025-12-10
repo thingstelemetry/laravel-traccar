@@ -42,5 +42,4 @@ $result->status->label(); // 'Success' or 'Failure'
 
 ## Important Links
 - [Traccar: Delete positions for a device and time range](https://www.traccar.org/api-reference/#tag/Positions/paths/~1positions/delete)
-- [Package configuration & environment variables](./../introduction/getting-started)
 - [Status enum reference](./../reference/enums/status)
