@@ -39,7 +39,7 @@ class Device extends Traccar
     }
 
     /**
-     * Get devices by id, unique id or user id
+     * Get devices by id, unique id, or user id
      * or returns a list of the user's devices
      *
      * @throws \Saloon\Exceptions\SaloonException

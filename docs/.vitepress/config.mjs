@@ -81,6 +81,13 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Positions',
+                collapsed: true,
+                items: [
+                    {text: 'Delete Position', link: '/positions/delete'},
+                ]
+            },
+            {
                 text: 'DTO Reference',
                 collapsed: true,
                 items: [
