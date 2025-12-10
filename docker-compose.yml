@@ -1,6 +1,6 @@
 services:
   vitepress:
-    image: node:22-alpine
+    image: node:24-alpine
     container_name: traccar-vitepress-docs
     working_dir: /app/docs
     volumes:
