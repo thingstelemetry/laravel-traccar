@@ -281,3 +281,12 @@ Route::prefix('/users')->group(function () {
         dump($user->toArray());
     });
 });
+
+Route::prefix('/positions')->group(function () {
+    Route::get('/delete/{id}', function (int $id) {
+        // Example endpoint to test deleting a position
+        $result = \ThingsTelemetry\Traccar\Facades\Position::delete(id: $id);
+
+        dd($result);
+    });
+});

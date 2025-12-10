@@ -61,7 +61,8 @@
                 "Server": "ThingsTelemetry\\Traccar\\Facades\\Server",
                 "Device": "ThingsTelemetry\\Traccar\\Facades\\Device",
                 "Event": "ThingsTelemetry\\Traccar\\Facades\\Event",
-                "User": "ThingsTelemetry\\Traccar\\Facades\\User"
+                "User": "ThingsTelemetry\\Traccar\\Facades\\User",
+                "Position": "ThingsTelemetry\\Traccar\\Facades\\Position"
             }
         }
     },
