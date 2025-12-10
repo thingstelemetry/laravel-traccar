@@ -85,6 +85,7 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                     {text: 'Delete Position', link: '/positions/delete'},
+                    {text: 'Delete Positions Range', link: '/positions/delete-by-range'},
                 ]
             },
             {

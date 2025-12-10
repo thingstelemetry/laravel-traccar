@@ -284,8 +284,19 @@ Route::prefix('/users')->group(function () {
 
 Route::prefix('/positions')->group(function () {
     Route::get('/delete/{id}', function (int $id) {
-        // Example endpoint to test deleting a position
+        // Example endpoint to test deleting a single position by ID
         $result = \ThingsTelemetry\Traccar\Facades\Position::delete(id: $id);
+
+        dd($result);
+    });
+
+    Route::get('/delete-range/{id}/{from}/{to}', function (int $id, int $from, int $to) {
+
+        $result = \ThingsTelemetry\Traccar\Facades\Position::deleteForDeviceInRange(
+            deviceId: $id,
+            from: now()->subMinutes($from),
+            to: now()->subMinutes($to),
+        );
 
         dd($result);
     });
