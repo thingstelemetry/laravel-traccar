@@ -101,6 +101,7 @@ export default defineConfig({
                     {text: 'User Data', link: '/reference/dto/user-data'},
                     {text: 'User Attributes Data', link: '/reference/dto/user-attributes-data'},
                     {text: 'Server Statistics Data', link: '/reference/dto/server-statistics-data'},
+                    {text: 'Position Data', link: '/reference/dto/position-data'},
                 ]
             },
             {
