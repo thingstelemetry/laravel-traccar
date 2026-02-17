@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ThingsTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests\Device;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -18,17 +18,11 @@ class DeleteDevice extends Request
     {
     }
 
-    /**
-     * Resolves and returns the API endpoint for deleting a device.
-     */
     public function resolveEndpoint(): string
     {
         return "/devices/{$this->id}";
     }
 
-    /**
-     * Return an enum status from the response.
-     */
     public function createDtoFromResponse(Response $response): StatusData
     {
         return new StatusData(status: Status::SUCCESS);
