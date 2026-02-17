@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ThingsTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests\User;
 
 use JsonException;
 use Saloon\Enums\Method;

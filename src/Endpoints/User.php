@@ -7,11 +7,11 @@ namespace ThingsTelemetry\Traccar\Endpoints;
 use ThingsTelemetry\Traccar\Traccar;
 use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
-use ThingsTelemetry\Traccar\Requests\GetUser;
-use ThingsTelemetry\Traccar\Requests\CreateUser;
-use ThingsTelemetry\Traccar\Requests\DeleteUser;
-use ThingsTelemetry\Traccar\Requests\UpdateUser;
-use ThingsTelemetry\Traccar\Requests\GetAllUsers;
+use ThingsTelemetry\Traccar\Requests\User\GetUser;
+use ThingsTelemetry\Traccar\Requests\User\CreateUser;
+use ThingsTelemetry\Traccar\Requests\User\DeleteUser;
+use ThingsTelemetry\Traccar\Requests\User\UpdateUser;
+use ThingsTelemetry\Traccar\Requests\User\GetAllUsers;
 
 class User extends Traccar
 {
