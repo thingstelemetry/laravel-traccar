@@ -14,8 +14,8 @@ class UpdateDeviceImage extends Request
 
     public function __construct(
         public int $deviceId,
-        protected string $mimeType,
-        protected string $contents,
+        private string $mimeType,
+        private string $contents,
     ) {
     }
 

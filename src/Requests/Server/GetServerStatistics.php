@@ -18,8 +18,8 @@ class GetServerStatistics extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        protected CarbonInterface $from,
-        protected CarbonInterface $to,
+        private CarbonInterface $from,
+        private CarbonInterface $to,
     ) {
     }
 

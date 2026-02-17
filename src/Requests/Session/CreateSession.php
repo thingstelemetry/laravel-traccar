@@ -19,8 +19,8 @@ class CreateSession extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        public string $email,
-        public string $password,
+        private string $email,
+        private string $password,
         public ?int $code = null
     ) {
     }
