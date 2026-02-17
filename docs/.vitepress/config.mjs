@@ -107,6 +107,16 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Permissions',
+                collapsed: true,
+                items: [
+                    {text: 'Link Permission', link: '/permissions/link'},
+                    {text: 'Unlink Permission', link: '/permissions/unlink'},
+                    {text: 'Link Permissions (Bulk)', link: '/permissions/link-bulk'},
+                    {text: 'Unlink Permissions (Bulk)', link: '/permissions/unlink-bulk'},
+                ]
+            },
+            {
                 text: 'Positions',
                 collapsed: true,
                 items: [
@@ -125,6 +135,7 @@ export default defineConfig({
                     {text: 'Device Share Data', link: '/reference/dto/device-share-data'},
                     {text: 'Event Data', link: '/reference/dto/event-data'},
                     {text: 'Group Data', link: '/reference/dto/group-data'},
+                    {text: 'Permission Data', link: '/reference/dto/permission-data'},
                     {text: 'User Data', link: '/reference/dto/user-data'},
                     {text: 'User Attributes Data', link: '/reference/dto/user-attributes-data'},
                     {text: 'Server Statistics Data', link: '/reference/dto/server-statistics-data'},
