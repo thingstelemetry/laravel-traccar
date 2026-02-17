@@ -104,9 +104,18 @@ it(description: 'can find a device by id', closure: function () {
         ->and(value: $device->attributes->speedLimit)->toBeFloat();
 });
 
-it(description: 'throws NotFoundException when device is not found', closure: function () {
+it(description: 'throws NotFoundException when device returns 200 with empty body', closure: function () {
     MockClient::global(mockData: [
         GetDevice::class => MockResponse::make(body: [], status: 200),
+    ]);
+
+    expect(value: fn () => Device::find(id: 999))
+        ->toThrow(exception: NotFoundException::class);
+});
+
+it(description: 'throws NotFoundException when device returns HTTP 404', closure: function () {
+    MockClient::global(mockData: [
+        GetDevice::class => MockResponse::make(body: ['error' => 'Not found'], status: 404),
     ]);
 
     expect(value: fn () => Device::find(id: 999))
