@@ -96,6 +96,17 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Groups',
+                collapsed: true,
+                items: [
+                    {text: 'Get Group', link: '/groups/get-information'},
+                    {text: 'Get All Groups', link: '/groups/get-all'},
+                    {text: 'Create Group', link: '/groups/create'},
+                    {text: 'Update Group', link: '/groups/update'},
+                    {text: 'Delete Group', link: '/groups/delete'},
+                ]
+            },
+            {
                 text: 'Positions',
                 collapsed: true,
                 items: [
@@ -113,6 +124,7 @@ export default defineConfig({
                     {text: 'Device Attribute Data', link: '/reference/dto/device-attributes-data'},
                     {text: 'Device Share Data', link: '/reference/dto/device-share-data'},
                     {text: 'Event Data', link: '/reference/dto/event-data'},
+                    {text: 'Group Data', link: '/reference/dto/group-data'},
                     {text: 'User Data', link: '/reference/dto/user-data'},
                     {text: 'User Attributes Data', link: '/reference/dto/user-attributes-data'},
                     {text: 'Server Statistics Data', link: '/reference/dto/server-statistics-data'},
