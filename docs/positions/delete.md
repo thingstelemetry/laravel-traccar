@@ -31,6 +31,26 @@ $result->status->name;  // 'SUCCESS' or 'FAILURE'
 $result->status->label(); // 'Success' or 'Failure'
 ```
 
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\Position;
+use Saloon\Exceptions\Request\RequestException;
+
+try {
+    $result = Position::delete(id: 12345);
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        401 => // Unauthorized - check API credentials,
+        403 => // Forbidden - insufficient permissions,
+        404 => // Position not found - check position ID,
+        default => // Handle other errors
+    };
+}
+```
+
 ## Important Links
 - [Traccar Delete a Position](https://www.traccar.org/api-reference/#tag/Positions/paths/~1positions~1%7Bid%7D/delete)
 - [Status enum reference](./../reference/enums/status)

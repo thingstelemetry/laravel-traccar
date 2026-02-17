@@ -66,6 +66,26 @@ $speedLimit = $first->attributes->speedLimit; // 80.0 (knots)
 - `attributes` → [`DeviceAttributesData`](./../reference/dto/device-attributes-data)
   Typed DTO for device attributes.
 
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\Device;
+use Saloon\Exceptions\Request\RequestException;
+
+try {
+    $devices = Device::get(userId: 123);
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        400 => // Bad request - invalid parameters,
+        401 => // Unauthorized - check API credentials,
+        403 => // Forbidden - insufficient permissions to view this user's devices,
+        default => // Handle other errors
+    };
+}
+```
+
 ## Important Links
 - [Traccar Fetch a list of Devices](https://www.traccar.org/api-reference/#tag/Device/paths/~1devices/get)
 - [DeviceData DTO reference](./../reference/dto/device-data)

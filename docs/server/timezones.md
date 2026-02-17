@@ -28,3 +28,21 @@ $timezones = \DateTimeZone::listIdentifiers();
 // or
 $timezones = timezone_identifiers_list();
 ```
+
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\Server;
+use Saloon\Exceptions\Request\RequestException;
+
+try {
+    $zones = Server::timezones();
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        401 => // Unauthorized - check API credentials,
+        default => // Handle other errors
+    };
+}
+```

@@ -29,3 +29,28 @@ The response is an instance of `ThingsTelemetry\Traccar\Dto\StatusData`.
 ```php
 $status = $result->status->value; // "success"
 ```
+
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\Server;
+use Illuminate\Validation\ValidationException;
+use Saloon\Exceptions\Request\RequestException;
+
+try {
+    $result = Server::uploadFile(path: 'web/assets/readme.txt', file: base_path('readme.txt'));
+} catch (ValidationException $e) {
+    // Handle validation errors (missing path, file, etc.)
+    $errors = $e->errors();
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        400 => // Bad request - invalid path or file,
+        401 => // Unauthorized - check API credentials,
+        403 => // Forbidden - requires admin privileges,
+        413 => // Payload too large - file exceeds server limits,
+        default => // Handle other errors
+    };
+}
+```

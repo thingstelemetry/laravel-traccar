@@ -33,6 +33,27 @@ $updated->name; // "Jane Doe (Updated)"
 $updated->map->value; // e.g., "osm"
 ```
 
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\User;
+use Saloon\Exceptions\Request\RequestException;
+
+try {
+    $updated = User::update($user);
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        400 => // Bad request - invalid data (e.g., duplicate email),
+        401 => // Unauthorized - check API credentials,
+        403 => // Forbidden - insufficient permissions,
+        404 => // User not found - check user ID,
+        default => // Handle other errors
+    };
+}
+```
+
 ## Important Links
 - [Traccar Update User](https://www.traccar.org/api-reference/#tag/Users/paths/~1users~1%7Bid%7D/put)
 - [UserData DTO reference](./../reference/dto/user-data)

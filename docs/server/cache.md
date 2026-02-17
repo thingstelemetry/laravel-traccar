@@ -22,3 +22,22 @@ The response is a string, for example:
 // e.g. "Cache{devices=123, users=45}"
 echo $cache;
 ```
+
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\Server;
+use Saloon\Exceptions\Request\RequestException;
+
+try {
+    $cache = Server::cache();
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        401 => // Unauthorized - check API credentials,
+        403 => // Forbidden - requires admin privileges,
+        default => // Handle other errors
+    };
+}
+```
