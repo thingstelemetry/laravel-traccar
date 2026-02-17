@@ -8,25 +8,17 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class GetServerCache extends Request
+class GetOpenIdAuth extends Request
 {
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string
     {
-        return '/server/cache';
+        return '/session/openid/auth';
     }
 
     public function createDtoFromResponse(Response $response): string
     {
-        return mb_trim((string) $response->body());
-    }
-
-    /** @return array<string, string> */
-    protected function defaultHeaders(): array
-    {
-        return [
-            'Accept' => 'text/plain, */*',
-        ];
+        return $response->header('Location') ?? '';
     }
 }

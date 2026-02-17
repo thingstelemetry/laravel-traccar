@@ -7,16 +7,24 @@ namespace ThingsTelemetry\Traccar\Requests;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use Saloon\Contracts\Body\HasBody;
+use Saloon\Traits\Body\HasFormBody;
 use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 
-class RunGarbageCollector extends Request
+class RevokeSessionToken extends Request implements HasBody
 {
-    protected Method $method = Method::GET;
+    use HasFormBody;
+
+    protected Method $method = Method::POST;
+
+    public function __construct(public string $token)
+    {
+    }
 
     public function resolveEndpoint(): string
     {
-        return '/server/gc';
+        return '/session/token/revoke';
     }
 
     public function createDtoFromResponse(Response $response): StatusData
@@ -24,11 +32,11 @@ class RunGarbageCollector extends Request
         return new StatusData(status: Status::SUCCESS);
     }
 
-    /** @return array<string, string> */
-    protected function defaultHeaders(): array
+    /** @return array<string, mixed> */
+    protected function defaultBody(): array
     {
         return [
-            'Accept' => '*/*',
+            'token' => $this->token,
         ];
     }
 }

@@ -14,18 +14,12 @@ class GetServerInformation extends Request
 {
     protected Method $method = Method::GET;
 
-    /**
-     * Resolves and returns the API endpoint for initializing a transaction.
-     */
     public function resolveEndpoint(): string
     {
         return '/server';
     }
 
-    /**
-     *
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): ServerData
     {
         return ServerData::fromArray($response->json());

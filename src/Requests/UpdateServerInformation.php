@@ -22,28 +22,18 @@ class UpdateServerInformation extends Request implements HasBody
     {
     }
 
-    /**
-     * Resolves and returns the API endpoint for initializing a transaction.
-     */
     public function resolveEndpoint(): string
     {
         return '/server';
     }
 
-    /**
-     *
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): ServerData
     {
         return ServerData::fromArray($response->json());
     }
 
-    /**
-     * Returns the default body for the request.
-     *
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     protected function defaultBody(): array
     {
         return $this->data->toArray();

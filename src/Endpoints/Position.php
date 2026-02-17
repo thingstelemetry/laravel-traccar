@@ -13,11 +13,7 @@ use ThingsTelemetry\Traccar\Requests\DeleteDevicePositions;
 
 class Position extends Traccar
 {
-    /**
-     * Delete a position by ID.
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function delete(int $id): StatusData
     {
         $response = $this->connector->send(request: new DeletePosition(id: $id));
@@ -26,10 +22,8 @@ class Position extends Traccar
     }
 
     /**
-     * Delete all positions for a device within the given time range.
-     *
      * @throws \Saloon\Exceptions\SaloonException
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function deleteForDeviceInRange(int $deviceId, CarbonInterface $from, CarbonInterface $to): StatusData
     {

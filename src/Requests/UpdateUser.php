@@ -31,17 +31,13 @@ class UpdateUser extends Request implements HasBody
         return "/users/{$this->data->id}";
     }
 
-    /**
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): UserData
     {
         return UserData::fromArray(data: $response->json());
     }
 
-    /**
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     protected function defaultBody(): array
     {
         return $this->data->toArray();

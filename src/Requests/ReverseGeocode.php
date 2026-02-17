@@ -28,11 +28,7 @@ class ReverseGeocode extends Request
         return mb_trim($response->body());
     }
 
-    /**
-     * Provide query parameters for latitude and longitude.
-     *
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     protected function defaultQuery(): array
     {
         return [
@@ -41,11 +37,7 @@ class ReverseGeocode extends Request
         ];
     }
 
-    /**
-     * Accept plain text address responses.
-     *
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function defaultHeaders(): array
     {
         return [

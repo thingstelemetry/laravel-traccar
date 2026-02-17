@@ -27,17 +27,12 @@ class DeleteDevicePositions extends Request
         return '/positions';
     }
 
-    /**
-     * Return an enum status from the response.
-     */
     public function createDtoFromResponse(Response $response): StatusData
     {
         return new StatusData(status: Status::SUCCESS);
     }
 
-    /**
-     * @return array<string, int|string>
-     */
+    /** @return array<string, int|string> */
     protected function defaultQuery(): array
     {
         return [

@@ -15,22 +15,17 @@ class GetAllDevices extends Request
 {
     protected Method $method = Method::GET;
 
-    /**
-     + Resolves and returns the API endpoint for fetching devices.
-     */
     public function resolveEndpoint(): string
     {
         return '/devices';
     }
 
     /**
-     * Create DTO collection from the response.
-     *
      * @return Collection<int, DeviceData>
      *
      * @throws JsonException
      */
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
         return collect($response->json())
             ->map(fn ($device) => DeviceData::fromArray($device));

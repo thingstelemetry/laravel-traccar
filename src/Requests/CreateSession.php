@@ -9,22 +9,28 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
+use Saloon\Traits\Body\HasFormBody;
 use ThingsTelemetry\Traccar\Dto\UserData;
 
-class CreateUser extends Request implements HasBody
+class CreateSession extends Request implements HasBody
 {
-    use HasJsonBody;
+    use HasFormBody;
 
     protected Method $method = Method::POST;
 
-    public function __construct(public UserData $data)
-    {
+    public function __construct(
+        public string $email,
+        public string $password,
+        public ?int $code = null
+    ) {
     }
 
+    /**
+     * Resolves and returns the API endpoint for creating a session.
+     */
     public function resolveEndpoint(): string
     {
-        return '/users';
+        return '/session';
     }
 
     /** @throws JsonException */
@@ -36,6 +42,15 @@ class CreateUser extends Request implements HasBody
     /** @return array<string, mixed> */
     protected function defaultBody(): array
     {
-        return $this->data->toArray();
+        $body = [
+            'email'    => $this->email,
+            'password' => $this->password,
+        ];
+
+        if ($this->code !== null) {
+            $body['code'] = $this->code;
+        }
+
+        return $body;
     }
 }

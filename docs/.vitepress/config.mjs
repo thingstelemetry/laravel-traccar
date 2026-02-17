@@ -49,6 +49,20 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Session',
+                collapsed: true,
+                items: [
+                    {text: 'Get Session', link: '/session/get'},
+                    {text: 'Get Session by ID', link: '/session/get-by-id'},
+                    {text: 'Create Session (Login)', link: '/session/create'},
+                    {text: 'Delete Session (Logout)', link: '/session/delete'},
+                    {text: 'Generate Token', link: '/session/generate-token'},
+                    {text: 'Revoke Token', link: '/session/revoke-token'},
+                    {text: 'OpenID Auth', link: '/session/openid-auth'},
+                    {text: 'OpenID Callback', link: '/session/openid-callback'},
+                ]
+            },
+            {
                 text: 'Users',
                 collapsed: true,
                 items: [
@@ -66,7 +80,7 @@ export default defineConfig({
                     {text: 'Get Information', link: '/events/get-information'},
                 ]
             },
-{
+            {
                 text: 'Devices',
                 collapsed: true,
                 items: [
@@ -102,6 +116,7 @@ export default defineConfig({
                     {text: 'User Attributes Data', link: '/reference/dto/user-attributes-data'},
                     {text: 'Server Statistics Data', link: '/reference/dto/server-statistics-data'},
                     {text: 'Position Data', link: '/reference/dto/position-data'},
+                    {text: 'Session Token Data', link: '/reference/dto/session-token-data'},
                 ]
             },
             {

@@ -26,7 +26,7 @@ class GetUser extends Request
 
     /**
      * @throws JsonException
-     * @throws NotFoundException
+     * @throws \Saloon\Exceptions\Request\Statuses\NotFoundException
      */
     public function createDtoFromResponse(Response $response): UserData
     {

@@ -31,11 +31,7 @@ class UploadServerFile extends Request
         return new StatusData(status: Status::SUCCESS);
     }
 
-    /**
-     * Send raw file bytes with the provided mime type.
-     *
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function defaultHeaders(): array
     {
         return [
@@ -44,11 +40,7 @@ class UploadServerFile extends Request
         ];
     }
 
-    /**
-     * Provide the raw body contents.
-     *
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     protected function defaultConfig(): array
     {
         return [

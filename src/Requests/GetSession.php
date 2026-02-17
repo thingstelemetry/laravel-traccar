@@ -8,23 +8,19 @@ use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
 use ThingsTelemetry\Traccar\Dto\UserData;
 
-class CreateUser extends Request implements HasBody
+class GetSession extends Request
 {
-    use HasJsonBody;
+    protected Method $method = Method::GET;
 
-    protected Method $method = Method::POST;
-
-    public function __construct(public UserData $data)
+    public function __construct(public ?string $token = null)
     {
     }
 
     public function resolveEndpoint(): string
     {
-        return '/users';
+        return '/session';
     }
 
     /** @throws JsonException */
@@ -33,9 +29,12 @@ class CreateUser extends Request implements HasBody
         return UserData::fromArray($response->json());
     }
 
-    /** @return array<string, mixed> */
-    protected function defaultBody(): array
+    protected function defaultQuery(): array
     {
-        return $this->data->toArray();
+        if ($this->token === null) {
+            return [];
+        }
+
+        return ['token' => $this->token];
     }
 }
