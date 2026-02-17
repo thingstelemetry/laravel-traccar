@@ -32,9 +32,9 @@ class ShareDevice extends Request implements HasBody
     public function createDtoFromResponse(Response $response): DeviceShareData
     {
         return DeviceShareData::fromToken(
+            deviceId: $this->deviceId,
             token: $response->body(),
             expiration: $this->expiration,
-            deviceId: $this->deviceId,
             apiBaseUrl: config('traccar.base_url'),
         );
     }

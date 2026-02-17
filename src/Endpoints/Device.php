@@ -12,7 +12,6 @@ use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Validator;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
-use Illuminate\Validation\ValidationException;
 use ThingsTelemetry\Traccar\Dto\DeviceShareData;
 use ThingsTelemetry\Traccar\Requests\ShareDevice;
 use ThingsTelemetry\Traccar\Requests\CreateDevice;
@@ -26,11 +25,7 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 class Device extends Traccar
 {
-    /**
-     * Get all devices
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function getAll(): Collection
     {
         $response = $this->connector->send(request: new GetAllDevices());
@@ -38,12 +33,7 @@ class Device extends Traccar
         return $response->dtoOrFail();
     }
 
-    /**
-     * Get devices by id, unique id, or user id
-     * or returns a list of the user's devices
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function get(?int $userId = null, ?array $ids = null, ?array $uniqueIds = null): Collection
     {
         $response = $this->connector->send(
@@ -57,11 +47,7 @@ class Device extends Traccar
         return $response->dtoOrFail();
     }
 
-    /**
-     * Create a new device.
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function create(DeviceData $data): DeviceData
     {
         $response = $this->connector->send(request: new CreateDevice(data: $data));
@@ -69,11 +55,7 @@ class Device extends Traccar
         return $response->dtoOrFail();
     }
 
-    /**
-     * Update an existing device.
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function update(DeviceData $data): DeviceData
     {
         $response = $this->connector->send(request: new UpdateDevice(data: $data));
@@ -82,9 +64,7 @@ class Device extends Traccar
     }
 
     /**
-     * Update total distance and hours of the Device.
-     *
-     * Note: The path parameter `id` must equal the body `deviceId`.
+     * The path parameter `id` must equal the body `deviceId`.
      *
      * @throws \Saloon\Exceptions\SaloonException
      */
@@ -101,11 +81,7 @@ class Device extends Traccar
         return $response->dtoOrFail();
     }
 
-    /**
-     * Delete a device by ID.
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function delete(int $id): StatusData
     {
         $response = $this->connector->send(request: new DeleteDevice(id: $id));
@@ -114,13 +90,8 @@ class Device extends Traccar
     }
 
     /**
-     * Upload/Update device image.
-     *
-     * Validates the image before sending to Traccar and streams the raw bytes with the correct
-     * Content-Type header as required by the Traccar API (Consumes: image/*).
-     *
      * @throws \Saloon\Exceptions\SaloonException
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function updateImage(int $deviceId, UploadedFile|SymfonyFile|string $file): string
     {
@@ -158,14 +129,7 @@ class Device extends Traccar
         return $response->dtoOrFail();
     }
 
-    /**
-     * Share a device and receive a temporary access token.
-     *
-     * Accepts a Carbon instance for expiration and converts it to ISO-8601 before submitting
-     * as application/x-www-form-urlencoded data as expected by Traccar.
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function share(int $deviceId, CarbonInterface $expiration): DeviceShareData
     {
         $response = $this->connector->send(

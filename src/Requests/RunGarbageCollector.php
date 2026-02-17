@@ -24,11 +24,7 @@ class RunGarbageCollector extends Request
         return new StatusData(status: Status::SUCCESS);
     }
 
-    /**
-     * Accept any response since Traccar may return empty or no content.
-     *
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function defaultHeaders(): array
     {
         return [

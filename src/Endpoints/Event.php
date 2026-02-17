@@ -10,11 +10,7 @@ use ThingsTelemetry\Traccar\Requests\GetEvent;
 
 class Event extends Traccar
 {
-    /**
-     * Retrieve an event by ID.
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function get(int $id): EventData
     {
         $response = $this->connector->send(request: new GetEvent(id: $id));

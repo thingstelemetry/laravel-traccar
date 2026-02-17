@@ -26,29 +26,18 @@ class UpdateDevice extends Request implements HasBody
         }
     }
 
-    /**
-     * Resolves and returns the API endpoint for updating a device.
-     */
     public function resolveEndpoint(): string
     {
         return "/devices/{$this->data->id}";
     }
 
-    /**
-     * Create DTO from the response.
-     *
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): DeviceData
     {
         return DeviceData::fromArray(data: $response->json());
     }
 
-    /**
-     * Returns the default body for the request.
-     *
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     protected function defaultBody(): array
     {
         return $this->data->toArray();

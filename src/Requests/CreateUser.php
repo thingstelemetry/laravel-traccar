@@ -27,17 +27,13 @@ class CreateUser extends Request implements HasBody
         return '/users';
     }
 
-    /**
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): UserData
     {
         return UserData::fromArray($response->json());
     }
 
-    /**
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     protected function defaultBody(): array
     {
         return $this->data->toArray();

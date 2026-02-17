@@ -22,19 +22,12 @@ class GetForUserDevices extends Request
     ) {
     }
 
-    /**
-     * Resolves and returns the API endpoint for fetching devices.
-     */
     public function resolveEndpoint(): string
     {
         return "/devices?{$this->getQueryParam()}";
     }
 
-    /**
-     * Create DTO collection from the response.
-     *
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): Collection
     {
         return collect(value: $response->json())

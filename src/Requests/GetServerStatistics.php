@@ -28,9 +28,7 @@ class GetServerStatistics extends Request
         return '/statistics';
     }
 
-    /**
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): ServerStatisticsData
     {
         $json = $response->json();

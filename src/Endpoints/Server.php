@@ -28,11 +28,7 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 class Server extends Traccar
 {
-    /**
-     * Get server information
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function getInformation(): ServerData
     {
         $response = $this->connector->send(request: new GetServerInformation());
@@ -40,11 +36,7 @@ class Server extends Traccar
         return $response->dtoOrFail();
     }
 
-    /**
-     * Update server information
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function updateInformation(ServerData $data): ServerData
     {
         $response = $this->connector->send(request: new UpdateServerInformation($data));
@@ -53,10 +45,6 @@ class Server extends Traccar
     }
 
     /**
-     * Reboot the Traccar server.
-     *
-     * Note: This endpoint is restricted to admin users only on the Traccar server.
-     *
      * In practice, Traccar may terminate the HTTP process immediately during reboot,
      * causing an "Empty reply from server" (cURL error 52). We treat that specific
      * scenario as a successful initiation of reboot and return a success status.
@@ -79,11 +67,7 @@ class Server extends Traccar
         }
     }
 
-    /**
-     * Cache
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function cache(): string
     {
         $response = $this->connector->send(request: new GetServerCache());
@@ -91,11 +75,7 @@ class Server extends Traccar
         return $response->dtoOrFail();
     }
 
-    /**
-     * Trigger Garbage Collector
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function gc(): StatusData
     {
         $response = $this->connector->send(request: new RunGarbageCollector());
@@ -104,13 +84,8 @@ class Server extends Traccar
     }
 
     /**
-     *
-     * Accepts Laravel UploadedFile, Symfony File, or a filesystem path string. Sends the file
-     * bytes to Traccar with the detected MIME type. No admin validation is enforced client-side;
-     * Traccar server will handle permissions.
-     *
      * @throws \Saloon\Exceptions\SaloonException
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function uploadFile(string $path, UploadedFile|SymfonyFile|string $file): StatusData
     {
@@ -153,8 +128,6 @@ class Server extends Traccar
     }
 
     /**
-     * Get timezones
-     *
      * @return Collection<int, string>
      *
      * @throws \Saloon\Exceptions\SaloonException
@@ -166,22 +139,15 @@ class Server extends Traccar
         return $response->dtoOrFail();
     }
 
-    /**
-     * Geocode coordinates
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function geocode(float $latitude, float $longitude): string
     {
         $response = $this->connector->send(request: new ReverseGeocode(latitude: $latitude, longitude: $longitude));
 
         return $response->dtoOrFail();
     }
-    /**
-     * Get aggregated server statistics between two timestamps.
-     *
-     * @throws \Saloon\Exceptions\SaloonException
-     */
+
+    /** @throws \Saloon\Exceptions\SaloonException */
     public function statistics(CarbonInterface $from, CarbonInterface $to): ServerStatisticsData
     {
         $response = $this->connector->send(

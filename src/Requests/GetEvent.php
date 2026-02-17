@@ -23,9 +23,7 @@ class GetEvent extends Request
         return "/events/{$this->id}";
     }
 
-    /**
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): EventData
     {
         return EventData::fromArray($response->json());

@@ -18,17 +18,11 @@ class DeletePosition extends Request
     {
     }
 
-    /**
-     * Resolve the API endpoint for deleting a position.
-     */
     public function resolveEndpoint(): string
     {
         return "/positions/{$this->id}";
     }
 
-    /**
-     * Return an enum status from the response.
-     */
     public function createDtoFromResponse(Response $response): StatusData
     {
         return new StatusData(status: Status::SUCCESS);

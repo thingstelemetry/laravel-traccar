@@ -22,11 +22,7 @@ class GetServerCache extends Request
         return mb_trim((string) $response->body());
     }
 
-    /**
-     * Override headers to accept plain text responses.
-     *
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function defaultHeaders(): array
     {
         return [
