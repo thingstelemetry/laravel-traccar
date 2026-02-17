@@ -26,7 +26,7 @@ class GetGroup extends Request
 
     /**
      * @throws JsonException
-     * @throws \Saloon\Exceptions\Request\Statuses\NotFoundException
+     * @throws NotFoundException
      */
     public function createDtoFromResponse(Response $response): GroupData
     {
@@ -39,6 +39,6 @@ class GetGroup extends Request
             );
         }
 
-        return GroupData::fromArray($json);
+        return GroupData::fromArray(data: $json);
     }
 }

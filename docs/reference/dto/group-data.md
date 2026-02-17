@@ -58,11 +58,13 @@ $group->groupId; // 5 (parent group) or null (top-level)
 Use this to create nested group structures:
 
 ```php
-// Top-level group
-$fleet = new GroupData(name: 'Fleet', groupId: null);
+use ThingsTelemetry\Traccar\Facades\Group;
 
-// Child group
-$trucks = new GroupData(name: 'Trucks', groupId: $fleet->id);
+// Create parent group on server first
+$fleet = Group::create(new GroupData(name: 'Fleet'));
+
+// Create child group with parent reference
+$trucks = Group::create(new GroupData(name: 'Trucks', groupId: $fleet->id));
 ```
 
 ## `attributes` → `array<string, mixed>`

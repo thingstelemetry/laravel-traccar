@@ -30,7 +30,7 @@ class CreateGroup extends Request implements HasBody
     /** @throws JsonException */
     public function createDtoFromResponse(Response $response): GroupData
     {
-        return GroupData::fromArray($response->json());
+        return GroupData::fromArray(data: $response->json());
     }
 
     /** @return array<string, mixed> */

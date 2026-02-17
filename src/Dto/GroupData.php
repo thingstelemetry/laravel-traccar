@@ -17,7 +17,7 @@ class GroupData
     ) {
     }
 
-    /** @return array<string, mixed> */
+    /** @return self */
     public static function fromArray(array $data): self
     {
         return new self(

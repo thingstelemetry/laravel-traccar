@@ -47,14 +47,13 @@ use Saloon\Exceptions\Request\Statuses\NotFoundException;
 try {
     $group = Group::get(1);
 } catch (NotFoundException $e) {
-    // Group not found - check the group ID
+    // Group not found (404) - check the group ID
 } catch (RequestException $e) {
     $status = $e->getResponse()->status();
     
     match ($status) {
         401 => // Unauthorized - check API credentials,
         403 => // Forbidden - insufficient permissions to view this group,
-        404 => // Group not found,
         default => // Handle other errors
     };
 }

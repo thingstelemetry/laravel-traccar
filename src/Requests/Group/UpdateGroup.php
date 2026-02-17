@@ -28,13 +28,21 @@ class UpdateGroup extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return "/groups/{$this->data->id}";
+        return '/groups/'.(int) $this->data->id;
     }
 
     /** @throws JsonException */
     public function createDtoFromResponse(Response $response): GroupData
     {
-        return GroupData::fromArray(data: $response->json());
+        $json = $response->json();
+
+        if (! is_array($json) || $json === []) {
+            throw new InvalidArgumentException(
+                message: 'Invalid or empty JSON response from Traccar server.'
+            );
+        }
+
+        return GroupData::fromArray(data: $json);
     }
 
     /** @return array<string, mixed> */
