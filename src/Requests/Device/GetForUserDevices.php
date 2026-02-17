@@ -34,7 +34,7 @@ class GetForUserDevices extends Request
             ->map(callback: fn ($device) => DeviceData::fromArray(data: $device));
     }
 
-    protected function getQueryParam(): string
+    private function getQueryParam(): string
     {
         $query = '';
 
