@@ -26,6 +26,25 @@ $geofenceId = $event->geofenceId; // maybe null
 $attrs      = $event->attributes; // array<string, mixed>
 ```
 
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\Event;
+use Saloon\Exceptions\Request\RequestException;
+
+try {
+    $event = Event::get(1234);
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        401 => // Unauthorized - check API credentials,
+        403 => // Forbidden - insufficient permissions,
+        404 => // Event not found - check event ID,
+        default => // Handle other errors
+    };
+}
+```
 
 ## Important Links
 - [Traccar: Get Event by ID](https://www.traccar.org/api-reference/#tag/Events/paths/~1events~1%7Bid%7D/get)
