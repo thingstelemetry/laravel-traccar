@@ -15,15 +15,15 @@ use Illuminate\Validation\ValidationException;
 use ThingsTelemetry\Traccar\Enums\DeviceStatus;
 use ThingsTelemetry\Traccar\Dto\DeviceShareData;
 use ThingsTelemetry\Traccar\Enums\DeviceCategory;
-use ThingsTelemetry\Traccar\Requests\ShareDevice;
-use ThingsTelemetry\Traccar\Requests\CreateDevice;
-use ThingsTelemetry\Traccar\Requests\DeleteDevice;
-use ThingsTelemetry\Traccar\Requests\UpdateDevice;
-use ThingsTelemetry\Traccar\Requests\GetAllDevices;
 use ThingsTelemetry\Traccar\Dto\DeviceAttributesData;
-use ThingsTelemetry\Traccar\Requests\GetForUserDevices;
-use ThingsTelemetry\Traccar\Requests\UpdateDeviceImage;
-use ThingsTelemetry\Traccar\Requests\UpdateDeviceTotals;
+use ThingsTelemetry\Traccar\Requests\Device\ShareDevice;
+use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
+use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;
+use ThingsTelemetry\Traccar\Requests\Device\UpdateDevice;
+use ThingsTelemetry\Traccar\Requests\Device\GetAllDevices;
+use ThingsTelemetry\Traccar\Requests\Device\GetForUserDevices;
+use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceImage;
+use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceTotals;
 
 beforeEach(closure: function () {
     $this->devices = [

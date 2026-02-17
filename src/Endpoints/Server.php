@@ -13,18 +13,18 @@ use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\ServerData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use Illuminate\Validation\ValidationException;
-use ThingsTelemetry\Traccar\Requests\RebootServer;
 use Saloon\Exceptions\Request\FatalRequestException;
-use ThingsTelemetry\Traccar\Requests\GetServerCache;
-use ThingsTelemetry\Traccar\Requests\ReverseGeocode;
 use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
-use ThingsTelemetry\Traccar\Requests\UploadServerFile;
-use ThingsTelemetry\Traccar\Requests\GetServerTimezones;
-use ThingsTelemetry\Traccar\Requests\GetServerStatistics;
-use ThingsTelemetry\Traccar\Requests\RunGarbageCollector;
-use ThingsTelemetry\Traccar\Requests\GetServerInformation;
-use ThingsTelemetry\Traccar\Requests\UpdateServerInformation;
+use ThingsTelemetry\Traccar\Requests\Server\RebootServer;
+use ThingsTelemetry\Traccar\Requests\Server\GetServerCache;
+use ThingsTelemetry\Traccar\Requests\Server\ReverseGeocode;
+use ThingsTelemetry\Traccar\Requests\Server\UploadServerFile;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
+use ThingsTelemetry\Traccar\Requests\Server\GetServerTimezones;
+use ThingsTelemetry\Traccar\Requests\Server\GetServerStatistics;
+use ThingsTelemetry\Traccar\Requests\Server\RunGarbageCollector;
+use ThingsTelemetry\Traccar\Requests\Server\GetServerInformation;
+use ThingsTelemetry\Traccar\Requests\Server\UpdateServerInformation;
 
 class Server extends Traccar
 {

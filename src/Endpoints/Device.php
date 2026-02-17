@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\Validator;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Dto\DeviceShareData;
-use ThingsTelemetry\Traccar\Requests\ShareDevice;
-use ThingsTelemetry\Traccar\Requests\CreateDevice;
-use ThingsTelemetry\Traccar\Requests\DeleteDevice;
-use ThingsTelemetry\Traccar\Requests\UpdateDevice;
-use ThingsTelemetry\Traccar\Requests\GetAllDevices;
-use ThingsTelemetry\Traccar\Requests\GetForUserDevices;
-use ThingsTelemetry\Traccar\Requests\UpdateDeviceImage;
-use ThingsTelemetry\Traccar\Requests\UpdateDeviceTotals;
+use ThingsTelemetry\Traccar\Requests\Device\ShareDevice;
+use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
+use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;
+use ThingsTelemetry\Traccar\Requests\Device\UpdateDevice;
+use ThingsTelemetry\Traccar\Requests\Device\GetAllDevices;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
+use ThingsTelemetry\Traccar\Requests\Device\GetForUserDevices;
+use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceImage;
+use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceTotals;
 
 class Device extends Traccar
 {

@@ -10,13 +10,13 @@ use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Facades\User;
 use ThingsTelemetry\Traccar\Dto\StatusData;
-use ThingsTelemetry\Traccar\Requests\GetUser;
-use ThingsTelemetry\Traccar\Requests\CreateUser;
-use ThingsTelemetry\Traccar\Requests\DeleteUser;
-use ThingsTelemetry\Traccar\Requests\UpdateUser;
-use ThingsTelemetry\Traccar\Requests\GetAllUsers;
+use ThingsTelemetry\Traccar\Requests\User\GetUser;
 use ThingsTelemetry\Traccar\Dto\UserAttributesData;
 use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
+use ThingsTelemetry\Traccar\Requests\User\CreateUser;
+use ThingsTelemetry\Traccar\Requests\User\DeleteUser;
+use ThingsTelemetry\Traccar\Requests\User\UpdateUser;
+use ThingsTelemetry\Traccar\Requests\User\GetAllUsers;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 beforeEach(function () {
@@ -294,7 +294,7 @@ it(description: 'can retrieve all users', closure: function () {
     ];
 
     MockClient::global(mockData: [
-        \ThingsTelemetry\Traccar\Requests\GetAllUsers::class => MockResponse::make($payload),
+        GetAllUsers::class => MockResponse::make($payload),
     ]);
 
     $users = User::all();

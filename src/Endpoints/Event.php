@@ -6,7 +6,7 @@ namespace ThingsTelemetry\Traccar\Endpoints;
 
 use ThingsTelemetry\Traccar\Traccar;
 use ThingsTelemetry\Traccar\Dto\EventData;
-use ThingsTelemetry\Traccar\Requests\GetEvent;
+use ThingsTelemetry\Traccar\Requests\Event\GetEvent;
 
 class Event extends Traccar
 {

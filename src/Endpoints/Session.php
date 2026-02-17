@@ -8,15 +8,15 @@ use Carbon\CarbonInterface;
 use ThingsTelemetry\Traccar\Traccar;
 use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
-use ThingsTelemetry\Traccar\Requests\GetSession;
 use ThingsTelemetry\Traccar\Dto\SessionTokenData;
-use ThingsTelemetry\Traccar\Requests\CreateSession;
-use ThingsTelemetry\Traccar\Requests\DeleteSession;
-use ThingsTelemetry\Traccar\Requests\GetOpenIdAuth;
-use ThingsTelemetry\Traccar\Requests\GetSessionById;
-use ThingsTelemetry\Traccar\Requests\GetOpenIdCallback;
-use ThingsTelemetry\Traccar\Requests\RevokeSessionToken;
-use ThingsTelemetry\Traccar\Requests\GenerateSessionToken;
+use ThingsTelemetry\Traccar\Requests\Session\GetSession;
+use ThingsTelemetry\Traccar\Requests\Session\CreateSession;
+use ThingsTelemetry\Traccar\Requests\Session\DeleteSession;
+use ThingsTelemetry\Traccar\Requests\Session\GetOpenIdAuth;
+use ThingsTelemetry\Traccar\Requests\Session\GetSessionById;
+use ThingsTelemetry\Traccar\Requests\Session\GetOpenIdCallback;
+use ThingsTelemetry\Traccar\Requests\Session\RevokeSessionToken;
+use ThingsTelemetry\Traccar\Requests\Session\GenerateSessionToken;
 
 class Session extends Traccar
 {

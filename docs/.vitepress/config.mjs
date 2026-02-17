@@ -66,8 +66,8 @@ export default defineConfig({
                 text: 'Users',
                 collapsed: true,
                 items: [
-                    {text: 'Get Information', link: '/users/get-information'},
-                    {text: 'Get All', link: '/users/get-all'},
+                    {text: 'Get User', link: '/users/get-information'},
+                    {text: 'Get All User', link: '/users/get-all'},
                     {text: 'Create User', link: '/users/create'},
                     {text: 'Update User', link: '/users/update'},
                     {text: 'Delete User', link: '/users/delete'},
@@ -84,6 +84,7 @@ export default defineConfig({
                 text: 'Devices',
                 collapsed: true,
                 items: [
+                    {text: 'Get Device', link: '/devices/get-information'},
                     {text: 'Get All Devices', link: '/devices/get-all'},
                     {text: 'Get User Devices', link: '/devices/get-for-user'},
                     {text: 'Create Device', link: '/devices/create'},
