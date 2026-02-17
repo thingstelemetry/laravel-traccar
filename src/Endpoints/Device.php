@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Dto\DeviceShareData;
+use ThingsTelemetry\Traccar\Requests\Device\GetDevice;
 use ThingsTelemetry\Traccar\Requests\Device\ShareDevice;
 use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;
@@ -29,6 +30,14 @@ class Device extends Traccar
     public function getAll(): Collection
     {
         $response = $this->connector->send(request: new GetAllDevices());
+
+        return $response->dtoOrFail();
+    }
+
+    /** @throws \Saloon\Exceptions\SaloonException */
+    public function find(int $id): DeviceData
+    {
+        $response = $this->connector->send(request: new GetDevice(id: $id));
 
         return $response->dtoOrFail();
     }
