@@ -14,7 +14,7 @@ This is **Laravel Traccar** - a PHP Laravel package that provides an elegant API
 
 ### Directory Structure
 
-```
+```text
 ├── config/           # Package configuration
 ├── docs/             # Documentation (VitePress)
 ├── src/              # Source code
@@ -38,7 +38,7 @@ This is **Laravel Traccar** - a PHP Laravel package that provides an elegant API
 2. **Endpoints:** Extend `Traccar` base class, return typed DTOs, accessible via facades
 3. **DTOs:** Have `fromArray()` constructor and `toArray()` serialization, support nested DTOs
 4. **Enums:** Backed enums (string values), have `default()` method for fallback
-5. **Support Classes:** Utilities in `src/Support/` with unit tests in `tests/Unit/Services/`
+5. **Support Classes:** Utilities in `src/Support/` with unit tests in `tests/Unit/Services/` (historical naming; keep tests in `tests/Unit/Services/` for `src/Support/` classes)
 6. **Service Provider:** Binds `TraccarConnector` to container, publishes config
 7. **Facades:** Static access via `Server::getInformation()` instead of `app(Server::class)->getInformation()`
 
@@ -156,7 +156,7 @@ Run tests: `composer test`
 
 - **`tests/Feature/`** - Integration tests (endpoint methods, HTTP cycles)
 - **`tests/Unit/`** - Unit tests (`TraccarConnectorTest.php`, `Services/` folder)
-- **`tests/Unit/Services/`** - Support class tests (`MountTest.php`, `StorageInfoTest.php`)
+- **`tests/Unit/Services/`** - Support class tests (`MountTest.php`, `StorageInfoTest.php`); this folder intentionally covers `src/Support/`
 
 ### Key Patterns
 

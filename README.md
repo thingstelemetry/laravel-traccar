@@ -33,7 +33,7 @@ composer require thingstelemetry/laravel-traccar
 - `TRACCAR_BASE_URL` – Base API URL (default `https://demo.traccar.org/api`)
 
 
-## Configuration
+## Publishing Configuration
 
 You can publish the configuration by running the following command:
 
