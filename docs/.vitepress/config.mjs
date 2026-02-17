@@ -102,6 +102,7 @@ export default defineConfig({
                     {text: 'User Attributes Data', link: '/reference/dto/user-attributes-data'},
                     {text: 'Server Statistics Data', link: '/reference/dto/server-statistics-data'},
                     {text: 'Position Data', link: '/reference/dto/position-data'},
+                    {text: 'Session Token Data', link: '/reference/dtos/session-token-data'},
                 ]
             },
             {
