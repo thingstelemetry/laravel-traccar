@@ -119,6 +119,6 @@ Session::revokeToken($tokenData->token);
 ```
 
 ## Important Links
-- [Generate Token Documentation](../session/generate-token)
-- [Revoke Token Documentation](../session/revoke-token)
+- [Generate Token Documentation](../../session/generate-token)
+- [Revoke Token Documentation](../../session/revoke-token)
 - [Traccar API: Session Token](https://www.traccar.org/api-reference/#tag/Session/paths/~1session~1token/post)

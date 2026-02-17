@@ -95,5 +95,5 @@ try {
 
 ## Important Links
 - [Traccar API: Generate Session Token](https://www.traccar.org/api-reference/#tag/Session/paths/~1session~1token/post)
-- [SessionTokenData DTO Reference](../reference/dtos/session-token-data)
+- [SessionTokenData DTO Reference](../reference/dto/session-token-data)
 - [Revoke Token Documentation](./revoke-token)
