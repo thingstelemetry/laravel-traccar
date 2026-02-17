@@ -16,7 +16,7 @@
 
 | Version | PHP    | Composer | Laravel |
 |---------|--------|----------|---------|
-| 1.x     | >= 8.4 | Required | >= 11.x |
+| 1.x     | >= 8.4 | Required | >= 12.x |
 
 ## Installation
 
@@ -33,7 +33,7 @@ composer require thingstelemetry/laravel-traccar
 - `TRACCAR_BASE_URL` – Base API URL (default `https://demo.traccar.org/api`)
 
 
-## Configuration
+## Publishing Configuration
 
 You can publish the configuration by running the following command:
 

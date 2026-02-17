@@ -14,7 +14,7 @@ services:
       - dev.orbstack.domains=traccar.thingstelemetry.local
 
   composer:
-    image: php:8.4-cli
+    image: php:8.5-cli
     container_name: traccar-composer-app
     working_dir: /app
     volumes:
