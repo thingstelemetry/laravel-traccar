@@ -9,8 +9,8 @@ use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Facades\Position;
 use Illuminate\Validation\ValidationException;
-use ThingsTelemetry\Traccar\Requests\DeletePosition;
-use ThingsTelemetry\Traccar\Requests\DeleteDevicePositions;
+use ThingsTelemetry\Traccar\Requests\Position\DeletePosition;
+use ThingsTelemetry\Traccar\Requests\Position\DeleteDevicePositions;
 
 it(description: 'can delete a position', closure: function () {
     MockClient::global(mockData: [
