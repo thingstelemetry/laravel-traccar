@@ -40,6 +40,31 @@ $result->status->name;  // 'SUCCESS' or 'FAILURE'
 $result->status->label(); // 'Success' or 'Failure'
 ```
 
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\Position;
+use Illuminate\Validation\ValidationException;
+use Saloon\Exceptions\Request\RequestException;
+
+try {
+    $result = Position::deleteForDeviceInRange(deviceId: 6, from: $from, to: $to);
+} catch (ValidationException $e) {
+    // Handle validation errors (from timestamp must be before to)
+    $errors = $e->errors();
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        400 => // Bad request - invalid device or date range,
+        401 => // Unauthorized - check API credentials,
+        403 => // Forbidden - insufficient permissions,
+        404 => // Device not found - check device ID,
+        default => // Handle other errors
+    };
+}
+```
+
 ## Important Links
 - [Traccar: Delete positions for a device and time range](https://www.traccar.org/api-reference/#tag/Positions/paths/~1positions/delete)
 - [Status enum reference](./../reference/enums/status)
