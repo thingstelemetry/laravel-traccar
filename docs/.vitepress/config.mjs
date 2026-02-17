@@ -31,6 +31,9 @@ export default defineConfig({
                     {text: 'About Traccar', link: '/introduction/about-traccar'},
                     {text: 'Generate Token', link: '/introduction/generate-bearer-token'},
                     {text: 'Getting Started', link: '/introduction/getting-started'},
+                    {text: 'Making Requests', link: '/introduction/making-request'},
+                    {text: 'Handling Responses', link: '/introduction/handling-response'},
+                    {text: 'Error Handling', link: '/introduction/error-handling'},
                 ]
             },
             {
