@@ -16,7 +16,9 @@ use ThingsTelemetry\Traccar\Enums\DeviceStatus;
 use ThingsTelemetry\Traccar\Dto\DeviceShareData;
 use ThingsTelemetry\Traccar\Enums\DeviceCategory;
 use ThingsTelemetry\Traccar\Dto\DeviceAttributesData;
+use ThingsTelemetry\Traccar\Requests\Device\GetDevice;
 use ThingsTelemetry\Traccar\Requests\Device\ShareDevice;
+use Saloon\Exceptions\Request\Statuses\NotFoundException;
 use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDevice;
@@ -81,6 +83,34 @@ it(description: 'can get all devices', closure: function () {
         ->and(value: $first->lastUpdate)->toBeInstanceOf(class: CarbonImmutable::class)
         ->and(value: $first->attributes)->toBeInstanceOf(class: DeviceAttributesData::class)
         ->and(value: $first->attributes->speedLimit)->toBeFloat();
+});
+
+it(description: 'can find a device by id', closure: function () {
+    MockClient::global(mockData: [
+        GetDevice::class => MockResponse::make($this->devices[0]),
+    ]);
+
+    $device = Device::find(id: 6);
+
+    expect(value: $device)
+        ->toBeInstanceOf(class: DeviceData::class)
+        ->and(value: $device->id)->toEqual(expected: 6)
+        ->and(value: $device->name)->toEqual(expected: 'Truck 1')
+        ->and(value: $device->uniqueId)->toEqual(expected: 'ABC123')
+        ->and(value: $device->status)->toEqual(expected: DeviceStatus::ONLINE)
+        ->and(value: $device->category)->toEqual(expected: DeviceCategory::TRUCK)
+        ->and(value: $device->lastUpdate)->toBeInstanceOf(class: CarbonImmutable::class)
+        ->and(value: $device->attributes)->toBeInstanceOf(class: DeviceAttributesData::class)
+        ->and(value: $device->attributes->speedLimit)->toBeFloat();
+});
+
+it(description: 'throws NotFoundException when device is not found', closure: function () {
+    MockClient::global(mockData: [
+        GetDevice::class => MockResponse::make(body: [], status: 200),
+    ]);
+
+    expect(value: fn () => Device::find(id: 999))
+        ->toThrow(exception: NotFoundException::class);
 });
 
 it(description: 'can get devices for a specific user', closure: function () {
