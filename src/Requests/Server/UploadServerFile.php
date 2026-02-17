@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ThingsTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests\Server;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -10,13 +10,20 @@ use Saloon\Http\Response;
 use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 
-class RebootServer extends Request
+class UploadServerFile extends Request
 {
     protected Method $method = Method::POST;
 
+    public function __construct(
+        public string $path,
+        protected string $mimeType,
+        protected string $contents,
+    ) {
+    }
+
     public function resolveEndpoint(): string
     {
-        return '/server/reboot';
+        return "/server/file/{$this->path}";
     }
 
     public function createDtoFromResponse(Response $response): StatusData
@@ -28,7 +35,16 @@ class RebootServer extends Request
     protected function defaultHeaders(): array
     {
         return [
-            'Accept' => '*/*',
+            'Content-Type' => $this->mimeType,
+            'Accept'       => '*/*',
+        ];
+    }
+
+    /** @return array<string, mixed> */
+    protected function defaultConfig(): array
+    {
+        return [
+            'body' => $this->contents,
         ];
     }
 }
