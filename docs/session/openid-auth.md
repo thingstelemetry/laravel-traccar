@@ -27,6 +27,7 @@ return redirect($authUrl);
 
 ```php
 use ThingsTelemetry\Traccar\Facades\Session;
+use Saloon\Exceptions\Request\RequestException;
 
 class AuthController extends Controller
 {
@@ -50,13 +51,14 @@ After the user authenticates with the identity provider, they will be redirected
 
 ```php
 use ThingsTelemetry\Traccar\Facades\Session;
+use Saloon\Exceptions\Request\RequestException;
 
 class AuthController extends Controller
 {
     public function handleCallback(Request $request)
     {
         // Pass the query string to handle the callback
-        $queryString = $request->getQueryString();
+        $queryString = $request->getQueryString() ?? ''
         
         try {
             $redirectUrl = Session::handleOpenIdCallback($queryString);

@@ -46,7 +46,7 @@ try {
     
     // Check if TOTP is required
     if ($response->status() === 401) {
-        $authHeader = $response->header('WWW-Authenticate');
+        $authHeader = $response->header('WWW-Authenticate') ?? '';
         if (str_contains($authHeader, 'TOTP')) {
             $totpRequired = true;
         }

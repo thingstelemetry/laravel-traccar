@@ -20,18 +20,21 @@ class GetSession extends Request
 
     public function resolveEndpoint(): string
     {
-        $endpoint = '/session';
-
-        if ($this->token !== null) {
-            $endpoint .= '?token=' . urlencode($this->token);
-        }
-
-        return $endpoint;
+        return '/session';
     }
 
     /** @throws JsonException */
     public function createDtoFromResponse(Response $response): UserData
     {
         return UserData::fromArray($response->json());
+    }
+
+    protected function defaultQuery(): array
+    {
+        if ($this->token === null) {
+            return [];
+        }
+
+        return ['token' => $this->token];
     }
 }

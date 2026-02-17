@@ -70,6 +70,7 @@ public function changePassword(Request $request)
 
 ```php
 use ThingsTelemetry\Traccar\Facades\Session;
+use Saloon\Exceptions\Request\RequestException;
 
 // When user logs out from mobile app
 public function logout()
