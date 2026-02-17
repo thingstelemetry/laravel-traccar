@@ -48,3 +48,28 @@ Before sending the request, Laravel validation ensures:
 - `file size`: must not exceed 500000 bytes
 
 If validation fails, an `Illuminate\Validation\ValidationException` is thrown. Make sure to catch it.
+
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\Device;
+use Saloon\Exceptions\Request\RequestException;
+use Illuminate\Validation\ValidationException;
+
+try {
+    $filename = Device::updateImage(deviceId: 6, file: $uploaded);
+} catch (ValidationException $e) {
+    // Handle validation errors (invalid file type, size, etc.)
+    $errors = $e->errors();
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        401 => // Unauthorized - check API credentials,
+        403 => // Forbidden - insufficient permissions,
+        404 => // Device not found - check device ID,
+        413 => // Payload too large - image exceeds server limits,
+        default => // Handle other errors
+    };
+}
+```
