@@ -68,6 +68,26 @@ $speedUnitLabel = $info->attributes->speedUnit->label(); // "Kilometers per Hour
 $timezone = $info->attributes->timezone; // "Africa/Nairobi"
 ```
 
+## Error Handling
+
+```php
+use ThingsTelemetry\Traccar\Facades\Server;
+use Saloon\Exceptions\Request\RequestException;
+
+try {
+    $response = Server::updateInformation($data);
+} catch (RequestException $e) {
+    $status = $e->getResponse()->status();
+    
+    match ($status) {
+        400 => // Bad request - invalid data,
+        401 => // Unauthorized - check API credentials,
+        403 => // Forbidden - requires admin privileges,
+        default => // Handle other errors
+    };
+}
+```
+
 ## Traccar UI Side Effect
 
 When `updateInformation` is called, some configuration values are updated to default `null` or `false` values. 
