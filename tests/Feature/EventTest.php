@@ -7,7 +7,7 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Dto\EventData;
 use ThingsTelemetry\Traccar\Facades\Event;
-use ThingsTelemetry\Traccar\Requests\GetEvent;
+use ThingsTelemetry\Traccar\Requests\Event\GetEvent;
 
 it(description: 'can retrieve an event by id', closure: function () {
     $payload = [
