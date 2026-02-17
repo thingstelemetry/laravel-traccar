@@ -29,6 +29,9 @@ class GetSession extends Request
         return UserData::fromArray($response->json());
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function defaultQuery(): array
     {
         if ($this->token === null) {

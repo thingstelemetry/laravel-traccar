@@ -41,7 +41,7 @@ class GetServerStatistics extends Request
         }
 
         return ServerStatisticsData::fromArray(
-            data: Arr::first(array: $response->json())
+            data: Arr::first(array: $json)
         );
     }
 
