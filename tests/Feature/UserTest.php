@@ -294,7 +294,7 @@ it(description: 'can retrieve all users', closure: function () {
     ];
 
     MockClient::global(mockData: [
-        \ThingsTelemetry\Traccar\Requests\User\GetAllUsers::class => MockResponse::make($payload),
+        GetAllUsers::class => MockResponse::make($payload),
     ]);
 
     $users = User::all();
