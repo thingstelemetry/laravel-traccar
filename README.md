@@ -16,7 +16,7 @@
 
 | Version | PHP    | Composer | Laravel |
 |---------|--------|----------|---------|
-| 1.x     | >= 8.4 | Required | >= 11.x |
+| 1.x     | >= 8.4 | Required | >= 12.x |
 
 ## Installation
 
