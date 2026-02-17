@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ThingsTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests\Session;
 
 use JsonException;
 use Saloon\Enums\Method;
@@ -25,9 +25,6 @@ class CreateSession extends Request implements HasBody
     ) {
     }
 
-    /**
-     * Resolves and returns the API endpoint for creating a session.
-     */
     public function resolveEndpoint(): string
     {
         return '/session';

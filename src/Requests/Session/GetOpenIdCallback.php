@@ -2,19 +2,23 @@
 
 declare(strict_types=1);
 
-namespace ThingsTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests\Session;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class GetOpenIdAuth extends Request
+class GetOpenIdCallback extends Request
 {
     protected Method $method = Method::GET;
 
+    public function __construct(public string $queryString)
+    {
+    }
+
     public function resolveEndpoint(): string
     {
-        return '/session/openid/auth';
+        return '/session/openid/callback?' . $this->queryString;
     }
 
     public function createDtoFromResponse(Response $response): string

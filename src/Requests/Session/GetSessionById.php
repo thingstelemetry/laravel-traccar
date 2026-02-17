@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ThingsTelemetry\Traccar\Requests;
+namespace ThingsTelemetry\Traccar\Requests\Session;
 
 use JsonException;
 use Saloon\Enums\Method;
@@ -10,31 +10,22 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use ThingsTelemetry\Traccar\Dto\UserData;
 
-class GetSession extends Request
+class GetSessionById extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(public ?string $token = null)
+    public function __construct(public int $userId)
     {
     }
 
     public function resolveEndpoint(): string
     {
-        return '/session';
+        return "/session/{$this->userId}";
     }
 
     /** @throws JsonException */
     public function createDtoFromResponse(Response $response): UserData
     {
         return UserData::fromArray($response->json());
-    }
-
-    protected function defaultQuery(): array
-    {
-        if ($this->token === null) {
-            return [];
-        }
-
-        return ['token' => $this->token];
     }
 }
