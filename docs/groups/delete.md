@@ -39,26 +39,6 @@ When you delete a group:
 - Devices in the group are **not** deleted, but their `groupId` becomes `null`
 - Child groups (nested groups) are **not** deleted, but their `groupId` reference is removed
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Group;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $result = Group::delete(id: 1);
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - insufficient permissions,
-        404 => // Group not found - check group ID,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Related Operations
 
 - [Get All Groups](./get-all) - Fetch all accessible groups

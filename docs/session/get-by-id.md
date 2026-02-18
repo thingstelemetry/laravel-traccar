@@ -31,42 +31,6 @@ $user->map->value; // "osm"
 $user->attributes->toArray(); // array<string, mixed>
 ```
 
-## Error Handling
-
-### 403 Forbidden
-
-Returned when the authenticated user lacks permission to access the specified user.
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $user = Session::getById(42);
-} catch (RequestException $e) {
-    if ($e->getResponse()->status() === 403) {
-        // User lacks permission to impersonate this user
-    }
-}
-```
-
-### 404 Not Found
-
-Returned when the user with the specified ID does not exist.
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $user = Session::getById(99999);
-} catch (RequestException $e) {
-    if ($e->getResponse()->status() === 404) {
-        // User not found
-    }
-}
-```
-
 ## Important Notes
 
 - This method is intended for administrative use cases

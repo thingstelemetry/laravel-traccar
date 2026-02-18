@@ -7,6 +7,7 @@ namespace ThingsTelemetry\Traccar\Requests\Permission;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use InvalidArgumentException;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Traits\Body\HasJsonBody;
 use ThingsTelemetry\Traccar\Enums\Status;
@@ -21,9 +22,15 @@ class UnlinkPermissionsBulk extends Request implements HasBody
 
     /**
      * @param  array<PermissionData>  $permissions
+     *
+     * @throws InvalidArgumentException
      */
     public function __construct(public array $permissions)
     {
+        if (empty($this->permissions)) {
+            throw new InvalidArgumentException('Permissions array cannot be empty.');
+        }
+
         foreach ($this->permissions as $permission) {
             $permission->validate();
         }

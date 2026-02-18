@@ -31,26 +31,6 @@ $result->status->name;  // 'SUCCESS' or 'FAILURE'
 $result->status->label(); // 'Success' or 'Failure'
 ```
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\User;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $result = User::delete(id: 6);
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - insufficient permissions,
-        404 => // User not found - check user ID,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Important Links
 - [Traccar Delete User](https://www.traccar.org/api-reference/#tag/Users/paths/~1users~1%7Bid%7D/delete)
 - [Status enum reference](./../reference/enums/status)

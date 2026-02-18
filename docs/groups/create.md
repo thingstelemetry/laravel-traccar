@@ -90,26 +90,6 @@ Bad Request (400) Response: Key (groupid)=(9999) is not present in table "tc_gro
 
 This means the specified `groupId` (parent) does not exist. Use the groups API to get valid group IDs.
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Group;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $group = Group::create($groupData);
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        400 => // Bad request - check group data,
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - insufficient permissions,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Related Operations
 
 - [Get All Groups](./get-all) - Fetch all accessible groups

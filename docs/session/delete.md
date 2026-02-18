@@ -24,21 +24,6 @@ $result->status; // Status::SUCCESS
 $result->status->value; // "success"
 ```
 
-## Error Handling
-
-This endpoint typically does not return errors for valid requests. However, if the session has already expired or been invalidated:
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $result = Session::delete();
-} catch (RequestException $e) {
-    // Handle error (e.g., session already expired)
-}
-```
-
 ## Important Notes
 
 - This method effectively logs the user out

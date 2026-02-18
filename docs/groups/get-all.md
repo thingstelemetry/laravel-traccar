@@ -67,25 +67,6 @@ $attributes = $first->attributes; // ['color' => 'blue']
 - `attributes` → `array<string, mixed>`
   Custom attributes associated with the group.
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Group;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $groups = Group::getAll(all: true);
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - insufficient permissions (all param requires admin),
-        default => // Handle other errors
-    };
-}
-```
-
 ## Hierarchical Groups
 
 Groups can be nested. Check the `groupId` property to determine parent-child relationships:

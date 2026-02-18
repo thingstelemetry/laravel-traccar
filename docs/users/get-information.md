@@ -30,26 +30,6 @@ $user->expirationTime?->toIso8601String();
 $user->attributes->toArray(); // array<string, mixed>
 ```
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\User;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $user = User::get(42);
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - requires admin or manager role,
-        404 => // User not found - check user ID,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Important Links
 - [Traccar: Get User by ID](https://www.traccar.org/api-reference/#tag/Users/paths/~1users/get)
 - [UserData DTO reference](./../reference/dto/user-data)

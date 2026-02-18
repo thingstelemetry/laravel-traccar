@@ -80,34 +80,6 @@ $user->coordinateFormat; // enum CoordinateFormat
 $user->attributes->toArray(); // array<string, mixed>
 ```
 
-## Error Handling
-
-### 401 Unauthorized
-
-Returned when authentication fails or when TOTP is required.
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $user = Session::create(
-        email: 'user@example.com',
-        password: 'wrong-password'
-    );
-} catch (RequestException $e) {
-    if ($e->getResponse()->status() === 401) {
-        $authHeader = $e->getResponse()->header('WWW-Authenticate');
-        
-        if (str_contains($authHeader, 'TOTP')) {
-            // TOTP required
-        } else {
-            // Invalid credentials
-        }
-    }
-}
-```
-
 ## Security Notes
 
 - Never log or store user passwords

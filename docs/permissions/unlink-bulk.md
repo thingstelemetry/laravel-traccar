@@ -77,33 +77,6 @@ $permissions = array_map(
 Permission::unlinkBulk($permissions);
 ```
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Permission;
-use ThingsTelemetry\Traccar\Dto\PermissionData;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $permissions = [
-        new PermissionData(userId: 5, deviceId: 10),
-        new PermissionData(userId: 5, deviceId: 11),
-    ];
-    
-    $result = Permission::unlinkBulk($permissions);
-} catch (InvalidArgumentException $e) {
-    // One of the permissions has invalid structure
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        400 => // Bad Request - invalid permission parameters,
-        403 => // Forbidden - insufficient permissions,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Important Notes
 
 - Each `PermissionData` in the array must have exactly **2 parameters**

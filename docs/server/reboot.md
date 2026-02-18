@@ -24,21 +24,5 @@ The response is an instance of `ThingsTelemetry\Traccar\Dto\StatusData`.
 $status = $result->status->value; // "success"
 ```
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Server;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $result = Server::reboot();
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - requires admin privileges,
-        default => // Handle other errors
-    };
-}
-```
+## Important Links
+- [Traccar API: Reboot](https://www.traccar.org/api-reference/#tag/Server/paths/~1server/reboot/get)

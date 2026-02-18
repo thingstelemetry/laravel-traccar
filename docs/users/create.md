@@ -59,26 +59,6 @@ $created->map->value;    // "osm"
 $created->attributes->toArray();
 ```
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\User;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $created = User::create($data);
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        400 => // Bad request - invalid data (e.g., email already exists),
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - requires admin or manager role,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Important Links
 - [Traccar Create User](https://www.traccar.org/api-reference/#tag/Users/paths/~1users/post)
 - [UserData DTO reference](./../reference/dto/user-data)

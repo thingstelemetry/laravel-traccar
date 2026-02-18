@@ -76,30 +76,6 @@ new PermissionData(groupId: 2, geofenceId: 3)
 new PermissionData(groupId: 2, notificationId: 7)
 ```
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Permission;
-use ThingsTelemetry\Traccar\Dto\PermissionData;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $permission = new PermissionData(userId: 5, deviceId: 10);
-    $result = Permission::link($permission);
-} catch (InvalidArgumentException $e) {
-    // Invalid permission structure - must have exactly 2 properties
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        400 => // Bad Request - invalid permission parameters,
-        403 => // Forbidden - insufficient permissions,
-        404 => // Not Found - one of the objects doesn't exist,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Important Notes
 
 - Exactly **2 parameters** must be provided in the `PermissionData` object
