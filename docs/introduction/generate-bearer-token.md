@@ -8,20 +8,20 @@ There are two ways to generate a bearer token: From UI or from CLI.
 
 Login into your Traccar account and navigate **settings** 
 
-![Traccar Dashboard](./../images/how-to-generate-traccar-api-token-visit-dashboard.webp)
+![Traccar Dashboard](./../images/how-to-generate-laravel-traccar-token-visit-dashboard.webp)
 
 
 Select **preferences** and navigate to **token** section on right
 
-![Traccar Preferences](./../images/how-to-generate-traccar-api-token-preference.webp)
+![Traccar Preferences](./../images/how-to-generate-laravel-traccar-token-preference.webp)
 
 Expand the **token section**, set an **expiration date** and click **refresh icon** to generate a new token.
 
-![Traccar Token Section](./../images/how-to-generate-traccar-api-token-set-date.webp)
+![Traccar Token Section](./../images/how-to-generate-laravel-traccar-token-set-date.webp)
 
 Copy the generated token and use it in your application.
 
-![Traccar Token Section](./../images/how-to-generate-traccar-api-token-copy.webp)
+![Traccar Token Section](./../images/how-to-generate-laravel-traccar-token-copy.webp)
 
 ```dotenv
 TRACCAR_BASE_URL=http://host.docker.internal:8082/api
