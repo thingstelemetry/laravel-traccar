@@ -10,7 +10,7 @@ export default defineConfig({
     },
     head: [
         ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
-        ['meta', { property: 'og:image', content: '/images/thingstelemetry-laravel-traccar.webp' }],
+        ['meta', { property: 'og:image', content: '/thingstelemetry-laravel-traccar.webp' }],
         ['meta', { property: 'og:image:type', content: 'image/webp' }],
         ['meta', { property: 'og:image:width', content: '1200' }],
         ['meta', { property: 'og:image:height', content: '630' }],
