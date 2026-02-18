@@ -103,29 +103,6 @@ try {
 }
 ```
 
-## Error Handling
-
-### Configuration Not Available
-
-If OpenID Connect is not enabled on the server, the request may fail:
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $authUrl = Session::getOpenIdAuthUrl();
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    if ($status === 404) {
-        // OpenID endpoint not found - not configured
-    } elseif ($status === 503) {
-        // OpenID service unavailable
-    }
-}
-```
-
 ## Important Notes
 
 - The Traccar server must be configured with OpenID Connect settings

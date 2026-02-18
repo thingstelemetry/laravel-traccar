@@ -52,29 +52,6 @@ $device->attributes->fuelIncreaseThreshold; // 10.0
 - `lastUpdate` → `?CarbonImmutable`
   When the device last sent a position update (null if never).
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Device;
-use Saloon\Exceptions\Request\RequestException;
-use Saloon\Exceptions\Request\Statuses\NotFoundException;
-
-try {
-    $device = Device::find(6);
-} catch (NotFoundException $e) {
-    // Device not found - check the device ID
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - insufficient permissions to view this device,
-        404 => // Device not found,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Related Operations
 
 - [Get All Devices](./get-all) - Fetch all accessible devices

@@ -41,24 +41,6 @@ While most fields are cast into a string or ints, some are cast into a DTO/Servi
 > [!IMPORTANT]
 > Refer to the [ServerData DTO documentation](./../reference/dto/server-data) for more details on the DTO structure.
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Server;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $info = Server::getInformation();
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Important Links
 - [Traccar Fetch Server information Documentation](https://www.traccar.org/api-reference/#tag/Server/paths/~1server/get)
 - [ServerData DTO documentation](./../reference/dto/server-data)

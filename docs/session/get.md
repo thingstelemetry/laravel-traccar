@@ -57,24 +57,6 @@ $user->attributes->toArray(); // array<string, mixed>
 > [!IMPORTANT]
 > Refer to the [UserData DTO documentation](../reference/dto/user-data) for complete field documentation.
 
-## Error Handling
-
-- **404 Not Found**: Returned when no valid session exists (user not authenticated)
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $user = Session::get();
-} catch (RequestException $e) {
-    if ($e->getResponse()->status() === 404) {
-        // User is not authenticated
-        // Redirect to login page
-    }
-}
-```
-
 ## Important Links
 - [Traccar API: Get Session](https://www.traccar.org/api-reference/#tag/Session/paths/~1session/get)
 - [UserData DTO Reference](../reference/dto/user-data)

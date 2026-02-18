@@ -24,21 +24,5 @@ $status = $result->status->value; // "success"
 
 > Note: Traccar may return an empty response body. This package treats a successful HTTP call as `success`.
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Server;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $result = Server::gc();
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - requires admin privileges,
-        default => // Handle other errors
-    };
-}
-```
+## Important Links
+- [Traccar API: Garbage Collector](https://www.traccar.org/api-reference/#tag/Server/paths/~1server/gc/get)

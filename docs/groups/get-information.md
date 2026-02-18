@@ -37,28 +37,6 @@ $group->attributes;  // ['color' => 'blue', 'icon' => 'truck']
 - `attributes` → `array<string, mixed>`
   Custom attributes for the group.
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Group;
-use Saloon\Exceptions\Request\RequestException;
-use Saloon\Exceptions\Request\Statuses\NotFoundException;
-
-try {
-    $group = Group::get(1);
-} catch (NotFoundException $e) {
-    // Group not found (404) - check the group ID
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - insufficient permissions to view this group,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Related Operations
 
 - [Get All Groups](./get-all) - Fetch all accessible groups

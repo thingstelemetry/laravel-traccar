@@ -23,21 +23,5 @@ The response is a string, for example:
 echo $cache;
 ```
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Server;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $cache = Server::cache();
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - requires admin privileges,
-        default => // Handle other errors
-    };
-}
-```
+## Important Links
+- [Traccar API: Cache](https://www.traccar.org/api-reference/#tag/Server/paths/~1server/cache/get)

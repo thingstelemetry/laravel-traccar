@@ -25,26 +25,6 @@ $result->status; // Status::SUCCESS
 $result->status->value; // "success"
 ```
 
-## Error Handling
-
-### 400 Bad Request
-
-Returned when the provided token is invalid or does not exist.
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $result = Session::revokeToken('invalid-token');
-} catch (RequestException $e) {
-    if ($e->getResponse()->status() === 400) {
-        // Invalid or non-existent token
-        // Token may have already been revoked
-    }
-}
-```
-
 ## Common Use Cases
 
 ### User Logout from All Devices

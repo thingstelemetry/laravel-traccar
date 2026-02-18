@@ -72,19 +72,6 @@ $user = Session::create(
 - Implement token rotation for enhanced security
 - Use HTTPS for all API communications
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $tokenData = Session::generateToken();
-} catch (RequestException $e) {
-    // Handle error (e.g., not authenticated)
-}
-```
-
 ## Important Notes
 
 - Tokens can be used in place of passwords for authentication

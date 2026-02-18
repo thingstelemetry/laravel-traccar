@@ -30,25 +30,6 @@ $expiration = $share->expiration; // CarbonImmutable instance
 $expiresAt = $expiration->toIso8601String(); // ISO-8601
 ```
 
-## Error Handling
-
-- **403 Forbidden**: "Sharing is disabled" - Server has disabled device sharing
-- **403 Forbidden**: "Temporary user" - Cannot share as a temporary user
-
-```php
-use ThingsTelemetry\Traccar\Facades\Device;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $share = Device::share(deviceId: 6, expiration: $expiration);
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - sharing disabled or temporary user,
-        404 => // Device not found - check device ID,
-        default => // Handle other errors
-    };
-}
-```
+## Important Links
+- [Traccar API: Device Sharing](https://www.traccar.org/api-reference/#tag/Devices/paths/~1devices~1{id}~1sharing/post)
+- [DeviceShareData DTO reference](./../reference/dto/device-share-data)

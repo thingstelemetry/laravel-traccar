@@ -126,43 +126,6 @@ class AuthController extends Controller
 }
 ```
 
-## Error Handling
-
-### 400 Bad Request
-
-Returned when the authorization code is invalid or expired:
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $redirectUrl = Session::handleOpenIdCallback($queryString);
-} catch (RequestException $e) {
-    if ($e->getResponse()->status() === 400) {
-        // Invalid or expired authorization code
-        // User needs to restart the authentication flow
-    }
-}
-```
-
-### 401 Unauthorized
-
-Returned when the identity provider rejected the authentication:
-
-```php
-use ThingsTelemetry\Traccar\Facades\Session;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $redirectUrl = Session::handleOpenIdCallback($queryString);
-} catch (RequestException $e) {
-    if ($e->getResponse()->status() === 401) {
-        // Identity provider rejected authentication
-    }
-}
-```
-
 ## Important Notes
 
 - The query string should include `code` and `state` parameters from the identity provider

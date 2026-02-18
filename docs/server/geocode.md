@@ -20,22 +20,5 @@ The response is a string address, e.g.:
 // Nairobi Expressway, Nairobi, Nairobi County, KE
 ```
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Server;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $address = Server::geocode(latitude: -1.286389, longitude: 36.817223);
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        400 => // Bad request - invalid coordinates or geocoding disabled,
-        401 => // Unauthorized - check API credentials,
-        404 => // No address found for coordinates,
-        default => // Handle other errors
-    };
-}
-```
+## Important Links
+- [Traccar API: Geocoding](https://www.traccar.org/api-reference/#tag/Server/paths/~1geocode/post)

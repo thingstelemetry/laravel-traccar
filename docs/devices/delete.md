@@ -31,26 +31,6 @@ $result->status->name;  // 'SUCCESS' or 'FAILURE'
 $result->status->label(); // 'Success' or 'Failure'
 ```
 
-## Error Handling
-
-```php
-use ThingsTelemetry\Traccar\Facades\Device;
-use Saloon\Exceptions\Request\RequestException;
-
-try {
-    $result = Device::delete(id: 6);
-} catch (RequestException $e) {
-    $status = $e->getResponse()->status();
-    
-    match ($status) {
-        401 => // Unauthorized - check API credentials,
-        403 => // Forbidden - insufficient permissions,
-        404 => // Device not found - check device ID,
-        default => // Handle other errors
-    };
-}
-```
-
 ## Important Links
 - Traccar Delete a Device: https://www.traccar.org/api-reference/#tag/Devices/paths/~1devices~1%7Bid%7D/delete
 - [Status enum reference](./../reference/enums/status)
