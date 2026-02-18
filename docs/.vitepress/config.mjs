@@ -9,6 +9,12 @@ export default defineConfig({
         hostname: 'https://traccar.thingstelemetry.com'
     },
     head: [
+        ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+        ['meta', { property: 'og:image', content: '/images/thingstelemetry-laravel-traccar.webp' }],
+        ['meta', { property: 'og:image:type', content: 'image/webp' }],
+        ['meta', { property: 'og:image:width', content: '1200' }],
+        ['meta', { property: 'og:image:height', content: '630' }],
+        ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
         [
             'script',
             { defer: '', 'data-domain': 'traccar.thingstelemetry.com', src: 'https://stats.thingstelemetry.com/js/script.js' }
@@ -169,7 +175,7 @@ export default defineConfig({
 
         footer: {
             message: 'Released under the MIT License.',
-            copyright: 'Copyright © 2025-present Njogu Amos'
+            copyright: 'Copyright © 2025-present Things Telemetry'
         }
     }
 })
