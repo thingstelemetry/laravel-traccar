@@ -4,7 +4,7 @@ updates:
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     open-pull-requests-limit: 10
     versioning-strategy: "auto"
 
@@ -12,7 +12,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/docs"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     open-pull-requests-limit: 10
     versioning-strategy: "auto"
 
@@ -20,5 +20,5 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     open-pull-requests-limit: 10
