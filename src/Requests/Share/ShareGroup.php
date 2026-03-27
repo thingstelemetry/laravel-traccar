@@ -26,7 +26,7 @@ class ShareGroup extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/devices/group';
+        return '/share/group';
     }
 
     public function createDtoFromResponse(Response $response): GroupShareData
@@ -35,7 +35,7 @@ class ShareGroup extends Request implements HasBody
             groupId: $this->groupId,
             token: $response->body(),
             expiration: $this->expiration,
-            apiBaseUrl: config('traccar.base_url'),
+            apiBaseUrl: config(key: 'traccar.base_url'),
         );
     }
 

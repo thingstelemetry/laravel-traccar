@@ -158,6 +158,7 @@ export default defineConfig({
                     {text: 'Server Statistics Data', link: '/reference/dto/server-statistics-data'},
                     {text: 'Position Data', link: '/reference/dto/position-data'},
                     {text: 'Session Token Data', link: '/reference/dto/session-token-data'},
+                    {text: 'Group Share Data', link: '/reference/dto/group-share-data'},
                 ]
             },
             {

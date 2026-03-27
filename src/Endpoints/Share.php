@@ -16,26 +16,22 @@ class Share extends Traccar
     /** @throws \Saloon\Exceptions\SaloonException */
     public function device(int $deviceId, CarbonInterface $expiration): DeviceShareData
     {
-        $response = $this->connector->send(
+        return $this->connector->send(
             request: new ShareDevice(
                 deviceId: $deviceId,
                 expiration: $expiration,
             )
-        );
-
-        return $response->dtoOrFail();
+        )->dtoOrFail();
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
     public function group(int $groupId, CarbonInterface $expiration): GroupShareData
     {
-        $response = $this->connector->send(
+        return $this->connector->send(
             request: new ShareGroup(
                 groupId: $groupId,
                 expiration: $expiration,
             )
-        );
-
-        return $response->dtoOrFail();
+        )->dtoOrFail();
     }
 }

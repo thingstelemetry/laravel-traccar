@@ -34,6 +34,16 @@ class GroupShareData
         );
     }
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            groupId: $data['groupId'],
+            token: $data['token'],
+            expiration: \Carbon\Carbon::parse(time: $data['expiration']),
+            url: $data['url'],
+        );
+    }
+
     public function toArray(): array
     {
         return [
