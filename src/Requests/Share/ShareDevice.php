@@ -26,7 +26,7 @@ class ShareDevice extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/devices/share';
+        return '/share/device';
     }
 
     public function createDtoFromResponse(Response $response): DeviceShareData
