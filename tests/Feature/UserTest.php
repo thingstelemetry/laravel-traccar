@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use ThingsTelemetry\Traccar\Enums\Map;
 use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Facades\User;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Requests\User\GetUser;
-use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
 use ThingsTelemetry\Traccar\Requests\User\CreateUser;
 use ThingsTelemetry\Traccar\Requests\User\DeleteUser;
 use ThingsTelemetry\Traccar\Requests\User\UpdateUser;

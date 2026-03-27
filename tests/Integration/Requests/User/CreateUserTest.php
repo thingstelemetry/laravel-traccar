@@ -6,12 +6,11 @@ namespace Tests\Integration\Requests\User;
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use ThingsTelemetry\Traccar\Enums\Map;
 use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\TraccarConnector;
-use ThingsTelemetry\Traccar\Requests\User\CreateUser;
-use ThingsTelemetry\Traccar\Enums\Map;
 use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
-use ThingsTelemetry\Traccar\Dto\UserAttributesData;
+use ThingsTelemetry\Traccar\Requests\User\CreateUser;
 
 beforeEach(closure: function () {
     $this->connector = new TraccarConnector(

@@ -9,8 +9,6 @@ use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\TraccarConnector;
 use ThingsTelemetry\Traccar\Requests\User\GetAllUsers;
-use ThingsTelemetry\Traccar\Enums\Map;
-use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
 
 beforeEach(closure: function () {
     $this->connector = new TraccarConnector(

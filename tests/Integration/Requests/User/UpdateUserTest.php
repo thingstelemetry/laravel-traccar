@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Requests\User;
 
+use InvalidArgumentException;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\TraccarConnector;
-use ThingsTelemetry\Traccar\Requests\User\UpdateUser;
-use ThingsTelemetry\Traccar\Enums\Map;
 use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
+use ThingsTelemetry\Traccar\Requests\User\UpdateUser;
 
 beforeEach(closure: function () {
     $this->connector = new TraccarConnector(
@@ -76,7 +76,7 @@ test(description: 'it sends the correct body', closure: function () {
 
 test(description: 'it throws InvalidArgumentException when user ID is missing', closure: function () {
     $data = UserData::fromArray(data: array_merge($this->userData, ['id' => 0]));
-    
+
     expect(value: fn () => new UpdateUser(data: $data))
-        ->toThrow(exception: \InvalidArgumentException::class, exceptionMessage: 'User ID is required for update operations.');
+        ->toThrow(exception: InvalidArgumentException::class, exceptionMessage: 'User ID is required for update operations.');
 });

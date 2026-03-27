@@ -6,10 +6,10 @@ namespace Tests\Integration\Requests\User;
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use ThingsTelemetry\Traccar\Enums\Status;
+use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\TraccarConnector;
 use ThingsTelemetry\Traccar\Requests\User\DeleteUser;
-use ThingsTelemetry\Traccar\Dto\StatusData;
-use ThingsTelemetry\Traccar\Enums\Status;
 
 beforeEach(closure: function () {
     $this->connector = new TraccarConnector(
