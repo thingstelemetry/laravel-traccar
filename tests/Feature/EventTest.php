@@ -8,7 +8,7 @@ use ThingsTelemetry\Traccar\Dto\EventData;
 use ThingsTelemetry\Traccar\Facades\Event;
 use ThingsTelemetry\Traccar\Requests\Event\GetEvent;
 
-it(description: 'can retrieve an event by id', closure: function () {
+test(description: 'can retrieve an event by id', closure: function () {
     $payload = [
         'id'            => 1234,
         'type'          => 'geofenceEnter',
@@ -24,12 +24,12 @@ it(description: 'can retrieve an event by id', closure: function () {
     ];
 
     MockClient::global(mockData: [
-        GetEvent::class => MockResponse::make($payload),
+        GetEvent::class => MockResponse::make(body: $payload),
     ]);
 
     $event = Event::get(id: 1234);
 
     expect(value: $event)
         ->toBeInstanceOf(class: EventData::class)
-        ->and(value: $event->id)->toEqual(expected: 1234);
+        ->and(value: $event->id)->toBe(expected: 1234);
 });

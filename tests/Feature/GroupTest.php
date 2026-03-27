@@ -41,7 +41,7 @@ test(description: 'can get a single group by id', closure: function () use ($get
 
     expect(value: $response)
         ->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $response->id)->toEqual(expected: 1);
+        ->and(value: $response->id)->toBe(expected: 1);
 });
 
 test(description: 'can create a group', closure: function () use ($getGroupData) {
@@ -54,7 +54,7 @@ test(description: 'can create a group', closure: function () use ($getGroupData)
 
     expect(value: $response)
         ->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $response->id)->toEqual(expected: 1);
+        ->and(value: $response->id)->toBe(expected: 1);
 });
 
 test(description: 'can update a group', closure: function () use ($getGroupData) {
@@ -67,7 +67,7 @@ test(description: 'can update a group', closure: function () use ($getGroupData)
 
     expect(value: $response)
         ->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $response->id)->toEqual(expected: 1);
+        ->and(value: $response->id)->toBe(expected: 1);
 });
 
 test(description: 'can delete a group', closure: function () {
@@ -79,5 +79,5 @@ test(description: 'can delete a group', closure: function () {
 
     expect(value: $result)
         ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
 });

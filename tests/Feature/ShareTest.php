@@ -20,8 +20,8 @@ test(description: 'can share a device', closure: function () {
 
     expect(value: $share)
         ->toBeInstanceOf(class: DeviceShareData::class)
-        ->and(value: $share->token)->toEqual(expected: 'token-abc-123')
-        ->and(value: $share->deviceId)->toEqual(expected: 6);
+        ->and(value: $share->token)->toBe(expected: 'token-abc-123')
+        ->and(value: $share->deviceId)->toBe(expected: 6);
 });
 
 test(description: 'can share a group', closure: function () {
@@ -33,6 +33,6 @@ test(description: 'can share a group', closure: function () {
 
     expect(value: $share)
         ->toBeInstanceOf(class: GroupShareData::class)
-        ->and(value: $share->token)->toEqual(expected: 'token-abc-123')
-        ->and(value: $share->groupId)->toEqual(expected: 6);
+        ->and(value: $share->token)->toBe(expected: 'token-abc-123')
+        ->and(value: $share->groupId)->toBe(expected: 6);
 });

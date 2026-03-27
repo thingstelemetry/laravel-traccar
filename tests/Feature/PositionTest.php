@@ -20,7 +20,7 @@ test(description: 'can delete a position', closure: function () {
 
     expect(value: $result)
         ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
 });
 
 test(description: 'can delete all positions for a device in a time range', closure: function () {
@@ -35,5 +35,5 @@ test(description: 'can delete all positions for a device in a time range', closu
 
     expect(value: $result)
         ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
 });

@@ -46,7 +46,7 @@ test(description: 'can find a device by id', closure: function () use ($getDevic
 
     expect(value: $device)
         ->toBeInstanceOf(class: DeviceData::class)
-        ->and(value: $device->id)->toEqual(expected: 6);
+        ->and(value: $device->id)->toBe(expected: 6);
 });
 
 test(description: 'can get devices for a specific user', closure: function () use ($getDeviceData) {
@@ -71,7 +71,7 @@ test(description: 'can create a device', closure: function () use ($getDeviceDat
 
     expect(value: $response)
         ->toBeInstanceOf(class: DeviceData::class)
-        ->and(value: $response->id)->toBe(6);
+        ->and(value: $response->id)->toBe(expected: 6);
 });
 
 test(description: 'can update a device', closure: function () use ($getDeviceData) {
@@ -84,7 +84,7 @@ test(description: 'can update a device', closure: function () use ($getDeviceDat
 
     expect(value: $response)
         ->toBeInstanceOf(class: DeviceData::class)
-        ->and(value: $response->id)->toBe(6);
+        ->and(value: $response->id)->toBe(expected: 6);
 });
 
 test(description: 'can delete a device', closure: function () {
@@ -96,7 +96,7 @@ test(description: 'can delete a device', closure: function () {
 
     expect(value: $result)
         ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
 });
 
 test(description: 'can update device totals', closure: function () {
@@ -108,5 +108,5 @@ test(description: 'can update device totals', closure: function () {
 
     expect(value: $result)
         ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
 });

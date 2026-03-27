@@ -41,9 +41,9 @@ beforeEach(closure: function () {
     ];
 });
 
-test(description: 'it can get all users', closure: function () {
+test(description: 'can get all users', closure: function () {
     MockClient::global(mockData: [
-        GetAllUsers::class => MockResponse::make([$this->user]),
+        GetAllUsers::class => MockResponse::make(body: [$this->user]),
     ]);
 
     $response = User::all();
@@ -53,43 +53,43 @@ test(description: 'it can get all users', closure: function () {
         ->and(value: $response[0])->toBeInstanceOf(class: UserData::class);
 });
 
-test(description: 'it can get a user by id', closure: function () {
+test(description: 'can get a user by id', closure: function () {
     MockClient::global(mockData: [
-        GetUser::class => MockResponse::make($this->user),
+        GetUser::class => MockResponse::make(body: $this->user),
     ]);
 
     $user = User::get(id: 6);
 
     expect(value: $user)
         ->toBeInstanceOf(class: UserData::class)
-        ->and(value: $user->id)->toEqual(expected: 6);
+        ->and(value: $user->id)->toBe(expected: 6);
 });
 
-test(description: 'it can create a user', closure: function () {
+test(description: 'can create a user', closure: function () {
     MockClient::global(mockData: [
-        CreateUser::class => MockResponse::make($this->user),
+        CreateUser::class => MockResponse::make(body: $this->user),
     ]);
 
     $response = User::create(data: UserData::fromArray(data: $this->user));
 
     expect(value: $response)
         ->toBeInstanceOf(class: UserData::class)
-        ->and(value: $response->id)->toEqual(expected: 6);
+        ->and(value: $response->id)->toBe(expected: 6);
 });
 
-test(description: 'it can update a user', closure: function () {
+test(description: 'can update a user', closure: function () {
     MockClient::global(mockData: [
-        UpdateUser::class => MockResponse::make($this->user),
+        UpdateUser::class => MockResponse::make(body: $this->user),
     ]);
 
     $response = User::update(data: UserData::fromArray(data: $this->user));
 
     expect(value: $response)
         ->toBeInstanceOf(class: UserData::class)
-        ->and(value: $response->id)->toEqual(expected: 6);
+        ->and(value: $response->id)->toBe(expected: 6);
 });
 
-test(description: 'it can delete a user', closure: function () {
+test(description: 'can delete a user', closure: function () {
     MockClient::global(mockData: [
         DeleteUser::class => MockResponse::make(body: '', status: 204),
     ]);
@@ -98,10 +98,10 @@ test(description: 'it can delete a user', closure: function () {
 
     expect(value: $result)
         ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
 });
 
-test(description: 'it can generate totp secret', closure: function () {
+test(description: 'can generate totp secret', closure: function () {
     MockClient::global(mockData: [
         GenerateTotpSecret::class => MockResponse::make(body: 'K5S7N7G5K5S7N7G5'),
     ]);
@@ -110,5 +110,5 @@ test(description: 'it can generate totp secret', closure: function () {
 
     expect(value: $secret)
         ->toBeString()
-        ->toEqual(expected: 'K5S7N7G5K5S7N7G5');
+        ->toBe(expected: 'K5S7N7G5K5S7N7G5');
 });

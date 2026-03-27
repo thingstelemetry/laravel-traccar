@@ -59,7 +59,7 @@ test(description: 'can create session', closure: function () use ($getUserData) 
 
     expect(value: $user)
         ->toBeInstanceOf(class: UserData::class)
-        ->and(value: $user->id)->toBe(6);
+        ->and(value: $user->id)->toBe(expected: 6);
 });
 
 test(description: 'can delete session', closure: function () {

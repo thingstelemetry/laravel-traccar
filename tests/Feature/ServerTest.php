@@ -76,12 +76,12 @@ test(description: 'can reboot server', closure: function () {
 
     expect(value: $result)
         ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
 });
 
 test(description: 'can fetch server cache string', closure: function () {
     MockClient::global(mockData: [
-        GetServerCache::class => MockResponse::make('Cache{devices=123, users=45}')
+        GetServerCache::class => MockResponse::make(body: 'Cache{devices=123, users=45}')
     ]);
 
     $cache = Server::cache();
@@ -93,19 +93,19 @@ test(description: 'can fetch server cache string', closure: function () {
 
 test(description: 'can trigger garbage collector', closure: function () {
     MockClient::global(mockData: [
-        RunGarbageCollector::class => MockResponse::make('', 204)
+        RunGarbageCollector::class => MockResponse::make(body: '', status: 204)
     ]);
 
     $result = Server::gc();
 
     expect(value: $result)
         ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
 });
 
 test(description: 'can upload a file to server path', closure: function () {
     MockClient::global(mockData: [
-        UploadServerFile::class => MockResponse::make('', 200)
+        UploadServerFile::class => MockResponse::make(body: '', status: 200)
     ]);
 
     $uploaded = UploadedFile::fake()->create(name: 'readme.txt', kilobytes: 1, mimeType: 'text/plain');
@@ -114,12 +114,12 @@ test(description: 'can upload a file to server path', closure: function () {
 
     expect(value: $result)
         ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
+        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
 });
 
 test(description: 'can get server timezones', closure: function () {
     MockClient::global(mockData: [
-        GetServerTimezones::class => MockResponse::make(['UTC', 'Africa/Nairobi'])
+        GetServerTimezones::class => MockResponse::make(body: ['UTC', 'Africa/Nairobi'])
     ]);
 
     $zones = Server::timezones();
@@ -131,14 +131,14 @@ test(description: 'can get server timezones', closure: function () {
 
 test(description: 'can reverse geocode coordinates', closure: function () {
     MockClient::global(mockData: [
-        ReverseGeocode::class => MockResponse::make('Nairobi, Kenya')
+        ReverseGeocode::class => MockResponse::make(body: 'Nairobi, Kenya')
     ]);
 
     $address = Server::geocode(latitude: -1.286389, longitude: 36.817223);
 
     expect(value: $address)
         ->toBeString()
-        ->toEqual(expected: 'Nairobi, Kenya');
+        ->toBe(expected: 'Nairobi, Kenya');
 });
 
 test(description: 'can fetch server statistics between dates', closure: function () {
@@ -150,7 +150,7 @@ test(description: 'can fetch server statistics between dates', closure: function
     ];
 
     MockClient::global(mockData: [
-        GetServerStatistics::class => MockResponse::make($payload),
+        GetServerStatistics::class => MockResponse::make(body: $payload),
     ]);
 
     $from = CarbonImmutable::parse(time: '2019-08-24T00:00:00Z');
