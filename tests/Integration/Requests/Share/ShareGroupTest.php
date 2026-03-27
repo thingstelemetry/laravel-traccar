@@ -17,15 +17,15 @@ beforeEach(closure: function () {
 });
 
 test(description: 'it resolves the correct endpoint', closure: function () {
-    $expiration = CarbonImmutable::parse('2030-12-31T23:59:59Z');
+    $expiration = CarbonImmutable::parse(time: '2030-12-31T23:59:59Z');
     $request = new ShareGroup(groupId: 6, expiration: $expiration);
 
-    expect(value: $request->resolveEndpoint())->toBe(expected: '/groups/6/share')
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/share/group')
         ->and(value: $request->getMethod()->value)->toBe(expected: 'GET');
 });
 
 test(description: 'it sends the correct query parameters', closure: function () {
-    $expiration = CarbonImmutable::parse('2030-12-31T23:59:59Z');
+    $expiration = CarbonImmutable::parse(time: '2030-12-31T23:59:59Z');
     $request = new ShareGroup(groupId: 6, expiration: $expiration);
 
     expect(value: $request->query()->get(key: 'expiration'))->toBe(expected: $expiration->toIso8601String());
@@ -34,7 +34,7 @@ test(description: 'it sends the correct query parameters', closure: function () 
 test(description: 'it creates a GroupShareData DTO from response via createDtoFromResponse', closure: function () {
     $groupId = 6;
     $token = 'token-abc-123';
-    $expiration = CarbonImmutable::parse('2030-12-31T23:59:59Z');
+    $expiration = CarbonImmutable::parse(time: '2030-12-31T23:59:59Z');
 
     $mockClient = new MockClient(mockData: [
         ShareGroup::class => MockResponse::make(body: $token, status: 200),
