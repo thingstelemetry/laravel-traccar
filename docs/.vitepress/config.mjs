@@ -72,24 +72,6 @@ export default defineConfig({
                 ]
             },
             {
-                text: 'Users',
-                collapsed: true,
-                items: [
-                    {text: 'Get User', link: '/users/get-information'},
-                    {text: 'Get All User', link: '/users/get-all'},
-                    {text: 'Create User', link: '/users/create'},
-                    {text: 'Update User', link: '/users/update'},
-                    {text: 'Delete User', link: '/users/delete'},
-                ]
-            },
-            {
-                text: 'Events',
-                collapsed: true,
-                items: [
-                    {text: 'Get Information', link: '/events/get-information'},
-                ]
-            },
-            {
                 text: 'Devices',
                 collapsed: true,
                 items: [
@@ -98,7 +80,6 @@ export default defineConfig({
                     {text: 'Get User Devices', link: '/devices/get-for-user'},
                     {text: 'Create Device', link: '/devices/create'},
                     {text: 'Update Device', link: '/devices/update'},
-                    {text: 'Share Device', link: '/devices/share-location'},
                     {text: 'Upload/Update Device Image', link: '/devices/update-image'},
                     {text: 'Update Totals (Distance & Hours)', link: '/devices/accumulators'},
                     {text: 'Delete Device', link: '/devices/delete'},
@@ -113,6 +94,33 @@ export default defineConfig({
                     {text: 'Create Group', link: '/groups/create'},
                     {text: 'Update Group', link: '/groups/update'},
                     {text: 'Delete Group', link: '/groups/delete'},
+                ]
+            },
+            {
+                text: 'Share',
+                collapsed: true,
+                items: [
+                    {text: 'Share Device', link: '/share/device'},
+                    {text: 'Share Group', link: '/share/group'},
+                ]
+            },
+            {
+                text: 'Users',
+                collapsed: true,
+                items: [
+                    {text: 'Get User', link: '/users/get-information'},
+                    {text: 'Get All User', link: '/users/get-all'},
+                    {text: 'Create User', link: '/users/create'},
+                    {text: 'Update User', link: '/users/update'},
+                    {text: 'Delete User', link: '/users/delete'},
+                    {text: 'Generate TOTP Secret', link: '/users/generate-totp'},
+                ]
+            },
+            {
+                text: 'Events',
+                collapsed: true,
+                items: [
+                    {text: 'Get Information', link: '/events/get-information'},
                 ]
             },
             {
@@ -150,6 +158,7 @@ export default defineConfig({
                     {text: 'Server Statistics Data', link: '/reference/dto/server-statistics-data'},
                     {text: 'Position Data', link: '/reference/dto/position-data'},
                     {text: 'Session Token Data', link: '/reference/dto/session-token-data'},
+                    {text: 'Group Share Data', link: '/reference/dto/group-share-data'},
                 ]
             },
             {

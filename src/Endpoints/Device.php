@@ -12,9 +12,8 @@ use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Validator;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
-use ThingsTelemetry\Traccar\Dto\DeviceShareData;
 use ThingsTelemetry\Traccar\Requests\Device\GetDevice;
-use ThingsTelemetry\Traccar\Requests\Device\ShareDevice;
+use ThingsTelemetry\Traccar\Requests\Share\ShareDevice;
 use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDevice;
@@ -98,6 +97,19 @@ class Device extends Traccar
         return $response->dtoOrFail();
     }
 
+    /** @throws \Saloon\Exceptions\SaloonException */
+    public function share(int $deviceId, CarbonInterface $expiration): DeviceShareData
+    {
+        $response = $this->connector->send(
+            request: new ShareDevice(
+                deviceId: $deviceId,
+                expiration: $expiration,
+            )
+        );
+
+        return $response->dtoOrFail();
+    }
+
     /**
      * @throws \Saloon\Exceptions\SaloonException
      * @throws \Illuminate\Validation\ValidationException
@@ -132,19 +144,6 @@ class Device extends Traccar
                 deviceId: $deviceId,
                 mimeType: $mimeType,
                 contents: $contents,
-            )
-        );
-
-        return $response->dtoOrFail();
-    }
-
-    /** @throws \Saloon\Exceptions\SaloonException */
-    public function share(int $deviceId, CarbonInterface $expiration): DeviceShareData
-    {
-        $response = $this->connector->send(
-            request: new ShareDevice(
-                deviceId: $deviceId,
-                expiration: $expiration,
             )
         );
 

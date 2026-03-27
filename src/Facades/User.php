@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \ThingsTelemetry\Traccar\Dto\UserData get(int $id)
- * @method static array<int, \ThingsTelemetry\Traccar\Dto\UserData> all()
+ * @method static \Illuminate\Support\Collection<\ThingsTelemetry\Traccar\Dto\UserData> all()
  * @method static \ThingsTelemetry\Traccar\Dto\UserData create(\ThingsTelemetry\Traccar\Dto\UserData $data)
  * @method static \ThingsTelemetry\Traccar\Dto\UserData update(\ThingsTelemetry\Traccar\Dto\UserData $data)
  * @method static \ThingsTelemetry\Traccar\Dto\StatusData delete(int $id)
+ * @method static string generateTotpSecret()
  *
  * @see \ThingsTelemetry\Traccar\Endpoints\User
  */

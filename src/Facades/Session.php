@@ -20,9 +20,6 @@ use Illuminate\Support\Facades\Facade;
  */
 class Session extends Facade
 {
-    /**
-     * Get the registered name of the component.
-     */
     protected static function getFacadeAccessor(): string
     {
         return \ThingsTelemetry\Traccar\Endpoints\Session::class;

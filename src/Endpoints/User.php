@@ -12,6 +12,7 @@ use ThingsTelemetry\Traccar\Requests\User\CreateUser;
 use ThingsTelemetry\Traccar\Requests\User\DeleteUser;
 use ThingsTelemetry\Traccar\Requests\User\UpdateUser;
 use ThingsTelemetry\Traccar\Requests\User\GetAllUsers;
+use ThingsTelemetry\Traccar\Requests\User\GenerateTotpSecret;
 
 class User extends Traccar
 {
@@ -51,6 +52,14 @@ class User extends Traccar
     public function delete(int $id): StatusData
     {
         $response = $this->connector->send(request: new DeleteUser(id: $id));
+
+        return $response->dtoOrFail();
+    }
+
+    /** @throws \Saloon\Exceptions\SaloonException */
+    public function generateTotpSecret(): string
+    {
+        $response = $this->connector->send(request: new GenerateTotpSecret());
 
         return $response->dtoOrFail();
     }

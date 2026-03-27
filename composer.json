@@ -36,6 +36,7 @@
     "scripts": {
         "format": "./vendor/bin/pint --parallel",
         "test": "./vendor/bin/pest",
+        "test-parallel": "./vendor/bin/pest --parallel",
         "post-autoload-dump": [
             "@clear",
             "@prepare"
@@ -47,9 +48,6 @@
             "Composer\\Config::disableProcessTimeout",
             "@build",
             "@php vendor/bin/testbench serve --host=0.0.0.0 --ansi"
-        ],
-        "lint": [
-            "@php vendor/bin/pint --ansi"
         ]
     },
     "extra": {
@@ -62,7 +60,11 @@
                 "Device": "ThingsTelemetry\\Traccar\\Facades\\Device",
                 "Event": "ThingsTelemetry\\Traccar\\Facades\\Event",
                 "User": "ThingsTelemetry\\Traccar\\Facades\\User",
-                "Position": "ThingsTelemetry\\Traccar\\Facades\\Position"
+                "Position": "ThingsTelemetry\\Traccar\\Facades\\Position",
+                "Group": "ThingsTelemetry\\Traccar\\Facades\\Group",
+                "Permission": "ThingsTelemetry\\Traccar\\Facades\\Permission",
+                "Session": "ThingsTelemetry\\Traccar\\Facades\\Session",
+                "Share": "ThingsTelemetry\\Traccar\\Facades\\Share"
             }
         }
     },

@@ -18,6 +18,7 @@ use ThingsTelemetry\Traccar\Requests\User\DeleteUser;
 use ThingsTelemetry\Traccar\Requests\User\UpdateUser;
 use ThingsTelemetry\Traccar\Requests\User\GetAllUsers;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
+use ThingsTelemetry\Traccar\Requests\User\GenerateTotpSecret;
 
 beforeEach(function () {
     $this->users = [
@@ -192,6 +193,18 @@ it(description: 'can delete a user', closure: function () {
     expect($result)
         ->toBeInstanceOf(StatusData::class)
         ->and($result->status)->toEqual(Status::SUCCESS);
+});
+
+it(description: 'can generate totp secret', closure: function () {
+    MockClient::global([
+        GenerateTotpSecret::class => MockResponse::make(body: 'K5S7N7G5K5S7N7G5'),
+    ]);
+
+    $secret = User::generateTotpSecret();
+
+    expect($secret)
+        ->toBeString()
+        ->toEqual('K5S7N7G5K5S7N7G5');
 });
 
 it(description: 'can retrieve a user by id', closure: function () {

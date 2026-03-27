@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ThingsTelemetry\Traccar\Requests\Device;
+namespace ThingsTelemetry\Traccar\Requests\Share;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
