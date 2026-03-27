@@ -387,6 +387,7 @@ enum Status: string
 8. **Follow PSR-12** and run `composer format` before committing.
 9. **Follow Named Parameters style** for Laravel helper functions like `app()`, `config()`, `Validator::make()`, etc.
 10. **Use Semantic Commit Messages** 
+11. **Use GitHub CLI (`gh`)** for all GitHub-related operations (e.g., creating PRs, checking status, etc.).
 
 # Use Semantic Commit Messages
 
