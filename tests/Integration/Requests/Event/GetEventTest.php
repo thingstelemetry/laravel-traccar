@@ -45,7 +45,7 @@ test(description: 'it creates an EventData DTO from response via createDtoFromRe
     $event = $response->dtoOrFail();
 
     expect(value: $event)->toBeInstanceOf(class: EventData::class)
-        ->and(value: $event->id)->toBe(1)
-        ->and(value: $event->type)->toBe('deviceOnline')
+        ->and(value: $event->id)->toBe(expected: 1)
+        ->and(value: $event->type)->toBe(expected: 'deviceOnline')
         ->and(value: $event->eventTime)->toBeInstanceOf(class: CarbonImmutable::class);
 });

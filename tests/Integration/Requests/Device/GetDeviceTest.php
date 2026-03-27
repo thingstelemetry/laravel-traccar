@@ -54,7 +54,7 @@ test(description: 'it creates a DeviceData DTO from response via createDtoFromRe
     $device = $response->dtoOrFail();
 
     expect(value: $device)->toBeInstanceOf(class: DeviceData::class)
-        ->and(value: $device->id)->toBe(6);
+        ->and(value: $device->id)->toBe(expected: 6);
 });
 
 test(description: 'it throws NotFoundException when device returns 200 with empty body via createDtoFromResponse', closure: function () {

@@ -49,5 +49,5 @@ test(description: 'it creates a UserData DTO from response via createDtoFromResp
     $user = $response->dtoOrFail();
 
     expect(value: $user)->toBeInstanceOf(class: UserData::class)
-        ->and(value: $user->email)->toBe('jane@example.com');
+        ->and(value: $user->email)->toBe(expected: 'jane@example.com');
 });

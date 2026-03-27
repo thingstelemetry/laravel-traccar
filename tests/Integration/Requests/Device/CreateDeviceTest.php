@@ -62,5 +62,5 @@ test(description: 'it creates a DeviceData DTO from response via createDtoFromRe
     $device = $response->dtoOrFail();
 
     expect(value: $device)->toBeInstanceOf(class: DeviceData::class)
-        ->and(value: $device->id)->toBe(6);
+        ->and(value: $device->id)->toBe(expected: 6);
 });

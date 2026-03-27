@@ -62,8 +62,8 @@ test(description: 'it creates a ServerStatisticsData DTO from response via creat
     $stats = $response->dtoOrFail();
 
     expect(value: $stats)->toBeInstanceOf(class: ServerStatisticsData::class)
-        ->and(value: $stats->activeUsers)->toBe(2)
-        ->and(value: $stats->messagesStored)->toBe(440);
+        ->and(value: $stats->activeUsers)->toBe(expected: 2)
+        ->and(value: $stats->messagesStored)->toBe(expected: 440);
 });
 
 test(description: 'it throws NotFoundException for empty server statistics via createDtoFromResponse', closure: function () {
@@ -77,5 +77,5 @@ test(description: 'it throws NotFoundException for empty server statistics via c
     $request = new GetServerStatistics(from: $from, to: $to);
 
     expect(value: fn () => $this->connector->send(request: $request, mockClient: $mockClient)->dtoOrFail())
-        ->toThrow(exception: NotFoundException::class, message: 'Statistics were not found. Check the date range and try again.');
+        ->toThrow(exception: NotFoundException::class, exceptionMessage: 'Statistics were not found. Check the date range and try again.');
 });

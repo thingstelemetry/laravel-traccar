@@ -35,5 +35,5 @@ test(description: 'it creates a SessionTokenData DTO from response via createDto
     $token = $response->dtoOrFail();
 
     expect(value: $token)->toBeInstanceOf(class: SessionTokenData::class)
-        ->and(value: $token->token)->toBe('abc123xyz789');
+        ->and(value: $token->token)->toBe(expected: 'abc123xyz789');
 });

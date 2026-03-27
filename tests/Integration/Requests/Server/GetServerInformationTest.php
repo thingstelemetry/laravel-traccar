@@ -71,6 +71,6 @@ test(description: 'it creates a ServerData DTO from response via createDtoFromRe
     $server = $response->dtoOrFail();
 
     expect(value: $server)->toBeInstanceOf(class: ServerData::class)
-        ->and(value: $server->id)->toBe(1)
-        ->and(value: $server->version)->toBe('6.10.0');
+        ->and(value: $server->id)->toBe(expected: 1)
+        ->and(value: $server->version)->toBe(expected: '6.10.0');
 });

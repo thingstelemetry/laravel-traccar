@@ -26,5 +26,5 @@ test(description: 'it creates a UserData DTO from response via createDtoFromResp
     $user = $request->createDtoFromResponse(response: $response);
 
     expect(value: $user)->toBeInstanceOf(class: UserData::class)
-        ->and(value: $user->id)->toBe(6);
+        ->and(value: $user->id)->toBe(expected: 6);
 });

@@ -54,7 +54,7 @@ test(description: 'it sends the correct body', closure: function () {
     $data = UserData::fromArray(data: $this->userData);
     $request = new UpdateUser(data: $data);
 
-    expect(value: $request->body()->all())->toEqual(expected: $data->toArray());
+    expect(value: $request->body()->all())->toBe(expected: $data->toArray());
 });
 
 test(description: 'it creates a UserData DTO from response via createDtoFromResponse', closure: function () {

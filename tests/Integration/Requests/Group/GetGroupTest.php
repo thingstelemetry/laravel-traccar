@@ -45,9 +45,9 @@ test(description: 'it creates a GroupData DTO from response via createDtoFromRes
     $group = $response->dtoOrFail();
 
     expect(value: $group)->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $group->id)->toBe(1)
-        ->and(value: $group->name)->toBe('Vehicles')
-        ->and(value: $group->attributes['color'])->toBe('red');
+        ->and(value: $group->id)->toBe(expected: 1)
+        ->and(value: $group->name)->toBe(expected: 'Vehicles')
+        ->and(value: $group->attributes['color'])->toBe(expected: 'red');
 });
 
 test(description: 'it throws NotFoundException for empty group body via createDtoFromResponse', closure: function () {

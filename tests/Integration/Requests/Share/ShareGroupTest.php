@@ -46,6 +46,6 @@ test(description: 'it creates a GroupShareData DTO from response via createDtoFr
     $share = $response->dtoOrFail();
 
     expect(value: $share)->toBeInstanceOf(class: GroupShareData::class)
-        ->and(value: $share->groupId)->toBe($groupId)
-        ->and(value: $share->token)->toBe($token);
+        ->and(value: $share->groupId)->toBe(expected: $groupId)
+        ->and(value: $share->token)->toBe(expected: $token);
 });

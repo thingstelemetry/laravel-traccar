@@ -59,5 +59,5 @@ test(description: 'it creates a GroupData DTO from response via createDtoFromRes
     $group = $response->dtoOrFail();
 
     expect(value: $group)->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $group->id)->toBe(3);
+        ->and(value: $group->id)->toBe(expected: 3);
 });

@@ -46,6 +46,6 @@ test(description: 'it creates a DeviceShareData DTO from response via createDtoF
     $share = $response->dtoOrFail();
 
     expect(value: $share)->toBeInstanceOf(class: DeviceShareData::class)
-        ->and(value: $share->deviceId)->toBe($deviceId)
-        ->and(value: $share->token)->toBe($token);
+        ->and(value: $share->deviceId)->toBe(expected: $deviceId)
+        ->and(value: $share->token)->toBe(expected: $token);
 });
