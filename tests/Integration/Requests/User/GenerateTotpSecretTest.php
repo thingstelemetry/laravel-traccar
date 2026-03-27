@@ -19,7 +19,8 @@ beforeEach(closure: function () {
 test(description: 'it resolves the correct endpoint', closure: function () {
     $request = new GenerateTotpSecret();
 
-    expect(value: $request->resolveEndpoint())->toBe(expected: '/users/totp');
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/users/totp')
+        ->and(value: $request->getMethod()->value)->toBe(expected: 'GET');
 });
 
 test(description: 'it returns a string response via createDtoFromResponse', closure: function () {

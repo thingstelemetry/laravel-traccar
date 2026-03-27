@@ -21,7 +21,8 @@ beforeEach(closure: function () {
 test(description: 'it resolves the correct endpoint', closure: function () {
     $request = new DeleteUser(id: 6);
 
-    expect(value: $request->resolveEndpoint())->toBe(expected: '/users/6');
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/users/6')
+        ->and(value: $request->getMethod()->value)->toBe(expected: 'DELETE');
 });
 
 test(description: 'it returns a success StatusData from response via createDtoFromResponse', closure: function () {

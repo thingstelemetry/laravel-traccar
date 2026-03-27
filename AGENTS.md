@@ -197,7 +197,6 @@ test('it can hydrate DTO from response', function () {
     ]);
     
     $request = new GetServerInformation();
-    $response = connector()->send($request, $mockClient);
     
     expect($response->dto())->toBeInstanceOf(ServerData::class)
         ->and($response->dto()->version)->toBe('6.10');

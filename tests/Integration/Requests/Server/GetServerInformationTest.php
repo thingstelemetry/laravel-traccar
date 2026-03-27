@@ -5,9 +5,24 @@ declare(strict_types=1);
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Dto\ServerData;
+use ThingsTelemetry\Traccar\TraccarConnector;
 use ThingsTelemetry\Traccar\Requests\Server\GetServerInformation;
 
-test(description: 'it can get server information', closure: function () {
+beforeEach(closure: function () {
+    $this->connector = new TraccarConnector(
+        baseUrl: 'https://demo.traccar.org/api',
+        apiKey: 'test-api-key'
+    );
+});
+
+test(description: 'it resolves the correct endpoint', closure: function () {
+    $request = new GetServerInformation();
+
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/server')
+        ->and(value: $request->getMethod()->value)->toBe(expected: 'GET');
+});
+
+test(description: 'it creates a ServerData DTO from response via createDtoFromResponse', closure: function () {
     $body = [
         "id"         => 1,
         "attributes" => [
@@ -47,14 +62,15 @@ test(description: 'it can get server information', closure: function () {
     ];
 
     $mockClient = new MockClient(mockData: [
-        GetServerInformation::class => MockResponse::make(body: $body)
+        GetServerInformation::class => MockResponse::make(body: $body, status: 200),
     ]);
 
     $request = new GetServerInformation();
-    $response = connector()->send(request: $request, mockClient: $mockClient);
+    $response = $this->connector->send(request: $request, mockClient: $mockClient);
 
-    expect(value: $response->dto())
-        ->toBeInstanceOf(class: ServerData::class)
-        ->and(value: $response->dto()->id)->toBe(1)
-        ->and(value: $response->dto()->version)->toBe('6.10.0');
+    $server = $response->dtoOrFail();
+
+    expect(value: $server)->toBeInstanceOf(class: ServerData::class)
+        ->and(value: $server->id)->toBe(1)
+        ->and(value: $server->version)->toBe('6.10.0');
 });

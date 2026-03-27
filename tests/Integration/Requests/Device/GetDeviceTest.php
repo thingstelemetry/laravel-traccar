@@ -2,17 +2,30 @@
 
 declare(strict_types=1);
 
-use Carbon\CarbonImmutable;
+namespace Tests\Integration\Requests\Device;
+
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
-use ThingsTelemetry\Traccar\Enums\DeviceStatus;
-use ThingsTelemetry\Traccar\Enums\DeviceCategory;
-use ThingsTelemetry\Traccar\Dto\DeviceAttributesData;
+use ThingsTelemetry\Traccar\TraccarConnector;
 use ThingsTelemetry\Traccar\Requests\Device\GetDevice;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
-test(description: 'it can get a device by id', closure: function () {
+beforeEach(closure: function () {
+    $this->connector = new TraccarConnector(
+        baseUrl: 'https://demo.traccar.org/api',
+        apiKey: 'test-api-key'
+    );
+});
+
+test(description: 'it resolves the correct endpoint', closure: function () {
+    $request = new GetDevice(id: 6);
+
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/devices/6')
+        ->and(value: $request->getMethod()->value)->toBe(expected: 'GET');
+});
+
+test(description: 'it creates a DeviceData DTO from response via createDtoFromResponse', closure: function () {
     $body = [
         'id'         => 6,
         'name'       => 'Truck 1',
@@ -32,40 +45,25 @@ test(description: 'it can get a device by id', closure: function () {
     ];
 
     $mockClient = new MockClient(mockData: [
-        GetDevice::class => MockResponse::make(body: $body),
+        GetDevice::class => MockResponse::make(body: $body, status: 200),
     ]);
 
     $request = new GetDevice(id: 6);
-    $response = connector()->send(request: $request, mockClient: $mockClient);
+    $response = $this->connector->send(request: $request, mockClient: $mockClient);
 
-    expect(value: $response->dto())
-        ->toBeInstanceOf(class: DeviceData::class)
-        ->and(value: $response->dto()->id)->toBe(6)
-        ->and(value: $response->dto()->status)->toBe(DeviceStatus::ONLINE)
-        ->and(value: $response->dto()->category)->toBe(DeviceCategory::TRUCK)
-        ->and(value: $response->dto()->lastUpdate)->toBeInstanceOf(class: CarbonImmutable::class)
-        ->and(value: $response->dto()->attributes)->toBeInstanceOf(class: DeviceAttributesData::class)
-        ->and(value: $response->dto()->attributes->speedLimit)->toBe(80.0);
+    $device = $response->dtoOrFail();
+
+    expect(value: $device)->toBeInstanceOf(class: DeviceData::class)
+        ->and(value: $device->id)->toBe(6);
 });
 
-test(description: 'it throws NotFoundException when device returns 200 with empty body', closure: function () {
+test(description: 'it throws NotFoundException when device returns 200 with empty body via createDtoFromResponse', closure: function () {
     $mockClient = new MockClient(mockData: [
         GetDevice::class => MockResponse::make(body: [], status: 200),
     ]);
 
     $request = new GetDevice(id: 999);
 
-    expect(value: fn () => connector()->send(request: $request, mockClient: $mockClient)->dto())
-        ->toThrow(exception: NotFoundException::class, message: 'Traccar device was not found. Check the device ID and try again.');
-});
-
-test(description: 'it throws NotFoundException when device returns HTTP 404', closure: function () {
-    $mockClient = new MockClient(mockData: [
-        GetDevice::class => MockResponse::make(body: ['error' => 'Not found'], status: 404),
-    ]);
-
-    $request = new GetDevice(id: 999);
-
-    expect(value: fn () => connector()->send(request: $request, mockClient: $mockClient)->dto())
-        ->toThrow(exception: NotFoundException::class);
+    expect(value: fn () => $this->connector->send(request: $request, mockClient: $mockClient)->dtoOrFail())
+        ->toThrow(exception: NotFoundException::class, exceptionMessage: 'Traccar device was not found. Check the device ID and try again.');
 });

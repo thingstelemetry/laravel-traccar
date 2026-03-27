@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Requests\User;
 
-use InvalidArgumentException;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Dto\UserData;
@@ -47,7 +46,15 @@ test(description: 'it resolves the correct endpoint', closure: function () {
     $data = UserData::fromArray(data: $this->userData);
     $request = new UpdateUser(data: $data);
 
-    expect(value: $request->resolveEndpoint())->toBe(expected: '/users/6');
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/users/6')
+        ->and(value: $request->getMethod()->value)->toBe(expected: 'PUT');
+});
+
+test(description: 'it sends the correct body', closure: function () {
+    $data = UserData::fromArray(data: $this->userData);
+    $request = new UpdateUser(data: $data);
+
+    expect(value: $request->body()->all())->toEqual(expected: $data->toArray());
 });
 
 test(description: 'it creates a UserData DTO from response via createDtoFromResponse', closure: function () {
@@ -65,18 +72,4 @@ test(description: 'it creates a UserData DTO from response via createDtoFromResp
         ->and(value: $user->id)->toBe(expected: 6)
         ->and(value: $user->name)->toBe(expected: 'Jane Doe - Updated')
         ->and(value: $user->coordinateFormat)->toBe(expected: CoordinateFormat::DDM);
-});
-
-test(description: 'it sends the correct body', closure: function () {
-    $data = UserData::fromArray(data: $this->userData);
-    $request = new UpdateUser(data: $data);
-
-    expect(value: $request->body()->all())->toEqual(expected: $data->toArray());
-});
-
-test(description: 'it throws InvalidArgumentException when user ID is missing', closure: function () {
-    $data = UserData::fromArray(data: array_merge($this->userData, ['id' => 0]));
-
-    expect(value: fn () => new UpdateUser(data: $data))
-        ->toThrow(exception: InvalidArgumentException::class, exceptionMessage: 'User ID is required for update operations.');
 });

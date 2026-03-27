@@ -9,8 +9,6 @@ use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Facades\Device;
-use ThingsTelemetry\Traccar\Enums\DeviceStatus;
-use ThingsTelemetry\Traccar\Enums\DeviceCategory;
 use ThingsTelemetry\Traccar\Requests\Device\GetDevice;
 use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;

@@ -47,7 +47,15 @@ test(description: 'it resolves the correct endpoint', closure: function () {
     $data = UserData::fromArray(data: $this->userData);
     $request = new CreateUser(data: $data);
 
-    expect(value: $request->resolveEndpoint())->toBe(expected: '/users');
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/users')
+        ->and(value: $request->getMethod()->value)->toBe(expected: 'POST');
+});
+
+test(description: 'it sends the correct body', closure: function () {
+    $data = UserData::fromArray(data: $this->userData);
+    $request = new CreateUser(data: $data);
+
+    expect(value: $request->body()->all())->toEqual(expected: $data->toArray());
 });
 
 test(description: 'it creates a UserData DTO from response via createDtoFromResponse', closure: function () {
@@ -67,11 +75,4 @@ test(description: 'it creates a UserData DTO from response via createDtoFromResp
         ->and(value: $user->email)->toBe(expected: 'alice@example.com')
         ->and(value: $user->map)->toBe(expected: Map::OSM)
         ->and(value: $user->coordinateFormat)->toBe(expected: CoordinateFormat::DD);
-});
-
-test(description: 'it sends the correct body', closure: function () {
-    $data = UserData::fromArray(data: $this->userData);
-    $request = new CreateUser(data: $data);
-
-    expect(value: $request->body()->all())->toEqual(expected: $data->toArray());
 });

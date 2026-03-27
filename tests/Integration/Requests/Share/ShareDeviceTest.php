@@ -5,12 +5,35 @@ declare(strict_types=1);
 use Carbon\CarbonImmutable;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use ThingsTelemetry\Traccar\TraccarConnector;
 use ThingsTelemetry\Traccar\Dto\DeviceShareData;
 use ThingsTelemetry\Traccar\Requests\Share\ShareDevice;
 
-test(description: 'it can share a device', closure: function () {
+beforeEach(closure: function () {
+    $this->connector = new TraccarConnector(
+        baseUrl: 'https://demo.traccar.org/api',
+        apiKey: 'test-api-key'
+    );
+});
+
+test(description: 'it resolves the correct endpoint', closure: function () {
+    $expiration = CarbonImmutable::parse('2026-12-01T12:00:00Z');
+    $request = new ShareDevice(deviceId: 6, expiration: $expiration);
+
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/devices/6/share')
+        ->and(value: $request->getMethod()->value)->toBe(expected: 'GET');
+});
+
+test(description: 'it sends the correct query parameters', closure: function () {
+    $expiration = CarbonImmutable::parse('2026-12-01T12:00:00Z');
+    $request = new ShareDevice(deviceId: 6, expiration: $expiration);
+
+    expect(value: $request->query()->get(key: 'expiration'))->toBe(expected: $expiration->toIso8601String());
+});
+
+test(description: 'it creates a DeviceShareData DTO from response via createDtoFromResponse', closure: function () {
     $deviceId = 6;
-    $expiration = CarbonImmutable::now()->addDay();
+    $expiration = CarbonImmutable::parse('2026-12-01T12:00:00Z');
     $token = 'share-token-123';
 
     $mockClient = new MockClient(mockData: [
@@ -18,10 +41,11 @@ test(description: 'it can share a device', closure: function () {
     ]);
 
     $request = new ShareDevice(deviceId: $deviceId, expiration: $expiration);
-    $response = connector()->send(request: $request, mockClient: $mockClient);
+    $response = $this->connector->send(request: $request, mockClient: $mockClient);
 
-    expect(value: $response->dto())
-        ->toBeInstanceOf(class: DeviceShareData::class)
-        ->and(value: $response->dto()->deviceId)->toBe($deviceId)
-        ->and(value: $response->dto()->token)->toBe($token);
+    $share = $response->dtoOrFail();
+
+    expect(value: $share)->toBeInstanceOf(class: DeviceShareData::class)
+        ->and(value: $share->deviceId)->toBe($deviceId)
+        ->and(value: $share->token)->toBe($token);
 });

@@ -69,7 +69,8 @@ beforeEach(closure: function () {
 test(description: 'it resolves the correct endpoint', closure: function () {
     $request = new GetAllUsers();
 
-    expect(value: $request->resolveEndpoint())->toBe(expected: '/users');
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/users')
+        ->and(value: $request->getMethod()->value)->toBe(expected: 'GET');
 });
 
 test(description: 'it creates an array of UserData DTOs from response via createDtoFromResponse', closure: function () {

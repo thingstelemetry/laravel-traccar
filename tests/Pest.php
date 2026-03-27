@@ -22,11 +22,6 @@ Config::preventStrayRequests();
 uses(TestCase::class)
     ->in('Feature', 'Integration', 'Unit');
 
-function connector(): \ThingsTelemetry\Traccar\TraccarConnector
-{
-    return app(\ThingsTelemetry\Traccar\TraccarConnector::class);
-}
-
 uses()
     ->beforeEach(fn () => MockClient::destroyGlobal())
     ->in(__DIR__);

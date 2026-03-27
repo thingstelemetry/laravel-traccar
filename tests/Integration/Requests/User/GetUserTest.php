@@ -45,12 +45,13 @@ beforeEach(closure: function () {
 test(description: 'it resolves the correct endpoint', closure: function () {
     $request = new GetUser(id: 6);
 
-    expect(value: $request->resolveEndpoint())->toBe(expected: '/users/6');
+    expect(value: $request->resolveEndpoint())->toBe(expected: '/users/6')
+        ->and(value: $request->getMethod()->value)->toBe(expected: 'GET');
 });
 
 test(description: 'it creates a UserData DTO from response via createDtoFromResponse', closure: function () {
     $mockClient = new MockClient(mockData: [
-        GetUser::class => MockResponse::make($this->userData, 200),
+        GetUser::class => MockResponse::make(body: $this->userData, status: 200),
     ]);
 
     $request = new GetUser(id: 6);
@@ -65,7 +66,7 @@ test(description: 'it creates a UserData DTO from response via createDtoFromResp
 
 test(description: 'it throws NotFoundException when user is not found via createDtoFromResponse', closure: function () {
     $mockClient = new MockClient(mockData: [
-        GetUser::class => MockResponse::make([], 200),
+        GetUser::class => MockResponse::make(body: [], status: 200),
     ]);
 
     $request = new GetUser(id: 999);
