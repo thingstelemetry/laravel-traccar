@@ -199,7 +199,7 @@ Route::prefix('/devices')->group(function () {
 
         $expiration = \Carbon\CarbonImmutable::now()->addHours($hours);
 
-        $share = \ThingsTelemetry\Traccar\Facades\Device::share(deviceId: $deviceId, expiration: $expiration);
+        $share = \ThingsTelemetry\Traccar\Facades\Share::device(deviceId: $deviceId, expiration: $expiration);
 
         dump($share->toArray());
     });

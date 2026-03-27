@@ -111,9 +111,9 @@ export default defineConfig({
                     {text: 'Get User', link: '/users/get-information'},
                     {text: 'Get All User', link: '/users/get-all'},
                     {text: 'Create User', link: '/users/create'},
+                    {text: 'Generate TOTP Secret', link: '/users/generate-totp'},
                     {text: 'Update User', link: '/users/update'},
                     {text: 'Delete User', link: '/users/delete'},
-                    {text: 'Generate TOTP Secret', link: '/users/generate-totp'},
                 ]
             },
             {
