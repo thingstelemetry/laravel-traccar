@@ -98,6 +98,19 @@ class Device extends Traccar
         return $response->dtoOrFail();
     }
 
+    /** @throws \Saloon\Exceptions\SaloonException */
+    public function share(int $deviceId, CarbonInterface $expiration): DeviceShareData
+    {
+        $response = $this->connector->send(
+            request: new ShareDevice(
+                deviceId: $deviceId,
+                expiration: $expiration,
+            )
+        );
+
+        return $response->dtoOrFail();
+    }
+
     /**
      * @throws \Saloon\Exceptions\SaloonException
      * @throws \Illuminate\Validation\ValidationException
@@ -132,19 +145,6 @@ class Device extends Traccar
                 deviceId: $deviceId,
                 mimeType: $mimeType,
                 contents: $contents,
-            )
-        );
-
-        return $response->dtoOrFail();
-    }
-
-    /** @throws \Saloon\Exceptions\SaloonException */
-    public function share(int $deviceId, CarbonInterface $expiration): DeviceShareData
-    {
-        $response = $this->connector->send(
-            request: new ShareDevice(
-                deviceId: $deviceId,
-                expiration: $expiration,
             )
         );
 

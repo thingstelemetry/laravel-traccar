@@ -72,6 +72,39 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Devices',
+                collapsed: true,
+                items: [
+                    {text: 'Get Device', link: '/devices/get-information'},
+                    {text: 'Get All Devices', link: '/devices/get-all'},
+                    {text: 'Get User Devices', link: '/devices/get-for-user'},
+                    {text: 'Create Device', link: '/devices/create'},
+                    {text: 'Update Device', link: '/devices/update'},
+                    {text: 'Upload/Update Device Image', link: '/devices/update-image'},
+                    {text: 'Update Totals (Distance & Hours)', link: '/devices/accumulators'},
+                    {text: 'Delete Device', link: '/devices/delete'},
+                ]
+            },
+            {
+                text: 'Groups',
+                collapsed: true,
+                items: [
+                    {text: 'Get Group', link: '/groups/get-information'},
+                    {text: 'Get All Groups', link: '/groups/get-all'},
+                    {text: 'Create Group', link: '/groups/create'},
+                    {text: 'Update Group', link: '/groups/update'},
+                    {text: 'Delete Group', link: '/groups/delete'},
+                ]
+            },
+            {
+                text: 'Share',
+                collapsed: true,
+                items: [
+                    {text: 'Share Device', link: '/share/device'},
+                    {text: 'Share Group', link: '/share/group'},
+                ]
+            },
+            {
                 text: 'Users',
                 collapsed: true,
                 items: [
@@ -87,32 +120,6 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                     {text: 'Get Information', link: '/events/get-information'},
-                ]
-            },
-            {
-                text: 'Devices',
-                collapsed: true,
-                items: [
-                    {text: 'Get Device', link: '/devices/get-information'},
-                    {text: 'Get All Devices', link: '/devices/get-all'},
-                    {text: 'Get User Devices', link: '/devices/get-for-user'},
-                    {text: 'Create Device', link: '/devices/create'},
-                    {text: 'Update Device', link: '/devices/update'},
-                    {text: 'Share Device', link: '/devices/share-location'},
-                    {text: 'Upload/Update Device Image', link: '/devices/update-image'},
-                    {text: 'Update Totals (Distance & Hours)', link: '/devices/accumulators'},
-                    {text: 'Delete Device', link: '/devices/delete'},
-                ]
-            },
-            {
-                text: 'Groups',
-                collapsed: true,
-                items: [
-                    {text: 'Get Group', link: '/groups/get-information'},
-                    {text: 'Get All Groups', link: '/groups/get-all'},
-                    {text: 'Create Group', link: '/groups/create'},
-                    {text: 'Update Group', link: '/groups/update'},
-                    {text: 'Delete Group', link: '/groups/delete'},
                 ]
             },
             {

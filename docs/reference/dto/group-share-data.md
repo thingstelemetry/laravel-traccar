@@ -1,19 +1,19 @@
-# Device Share Data Dto Reference
+# Group Share Data Dto Reference
 
-The `ThingsTelemetry\Traccar\Dto\DeviceShareData` represents the result of sharing a device. It includes the generated token, the expiration time, the device ID, and a computed share URL that can be opened in the Traccar web UI.
+The `ThingsTelemetry\Traccar\Dto\GroupShareData` represents the result of sharing a group of devices. It includes the generated token, the expiration time, the group ID, and a computed share URL that can be opened in the Traccar web UI.
 
 ```php
 use Carbon\CarbonImmutable;
 use ThingsTelemetry\Traccar\Facades\Share;
 
-$share = Share::device(deviceId: 6, expiration: CarbonImmutable::now()->addHours(12));
+$share = Share::group(groupId: 2, expiration: CarbonImmutable::now()->addHours(12));
 ```
 
-## `deviceId` → `integer`
+## `groupId` → `integer`
 
-Identifier of the shared device.
+Identifier of the shared group.
 ```php
-$share->deviceId; // 6
+$share->groupId; // 2
 ```
 
 ## `token` → `string`
