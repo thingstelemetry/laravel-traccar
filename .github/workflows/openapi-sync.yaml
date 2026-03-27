@@ -1,0 +1,82 @@
+name: Sync OpenAPI Spec
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # 07:00 UTC every day (10:00 AM Nairobi time)
+
+jobs:
+  sync-openapi:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Fetch remote OpenAPI spec
+        run: |
+          curl -sSL --fail --retry 3 --connect-timeout 10 -o /tmp/remote-openapi.json \
+            https://github.com/traccar/traccar/blob/master/openapi.yaml
+          
+          if ! jq . /tmp/remote-openapi.json > /dev/null; then
+            echo "Error: Downloaded file is not valid JSON"
+            exit 1
+          fi
+
+      - name: Compare files
+        id: compare
+        run: |
+          if ! diff -q openapi.json /tmp/remote-openapi.json > /dev/null; then
+            echo "Files differ"
+            echo "diff=true" >> $GITHUB_OUTPUT
+          else
+            echo "Files are the same"
+            echo "diff=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update OpenAPI spec
+        if: steps.compare.outputs.diff == 'true'
+        id: update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          BRANCH_NAME="update-openapi"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+          # Delete local branch if it exists, and create it fresh from current main
+          git branch -D $BRANCH_NAME 2>/dev/null || true
+          git checkout -b $BRANCH_NAME
+
+          cp /tmp/remote-openapi.json openapi.json
+          git add openapi.json
+          
+          if ! git diff --cached --quiet; then
+            git commit -m "Update openapi.json from remote"
+            # Force push to overwrite the remote branch, avoiding any conflicts or "stale info" errors
+            git push origin $BRANCH_NAME --force
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "No changes to commit."
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.compare.outputs.diff == 'true' && steps.update.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_EXISTS=$(gh pr list --head "${{ steps.update.outputs.branch_name }}" --json number --jq 'length')
+          if [ "$PR_EXISTS" -eq "0" ]; then
+            gh pr create \
+              --title "chore: update openapi.json from remote" \
+              --body "This PR updates the openapi.json file to match the remote specification from traccar/traccar." \
+              --head "${{ steps.update.outputs.branch_name }}" \
+              --base main
+          else
+            echo "PR already exists, updating title/body if needed..."
+            gh pr edit "${{ steps.update.outputs.branch_name }}" \
+              --title "chore: update openapi.json from remote" \
+              --body "This PR updates the openapi.json file to match the remote specification from traccar/traccar."
+          fi
