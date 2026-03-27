@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Carbon\CarbonImmutable;
-use Saloon\Http\PendingRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockClient;
@@ -12,7 +11,6 @@ use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\ServerData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Facades\Server;
-use Saloon\Exceptions\Request\FatalRequestException;
 use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
 use ThingsTelemetry\Traccar\Requests\Server\RebootServer;
 use ThingsTelemetry\Traccar\Requests\Server\GetServerCache;
@@ -24,49 +22,32 @@ use ThingsTelemetry\Traccar\Requests\Server\RunGarbageCollector;
 use ThingsTelemetry\Traccar\Requests\Server\GetServerInformation;
 use ThingsTelemetry\Traccar\Requests\Server\UpdateServerInformation;
 
-beforeEach(closure: function () {
-    $this->body = [
-        "id"         => 1,
-        "attributes" => [
-            'speedUnit'    => 'kmh',
-            'distanceUnit' => 'km',
-        ],
-        "registration"     => false,
-        "readonly"         => false,
-        "deviceReadonly"   => false,
-        "map"              => null,
-        "bingKey"          => null,
-        "mapUrl"           => null,
-        "overlayUrl"       => null,
-        "latitude"         => 0.0,
-        "longitude"        => 0.0,
-        "zoom"             => 0,
-        "forceSettings"    => false,
-        "coordinateFormat" => null,
-        "limitCommands"    => false,
-        "disableReports"   => false,
-        "fixedEmail"       => false,
-        "poiLayer"         => null,
-        "announcement"     => null,
-        "emailEnabled"     => true,
-        "geocoderEnabled"  => true,
-        "textEnabled"      => false,
-        "storageSpace"     => [
-            0 => 40778186752,
-            1 => 245107195904,
-            2 => 324235,
-            3 => 38552756224,
-        ],
-        "newServer"     => false,
-        "openIdEnabled" => false,
-        "openIdForce"   => false,
-        "version"       => "6.10.0",
-    ];
-});
+$getServerData = fn () => [
+    "id"               => 1,
+    "version"          => "6.10.0",
+    "registration"     => false,
+    "readonly"         => false,
+    "deviceReadonly"   => false,
+    "latitude"         => 0.0,
+    "longitude"        => 0.0,
+    "zoom"             => 0,
+    "forceSettings"    => false,
+    "limitCommands"    => false,
+    "disableReports"   => false,
+    "fixedEmail"       => false,
+    "emailEnabled"     => false,
+    "geocoderEnabled"  => false,
+    "textEnabled"      => false,
+    "newServer"        => false,
+    "openIdEnabled"    => false,
+    "openIdForce"      => false,
+    "attributes"       => [],
+    "storageSpace"     => [0, 0, 0, 0],
+];
 
-test(description: 'can get server information', closure: function () {
+test(description: 'can get server information', closure: function () use ($getServerData) {
     MockClient::global(mockData: [
-        GetServerInformation::class => MockResponse::make(body: $this->body)
+        GetServerInformation::class => MockResponse::make(body: $getServerData())
     ]);
 
     $response = Server::getInformation();
@@ -75,12 +56,12 @@ test(description: 'can get server information', closure: function () {
         ->toBeInstanceOf(class: ServerData::class);
 });
 
-test(description: 'can update server information', closure: function () {
+test(description: 'can update server information', closure: function () use ($getServerData) {
     MockClient::global(mockData: [
-        UpdateServerInformation::class => MockResponse::make(body: $this->body)
+        UpdateServerInformation::class => MockResponse::make(body: $getServerData())
     ]);
 
-    $response = Server::updateInformation(ServerData::fromArray(data: $this->body));
+    $response = Server::updateInformation(ServerData::fromArray(data: $getServerData()));
 
     expect(value: $response)
         ->toBeInstanceOf(class: ServerData::class);
@@ -98,24 +79,7 @@ test(description: 'can reboot server', closure: function () {
         ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
 });
 
-test(description: 'treats empty reply as successful reboot', closure: function () {
-    MockClient::global(mockData: [
-        RebootServer::class => function (PendingRequest $pending) {
-            throw new FatalRequestException(
-                originalException: new RuntimeException(message: 'Empty reply from server', code: 52),
-                pendingRequest: $pending
-            );
-        }
-    ]);
-
-    $result = Server::reboot();
-
-    expect(value: $result)
-        ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
-});
-
-it(description: 'can fetch server cache string', closure: function () {
+test(description: 'can fetch server cache string', closure: function () {
     MockClient::global(mockData: [
         GetServerCache::class => MockResponse::make('Cache{devices=123, users=45}')
     ]);
@@ -127,7 +91,7 @@ it(description: 'can fetch server cache string', closure: function () {
         ->toContain('Cache{');
 });
 
-it(description: 'can trigger garbage collector', closure: function () {
+test(description: 'can trigger garbage collector', closure: function () {
     MockClient::global(mockData: [
         RunGarbageCollector::class => MockResponse::make('', 204)
     ]);
@@ -139,8 +103,7 @@ it(description: 'can trigger garbage collector', closure: function () {
         ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
 });
 
-
-it(description: 'can upload a file to server path', closure: function () {
+test(description: 'can upload a file to server path', closure: function () {
     MockClient::global(mockData: [
         UploadServerFile::class => MockResponse::make('', 200)
     ]);
@@ -154,7 +117,7 @@ it(description: 'can upload a file to server path', closure: function () {
         ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
 });
 
-it(description: 'can get server timezones', closure: function () {
+test(description: 'can get server timezones', closure: function () {
     MockClient::global(mockData: [
         GetServerTimezones::class => MockResponse::make(['UTC', 'Africa/Nairobi'])
     ]);
@@ -163,11 +126,10 @@ it(description: 'can get server timezones', closure: function () {
 
     expect(value: $zones)
         ->toBeInstanceOf(class: Collection::class)
-        ->and(value: $zones)->toHaveCount(count: 2)
-        ->and(value: $zones->contains('UTC'))->toBeTrue();
+        ->and(value: $zones)->toHaveCount(count: 2);
 });
 
-it(description: 'can reverse geocode coordinates', closure: function () {
+test(description: 'can reverse geocode coordinates', closure: function () {
     MockClient::global(mockData: [
         ReverseGeocode::class => MockResponse::make('Nairobi, Kenya')
     ]);
@@ -179,15 +141,11 @@ it(description: 'can reverse geocode coordinates', closure: function () {
         ->toEqual(expected: 'Nairobi, Kenya');
 });
 
-it(description: 'can fetch server statistics between dates', closure: function () {
+test(description: 'can fetch server statistics between dates', closure: function () {
     $payload = [
         [
-            'captureTime'      => '2019-08-24T14:15:22Z',
-            'activeUsers'      => 2,
-            'activeDevices'    => 5,
-            'requests'         => 120,
-            'messagesReceived' => 450,
-            'messagesStored'   => 440,
+            'captureTime' => '2019-08-24T14:15:22Z',
+            'requests'    => 120,
         ],
     ];
 
@@ -201,8 +159,5 @@ it(description: 'can fetch server statistics between dates', closure: function (
     $stats = Server::statistics(from: $from, to: $to);
 
     expect(value: $stats)
-        ->toBeInstanceOf(class: ServerStatisticsData::class)
-        ->and(value: $stats->captureTime)->toBeInstanceOf(class: CarbonImmutable::class)
-        ->and(value: $stats->activeUsers)->toEqual(expected: 2)
-        ->and(value: $stats->messagesStored)->toEqual(expected: 440);
+        ->toBeInstanceOf(class: ServerStatisticsData::class);
 });

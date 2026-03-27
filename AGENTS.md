@@ -182,25 +182,37 @@ class Mount
 
 Run tests: `composer test`
 
-- **`tests/Feature/`** - Integration tests (endpoint methods, HTTP cycles).
+- **`tests/Feature/`** - Lightweight end-to-end tests focusing on Facade-to-Request connectivity.
+- **`tests/Integration/`** - Detailed isolation tests for Request classes, covering DTO hydration, URI generation, and custom error handling.
 - **`tests/Unit/`** - Unit tests (`TraccarConnectorTest.php`, `Services/` folder).
 - **`tests/Unit/Services/`** - Support class tests (`MountTest.php`, `StorageInfoTest.php`); this folder intentionally covers `src/Support/`.
 
 ### Key Patterns
 
 ```php
-// Mock HTTP requests
-MockClient::global([
-    GetServerInformation::class => MockResponse::make(['id' => 1, 'version' => '6.10'])
-]);
+// 1. Integration Test (Request Level)
+test('it can hydrate DTO from response', function () {
+    $mockClient = new MockClient([
+        GetServerInformation::class => MockResponse::make(['id' => 1, 'version' => '6.10'])
+    ]);
+    
+    $request = new GetServerInformation();
+    $response = connector()->send($request, $mockClient);
+    
+    expect($response->dto())->toBeInstanceOf(ServerData::class)
+        ->and($response->dto()->version)->toBe('6.10');
+});
 
-// Test support classes
-$mount = new Mount(free: 1024, total: 2048);
-expect($mount->free)->toBe(1024);
+// 2. Feature Test (Facade Level - Lightweight)
+test('can get server information via facade', function () {
+    MockClient::global([
+        GetServerInformation::class => MockResponse::make(['id' => 1, 'version' => '6.10'])
+    ]);
 
-// Test DTOs
-$serverData = new ServerData(id: 1, version: '6.10', attributes: new ServerAttributesData());
-expect($serverData->toArray()['id'])->toBe(1);
+    $response = Server::getInformation();
+
+    expect($response)->toBeInstanceOf(ServerData::class);
+});
 ```
 
 - Configure in `tests/Pest.php` with `Config::preventStrayRequests()` - all HTTP requests must be mocked.

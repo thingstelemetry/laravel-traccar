@@ -32,14 +32,5 @@ it(description: 'can retrieve an event by id', closure: function () {
 
     expect(value: $event)
         ->toBeInstanceOf(class: EventData::class)
-        ->and(value: $event->id)->toEqual(expected: 1234)
-        ->and(value: $event->type)->toEqual(expected: 'geofenceEnter')
-        ->and(value: $event->eventTime)->toBeInstanceOf(class: CarbonImmutable::class)
-        ->and(value: $event->eventTime->toIso8601String())->toEqual(expected: '2019-08-24T14:15:22+00:00')
-        ->and(value: $event->deviceId)->toEqual(expected: 42)
-        ->and(value: $event->positionId)->toEqual(expected: 98765)
-        ->and(value: $event->geofenceId)->toEqual(expected: 3)
-        ->and(value: $event->maintenanceId)->toBeNull()
-        ->and(value: $event->attributes)->toBeArray()
-        ->and(value: $event->attributes['alarm'])->toEqual(expected: 'powerCut');
+        ->and(value: $event->id)->toEqual(expected: 1234);
 });

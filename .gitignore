@@ -11,3 +11,4 @@ build
 .DS_Store
 workbench/storage
 /.junie/memory
+.output.txt
