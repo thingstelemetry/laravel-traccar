@@ -55,7 +55,6 @@ $device->attributes->fuelIncreaseThreshold; // 10.0
 ## Related Operations
 
 - [Get All Devices](./all) - Fetch all accessible devices
-- [All Devices With Filters](./all-filters) - Fetch devices with filters
 - [Create Device](./create) - Create a new device
 - [Update Device](./update) - Update an existing device
 - [Delete Device](./delete) - Remove a device
