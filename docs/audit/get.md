@@ -20,8 +20,8 @@ $auditLogs = Audit::get(from: $from, to: $to); // Illuminate\Support\Collection<
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `from` | `CarbonImmutable` | Start date for audit logs. |
-| `to` | `CarbonImmutable` | End date for audit logs. |
+| `from` | `?CarbonImmutable` | Start date for audit logs (optional). |
+| `to` | `?CarbonImmutable` | End date for audit logs (optional). |
 
 ## Result
 

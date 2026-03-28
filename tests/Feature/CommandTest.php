@@ -31,13 +31,13 @@ $getCommandData = fn () => [
     'attributes'  => ['data' => 'OFF'],
 ];
 
-$getQueuedCommandData = fn () => [
+$getQueuedCommandData = fn (array $overrides = []) => array_merge([
     'id'          => 31,
     'deviceId'    => 6,
     'type'        => 'engineStop',
     'textChannel' => false,
     'attributes'  => ['data' => 'OFF'],
-];
+], $overrides);
 
 describe(description: 'all', tests: function () use ($getCommandData) {
     test(description: 'request sends the correct query parameters', closure: function () {
@@ -230,14 +230,17 @@ describe(description: 'send', tests: function () use ($getCommandData, $getQueue
 
     test(description: 'normalizes multiple queued command responses', closure: function () use ($getCommandData, $getQueuedCommandData) {
         MockClient::global(mockData: [
-            SendCommand::class => MockResponse::make([$getQueuedCommandData(), $getQueuedCommandData()]),
+            SendCommand::class => MockResponse::make([
+                $getQueuedCommandData(['id' => 31]),
+                $getQueuedCommandData(['id' => 32]),
+            ]),
         ]);
 
         $result = Command::send(data: CommandData::fromArray(data: $getCommandData()));
 
         expect(value: $result->sentCommand)->toBeNull()
-            ->and(value: $result->queuedCommands->first())->toBeInstanceOf(class: QueuedCommandData::class)
-            ->and(value: $result->queuedCommands)->toHaveCount(count: 2);
+            ->and(value: $result->queuedCommands)->toHaveCount(count: 2)
+            ->and(value: $result->queuedCommands->pluck('id')->toArray())->toBe([31, 32]);
     });
 
     test(description: 'propagates errors', closure: function () use ($getCommandData) {

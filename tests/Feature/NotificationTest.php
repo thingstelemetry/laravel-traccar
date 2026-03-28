@@ -166,6 +166,19 @@ describe(description: 'delete, types and notificators', tests: function () {
 
         expect(value: fn () => Notification::types())->toThrow(exception: RequestException::class);
     });
+
+    test(description: 'propagates notificators error', closure: function () {
+        MockClient::global(mockData: [
+            GetNotificators::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        try {
+            Notification::notificators();
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(500);
+        }
+    });
 });
 
 describe(description: 'send', tests: function () {

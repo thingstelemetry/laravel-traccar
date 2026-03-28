@@ -17,7 +17,7 @@ $event = Event::get(1234); // ThingsTelemetry\Traccar\Dto\EventData
 The response is an instance of `ThingsTelemetry\Traccar\Dto\EventData`.
 
 ```php
-$id         = $event->id; / 1234
+$id         = $event->id; // 1234
 $type       = $event->type; // "geofenceEnter", "ignitionOn", etc.
 $occurredAt = $event->eventTime->toIso8601String();
 $deviceId   = $event->deviceId; // 42

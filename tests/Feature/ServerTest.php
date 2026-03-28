@@ -251,8 +251,28 @@ describe(description: 'statistics', tests: function () {
 
         $stats = Server::statistics(from: $from, to: $to);
 
-        expect(value: $stats)
+        expect(value: $stats)->toBeInstanceOf(class: ServerStatisticsData::class);
+
+        $statsCollection = Server::statisticsCollection(from: $from, to: $to);
+
+        expect(value: $statsCollection)
             ->toBeInstanceOf(class: Collection::class)
-            ->and(value: $stats->first())->toBeInstanceOf(class: ServerStatisticsData::class);
+            ->and(value: $statsCollection->first())->toBeInstanceOf(class: ServerStatisticsData::class);
+    });
+
+    test(description: 'surfaces error for a non-2xx response in server statistics', closure: function () {
+        MockClient::global(mockData: [
+            GetServerStatistics::class => MockResponse::make(body: ['error' => 'Invalid range'], status: 400),
+        ]);
+
+        $from = CarbonImmutable::now();
+        $to = CarbonImmutable::now()->addDay();
+
+        try {
+            Server::statistics(from: $from, to: $to);
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(400);
+        }
     });
 });

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace ThingsTelemetry\Traccar\Endpoints;
 
 use ThingsTelemetry\Traccar\Traccar;
-use ThingsTelemetry\Traccar\Dto\JwksResponseDto;
 use ThingsTelemetry\Traccar\Dto\OidcTokenData;
+use ThingsTelemetry\Traccar\Dto\JwksResponseDto;
 use ThingsTelemetry\Traccar\Dto\OidcUserInfoData;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetJwks;
-use ThingsTelemetry\Traccar\Requests\Oidc\Authorize;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetToken;
+use ThingsTelemetry\Traccar\Requests\Oidc\Authorize;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetUserInfo;
 
 class Oidc extends Traccar

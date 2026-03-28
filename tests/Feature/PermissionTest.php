@@ -99,6 +99,21 @@ describe(description: 'link bulk', tests: function () {
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
     });
+
+    test(description: 'propagates error for bulk link failure', closure: function () {
+        MockClient::global(mockData: [
+            LinkPermissionsBulk::class => MockResponse::make(body: ['error' => 'Conflict'], status: 409),
+        ]);
+
+        $permissions = [new PermissionData(userId: 1, deviceId: 5)];
+
+        try {
+            Permission::linkBulk($permissions);
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(409);
+        }
+    });
 });
 
 describe(description: 'unlink bulk', tests: function () {
@@ -131,5 +146,20 @@ describe(description: 'unlink bulk', tests: function () {
         expect(value: $result)
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
+
+    test(description: 'propagates error for bulk unlink failure', closure: function () {
+        MockClient::global(mockData: [
+            UnlinkPermissionsBulk::class => MockResponse::make(body: ['error' => 'Conflict'], status: 409),
+        ]);
+
+        $permissions = [new PermissionData(userId: 1, deviceId: 5)];
+
+        try {
+            Permission::unlinkBulk($permissions);
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(409);
+        }
     });
 });

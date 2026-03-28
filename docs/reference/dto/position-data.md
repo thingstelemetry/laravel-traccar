@@ -26,9 +26,9 @@ $pos = Position::all(ids: [12345])->first(); // PositionData
 | `course` | `float` | Heading/course in degrees. |
 | `address` | `string` | Resolved human-readable address. |
 | `accuracy` | `float` | Estimated accuracy. |
-| `network` | `array` | Raw network-related information. |
-| `geofenceIds` | `array` | IDs of geofences related to this position. |
-| `attributes` | `array` | Additional attributes returned by Traccar. |
+| `network` | `array<string, mixed>` | Raw network-related information. |
+| `geofenceIds` | `array<int, int>` | IDs of geofences related to this position. |
+| `attributes` | `array<string, mixed>` | Additional attributes returned by Traccar. |
 
 ## `id` → `integer`
 Unique position identifier in Traccar.

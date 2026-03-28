@@ -1,6 +1,6 @@
 # Combined Report
 
-Fetch combined report rows (Route, Trips, and Stops) for one or more devices or groups.
+Fetch combined report rows (route and events) for one or more devices or groups.
 
 ## Request
 

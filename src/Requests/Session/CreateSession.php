@@ -21,7 +21,7 @@ class CreateSession extends Request implements HasBody
     public function __construct(
         private string $email,
         private string $password,
-        public ?int $code = null
+        public int|string|null $code = null
     ) {
     }
 
