@@ -127,10 +127,96 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Calendars',
+                collapsed: true,
+                items: [
+                    {text: 'Get All Calendars', link: '/calendars/get-all'},
+                    {text: 'Create Calendar', link: '/calendars/create'},
+                    {text: 'Update Calendar', link: '/calendars/update'},
+                    {text: 'Delete Calendar', link: '/calendars/delete'},
+                ]
+            },
+            {
+                text: 'Attributes',
+                collapsed: true,
+                items: [
+                    {text: 'Get All Attributes', link: '/attributes/get-all'},
+                    {text: 'Create Attribute', link: '/attributes/create'},
+                    {text: 'Update Attribute', link: '/attributes/update'},
+                    {text: 'Delete Attribute', link: '/attributes/delete'},
+                ]
+            },
+            {
+                text: 'Drivers',
+                collapsed: true,
+                items: [
+                    {text: 'Get All Drivers', link: '/drivers/get-all'},
+                    {text: 'Create Driver', link: '/drivers/create'},
+                    {text: 'Update Driver', link: '/drivers/update'},
+                    {text: 'Delete Driver', link: '/drivers/delete'},
+                ]
+            },
+            {
+                text: 'Maintenance',
+                collapsed: true,
+                items: [
+                    {text: 'Get All Maintenance', link: '/maintenance/get-all'},
+                    {text: 'Create Maintenance', link: '/maintenance/create'},
+                    {text: 'Update Maintenance', link: '/maintenance/update'},
+                    {text: 'Delete Maintenance', link: '/maintenance/delete'},
+                ]
+            },
+            {
+                text: 'Orders',
+                collapsed: true,
+                items: [
+                    {text: 'Get All Orders', link: '/orders/get-all'},
+                    {text: 'Create Order', link: '/orders/create'},
+                    {text: 'Update Order', link: '/orders/update'},
+                    {text: 'Delete Order', link: '/orders/delete'},
+                ]
+            },
+            {
+                text: 'Geofences',
+                collapsed: true,
+                items: [
+                    {text: 'Get All Geofences', link: '/geofences/get-all'},
+                    {text: 'Create Geofence', link: '/geofences/create'},
+                    {text: 'Update Geofence', link: '/geofences/update'},
+                    {text: 'Delete Geofence', link: '/geofences/delete'},
+                ]
+            },
+            {
                 text: 'Events',
                 collapsed: true,
                 items: [
                     {text: 'Get Information', link: '/events/get-information'},
+                ]
+            },
+            {
+                text: 'Commands',
+                collapsed: true,
+                items: [
+                    {text: 'Get All Commands', link: '/commands/get-all'},
+                    {text: 'Create Command', link: '/commands/create'},
+                    {text: 'Update Command', link: '/commands/update'},
+                    {text: 'Delete Command', link: '/commands/delete'},
+                    {text: 'Get Sendable Commands', link: '/commands/get-sendable'},
+                    {text: 'Send Command', link: '/commands/send'},
+                    {text: 'Get Command Types', link: '/commands/types'},
+                ]
+            },
+            {
+                text: 'Notifications',
+                collapsed: true,
+                items: [
+                    {text: 'Get All Notifications', link: '/notifications/get-all'},
+                    {text: 'Create Notification', link: '/notifications/create'},
+                    {text: 'Update Notification', link: '/notifications/update'},
+                    {text: 'Delete Notification', link: '/notifications/delete'},
+                    {text: 'Get Notification Types', link: '/notifications/types'},
+                    {text: 'Send Test Notification', link: '/notifications/send-test'},
+                    {text: 'Send Notification', link: '/notifications/send'},
                 ]
             },
             {
@@ -143,6 +229,25 @@ export default defineConfig({
                     {text: 'Export GPX', link: '/positions/export-gpx'},
                     {text: 'Delete Position', link: '/positions/delete'},
                     {text: 'Delete Positions Range', link: '/positions/delete-by-range'},
+                ]
+            },
+            {
+                text: 'Reports',
+                collapsed: true,
+                items: [
+                    {text: 'Route Report', link: '/reports/route'},
+                    {text: 'Events Report', link: '/reports/events'},
+                    {text: 'Geofences Report', link: '/reports/geofences'},
+                    {text: 'Summary Report', link: '/reports/summary'},
+                    {text: 'Trips Report', link: '/reports/trips'},
+                    {text: 'Stops Report', link: '/reports/stops'},
+                ]
+            },
+            {
+                text: 'Health',
+                collapsed: true,
+                items: [
+                    {text: 'Check Health', link: '/health/check'},
                 ]
             },
             {
