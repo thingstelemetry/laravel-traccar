@@ -137,6 +137,10 @@ export default defineConfig({
                 text: 'Positions',
                 collapsed: true,
                 items: [
+                    {text: 'Get Positions', link: '/positions/get'},
+                    {text: 'Export KML', link: '/positions/export-kml'},
+                    {text: 'Export CSV', link: '/positions/export-csv'},
+                    {text: 'Export GPX', link: '/positions/export-gpx'},
                     {text: 'Delete Position', link: '/positions/delete'},
                     {text: 'Delete Positions Range', link: '/positions/delete-by-range'},
                 ]
