@@ -182,40 +182,36 @@ class Mount
 
 Run tests: `composer test`
 
-- **`tests/Feature/`** - Lightweight end-to-end tests focusing on Facade-to-Request connectivity.
-- **`tests/Integration/`** - Detailed isolation tests for Request classes, covering DTO hydration, URI generation, and custom error handling.
+- **`tests/Feature/`** - Primary API behavior tests. Group tests by facade method using `describe()` blocks such as `get`, `all`, `create`, `update`, and `delete`. Each method group should cover the request contract relevant to that method (endpoint, HTTP method, body/query parameters), the facade response, and error handling where applicable.
 - **`tests/Unit/`** - Unit tests (`TraccarConnectorTest.php`, `Services/` folder).
 - **`tests/Unit/Services/`** - Support class tests (`MountTest.php`, `StorageInfoTest.php`); this folder intentionally covers `src/Support/`.
 
 ### Key Patterns
 
 ```php
-// 1. Integration Test (Request Level)
-test('it can hydrate DTO from response', function () {
-    $mockClient = new MockClient([
-        GetServerInformation::class => MockResponse::make(['id' => 1, 'version' => '6.10'])
-    ]);
-    
-    $request = new GetServerInformation();
-    
-    expect($response->dto())->toBeInstanceOf(ServerData::class)
-        ->and($response->dto()->version)->toBe('6.10');
-});
+describe('get', function () {
+    test('request resolves the correct endpoint', function () {
+        $request = new GetServerInformation();
 
-// 2. Feature Test (Facade Level - Lightweight)
-test('can get server information via facade', function () {
-    MockClient::global([
-        GetServerInformation::class => MockResponse::make(['id' => 1, 'version' => '6.10'])
-    ]);
+        expect($request->resolveEndpoint())->toBe('/server')
+            ->and($request->getMethod()->value)->toBe('GET');
+    });
 
-    $response = Server::getInformation();
+    test('returns server information via facade', function () {
+        MockClient::global([
+            GetServerInformation::class => MockResponse::make(['id' => 1, 'version' => '6.10'])
+        ]);
 
-    expect($response)->toBeInstanceOf(ServerData::class);
+        $response = Server::getInformation();
+
+        expect($response)->toBeInstanceOf(ServerData::class);
+    });
 });
 ```
 
 - Configure in `tests/Pest.php` with `Config::preventStrayRequests()` - all HTTP requests must be mocked.
-- Use `test()` or `it()` functions with descriptive names.
+- Keep DTO hydration logic in unit tests and end-to-end facade behavior in feature tests.
+- Use `describe()` plus `test()` or `it()` with descriptive names.
 
 ## Environment Variables
 

@@ -2,34 +2,44 @@
 
 declare(strict_types=1);
 
+use Saloon\Enums\Method;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Dto\EventData;
 use ThingsTelemetry\Traccar\Facades\Event;
 use ThingsTelemetry\Traccar\Requests\Event\GetEvent;
 
-test(description: 'can retrieve an event by id', closure: function () {
-    $payload = [
-        'id'            => 1234,
-        'type'          => 'geofenceEnter',
-        'eventTime'     => '2019-08-24T14:15:22Z',
-        'deviceId'      => 42,
-        'positionId'    => 98765,
-        'geofenceId'    => 3,
-        'maintenanceId' => null,
-        'attributes'    => [
-            'alarm' => 'powerCut',
-            'speed' => 32.1,
-        ],
-    ];
+describe(description: 'get', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new GetEvent(id: 1234);
 
-    MockClient::global(mockData: [
-        GetEvent::class => MockResponse::make(body: $payload),
-    ]);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/events/1234')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+    });
 
-    $event = Event::get(id: 1234);
+    test(description: 'returns an event by id', closure: function () {
+        $payload = [
+            'id'            => 1234,
+            'type'          => 'geofenceEnter',
+            'eventTime'     => '2019-08-24T14:15:22Z',
+            'deviceId'      => 42,
+            'positionId'    => 98765,
+            'geofenceId'    => 3,
+            'maintenanceId' => null,
+            'attributes'    => [
+                'alarm' => 'powerCut',
+                'speed' => 32.1,
+            ],
+        ];
 
-    expect(value: $event)
-        ->toBeInstanceOf(class: EventData::class)
-        ->and(value: $event->id)->toBe(expected: 1234);
+        MockClient::global(mockData: [
+            GetEvent::class => MockResponse::make(body: $payload),
+        ]);
+
+        $event = Event::get(id: 1234);
+
+        expect(value: $event)
+            ->toBeInstanceOf(class: EventData::class)
+            ->and(value: $event->id)->toBe(expected: 1234);
+    });
 });

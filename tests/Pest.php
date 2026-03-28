@@ -20,7 +20,7 @@ use ThingsTelemetry\Traccar\Tests\TestCase;
 Config::preventStrayRequests();
 
 uses(TestCase::class)
-    ->in('Feature', 'Integration', 'Unit');
+    ->in('Feature', 'Unit');
 
 uses()
     ->beforeEach(fn () => MockClient::destroyGlobal())

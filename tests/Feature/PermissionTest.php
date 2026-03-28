@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Saloon\Enums\Method;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Enums\Status;
@@ -13,60 +14,122 @@ use ThingsTelemetry\Traccar\Requests\Permission\UnlinkPermission;
 use ThingsTelemetry\Traccar\Requests\Permission\LinkPermissionsBulk;
 use ThingsTelemetry\Traccar\Requests\Permission\UnlinkPermissionsBulk;
 
-test(description: 'can link a user to a device', closure: function () {
-    MockClient::global(mockData: [
-        LinkPermission::class => MockResponse::make(body: '', status: 204),
-    ]);
+describe(description: 'link', tests: function () {
+    test(description: 'request sends the correct body', closure: function () {
+        $permission = new PermissionData(userId: 1, deviceId: 5);
+        $request = new LinkPermission(data: $permission);
 
-    $permission = new PermissionData(userId: 1, deviceId: 5);
-    $result = Permission::link($permission);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/permissions')
+            ->and(value: $request->getMethod())->toBe(expected: Method::POST)
+            ->and(value: $request->body()->all())->toBe(expected: [
+                'userId'   => 1,
+                'deviceId' => 5,
+            ]);
+    });
 
-    expect(value: $result)
-        ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    test(description: 'links a user to a device', closure: function () {
+        MockClient::global(mockData: [
+            LinkPermission::class => MockResponse::make(body: '', status: 204),
+        ]);
+
+        $permission = new PermissionData(userId: 1, deviceId: 5);
+        $result = Permission::link($permission);
+
+        expect(value: $result)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
 });
 
-test(description: 'can unlink a user from a device', closure: function () {
-    MockClient::global(mockData: [
-        UnlinkPermission::class => MockResponse::make(body: '', status: 204),
-    ]);
+describe(description: 'unlink', tests: function () {
+    test(description: 'request sends the correct body', closure: function () {
+        $permission = new PermissionData(userId: 1, deviceId: 5);
+        $request = new UnlinkPermission(data: $permission);
 
-    $permission = new PermissionData(userId: 1, deviceId: 5);
-    $result = Permission::unlink($permission);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/permissions')
+            ->and(value: $request->getMethod())->toBe(expected: Method::DELETE)
+            ->and(value: $request->body()->all())->toBe(expected: [
+                'userId'   => 1,
+                'deviceId' => 5,
+            ]);
+    });
 
-    expect(value: $result)
-        ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    test(description: 'unlinks a user from a device', closure: function () {
+        MockClient::global(mockData: [
+            UnlinkPermission::class => MockResponse::make(body: '', status: 204),
+        ]);
+
+        $permission = new PermissionData(userId: 1, deviceId: 5);
+        $result = Permission::unlink($permission);
+
+        expect(value: $result)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
 });
 
-test(description: 'can link multiple permissions in bulk', closure: function () {
-    MockClient::global(mockData: [
-        LinkPermissionsBulk::class => MockResponse::make(body: '', status: 204),
-    ]);
+describe(description: 'link bulk', tests: function () {
+    test(description: 'request sends the correct body', closure: function () {
+        $permissions = [
+            new PermissionData(userId: 1, deviceId: 5),
+            new PermissionData(userId: 1, deviceId: 6),
+        ];
+        $request = new LinkPermissionsBulk(permissions: $permissions);
 
-    $permissions = [
-        new PermissionData(userId: 1, deviceId: 5),
-    ];
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/permissions')
+            ->and(value: $request->getMethod())->toBe(expected: Method::POST)
+            ->and(value: $request->body()->all())->toBe(expected: [
+                ['userId' => 1, 'deviceId' => 5],
+                ['userId' => 1, 'deviceId' => 6],
+            ]);
+    });
 
-    $result = Permission::linkBulk($permissions);
+    test(description: 'links permissions in bulk', closure: function () {
+        MockClient::global(mockData: [
+            LinkPermissionsBulk::class => MockResponse::make(body: '', status: 204),
+        ]);
 
-    expect(value: $result)
-        ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+        $permissions = [
+            new PermissionData(userId: 1, deviceId: 5),
+        ];
+
+        $result = Permission::linkBulk($permissions);
+
+        expect(value: $result)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
 });
 
-test(description: 'can unlink multiple permissions in bulk', closure: function () {
-    MockClient::global(mockData: [
-        UnlinkPermissionsBulk::class => MockResponse::make(body: '', status: 204),
-    ]);
+describe(description: 'unlink bulk', tests: function () {
+    test(description: 'request sends the correct body', closure: function () {
+        $permissions = [
+            new PermissionData(userId: 1, deviceId: 5),
+            new PermissionData(userId: 1, deviceId: 6),
+        ];
+        $request = new UnlinkPermissionsBulk(permissions: $permissions);
 
-    $permissions = [
-        new PermissionData(userId: 1, deviceId: 5),
-    ];
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/permissions')
+            ->and(value: $request->getMethod())->toBe(expected: Method::DELETE)
+            ->and(value: $request->body()->all())->toBe(expected: [
+                ['userId' => 1, 'deviceId' => 5],
+                ['userId' => 1, 'deviceId' => 6],
+            ]);
+    });
 
-    $result = Permission::unlinkBulk($permissions);
+    test(description: 'unlinks permissions in bulk', closure: function () {
+        MockClient::global(mockData: [
+            UnlinkPermissionsBulk::class => MockResponse::make(body: '', status: 204),
+        ]);
 
-    expect(value: $result)
-        ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+        $permissions = [
+            new PermissionData(userId: 1, deviceId: 5),
+        ];
+
+        $result = Permission::unlinkBulk($permissions);
+
+        expect(value: $result)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
 });

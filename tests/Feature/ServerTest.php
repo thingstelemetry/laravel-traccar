@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Saloon\Enums\Method;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -12,6 +13,7 @@ use ThingsTelemetry\Traccar\Dto\ServerData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Facades\Server;
 use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
+use Saloon\Exceptions\Request\Statuses\NotFoundException;
 use ThingsTelemetry\Traccar\Requests\Server\RebootServer;
 use ThingsTelemetry\Traccar\Requests\Server\GetServerCache;
 use ThingsTelemetry\Traccar\Requests\Server\ReverseGeocode;
@@ -45,119 +47,224 @@ $getServerData = fn () => [
     "storageSpace"    => [0, 0, 0, 0],
 ];
 
-test(description: 'can get server information', closure: function () use ($getServerData) {
-    MockClient::global(mockData: [
-        GetServerInformation::class => MockResponse::make(body: $getServerData())
-    ]);
+describe(description: 'get information', tests: function () use ($getServerData) {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new GetServerInformation();
 
-    $response = Server::getInformation();
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/server')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+    });
 
-    expect(value: $response)
-        ->toBeInstanceOf(class: ServerData::class);
+    test(description: 'returns server information', closure: function () use ($getServerData) {
+        MockClient::global(mockData: [
+            GetServerInformation::class => MockResponse::make(body: $getServerData())
+        ]);
+
+        $response = Server::getInformation();
+
+        expect(value: $response)
+            ->toBeInstanceOf(class: ServerData::class);
+    });
 });
 
-test(description: 'can update server information', closure: function () use ($getServerData) {
-    MockClient::global(mockData: [
-        UpdateServerInformation::class => MockResponse::make(body: $getServerData())
-    ]);
+describe(description: 'update information', tests: function () use ($getServerData) {
+    test(description: 'request sends the correct body', closure: function () use ($getServerData) {
+        $data = ServerData::fromArray(data: $getServerData());
+        $request = new UpdateServerInformation(data: $data);
 
-    $response = Server::updateInformation(ServerData::fromArray(data: $getServerData()));
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/server')
+            ->and(value: $request->getMethod())->toBe(expected: Method::PUT)
+            ->and(value: $request->body()->all())->toBe(expected: $data->toArray());
+    });
 
-    expect(value: $response)
-        ->toBeInstanceOf(class: ServerData::class);
+    test(description: 'updates server information', closure: function () use ($getServerData) {
+        MockClient::global(mockData: [
+            UpdateServerInformation::class => MockResponse::make(body: $getServerData())
+        ]);
+
+        $response = Server::updateInformation(ServerData::fromArray(data: $getServerData()));
+
+        expect(value: $response)
+            ->toBeInstanceOf(class: ServerData::class);
+    });
 });
 
-test(description: 'can reboot server', closure: function () {
-    MockClient::global(mockData: [
-        RebootServer::class => MockResponse::make(body: '', status: 204)
-    ]);
+describe(description: 'reboot', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new RebootServer();
 
-    $result = Server::reboot();
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/server/reboot')
+            ->and(value: $request->getMethod())->toBe(expected: Method::POST);
+    });
 
-    expect(value: $result)
-        ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    test(description: 'reboots the server', closure: function () {
+        MockClient::global(mockData: [
+            RebootServer::class => MockResponse::make(body: '', status: 204)
+        ]);
+
+        $result = Server::reboot();
+
+        expect(value: $result)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
 });
 
-test(description: 'can fetch server cache string', closure: function () {
-    MockClient::global(mockData: [
-        GetServerCache::class => MockResponse::make(body: 'Cache{devices=123, users=45}')
-    ]);
+describe(description: 'cache', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new GetServerCache();
 
-    $cache = Server::cache();
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/server/cache')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+    });
 
-    expect(value: $cache)
-        ->toBeString()
-        ->toContain('Cache{');
+    test(description: 'returns the server cache string', closure: function () {
+        MockClient::global(mockData: [
+            GetServerCache::class => MockResponse::make(body: 'Cache{devices=123, users=45}')
+        ]);
+
+        $cache = Server::cache();
+
+        expect(value: $cache)
+            ->toBeString()
+            ->toContain('Cache{');
+    });
 });
 
-test(description: 'can trigger garbage collector', closure: function () {
-    MockClient::global(mockData: [
-        RunGarbageCollector::class => MockResponse::make(body: '', status: 204)
-    ]);
+describe(description: 'gc', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new RunGarbageCollector();
 
-    $result = Server::gc();
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/server/gc')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+    });
 
-    expect(value: $result)
-        ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    test(description: 'triggers the garbage collector', closure: function () {
+        MockClient::global(mockData: [
+            RunGarbageCollector::class => MockResponse::make(body: '', status: 204)
+        ]);
+
+        $result = Server::gc();
+
+        expect(value: $result)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
 });
 
-test(description: 'can upload a file to server path', closure: function () {
-    MockClient::global(mockData: [
-        UploadServerFile::class => MockResponse::make(body: '', status: 200)
-    ]);
+describe(description: 'upload file', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new UploadServerFile(path: 'web/readme.txt', mimeType: 'text/plain', contents: 'hello');
 
-    $uploaded = UploadedFile::fake()->create(name: 'readme.txt', kilobytes: 1, mimeType: 'text/plain');
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/server/file/web/readme.txt')
+            ->and(value: $request->getMethod())->toBe(expected: Method::POST);
+    });
 
-    $result = Server::uploadFile(path: 'web/readme.txt', file: $uploaded);
+    test(description: 'uploads a file to the server path', closure: function () {
+        MockClient::global(mockData: [
+            UploadServerFile::class => MockResponse::make(body: '', status: 200)
+        ]);
 
-    expect(value: $result)
-        ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+        $uploaded = UploadedFile::fake()->create(name: 'readme.txt', kilobytes: 1, mimeType: 'text/plain');
+
+        $result = Server::uploadFile(path: 'web/readme.txt', file: $uploaded);
+
+        expect(value: $result)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
 });
 
-test(description: 'can get server timezones', closure: function () {
-    MockClient::global(mockData: [
-        GetServerTimezones::class => MockResponse::make(body: ['UTC', 'Africa/Nairobi'])
-    ]);
+describe(description: 'timezones', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new GetServerTimezones();
 
-    $zones = Server::timezones();
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/server/timezones')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+    });
 
-    expect(value: $zones)
-        ->toBeInstanceOf(class: Collection::class)
-        ->and(value: $zones)->toHaveCount(count: 2);
+    test(description: 'returns the server timezones', closure: function () {
+        MockClient::global(mockData: [
+            GetServerTimezones::class => MockResponse::make(body: ['UTC', 'Africa/Nairobi'])
+        ]);
+
+        $zones = Server::timezones();
+
+        expect(value: $zones)
+            ->toBeInstanceOf(class: Collection::class)
+            ->and(value: $zones)->toHaveCount(count: 2);
+    });
 });
 
-test(description: 'can reverse geocode coordinates', closure: function () {
-    MockClient::global(mockData: [
-        ReverseGeocode::class => MockResponse::make(body: 'Nairobi, Kenya')
-    ]);
+describe(description: 'geocode', tests: function () {
+    test(description: 'request sends the correct query parameters', closure: function () {
+        $request = new ReverseGeocode(latitude: -1.286389, longitude: 36.817223);
 
-    $address = Server::geocode(latitude: -1.286389, longitude: 36.817223);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/server/geocode')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET)
+            ->and(value: $request->query()->all())->toBe(expected: [
+                'latitude'  => -1.286389,
+                'longitude' => 36.817223,
+            ]);
+    });
 
-    expect(value: $address)
-        ->toBeString()
-        ->toBe(expected: 'Nairobi, Kenya');
+    test(description: 'reverse geocodes coordinates', closure: function () {
+        MockClient::global(mockData: [
+            ReverseGeocode::class => MockResponse::make(body: 'Nairobi, Kenya')
+        ]);
+
+        $address = Server::geocode(latitude: -1.286389, longitude: 36.817223);
+
+        expect(value: $address)
+            ->toBeString()
+            ->toBe(expected: 'Nairobi, Kenya');
+    });
 });
 
-test(description: 'can fetch server statistics between dates', closure: function () {
-    $payload = [
-        [
-            'captureTime' => '2019-08-24T14:15:22Z',
-            'requests'    => 120,
-        ],
-    ];
+describe(description: 'statistics', tests: function () {
+    test(description: 'request sends the correct query parameters', closure: function () {
+        $from = CarbonImmutable::parse(time: '2019-08-24T00:00:00Z');
+        $to = CarbonImmutable::parse(time: '2019-08-25T00:00:00Z');
+        $request = new GetServerStatistics(from: $from, to: $to);
 
-    MockClient::global(mockData: [
-        GetServerStatistics::class => MockResponse::make(body: $payload),
-    ]);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/statistics')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET)
+            ->and(value: $request->query()->all())->toBe(expected: [
+                'from' => $from->toIso8601String(),
+                'to'   => $to->toIso8601String(),
+            ]);
+    });
 
-    $from = CarbonImmutable::parse(time: '2019-08-24T00:00:00Z');
-    $to = CarbonImmutable::parse(time: '2019-08-25T00:00:00Z');
+    test(description: 'returns server statistics for a date range', closure: function () {
+        $payload = [
+            [
+                'captureTime' => '2019-08-24T14:15:22Z',
+                'requests'    => 120,
+            ],
+        ];
 
-    $stats = Server::statistics(from: $from, to: $to);
+        MockClient::global(mockData: [
+            GetServerStatistics::class => MockResponse::make(body: $payload),
+        ]);
 
-    expect(value: $stats)
-        ->toBeInstanceOf(class: ServerStatisticsData::class);
+        $from = CarbonImmutable::parse(time: '2019-08-24T00:00:00Z');
+        $to = CarbonImmutable::parse(time: '2019-08-25T00:00:00Z');
+
+        $stats = Server::statistics(from: $from, to: $to);
+
+        expect(value: $stats)
+            ->toBeInstanceOf(class: ServerStatisticsData::class);
+    });
+
+    test(description: 'throws not found when the statistics response is empty', closure: function () {
+        MockClient::global(mockData: [
+            GetServerStatistics::class => MockResponse::make(body: [], status: 200),
+        ]);
+
+        $from = CarbonImmutable::parse(time: '2019-08-24T00:00:00Z');
+        $to = CarbonImmutable::parse(time: '2019-08-25T00:00:00Z');
+
+        expect(value: fn () => Server::statistics(from: $from, to: $to))
+            ->toThrow(exception: NotFoundException::class, exceptionMessage: 'Statistics were not found. Check the date range and try again.');
+    });
 });
