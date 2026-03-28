@@ -26,7 +26,7 @@ class Position extends Traccar
      * @throws \Saloon\Exceptions\SaloonException
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function get(
+    public function all(
         ?int $deviceId = null,
         ?CarbonInterface $from = null,
         ?CarbonInterface $to = null,

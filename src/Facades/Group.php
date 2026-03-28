@@ -10,8 +10,8 @@ use ThingsTelemetry\Traccar\Dto\GroupData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 
 /**
- * @method static Collection getAll(?bool $all = null, ?int $userId = null, ?bool $excludeAttributes = null)
- * @method static GroupData get(int $id)
+ * @method static Collection all(?bool $all = null, ?int $userId = null, ?bool $excludeAttributes = null)
+ * @method static GroupData find(int $id)
  * @method static GroupData create(GroupData $data)
  * @method static GroupData update(GroupData $data)
  * @method static StatusData delete(int $id)

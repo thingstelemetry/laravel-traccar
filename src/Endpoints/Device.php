@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Endpoints;
 
-use Carbon\CarbonInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use ThingsTelemetry\Traccar\Traccar;
@@ -13,7 +12,6 @@ use Illuminate\Support\Facades\Validator;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Requests\Device\GetDevice;
-use ThingsTelemetry\Traccar\Requests\Share\ShareDevice;
 use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDevice;
@@ -26,9 +24,17 @@ use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceTotals;
 class Device extends Traccar
 {
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function getAll(): Collection
+    public function all(?int $userId = null, ?array $ids = null, ?array $uniqueIds = null): Collection
     {
-        $response = $this->connector->send(request: new GetAllDevices());
+        $request = $userId !== null || $ids !== null || $uniqueIds !== null
+            ? new GetForUserDevices(
+                userId: $userId,
+                ids: $ids,
+                uniqueIds: $uniqueIds,
+            )
+            : new GetAllDevices();
+
+        $response = $this->connector->send(request: $request);
 
         return $response->dtoOrFail();
     }
@@ -37,20 +43,6 @@ class Device extends Traccar
     public function find(int $id): DeviceData
     {
         $response = $this->connector->send(request: new GetDevice(id: $id));
-
-        return $response->dtoOrFail();
-    }
-
-    /** @throws \Saloon\Exceptions\SaloonException */
-    public function get(?int $userId = null, ?array $ids = null, ?array $uniqueIds = null): Collection
-    {
-        $response = $this->connector->send(
-            request: new GetForUserDevices(
-                userId: $userId,
-                ids: $ids,
-                uniqueIds: $uniqueIds
-            )
-        );
 
         return $response->dtoOrFail();
     }
@@ -93,19 +85,6 @@ class Device extends Traccar
     public function delete(int $id): StatusData
     {
         $response = $this->connector->send(request: new DeleteDevice(id: $id));
-
-        return $response->dtoOrFail();
-    }
-
-    /** @throws \Saloon\Exceptions\SaloonException */
-    public function share(int $deviceId, CarbonInterface $expiration): DeviceShareData
-    {
-        $response = $this->connector->send(
-            request: new ShareDevice(
-                deviceId: $deviceId,
-                expiration: $expiration,
-            )
-        );
 
         return $response->dtoOrFail();
     }

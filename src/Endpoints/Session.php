@@ -24,7 +24,7 @@ class Session extends Traccar
      * @throws \Saloon\Exceptions\Request\FatalRequestException
      * @throws \Saloon\Exceptions\Request\RequestException
      */
-    public function get(?string $token = null): UserData
+    public function current(?string $token = null): UserData
     {
         $response = $this->connector->send(request: new GetSession(token: $token));
 
@@ -35,7 +35,7 @@ class Session extends Traccar
      * @throws \Saloon\Exceptions\Request\FatalRequestException
      * @throws \Saloon\Exceptions\Request\RequestException
      */
-    public function getById(int $userId): UserData
+    public function forUser(int $userId): UserData
     {
         $response = $this->connector->send(request: new GetSessionById(userId: $userId));
 

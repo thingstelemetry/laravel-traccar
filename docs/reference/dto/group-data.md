@@ -5,7 +5,7 @@ The `ThingsTelemetry\Traccar\Dto\GroupData` represents a Traccar group entity wi
 ```php
 use ThingsTelemetry\Traccar\Facades\Group;
 
-$groups = Group::getAll(); // Illuminate\Support\Collection<GroupData>
+$groups = Group::all(); // Illuminate\Support\Collection<GroupData>
 $group = $groups->first();
 ```
 
@@ -146,7 +146,7 @@ Group::create(new GroupData(
 ));
 
 // List all groups
-$groups = Group::getAll();
+$groups = Group::all();
 
 // Find top-level groups
 $topLevel = $groups->filter(fn ($g) => $g->groupId === null);
@@ -157,8 +157,8 @@ $children = $groups->filter(fn ($g) => $g->groupId === $fleet->id);
 
 ## Related Operations
 
-- [Get All Groups](./../../groups/get-all) - Fetch all accessible groups
-- [Get Group](./../../groups/get-information) - Fetch a single group
+- [Get All Groups](./../../groups/all) - Fetch all accessible groups
+- [Get Group](./../../groups/find) - Fetch a single group
 - [Create Group](./../../groups/create) - Create a new group
 - [Update Group](./../../groups/update) - Update an existing group
 - [Delete Group](./../../groups/delete) - Remove a group

@@ -46,11 +46,11 @@ export default defineConfig({
                 text: 'Server',
                 collapsed: true,
                 items: [
-                    {text: 'Get Information', link: '/server/get-information'},
-                    {text: 'Update Information', link: '/server/update-information'},
+                    {text: 'Get', link: '/server/get'},
+                    {text: 'Update', link: '/server/update'},
                     {text: 'Reboot', link: '/server/reboot'},
                     {text: 'Cache', link: '/server/cache'},
-                    {text: 'Garbage Collector', link: '/server/gc'},
+                    {text: 'Run Garbage Collector', link: '/server/run-garbage-collector'},
                     {text: 'Upload File', link: '/server/upload-file'},
                     {text: 'Timezones', link: '/server/timezones'},
                     {text: 'Reverse Geocode', link: '/server/geocode'},
@@ -61,8 +61,8 @@ export default defineConfig({
                 text: 'Session',
                 collapsed: true,
                 items: [
-                    {text: 'Get Session', link: '/session/get'},
-                    {text: 'Get Session by ID', link: '/session/get-by-id'},
+                    {text: 'Current', link: '/session/current'},
+                    {text: 'For User', link: '/session/for-user'},
                     {text: 'Create Session (Login)', link: '/session/create'},
                     {text: 'Delete Session (Logout)', link: '/session/delete'},
                     {text: 'Generate Token', link: '/session/generate-token'},
@@ -75,9 +75,9 @@ export default defineConfig({
                 text: 'Devices',
                 collapsed: true,
                 items: [
-                    {text: 'Get Device', link: '/devices/get-information'},
-                    {text: 'Get All Devices', link: '/devices/get-all'},
-                    {text: 'Get User Devices', link: '/devices/get-for-user'},
+                    {text: 'Find', link: '/devices/find'},
+                    {text: 'All', link: '/devices/all'},
+                    {text: 'All With Filters', link: '/devices/all-filters'},
                     {text: 'Create Device', link: '/devices/create'},
                     {text: 'Update Device', link: '/devices/update'},
                     {text: 'Upload/Update Device Image', link: '/devices/update-image'},
@@ -89,8 +89,8 @@ export default defineConfig({
                 text: 'Groups',
                 collapsed: true,
                 items: [
-                    {text: 'Get Group', link: '/groups/get-information'},
-                    {text: 'Get All Groups', link: '/groups/get-all'},
+                    {text: 'Find', link: '/groups/find'},
+                    {text: 'All', link: '/groups/all'},
                     {text: 'Create Group', link: '/groups/create'},
                     {text: 'Update Group', link: '/groups/update'},
                     {text: 'Delete Group', link: '/groups/delete'},
@@ -108,8 +108,8 @@ export default defineConfig({
                 text: 'Users',
                 collapsed: true,
                 items: [
-                    {text: 'Get User', link: '/users/get-information'},
-                    {text: 'Get All User', link: '/users/get-all'},
+                    {text: 'Find', link: '/users/find'},
+                    {text: 'All', link: '/users/all'},
                     {text: 'Create User', link: '/users/create'},
                     {text: 'Update User', link: '/users/update'},
                     {text: 'Delete User', link: '/users/delete'},
@@ -127,22 +127,127 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Calendars',
+                collapsed: true,
+                items: [
+                    {text: 'All', link: '/calendars/all'},
+                    {text: 'Create Calendar', link: '/calendars/create'},
+                    {text: 'Update Calendar', link: '/calendars/update'},
+                    {text: 'Delete Calendar', link: '/calendars/delete'},
+                ]
+            },
+            {
+                text: 'Attributes',
+                collapsed: true,
+                items: [
+                    {text: 'All', link: '/attributes/all'},
+                    {text: 'Create Attribute', link: '/attributes/create'},
+                    {text: 'Update Attribute', link: '/attributes/update'},
+                    {text: 'Delete Attribute', link: '/attributes/delete'},
+                ]
+            },
+            {
+                text: 'Drivers',
+                collapsed: true,
+                items: [
+                    {text: 'All', link: '/drivers/all'},
+                    {text: 'Create Driver', link: '/drivers/create'},
+                    {text: 'Update Driver', link: '/drivers/update'},
+                    {text: 'Delete Driver', link: '/drivers/delete'},
+                ]
+            },
+            {
+                text: 'Maintenance',
+                collapsed: true,
+                items: [
+                    {text: 'All', link: '/maintenance/all'},
+                    {text: 'Create Maintenance', link: '/maintenance/create'},
+                    {text: 'Update Maintenance', link: '/maintenance/update'},
+                    {text: 'Delete Maintenance', link: '/maintenance/delete'},
+                ]
+            },
+            {
+                text: 'Orders',
+                collapsed: true,
+                items: [
+                    {text: 'All', link: '/orders/all'},
+                    {text: 'Create Order', link: '/orders/create'},
+                    {text: 'Update Order', link: '/orders/update'},
+                    {text: 'Delete Order', link: '/orders/delete'},
+                ]
+            },
+            {
+                text: 'Geofences',
+                collapsed: true,
+                items: [
+                    {text: 'All', link: '/geofences/all'},
+                    {text: 'Create Geofence', link: '/geofences/create'},
+                    {text: 'Update Geofence', link: '/geofences/update'},
+                    {text: 'Delete Geofence', link: '/geofences/delete'},
+                ]
+            },
+            {
                 text: 'Events',
                 collapsed: true,
                 items: [
-                    {text: 'Get Information', link: '/events/get-information'},
+                    {text: 'Find', link: '/events/find'},
+                ]
+            },
+            {
+                text: 'Commands',
+                collapsed: true,
+                items: [
+                    {text: 'All', link: '/commands/all'},
+                    {text: 'Create Command', link: '/commands/create'},
+                    {text: 'Update Command', link: '/commands/update'},
+                    {text: 'Delete Command', link: '/commands/delete'},
+                    {text: 'Get Sendable For Device', link: '/commands/get-sendable-for-device'},
+                    {text: 'Send Command', link: '/commands/send'},
+                    {text: 'Get Command Types', link: '/commands/types'},
+                ]
+            },
+            {
+                text: 'Notifications',
+                collapsed: true,
+                items: [
+                    {text: 'All', link: '/notifications/all'},
+                    {text: 'Create Notification', link: '/notifications/create'},
+                    {text: 'Update Notification', link: '/notifications/update'},
+                    {text: 'Delete Notification', link: '/notifications/delete'},
+                    {text: 'Get Notification Types', link: '/notifications/types'},
+                    {text: 'Send Test Notification', link: '/notifications/send-test'},
+                    {text: 'Send Notification', link: '/notifications/send'},
                 ]
             },
             {
                 text: 'Positions',
                 collapsed: true,
                 items: [
-                    {text: 'Get Positions', link: '/positions/get'},
+                    {text: 'All', link: '/positions/all'},
                     {text: 'Export KML', link: '/positions/export-kml'},
                     {text: 'Export CSV', link: '/positions/export-csv'},
                     {text: 'Export GPX', link: '/positions/export-gpx'},
                     {text: 'Delete Position', link: '/positions/delete'},
                     {text: 'Delete Positions Range', link: '/positions/delete-by-range'},
+                ]
+            },
+            {
+                text: 'Reports',
+                collapsed: true,
+                items: [
+                    {text: 'Route Report', link: '/reports/route'},
+                    {text: 'Events Report', link: '/reports/events'},
+                    {text: 'Geofences Report', link: '/reports/geofences'},
+                    {text: 'Summary Report', link: '/reports/summary'},
+                    {text: 'Trips Report', link: '/reports/trips'},
+                    {text: 'Stops Report', link: '/reports/stops'},
+                ]
+            },
+            {
+                text: 'Health',
+                collapsed: true,
+                items: [
+                    {text: 'Check Health', link: '/health/check'},
                 ]
             },
             {

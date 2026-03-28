@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Endpoints;
 
+use Illuminate\Support\Collection;
 use ThingsTelemetry\Traccar\Traccar;
 use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
@@ -25,9 +26,24 @@ class User extends Traccar
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function all(): array
-    {
-        $response = $this->connector->send(request: new GetAllUsers());
+    public function all(
+        ?int $userId = null,
+        ?int $deviceId = null,
+        ?bool $excludeAttributes = null,
+        ?int $limit = null,
+        ?int $offset = null,
+        ?string $keyword = null,
+    ): Collection {
+        $response = $this->connector->send(
+            request: new GetAllUsers(
+                userId: $userId,
+                deviceId: $deviceId,
+                excludeAttributes: $excludeAttributes,
+                limit: $limit,
+                offset: $offset,
+                keyword: $keyword,
+            )
+        );
 
         return $response->dtoOrFail();
     }

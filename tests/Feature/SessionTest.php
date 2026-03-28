@@ -24,7 +24,7 @@ $getUserData = fn () => [
     'email' => 'jane@example.com',
 ];
 
-describe(description: 'get', tests: function () use ($getUserData) {
+describe(description: 'current', tests: function () use ($getUserData) {
     test(description: 'request resolves the correct endpoint', closure: function () {
         $request = new GetSession();
 
@@ -37,7 +37,7 @@ describe(description: 'get', tests: function () use ($getUserData) {
             GetSession::class => MockResponse::make($getUserData()),
         ]);
 
-        $user = Session::get();
+        $user = Session::current();
 
         expect(value: $user)
             ->toBeInstanceOf(class: UserData::class)
@@ -45,7 +45,7 @@ describe(description: 'get', tests: function () use ($getUserData) {
     });
 });
 
-describe(description: 'get by id', tests: function () use ($getUserData) {
+describe(description: 'for user', tests: function () use ($getUserData) {
     test(description: 'request resolves the correct endpoint', closure: function () {
         $request = new GetSessionById(userId: 6);
 
@@ -58,7 +58,7 @@ describe(description: 'get by id', tests: function () use ($getUserData) {
             GetSessionById::class => MockResponse::make($getUserData()),
         ]);
 
-        $user = Session::getById(userId: 6);
+        $user = Session::forUser(userId: 6);
 
         expect(value: $user)
             ->toBeInstanceOf(class: UserData::class)

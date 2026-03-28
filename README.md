@@ -49,7 +49,7 @@ Here is a quick example of how to get server information.
 use ThingsTelemetry\Traccar\Facades\Server;
 
 // returns ThingsTelemetry\Traccar\Dto\ServerData
-$info = Server::getInformation(); 
+$info = Server::get(); 
 
 $version = $info->version; // '6.10'
 $speedUnit = $info->attributes->speedUnit->value; // 'kn', 'kmh', or 'mph'

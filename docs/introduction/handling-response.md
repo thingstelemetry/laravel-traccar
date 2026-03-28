@@ -10,7 +10,7 @@ Single resources return a DTO instance:
 use ThingsTelemetry\Traccar\Facades\Server;
 use ThingsTelemetry\Traccar\Facades\Device;
 
-$serverInfo = Server::getInformation();
+$serverInfo = Server::get();
 // Returns: ThingsTelemetry\Traccar\Dto\ServerData
 
 $device = Device::find(id: 1);
@@ -22,7 +22,7 @@ $device = Device::find(id: 1);
 Access properties directly on the DTO:
 
 ```php
-$serverInfo = Server::getInformation();
+$serverInfo = Server::get();
 
 echo $serverInfo->version;     // '6.10'
 echo $serverInfo->id;          // 1
@@ -34,7 +34,7 @@ echo $serverInfo->registration; // true/false
 Some DTOs contain nested DTOs for complex data structures:
 
 ```php
-$serverInfo = Server::getInformation();
+$serverInfo = Server::get();
 
 // Nested attributes DTO
 echo $serverInfo->attributes->speedUnit->value;  // 'kmh'
@@ -54,7 +54,7 @@ Some endpoints return a `Collection` of DTOs:
 use Illuminate\Support\Collection;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
 
-$devices = Device::getAll();
+$devices = Device::all();
 // Returns: Collection<int, DeviceData>
 
 foreach ($devices as $device) {

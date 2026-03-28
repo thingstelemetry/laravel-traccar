@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Saloon\Enums\Method;
+use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Dto\UserData;
@@ -45,10 +46,25 @@ beforeEach(closure: function () {
 
 describe(description: 'all', tests: function () {
     test(description: 'request resolves the correct endpoint', closure: function () {
-        $request = new GetAllUsers();
+        $request = new GetAllUsers(
+            userId: 3,
+            deviceId: 7,
+            excludeAttributes: true,
+            limit: 25,
+            offset: 50,
+            keyword: 'jane',
+        );
 
         expect(value: $request->resolveEndpoint())->toBe(expected: '/users')
-            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET)
+            ->and(value: $request->query()->all())->toBe(expected: [
+                'userId'            => 3,
+                'deviceId'          => 7,
+                'excludeAttributes' => true,
+                'limit'             => 25,
+                'offset'            => 50,
+                'keyword'           => 'jane',
+            ]);
     });
 
     test(description: 'returns all users', closure: function () {
@@ -56,11 +72,18 @@ describe(description: 'all', tests: function () {
             GetAllUsers::class => MockResponse::make(body: [$this->user]),
         ]);
 
-        $response = User::all();
+        $response = User::all(
+            userId: 3,
+            deviceId: 7,
+            excludeAttributes: true,
+            limit: 25,
+            offset: 50,
+            keyword: 'jane',
+        );
 
         expect(value: $response)
-            ->toBeArray()
-            ->and(value: $response[0])->toBeInstanceOf(class: UserData::class);
+            ->toBeInstanceOf(class: Collection::class)
+            ->and(value: $response->first())->toBeInstanceOf(class: UserData::class);
     });
 });
 

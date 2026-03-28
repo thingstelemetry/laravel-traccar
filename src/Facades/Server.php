@@ -14,11 +14,11 @@ use Symfony\Component\HttpFoundation\File\File;
 use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
 
 /**
- * @method static ServerData getInformation()
- * @method static ServerData updateInformation(ServerData $data)
+ * @method static ServerData get()
+ * @method static ServerData update(ServerData $data)
  * @method static StatusData reboot()
  * @method static string cache()
- * @method static StatusData gc()
+ * @method static StatusData runGarbageCollector()
  * @method static StatusData uploadFile(string $path, UploadedFile|File|string $file)
  * @method static Collection timezones()
  * @method static string geocode(float $latitude, float $longitude)

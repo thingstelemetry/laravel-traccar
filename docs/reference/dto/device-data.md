@@ -6,7 +6,7 @@ The `ThingsTelemetry\Traccar\Dto\DeviceData` represents a Traccar device entity 
 ```php
 use ThingsTelemetry\Traccar\Facades\Device;
 
-$devices = Device::getAll(); // Illuminate\Support\Collection<DeviceData>
+$devices = Device::all(); // Illuminate\Support\Collection<DeviceData>
 $device = $devices->first();
 ```
 

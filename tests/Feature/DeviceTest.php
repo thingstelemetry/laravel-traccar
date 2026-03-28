@@ -27,7 +27,7 @@ $getDeviceData = fn () => [
     'category' => 'truck',
 ];
 
-describe(description: 'get all', tests: function () use ($getDeviceData) {
+describe(description: 'all', tests: function () use ($getDeviceData) {
     test(description: 'request resolves the correct endpoint', closure: function () {
         $request = new GetAllDevices();
 
@@ -40,7 +40,7 @@ describe(description: 'get all', tests: function () use ($getDeviceData) {
             GetAllDevices::class => MockResponse::make([$getDeviceData()]),
         ]);
 
-        $response = Device::getAll();
+        $response = Device::all();
 
         expect(value: $response)
             ->toBeInstanceOf(class: Collection::class)
@@ -78,7 +78,7 @@ describe(description: 'find', tests: function () use ($getDeviceData) {
     });
 });
 
-describe(description: 'get', tests: function () use ($getDeviceData) {
+describe(description: 'all with filters', tests: function () use ($getDeviceData) {
     test(description: 'request resolves the correct endpoint', closure: function () {
         $request = new GetForUserDevices(userId: 42);
 
@@ -91,7 +91,7 @@ describe(description: 'get', tests: function () use ($getDeviceData) {
             GetForUserDevices::class => MockResponse::make([$getDeviceData()]),
         ]);
 
-        $response = Device::get(userId: 42);
+        $response = Device::all(userId: 42);
 
         expect(value: $response)
             ->toBeInstanceOf(class: Collection::class)

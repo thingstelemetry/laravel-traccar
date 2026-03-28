@@ -5,7 +5,7 @@ The `ThingsTelemetry\Traccar\Dto\PositionData` represents a single Traccar posit
 ```php
 use ThingsTelemetry\Traccar\Facades\Position;
 
-$pos = Position::get(12345); // PositionData
+$pos = Position::all(ids: [12345])->first(); // PositionData
 ```
 
 ## `id` → `integer`

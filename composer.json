@@ -64,7 +64,17 @@
                 "Group": "ThingsTelemetry\\Traccar\\Facades\\Group",
                 "Permission": "ThingsTelemetry\\Traccar\\Facades\\Permission",
                 "Session": "ThingsTelemetry\\Traccar\\Facades\\Session",
-                "Share": "ThingsTelemetry\\Traccar\\Facades\\Share"
+                "Share": "ThingsTelemetry\\Traccar\\Facades\\Share",
+                "Calendar": "ThingsTelemetry\\Traccar\\Facades\\Calendar",
+                "Driver": "ThingsTelemetry\\Traccar\\Facades\\Driver",
+                "Maintenance": "ThingsTelemetry\\Traccar\\Facades\\Maintenance",
+                "Order": "ThingsTelemetry\\Traccar\\Facades\\Order",
+                "Geofence": "ThingsTelemetry\\Traccar\\Facades\\Geofence",
+                "Attribute": "ThingsTelemetry\\Traccar\\Facades\\Attribute",
+                "Command": "ThingsTelemetry\\Traccar\\Facades\\Command",
+                "Notification": "ThingsTelemetry\\Traccar\\Facades\\Notification",
+                "Report": "ThingsTelemetry\\Traccar\\Facades\\Report",
+                "Health": "ThingsTelemetry\\Traccar\\Facades\\Health"
             }
         }
     },

@@ -17,7 +17,7 @@ use ThingsTelemetry\Traccar\Requests\Group\GetAllGroups;
 class Group extends Traccar
 {
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function getAll(?bool $all = null, ?int $userId = null, ?bool $excludeAttributes = null): Collection
+    public function all(?bool $all = null, ?int $userId = null, ?bool $excludeAttributes = null): Collection
     {
         $response = $this->connector->send(
             request: new GetAllGroups(
@@ -31,7 +31,7 @@ class Group extends Traccar
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function get(int $id): GroupData
+    public function find(int $id): GroupData
     {
         $response = $this->connector->send(request: new GetGroup(id: $id));
 

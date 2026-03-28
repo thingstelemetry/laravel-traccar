@@ -6,7 +6,7 @@ The `ThingsTelemetry\Traccar\Dto\DeviceAttributesData` represents additional, de
 use ThingsTelemetry\Traccar\Facades\Device;
 
 // ThingsTelemetry\Traccar\Dto\DeviceAttributesData;
-$attributes = Device::getAll()->first()->attributes
+$attributes = Device::all()->first()->attributes
 ```
 
 ## `speedLimit` → `float|null`

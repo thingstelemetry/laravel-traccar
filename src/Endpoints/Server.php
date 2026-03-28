@@ -29,7 +29,7 @@ use ThingsTelemetry\Traccar\Requests\Server\UpdateServerInformation;
 class Server extends Traccar
 {
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function getInformation(): ServerData
+    public function get(): ServerData
     {
         $response = $this->connector->send(request: new GetServerInformation());
 
@@ -37,7 +37,7 @@ class Server extends Traccar
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function updateInformation(ServerData $data): ServerData
+    public function update(ServerData $data): ServerData
     {
         $response = $this->connector->send(request: new UpdateServerInformation($data));
 
@@ -76,7 +76,7 @@ class Server extends Traccar
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function gc(): StatusData
+    public function runGarbageCollector(): StatusData
     {
         $response = $this->connector->send(request: new RunGarbageCollector());
 

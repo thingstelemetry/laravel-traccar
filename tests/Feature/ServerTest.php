@@ -47,7 +47,7 @@ $getServerData = fn () => [
     "storageSpace"    => [0, 0, 0, 0],
 ];
 
-describe(description: 'get information', tests: function () use ($getServerData) {
+describe(description: 'get', tests: function () use ($getServerData) {
     test(description: 'request resolves the correct endpoint', closure: function () {
         $request = new GetServerInformation();
 
@@ -60,14 +60,14 @@ describe(description: 'get information', tests: function () use ($getServerData)
             GetServerInformation::class => MockResponse::make(body: $getServerData())
         ]);
 
-        $response = Server::getInformation();
+        $response = Server::get();
 
         expect(value: $response)
             ->toBeInstanceOf(class: ServerData::class);
     });
 });
 
-describe(description: 'update information', tests: function () use ($getServerData) {
+describe(description: 'update', tests: function () use ($getServerData) {
     test(description: 'request sends the correct body', closure: function () use ($getServerData) {
         $data = ServerData::fromArray(data: $getServerData());
         $request = new UpdateServerInformation(data: $data);
@@ -82,7 +82,7 @@ describe(description: 'update information', tests: function () use ($getServerDa
             UpdateServerInformation::class => MockResponse::make(body: $getServerData())
         ]);
 
-        $response = Server::updateInformation(ServerData::fromArray(data: $getServerData()));
+        $response = Server::update(ServerData::fromArray(data: $getServerData()));
 
         expect(value: $response)
             ->toBeInstanceOf(class: ServerData::class);
@@ -131,7 +131,7 @@ describe(description: 'cache', tests: function () {
     });
 });
 
-describe(description: 'gc', tests: function () {
+describe(description: 'run garbage collector', tests: function () {
     test(description: 'request resolves the correct endpoint', closure: function () {
         $request = new RunGarbageCollector();
 
@@ -144,7 +144,7 @@ describe(description: 'gc', tests: function () {
             RunGarbageCollector::class => MockResponse::make(body: '', status: 204)
         ]);
 
-        $result = Server::gc();
+        $result = Server::runGarbageCollector();
 
         expect(value: $result)
             ->toBeInstanceOf(class: StatusData::class)

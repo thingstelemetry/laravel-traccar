@@ -19,7 +19,7 @@ use ThingsTelemetry\Traccar\Enums\DeviceStatus;
 use ThingsTelemetry\Traccar\Facades\Device;
 
 // 1) Get an existing device (example: by uniqueId)
-$devices = Device::get(uniqueIds: ['ABC123']);
+$devices = Device::all(uniqueIds: ['ABC123']);
 $data = $devices->first(); // ThingsTelemetry\Traccar\Dto\DeviceData
 
 // 2) Update the fields you want to change
@@ -56,6 +56,6 @@ This means that the `groupId` does not exist in the server. Use the group api to
 
 ## Important Links
 - [Traccar Update a Device](https://www.traccar.org/api-reference/#tag/Devices/paths/~1devices~1%7Bid%7D/put)
-- See the same [clone-update-send workflow](./../server/update-information)
+- See the same [clone-update-send workflow](./../server/update)
 - [DeviceData DTO reference](./../reference/dto/device-data)
 - [DeviceAttributesData DTO reference](./../reference/dto/device-attributes-data)
