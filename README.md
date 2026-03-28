@@ -1,6 +1,3 @@
-> [!IMPORTANT]
-> This package is still under development and the API may change. Things Telemetry bears no responsibility for any damage caused by using this package.
-
 # Things Telemetry Traccar PHP SDK
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/thingstelemetry/laravel-traccar.svg?style=flat-square)](https://packagist.org/packages/thingstelemetry/laravel-traccar)
