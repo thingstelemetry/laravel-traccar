@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Facades;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use ThingsTelemetry\Traccar\Dto\UserData;
+use ThingsTelemetry\Traccar\Dto\StatusData;
 
 /**
- * @method static \ThingsTelemetry\Traccar\Dto\UserData get(int $id)
- * @method static \Illuminate\Support\Collection<\ThingsTelemetry\Traccar\Dto\UserData> all()
- * @method static \ThingsTelemetry\Traccar\Dto\UserData create(\ThingsTelemetry\Traccar\Dto\UserData $data)
- * @method static \ThingsTelemetry\Traccar\Dto\UserData update(\ThingsTelemetry\Traccar\Dto\UserData $data)
- * @method static \ThingsTelemetry\Traccar\Dto\StatusData delete(int $id)
+ * @method static UserData get(int $id)
+ * @method static Collection<UserData> all()
+ * @method static UserData create(UserData $data)
+ * @method static UserData update(UserData $data)
+ * @method static StatusData delete(int $id)
  * @method static string generateTotpSecret()
- *
- * @see \ThingsTelemetry\Traccar\Endpoints\User
  */
 class User extends Facade
 {
