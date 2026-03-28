@@ -50,6 +50,15 @@ describe(description: 'all', tests: function () use ($getDriverData) {
             ->toBeInstanceOf(class: Collection::class)
             ->and(value: $response->first())->toBeInstanceOf(class: DriverData::class);
     });
+
+    test(description: 'throws an exception on server error', closure: function () {
+        MockClient::global(mockData: [
+            GetAllDrivers::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => Driver::all())
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'create', tests: function () use ($getDriverData) {
@@ -70,6 +79,15 @@ describe(description: 'create', tests: function () use ($getDriverData) {
         $response = Driver::create(data: DriverData::fromArray(data: $getDriverData()));
 
         expect(value: $response)->toBeInstanceOf(class: DriverData::class);
+    });
+
+    test(description: 'throws an exception on validation error', closure: function () use ($getDriverData) {
+        MockClient::global(mockData: [
+            CreateDriver::class => MockResponse::make(body: [], status: 400),
+        ]);
+
+        expect(value: fn () => Driver::create(data: DriverData::fromArray(data: $getDriverData())))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
     });
 });
 
@@ -92,6 +110,15 @@ describe(description: 'update', tests: function () use ($getDriverData) {
 
         expect(value: $response)->toBeInstanceOf(class: DriverData::class);
     });
+
+    test(description: 'throws an exception on record not found', closure: function () use ($getDriverData) {
+        MockClient::global(mockData: [
+            UpdateDriver::class => MockResponse::make(body: [], status: 404),
+        ]);
+
+        expect(value: fn () => Driver::update(data: DriverData::fromArray(data: $getDriverData())))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'delete', tests: function () {
@@ -112,5 +139,14 @@ describe(description: 'delete', tests: function () {
         expect(value: $result)
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
+
+    test(description: 'throws an exception on deletion error', closure: function () {
+        MockClient::global(mockData: [
+            DeleteDriver::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => Driver::delete(id: 9))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
     });
 });

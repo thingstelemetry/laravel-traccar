@@ -16,6 +16,7 @@ use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\GetAllDevices;
+use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceImage;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceTotals;
 
 $getDeviceData = fn () => [
@@ -209,5 +210,37 @@ describe(description: 'update totals', tests: function () {
         expect(value: $result)
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
+});
+
+describe(description: 'update image', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new UpdateDeviceImage(deviceId: 6, mimeType: 'image/png', contents: 'fake-image-data');
+
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/devices/6/image')
+            ->and(value: $request->getMethod())->toBe(expected: Method::POST);
+    });
+
+    test(description: 'uploads a device image', closure: function () {
+        MockClient::global(mockData: [
+            UpdateDeviceImage::class => MockResponse::make(body: '/media/device/6.png', status: 200),
+        ]);
+
+        $file = \Illuminate\Http\UploadedFile::fake()->create(name: 'device.png', kilobytes: 10, mimeType: 'image/png');
+
+        $result = Device::updateImage(deviceId: 6, file: $file);
+
+        expect(value: $result)->toBeString();
+    });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            UpdateDeviceImage::class => MockResponse::make(body: [], status: 400),
+        ]);
+
+        $file = \Illuminate\Http\UploadedFile::fake()->create(name: 'device.png', kilobytes: 10, mimeType: 'image/png');
+
+        expect(value: fn () => Device::updateImage(deviceId: 6, file: $file))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
     });
 });

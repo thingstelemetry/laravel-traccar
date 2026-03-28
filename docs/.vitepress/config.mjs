@@ -248,6 +248,7 @@ export default defineConfig({
                             {text: 'Get Notification Types', link: '/notifications/types'},
                             {text: 'Send Test Notification', link: '/notifications/send-test'},
                             {text: 'Send Notification', link: '/notifications/send'},
+                            {text: 'Get Notificators', link: '/notifications/notificators'},
                         ]
                     },
                     {

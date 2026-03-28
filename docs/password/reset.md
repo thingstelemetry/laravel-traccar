@@ -9,11 +9,19 @@ To initiate a password reset, you need to provide the user's email address. Trac
 ```php
 use ThingsTelemetry\Traccar\Facades\Password;
 
-$response = Password::reset(email: 'user@example.com');
+$result = Password::reset(email: 'user@example.com');
 
-if ($response->successful()) {
+if ($result->status->value === 'success') {
     // Password reset initiated successfully
 }
+```
+
+## Result
+
+The response is an instance of `ThingsTelemetry\Traccar\Dto\StatusData`.
+
+```php
+$result->status->value; // "success"
 ```
 
 ::: info

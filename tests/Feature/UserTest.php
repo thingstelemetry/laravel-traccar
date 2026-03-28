@@ -85,6 +85,15 @@ describe(description: 'all', tests: function () {
             ->toBeInstanceOf(class: Collection::class)
             ->and(value: $response->first())->toBeInstanceOf(class: UserData::class);
     });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            GetAllUsers::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => User::all())
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'get', tests: function () {
@@ -138,6 +147,15 @@ describe(description: 'create', tests: function () {
             ->toBeInstanceOf(class: UserData::class)
             ->and(value: $response->id)->toBe(expected: 6);
     });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            CreateUser::class => MockResponse::make(body: [], status: 400),
+        ]);
+
+        expect(value: fn () => User::create(data: UserData::fromArray(data: $this->user)))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'update', tests: function () {
@@ -161,6 +179,15 @@ describe(description: 'update', tests: function () {
             ->toBeInstanceOf(class: UserData::class)
             ->and(value: $response->id)->toBe(expected: 6);
     });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            UpdateUser::class => MockResponse::make(body: [], status: 404),
+        ]);
+
+        expect(value: fn () => User::update(data: UserData::fromArray(data: $this->user)))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'delete', tests: function () {
@@ -181,6 +208,15 @@ describe(description: 'delete', tests: function () {
         expect(value: $result)
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            DeleteUser::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => User::delete(id: 6))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
     });
 });
 

@@ -25,4 +25,4 @@ $status = $result->status->value; // "success"
 ```
 
 ## Important Links
-- [Traccar API: Reboot](https://www.traccar.org/api-reference/#tag/Server/paths/~1server/reboot/get)
+- [Traccar API: Reboot](https://www.traccar.org/api-reference/#tag/Server/paths/~1server/reboot/post)

@@ -29,4 +29,18 @@ class ReportSummaryData
             engineHours: (int) ($data['engineHours'] ?? 0),
         );
     }
+
+    /** @return array<string, mixed> */
+    public function toArray(): array
+    {
+        return [
+            'deviceId'     => $this->deviceId,
+            'deviceName'   => $this->deviceName,
+            'maxSpeed'     => $this->maxSpeed,
+            'averageSpeed' => $this->averageSpeed,
+            'distance'     => $this->distance,
+            'spentFuel'    => $this->spentFuel,
+            'engineHours'  => $this->engineHours,
+        ];
+    }
 }

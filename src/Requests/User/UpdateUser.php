@@ -21,7 +21,7 @@ class UpdateUser extends Request implements HasBody
 
     public function __construct(public UserData $data)
     {
-        if ($data->id <= 0) {
+        if (is_null($data->id)) {
             throw new InvalidArgumentException(message: 'User ID is required for update operations.');
         }
     }

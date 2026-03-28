@@ -7,8 +7,8 @@ namespace ThingsTelemetry\Traccar\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Saloon\Http\Response reset(string $email)
- * @method static \Saloon\Http\Response update(string $token, string $password)
+ * @method static \ThingsTelemetry\Traccar\Dto\StatusData reset(string $email)
+ * @method static \ThingsTelemetry\Traccar\Dto\StatusData update(string $token, string $password)
  *
  * @see \ThingsTelemetry\Traccar\Endpoints\Password
  */

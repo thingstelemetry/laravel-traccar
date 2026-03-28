@@ -24,4 +24,13 @@ describe(description: 'health', tests: function () {
 
         expect(value: Health::check())->toBe(expected: 'OK');
     });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            GetHealth::class => MockResponse::make(body: 'Service Unavailable', status: 503),
+        ]);
+
+        expect(value: fn () => Health::check())
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });

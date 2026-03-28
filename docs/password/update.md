@@ -9,14 +9,22 @@ After receiving a reset token (usually from the password reset email), you can u
 ```php
 use ThingsTelemetry\Traccar\Facades\Password;
 
-$response = Password::update(
+$result = Password::update(
     token: 'password-reset-token',
     password: 'new-secure-password'
 );
 
-if ($response->successful()) {
+if ($result->status->value === 'success') {
     // Password updated successfully
 }
+```
+
+## Result
+
+The response is an instance of `ThingsTelemetry\Traccar\Dto\StatusData`.
+
+```php
+$result->status->value; // "success"
 ```
 
 ::: warning
