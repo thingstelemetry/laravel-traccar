@@ -22,7 +22,7 @@ $getGeofenceData = fn () => [
     'area'        => 'POLYGON ((36.8 -1.2, 36.9 -1.2, 36.9 -1.3, 36.8 -1.3, 36.8 -1.2))',
 ];
 
-describe(description: 'get all', tests: function () use ($getGeofenceData) {
+describe(description: 'all', tests: function () use ($getGeofenceData) {
     test(description: 'request sends the correct query parameters', closure: function () {
         $request = new GetAllGeofences(all: true, userId: 3, deviceId: 6, groupId: 4, refresh: true, limit: 10, offset: 2, keyword: 'warehouse');
 
@@ -45,12 +45,20 @@ describe(description: 'get all', tests: function () use ($getGeofenceData) {
             GetAllGeofences::class => MockResponse::make([$getGeofenceData()]),
         ]);
 
-        $response = Geofence::getAll();
+        $response = Geofence::all();
 
         expect(value: $response)
             ->toBeInstanceOf(class: Collection::class)
             ->and(value: $response->first())->toBeInstanceOf(class: GeofenceData::class);
     });
+
+    test(description: 'throws an exception on server error', closure: function () {
+        MockClient::global(mockData: [
+            GetAllGeofences::class => MockResponse::make(body: ['message' => 'Internal Server Error'], status: 500),
+        ]);
+
+        Geofence::all();
+    })->throws(exception: Saloon\Exceptions\Request\RequestException::class);
 });
 
 describe(description: 'create', tests: function () use ($getGeofenceData) {
@@ -72,6 +80,14 @@ describe(description: 'create', tests: function () use ($getGeofenceData) {
 
         expect(value: $response)->toBeInstanceOf(class: GeofenceData::class);
     });
+
+    test(description: 'throws an exception on validation error', closure: function () use ($getGeofenceData) {
+        MockClient::global(mockData: [
+            CreateGeofence::class => MockResponse::make(body: ['message' => 'Invalid data'], status: 400),
+        ]);
+
+        Geofence::create(data: GeofenceData::fromArray(data: $getGeofenceData()));
+    })->throws(exception: Saloon\Exceptions\Request\RequestException::class);
 });
 
 describe(description: 'update', tests: function () use ($getGeofenceData) {
@@ -93,6 +109,14 @@ describe(description: 'update', tests: function () use ($getGeofenceData) {
 
         expect(value: $response)->toBeInstanceOf(class: GeofenceData::class);
     });
+
+    test(description: 'throws an exception on record not found', closure: function () use ($getGeofenceData) {
+        MockClient::global(mockData: [
+            UpdateGeofence::class => MockResponse::make(body: ['message' => 'Geofence not found'], status: 404),
+        ]);
+
+        Geofence::update(data: GeofenceData::fromArray(data: $getGeofenceData()));
+    })->throws(exception: Saloon\Exceptions\Request\RequestException::class);
 });
 
 describe(description: 'delete', tests: function () {
@@ -114,4 +138,12 @@ describe(description: 'delete', tests: function () {
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
     });
+
+    test(description: 'throws an exception on deletion error', closure: function () {
+        MockClient::global(mockData: [
+            DeleteGeofence::class => MockResponse::make(body: ['message' => 'Cannot delete geofence'], status: 400),
+        ]);
+
+        Geofence::delete(id: 15);
+    })->throws(exception: Saloon\Exceptions\Request\RequestException::class);
 });

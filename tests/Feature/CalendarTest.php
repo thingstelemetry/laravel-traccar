@@ -21,7 +21,7 @@ $getCalendarData = fn () => [
     'data' => 'QkVHSU46VkNBTEVOREFS',
 ];
 
-describe(description: 'get all', tests: function () use ($getCalendarData) {
+describe(description: 'all', tests: function () use ($getCalendarData) {
     test(description: 'request sends the correct query parameters', closure: function () {
         $request = new GetAllCalendars(all: true, userId: 4, limit: 10, offset: 5, keyword: 'work');
 
@@ -41,12 +41,20 @@ describe(description: 'get all', tests: function () use ($getCalendarData) {
             GetAllCalendars::class => MockResponse::make([$getCalendarData()]),
         ]);
 
-        $response = Calendar::getAll();
+        $response = Calendar::all();
 
         expect(value: $response)
             ->toBeInstanceOf(class: Collection::class)
             ->and(value: $response->first())->toBeInstanceOf(class: CalendarData::class);
     });
+
+    test(description: 'throws an exception on server error', closure: function () {
+        MockClient::global(mockData: [
+            GetAllCalendars::class => MockResponse::make(body: ['message' => 'Internal Server Error'], status: 500),
+        ]);
+
+        Calendar::all();
+    })->throws(exception: Saloon\Exceptions\Request\RequestException::class);
 });
 
 describe(description: 'create', tests: function () use ($getCalendarData) {
@@ -68,6 +76,14 @@ describe(description: 'create', tests: function () use ($getCalendarData) {
 
         expect(value: $response)->toBeInstanceOf(class: CalendarData::class);
     });
+
+    test(description: 'throws an exception on validation error', closure: function () use ($getCalendarData) {
+        MockClient::global(mockData: [
+            CreateCalendar::class => MockResponse::make(body: ['message' => 'Invalid data'], status: 400),
+        ]);
+
+        Calendar::create(data: CalendarData::fromArray(data: $getCalendarData()));
+    })->throws(exception: Saloon\Exceptions\Request\RequestException::class);
 });
 
 describe(description: 'update', tests: function () use ($getCalendarData) {
@@ -89,6 +105,14 @@ describe(description: 'update', tests: function () use ($getCalendarData) {
 
         expect(value: $response)->toBeInstanceOf(class: CalendarData::class);
     });
+
+    test(description: 'throws an exception on record not found', closure: function () use ($getCalendarData) {
+        MockClient::global(mockData: [
+            UpdateCalendar::class => MockResponse::make(body: ['message' => 'Calendar not found'], status: 404),
+        ]);
+
+        Calendar::update(data: CalendarData::fromArray(data: $getCalendarData()));
+    })->throws(exception: Saloon\Exceptions\Request\RequestException::class);
 });
 
 describe(description: 'delete', tests: function () {
@@ -110,4 +134,12 @@ describe(description: 'delete', tests: function () {
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
     });
+
+    test(description: 'throws an exception on deletion error', closure: function () {
+        MockClient::global(mockData: [
+            DeleteCalendar::class => MockResponse::make(body: ['message' => 'Cannot delete calendar'], status: 400),
+        ]);
+
+        Calendar::delete(id: 7);
+    })->throws(exception: Saloon\Exceptions\Request\RequestException::class);
 });

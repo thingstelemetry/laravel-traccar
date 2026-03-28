@@ -23,7 +23,7 @@ $getOrderData = fn () => [
     'toAddress'   => 'Customer',
 ];
 
-describe(description: 'get all', tests: function () use ($getOrderData) {
+describe(description: 'all', tests: function () use ($getOrderData) {
     test(description: 'request sends the correct query parameters', closure: function () {
         $request = new GetAllOrders(all: true, userId: 8, excludeAttributes: true, limit: 10, offset: 5, keyword: 'deliver');
 
@@ -44,11 +44,19 @@ describe(description: 'get all', tests: function () use ($getOrderData) {
             GetAllOrders::class => MockResponse::make([$getOrderData()]),
         ]);
 
-        $response = Order::getAll();
+        $response = Order::all();
 
         expect(value: $response)
             ->toBeInstanceOf(class: Collection::class)
             ->and(value: $response->first())->toBeInstanceOf(class: OrderData::class);
+    });
+
+    test(description: 'throws an error if the request fails', closure: function () {
+        MockClient::global(mockData: [
+            GetAllOrders::class => MockResponse::make(body: ['error' => 'Bad Request'], status: 400),
+        ]);
+
+        expect(value: fn () => Order::all())->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
     });
 });
 
@@ -71,6 +79,15 @@ describe(description: 'create', tests: function () use ($getOrderData) {
 
         expect(value: $response)->toBeInstanceOf(class: OrderData::class);
     });
+
+    test(description: 'throws an error if the request fails', closure: function () use ($getOrderData) {
+        MockClient::global(mockData: [
+            CreateOrder::class => MockResponse::make(body: ['error' => 'Server Error'], status: 500),
+        ]);
+
+        expect(value: fn () => Order::create(data: OrderData::fromArray(data: $getOrderData())))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'update', tests: function () use ($getOrderData) {
@@ -92,6 +109,15 @@ describe(description: 'update', tests: function () use ($getOrderData) {
 
         expect(value: $response)->toBeInstanceOf(class: OrderData::class);
     });
+
+    test(description: 'throws an error if the request fails', closure: function () use ($getOrderData) {
+        MockClient::global(mockData: [
+            UpdateOrder::class => MockResponse::make(body: ['error' => 'Not Found'], status: 404),
+        ]);
+
+        expect(value: fn () => Order::update(data: OrderData::fromArray(data: $getOrderData())))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'delete', tests: function () {
@@ -112,5 +138,14 @@ describe(description: 'delete', tests: function () {
         expect(value: $result)
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
+
+    test(description: 'throws an error if the request fails', closure: function () {
+        MockClient::global(mockData: [
+            DeleteOrder::class => MockResponse::make(body: ['error' => 'Forbidden'], status: 403),
+        ]);
+
+        expect(value: fn () => Order::delete(id: 13))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
     });
 });

@@ -23,7 +23,7 @@ $getAttributeData = fn () => [
     'type'        => 'Boolean',
 ];
 
-describe(description: 'get all', tests: function () use ($getAttributeData) {
+describe(description: 'all', tests: function () use ($getAttributeData) {
     test(description: 'request sends the correct query parameters', closure: function () {
         $request = new GetAllAttributes(all: true, userId: 3, deviceId: 6, groupId: 4, refresh: true, limit: 10, offset: 2, keyword: 'speed');
 
@@ -46,7 +46,7 @@ describe(description: 'get all', tests: function () use ($getAttributeData) {
             GetAllAttributes::class => MockResponse::make([$getAttributeData()]),
         ]);
 
-        $response = Attribute::getAll();
+        $response = Attribute::all();
 
         expect(value: $response)
             ->toBeInstanceOf(class: Collection::class)

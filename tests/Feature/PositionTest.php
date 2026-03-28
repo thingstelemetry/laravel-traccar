@@ -38,7 +38,7 @@ $getPositionData = fn () => [
     'attributes'  => ['ignition' => true],
 ];
 
-describe(description: 'get', tests: function () use ($getPositionData) {
+describe(description: 'all', tests: function () use ($getPositionData) {
     test(description: 'request sends the correct query parameters', closure: function () {
         $from = CarbonImmutable::parse(time: '2026-11-22T18:30:00Z');
         $to = CarbonImmutable::parse(time: '2026-11-23T18:30:00Z');
@@ -59,7 +59,7 @@ describe(description: 'get', tests: function () use ($getPositionData) {
             GetPositions::class => MockResponse::make([$getPositionData()]),
         ]);
 
-        $positions = Position::get(ids: [12345]);
+        $positions = Position::all(ids: [12345]);
 
         expect(value: $positions)
             ->toBeInstanceOf(class: Collection::class)
@@ -71,12 +71,12 @@ describe(description: 'get', tests: function () use ($getPositionData) {
     test(description: 'requires from and to together when filtering by time', closure: function () {
         $from = CarbonImmutable::parse(time: '2026-11-22T18:30:00Z');
 
-        expect(value: fn () => Position::get(from: $from))
+        expect(value: fn () => Position::all(from: $from))
             ->toThrow(exception: \Illuminate\Validation\ValidationException::class);
     });
 
     test(description: 'requires from and to when device id is provided', closure: function () {
-        expect(value: fn () => Position::get(deviceId: 6))
+        expect(value: fn () => Position::all(deviceId: 6))
             ->toThrow(exception: \Illuminate\Validation\ValidationException::class);
     });
 });

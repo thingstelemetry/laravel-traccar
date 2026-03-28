@@ -23,7 +23,7 @@ $getMaintenanceData = fn () => [
     'period' => 10000,
 ];
 
-describe(description: 'get all', tests: function () use ($getMaintenanceData) {
+describe(description: 'all', tests: function () use ($getMaintenanceData) {
     test(description: 'request sends the correct query parameters', closure: function () {
         $request = new GetAllMaintenance(all: true, userId: 3, deviceId: 6, groupId: 4, refresh: true, limit: 10, offset: 2, keyword: 'oil');
 
@@ -46,7 +46,7 @@ describe(description: 'get all', tests: function () use ($getMaintenanceData) {
             GetAllMaintenance::class => MockResponse::make([$getMaintenanceData()]),
         ]);
 
-        $response = Maintenance::getAll();
+        $response = Maintenance::all();
 
         expect(value: $response)
             ->toBeInstanceOf(class: Collection::class)

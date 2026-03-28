@@ -10,6 +10,7 @@ use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Dto\CommandData;
 use ThingsTelemetry\Traccar\Facades\Command;
+use Saloon\Exceptions\Request\RequestException;
 use ThingsTelemetry\Traccar\Dto\CommandTypeData;
 use ThingsTelemetry\Traccar\Dto\QueuedCommandData;
 use ThingsTelemetry\Traccar\Requests\Command\SendCommand;
@@ -38,7 +39,7 @@ $getQueuedCommandData = fn () => [
     'attributes'  => ['data' => 'OFF'],
 ];
 
-describe(description: 'get all', tests: function () use ($getCommandData) {
+describe(description: 'all', tests: function () use ($getCommandData) {
     test(description: 'request sends the correct query parameters', closure: function () {
         $request = new GetAllCommands(all: true, userId: 1, deviceId: 6, groupId: 7, refresh: true, limit: 10, offset: 2, keyword: 'engine');
 
@@ -61,11 +62,19 @@ describe(description: 'get all', tests: function () use ($getCommandData) {
             GetAllCommands::class => MockResponse::make([$getCommandData()]),
         ]);
 
-        $response = Command::getAll();
+        $response = Command::all();
 
         expect(value: $response)
             ->toBeInstanceOf(class: Collection::class)
             ->and(value: $response->first())->toBeInstanceOf(class: CommandData::class);
+    });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            GetAllCommands::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => Command::all())->toThrow(exception: RequestException::class);
     });
 });
 
@@ -99,6 +108,18 @@ describe(description: 'create and update', tests: function () use ($getCommandDa
         expect(value: Command::create(data: $data))->toBeInstanceOf(class: CommandData::class)
             ->and(value: Command::update(data: $data))->toBeInstanceOf(class: CommandData::class);
     });
+
+    test(description: 'propagates errors', closure: function () use ($getCommandData) {
+        MockClient::global(mockData: [
+            CreateCommand::class => MockResponse::make(body: [], status: 400),
+            UpdateCommand::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        $data = CommandData::fromArray(data: $getCommandData());
+
+        expect(value: fn () => Command::create(data: $data))->toThrow(exception: RequestException::class)
+            ->and(value: fn () => Command::update(data: $data))->toThrow(exception: RequestException::class);
+    });
 });
 
 describe(description: 'delete', tests: function () {
@@ -119,6 +140,14 @@ describe(description: 'delete', tests: function () {
         expect(value: $result)
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            DeleteCommand::class => MockResponse::make(body: [], status: 404),
+        ]);
+
+        expect(value: fn () => Command::delete(id: 21))->toThrow(exception: RequestException::class);
     });
 });
 
@@ -150,6 +179,16 @@ describe(description: 'sendable and types', tests: function () use ($getCommandD
 
         expect(value: Command::getSendableForDevice(deviceId: 6)->first())->toBeInstanceOf(class: CommandData::class)
             ->and(value: Command::types()->first())->toBeInstanceOf(class: CommandTypeData::class);
+    });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            GetSendableCommands::class => MockResponse::make(body: [], status: 500),
+            GetCommandTypes::class     => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => Command::getSendableForDevice(deviceId: 6))->toThrow(exception: RequestException::class)
+            ->and(value: fn () => Command::types())->toThrow(exception: RequestException::class);
     });
 });
 
@@ -187,5 +226,13 @@ describe(description: 'send', tests: function () use ($getCommandData, $getQueue
         expect(value: $result->sentCommand)->toBeNull()
             ->and(value: $result->queuedCommands->first())->toBeInstanceOf(class: QueuedCommandData::class)
             ->and(value: $result->queuedCommands)->toHaveCount(count: 2);
+    });
+
+    test(description: 'propagates errors', closure: function () use ($getCommandData) {
+        MockClient::global(mockData: [
+            SendCommand::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => Command::send(data: CommandData::fromArray(data: $getCommandData())))->toThrow(exception: RequestException::class);
     });
 });

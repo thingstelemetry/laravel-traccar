@@ -21,7 +21,7 @@ $getDriverData = fn () => [
     'uniqueId' => 'DRV-001',
 ];
 
-describe(description: 'get all', tests: function () use ($getDriverData) {
+describe(description: 'all', tests: function () use ($getDriverData) {
     test(description: 'request sends the correct query parameters', closure: function () {
         $request = new GetAllDrivers(all: true, userId: 3, deviceId: 6, groupId: 4, refresh: true, limit: 10, offset: 2, keyword: 'john');
 
@@ -44,7 +44,7 @@ describe(description: 'get all', tests: function () use ($getDriverData) {
             GetAllDrivers::class => MockResponse::make([$getDriverData()]),
         ]);
 
-        $response = Driver::getAll();
+        $response = Driver::all();
 
         expect(value: $response)
             ->toBeInstanceOf(class: Collection::class)

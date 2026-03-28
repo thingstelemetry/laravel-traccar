@@ -11,6 +11,7 @@ use ThingsTelemetry\Traccar\Dto\EventData;
 use ThingsTelemetry\Traccar\Facades\Report;
 use ThingsTelemetry\Traccar\Dto\PositionData;
 use Illuminate\Validation\ValidationException;
+use Saloon\Exceptions\Request\RequestException;
 use ThingsTelemetry\Traccar\Dto\ReportStopsData;
 use ThingsTelemetry\Traccar\Dto\ReportTripsData;
 use ThingsTelemetry\Traccar\Dto\ReportSummaryData;
@@ -155,6 +156,18 @@ describe(description: 'report results', tests: function () use ($from, $to, $pos
             ->and(value: Report::summary(deviceIds: [6], groupIds: [], from: $from, to: $to)->first())->toBeInstanceOf(class: ReportSummaryData::class)
             ->and(value: Report::trips(deviceIds: [6], groupIds: [], from: $from, to: $to)->first())->toBeInstanceOf(class: ReportTripsData::class)
             ->and(value: Report::stops(deviceIds: [6], groupIds: [], from: $from, to: $to)->first())->toBeInstanceOf(class: ReportStopsData::class);
+    });
+
+    test(description: 'propagates errors', closure: function () use ($from, $to) {
+        MockClient::global(mockData: [
+            GetRouteReport::class   => MockResponse::make(body: [], status: 500),
+            GetSummaryReport::class => MockResponse::make(body: [], status: 400),
+            GetEventsReport::class  => MockResponse::make(body: [], status: 401),
+        ]);
+
+        expect(value: fn () => Report::route(deviceIds: [6], groupIds: [], from: $from, to: $to))->toThrow(exception: RequestException::class)
+            ->and(value: fn () => Report::summary(deviceIds: [6], groupIds: [], from: $from, to: $to))->toThrow(exception: RequestException::class)
+            ->and(value: fn () => Report::events(deviceIds: [6], groupIds: [], from: $from, to: $to))->toThrow(exception: RequestException::class);
     });
 });
 
