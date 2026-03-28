@@ -166,6 +166,13 @@ describe(description: 'update', tests: function () use ($getDeviceData) {
             ->toBeInstanceOf(class: DeviceData::class)
             ->and(value: $response->id)->toBe(expected: 6);
     });
+
+    test(description: 'throws exception for non-positive ID', closure: function () use ($getDeviceData) {
+        $data = DeviceData::fromArray(data: array_merge($getDeviceData(), ['id' => 0]));
+
+        expect(value: fn () => new UpdateDevice(data: $data))
+            ->toThrow(exception: InvalidArgumentException::class, exceptionMessage: 'Device ID is required for update operations.');
+    });
 });
 
 describe(description: 'delete', tests: function () {

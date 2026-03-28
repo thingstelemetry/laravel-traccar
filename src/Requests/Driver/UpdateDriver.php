@@ -13,7 +13,7 @@ class UpdateDriver extends UpdateRequest
 {
     public function __construct(public DriverData $data)
     {
-        if (is_null($data->id)) {
+        if ($data->id <= 0) {
             throw new InvalidArgumentException(message: 'Driver ID is required for update operations.');
         }
     }

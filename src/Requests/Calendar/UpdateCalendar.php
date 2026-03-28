@@ -13,7 +13,7 @@ class UpdateCalendar extends UpdateRequest
 {
     public function __construct(public CalendarData $data)
     {
-        if (is_null($data->id)) {
+        if ($data->id <= 0) {
             throw new InvalidArgumentException(message: 'Calendar ID is required for update operations.');
         }
     }

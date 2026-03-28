@@ -13,7 +13,7 @@ class UpdateUser extends UpdateRequest
 {
     public function __construct(public UserData $data)
     {
-        if (is_null($data->id)) {
+        if ($data->id <= 0) {
             throw new InvalidArgumentException(message: 'User ID is required for update operations.');
         }
     }

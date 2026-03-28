@@ -13,7 +13,7 @@ class UpdateCommand extends UpdateRequest
 {
     public function __construct(public CommandData $data)
     {
-        if (is_null($data->id)) {
+        if ($data->id <= 0) {
             throw new InvalidArgumentException(message: 'Command ID is required for update operations.');
         }
     }

@@ -13,7 +13,7 @@ class UpdateAttribute extends UpdateRequest
 {
     public function __construct(public AttributeData $data)
     {
-        if (is_null($data->id)) {
+        if ($data->id <= 0) {
             throw new InvalidArgumentException(message: 'Attribute ID is required for update operations.');
         }
     }

@@ -13,7 +13,7 @@ class UpdateOrder extends UpdateRequest
 {
     public function __construct(public OrderData $data)
     {
-        if (is_null($data->id)) {
+        if ($data->id <= 0) {
             throw new InvalidArgumentException(message: 'Order ID is required for update operations.');
         }
     }

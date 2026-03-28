@@ -13,7 +13,7 @@ class UpdateNotification extends UpdateRequest
 {
     public function __construct(public NotificationData $data)
     {
-        if (is_null($data->id)) {
+        if ($data->id <= 0) {
             throw new InvalidArgumentException(message: 'Notification ID is required for update operations.');
         }
     }

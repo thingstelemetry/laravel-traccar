@@ -13,7 +13,7 @@ class UpdateGeofence extends UpdateRequest
 {
     public function __construct(public GeofenceData $data)
     {
-        if (is_null($data->id)) {
+        if ($data->id <= 0) {
             throw new InvalidArgumentException(message: 'Geofence ID is required for update operations.');
         }
     }
