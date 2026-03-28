@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 use Saloon\Enums\Method;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use Illuminate\Support\Collection;
 use ThingsTelemetry\Traccar\Dto\AuditData;
 use ThingsTelemetry\Traccar\Facades\Audit;
 use ThingsTelemetry\Traccar\Requests\Audit\GetAuditLogs;
@@ -19,7 +19,7 @@ describe(description: 'get', tests: function () {
 
         expect(value: $request->resolveEndpoint())->toBe(expected: '/audit')
             ->and(value: $request->getMethod())->toBe(expected: Method::GET);
-        
+
         $query = $request->query()->all();
         expect(value: $query['from'])->toBe(expected: '2025-01-01T00:00:00+00:00')
             ->and(value: $query['to'])->toBe(expected: '2025-01-01T23:59:59+00:00');

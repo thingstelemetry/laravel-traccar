@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Endpoints;
 
-use ThingsTelemetry\Traccar\Traccar;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
+use ThingsTelemetry\Traccar\Traccar;
 use ThingsTelemetry\Traccar\Dto\AuditData;
 use ThingsTelemetry\Traccar\Requests\Audit\GetAuditLogs;
 

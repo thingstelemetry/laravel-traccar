@@ -13,12 +13,12 @@ use ThingsTelemetry\Traccar\Dto\NotificationData;
 use ThingsTelemetry\Traccar\Facades\Notification;
 use ThingsTelemetry\Traccar\Dto\NotificationTypeData;
 use ThingsTelemetry\Traccar\Dto\NotificationMessageData;
+use ThingsTelemetry\Traccar\Requests\Notification\GetNotificators;
 use ThingsTelemetry\Traccar\Requests\Notification\SendNotification;
 use ThingsTelemetry\Traccar\Requests\Notification\CreateNotification;
 use ThingsTelemetry\Traccar\Requests\Notification\DeleteNotification;
 use ThingsTelemetry\Traccar\Requests\Notification\UpdateNotification;
 use ThingsTelemetry\Traccar\Requests\Notification\GetAllNotifications;
-use ThingsTelemetry\Traccar\Requests\Notification\GetNotificators;
 use ThingsTelemetry\Traccar\Requests\Notification\GetNotificationTypes;
 use ThingsTelemetry\Traccar\Requests\Notification\SendTestNotification;
 
