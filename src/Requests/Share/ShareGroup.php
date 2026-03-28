@@ -33,9 +33,9 @@ class ShareGroup extends Request implements HasBody
     {
         return GroupShareData::fromToken(
             groupId: $this->groupId,
-            token: $response->body(),
+            token: trim(string: $response->body(), characters: '"'),
             expiration: $this->expiration,
-            apiBaseUrl: config(key: 'traccar.base_url'),
+            apiBaseUrl: $response->getPendingRequest()->getConnector()->resolveBaseUrl(),
         );
     }
 

@@ -11,7 +11,7 @@ use ThingsTelemetry\Traccar\Facades\Report;
 $from = CarbonImmutable::parse('2025-11-22T18:30:00Z');
 $to = CarbonImmutable::parse('2025-11-23T18:30:00Z');
 
-$report = Report::summary(deviceIds: [6], groupIds: [], from: $from, to: $to);
+$report = Report::summary(deviceIds: [6], groupIds: [], from: $from, to: $to, daily: true);
 ```
 
 ## Result

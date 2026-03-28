@@ -43,6 +43,18 @@ describe(description: 'current', tests: function () use ($getUserData) {
             ->toBeInstanceOf(class: UserData::class)
             ->and(value: $user->id)->toBe(expected: 6);
     });
+
+    test(description: 'returns the current session with a token', closure: function () use ($getUserData) {
+        MockClient::global(mockData: [
+            GetSession::class => MockResponse::make($getUserData()),
+        ]);
+
+        $user = Session::current(token: 'abc123xyz789');
+
+        expect(value: $user)
+            ->toBeInstanceOf(class: UserData::class)
+            ->and(value: $user->id)->toBe(expected: 6);
+    });
 });
 
 describe(description: 'for user', tests: function () use ($getUserData) {
@@ -84,6 +96,22 @@ describe(description: 'create', tests: function () use ($getUserData) {
         ]);
 
         $user = Session::create(email: 'jane@example.com', password: 'secret123');
+
+        expect(value: $user)
+            ->toBeInstanceOf(class: UserData::class)
+            ->and(value: $user->id)->toBe(expected: 6);
+    });
+
+    test(description: 'creates a session with a TOTP code', closure: function () use ($getUserData) {
+        MockClient::global(mockData: [
+            CreateSession::class => function ($request) use ($getUserData) {
+                expect(value: $request->body()->get(key: 'code'))->toBe(expected: 123456);
+
+                return MockResponse::make(body: $getUserData());
+            },
+        ]);
+
+        $user = Session::create(email: 'jane@example.com', password: 'secret123', code: 123456);
 
         expect(value: $user)
             ->toBeInstanceOf(class: UserData::class)

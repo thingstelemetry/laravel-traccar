@@ -13,10 +13,27 @@ use ThingsTelemetry\Traccar\Requests\Report\GetStopsReport;
 use ThingsTelemetry\Traccar\Requests\Report\GetTripsReport;
 use ThingsTelemetry\Traccar\Requests\Report\GetEventsReport;
 use ThingsTelemetry\Traccar\Requests\Report\GetSummaryReport;
+use ThingsTelemetry\Traccar\Requests\Report\GetCombinedReport;
 use ThingsTelemetry\Traccar\Requests\Report\GetGeofencesReport;
 
 class Report extends Traccar
 {
+    /**
+     * @param  array<int>  $deviceIds
+     * @param  array<int>  $groupIds
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     * @throws ValidationException
+     */
+    public function combined(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to): Collection
+    {
+        $this->guardReportArguments(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to);
+
+        return $this->connector->send(
+            request: new GetCombinedReport(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to)
+        )->dtoOrFail();
+    }
+
     /**
      * @param  array<int>  $deviceIds
      * @param  array<int>  $groupIds
@@ -37,16 +54,17 @@ class Report extends Traccar
      * @param  array<int>  $deviceIds
      * @param  array<int>  $groupIds
      * @param  array<string>|null  $types
+     * @param  array<string>|null  $alarms
      *
      * @throws \Saloon\Exceptions\SaloonException
      * @throws ValidationException
      */
-    public function events(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to, ?array $types = null): Collection
+    public function events(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to, ?array $types = null, ?array $alarms = null): Collection
     {
         $this->guardReportArguments(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to);
 
         return $this->connector->send(
-            request: new GetEventsReport(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to, types: $types)
+            request: new GetEventsReport(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to, types: $types, alarms: $alarms)
         )->dtoOrFail();
     }
 
@@ -70,16 +88,17 @@ class Report extends Traccar
     /**
      * @param  array<int>  $deviceIds
      * @param  array<int>  $groupIds
+     * @param  bool  $daily
      *
      * @throws \Saloon\Exceptions\SaloonException
      * @throws ValidationException
      */
-    public function summary(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to): Collection
+    public function summary(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to, bool $daily = false): Collection
     {
         $this->guardReportArguments(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to);
 
         return $this->connector->send(
-            request: new GetSummaryReport(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to)
+            request: new GetSummaryReport(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to, daily: $daily)
         )->dtoOrFail();
     }
 

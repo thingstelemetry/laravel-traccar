@@ -77,7 +77,6 @@ export default defineConfig({
                 items: [
                     {text: 'Find', link: '/devices/find'},
                     {text: 'All', link: '/devices/all'},
-                    {text: 'All With Filters', link: '/devices/all-filters'},
                     {text: 'Create Device', link: '/devices/create'},
                     {text: 'Update Device', link: '/devices/update'},
                     {text: 'Upload/Update Device Image', link: '/devices/update-image'},
@@ -235,6 +234,7 @@ export default defineConfig({
                 text: 'Reports',
                 collapsed: true,
                 items: [
+                    {text: 'Combined Report', link: '/reports/combined'},
                     {text: 'Route Report', link: '/reports/route'},
                     {text: 'Events Report', link: '/reports/events'},
                     {text: 'Geofences Report', link: '/reports/geofences'},
@@ -268,6 +268,7 @@ export default defineConfig({
                     {text: 'Position Data', link: '/reference/dto/position-data'},
                     {text: 'Session Token Data', link: '/reference/dto/session-token-data'},
                     {text: 'Group Share Data', link: '/reference/dto/group-share-data'},
+                    {text: 'Combined Report Data', link: '/reference/dto/combined-report-data'},
                 ]
             },
             {

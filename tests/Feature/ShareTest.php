@@ -37,6 +37,18 @@ describe(description: 'device', tests: function () {
             ->and(value: $share->token)->toBe(expected: 'token-abc-123')
             ->and(value: $share->deviceId)->toBe(expected: 6);
     });
+
+    test(description: 'shares a device with a quoted token', closure: function () {
+        MockClient::global(mockData: [
+            ShareDevice::class => MockResponse::make('"token-abc-123"'),
+        ]);
+
+        $share = Share::device(deviceId: 6, expiration: CarbonImmutable::parse('2030-12-31T23:59:59Z'));
+
+        expect(value: $share)
+            ->toBeInstanceOf(class: DeviceShareData::class)
+            ->and(value: $share->token)->toBe(expected: 'token-abc-123');
+    });
 });
 
 describe(description: 'group', tests: function () {
@@ -63,5 +75,17 @@ describe(description: 'group', tests: function () {
             ->toBeInstanceOf(class: GroupShareData::class)
             ->and(value: $share->token)->toBe(expected: 'token-abc-123')
             ->and(value: $share->groupId)->toBe(expected: 6);
+    });
+
+    test(description: 'shares a group with a quoted token', closure: function () {
+        MockClient::global(mockData: [
+            ShareGroup::class => MockResponse::make('"token-abc-123"'),
+        ]);
+
+        $share = Share::group(groupId: 6, expiration: CarbonImmutable::parse('2030-12-31T23:59:59Z'));
+
+        expect(value: $share)
+            ->toBeInstanceOf(class: GroupShareData::class)
+            ->and(value: $share->token)->toBe(expected: 'token-abc-123');
     });
 });

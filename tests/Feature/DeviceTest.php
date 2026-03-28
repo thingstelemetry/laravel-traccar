@@ -16,7 +16,6 @@ use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\GetAllDevices;
-use ThingsTelemetry\Traccar\Requests\Device\GetForUserDevices;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceTotals;
 
 $getDeviceData = fn () => [
@@ -79,16 +78,35 @@ describe(description: 'find', tests: function () use ($getDeviceData) {
 });
 
 describe(description: 'all with filters', tests: function () use ($getDeviceData) {
-    test(description: 'request resolves the correct endpoint', closure: function () {
-        $request = new GetForUserDevices(userId: 42);
+    test(description: 'request resolves the correct endpoint and query params', closure: function () {
+        $request = new GetAllDevices(
+            userId: 42,
+            ids: [1, 2],
+            uniqueIds: ['U1', 'U2'],
+            all: true,
+            excludeAttributes: true,
+            limit: 10,
+            offset: 20,
+            keyword: 'truck'
+        );
 
-        expect(value: $request->resolveEndpoint())->toBe(expected: '/devices?userId=42')
-            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/devices')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET)
+            ->and(value: $request->query()->all())->toBe(expected: [
+                'userId'            => 42,
+                'id'                => [1, 2],
+                'uniqueId'          => ['U1', 'U2'],
+                'all'               => true,
+                'excludeAttributes' => true,
+                'limit'             => 10,
+                'offset'            => 20,
+                'keyword'           => 'truck',
+            ]);
     });
 
-    test(description: 'returns devices for a specific user', closure: function () use ($getDeviceData) {
+    test(description: 'returns devices for a specific user via facade', closure: function () use ($getDeviceData) {
         MockClient::global(mockData: [
-            GetForUserDevices::class => MockResponse::make([$getDeviceData()]),
+            GetAllDevices::class => MockResponse::make([$getDeviceData()]),
         ]);
 
         $response = Device::all(userId: 42);

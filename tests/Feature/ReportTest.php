@@ -16,11 +16,13 @@ use ThingsTelemetry\Traccar\Dto\ReportStopsData;
 use ThingsTelemetry\Traccar\Dto\ReportTripsData;
 use ThingsTelemetry\Traccar\Dto\ReportSummaryData;
 use ThingsTelemetry\Traccar\Dto\ReportGeofencesData;
+use ThingsTelemetry\Traccar\Dto\CombinedReportData;
 use ThingsTelemetry\Traccar\Requests\Report\GetRouteReport;
 use ThingsTelemetry\Traccar\Requests\Report\GetStopsReport;
 use ThingsTelemetry\Traccar\Requests\Report\GetTripsReport;
 use ThingsTelemetry\Traccar\Requests\Report\GetEventsReport;
 use ThingsTelemetry\Traccar\Requests\Report\GetSummaryReport;
+use ThingsTelemetry\Traccar\Requests\Report\GetCombinedReport;
 use ThingsTelemetry\Traccar\Requests\Report\GetGeofencesReport;
 
 $from = CarbonImmutable::parse(time: '2026-11-22T18:30:00Z');
@@ -105,6 +107,12 @@ $reportStopsPayload = fn () => [[
     'engineHours' => 1200,
 ]];
 
+$reportCombinedPayload = fn () => [[
+    'deviceId' => 6,
+    'route'    => $positionPayload(),
+    'events'   => $eventPayload(),
+]];
+
 describe(description: 'request serialization', tests: function () use ($from, $to) {
     test(description: 'serializes route report queries', closure: function () use ($from, $to) {
         $request = new GetRouteReport(deviceIds: [6, 7], groupIds: [4], from: $from, to: $to);
@@ -120,13 +128,15 @@ describe(description: 'request serialization', tests: function () use ($from, $t
     });
 
     test(description: 'serializes event and geofence report queries', closure: function () use ($from, $to) {
-        $events = new GetEventsReport(deviceIds: [6], groupIds: [4], from: $from, to: $to, types: ['ignitionOn', '%']);
+        $events = new GetEventsReport(deviceIds: [6], groupIds: [4], from: $from, to: $to, types: ['ignitionOn', '%'], alarms: ['sos']);
         $geofences = new GetGeofencesReport(deviceIds: [6], groupIds: [], from: $from, to: $to, geofenceIds: [15, 16]);
+        $summary = new GetSummaryReport(deviceIds: [6], groupIds: [], from: $from, to: $to, daily: true);
 
         expect(value: $events->query()->all())->toBe(expected: [
             'deviceId' => [6],
             'groupId'  => [4],
             'type'     => ['ignitionOn', '%'],
+            'alarm'    => ['sos'],
             'from'     => $from->toIso8601String(),
             'to'       => $to->toIso8601String(),
         ])->and(value: $geofences->query()->all())->toBe(expected: [
@@ -134,12 +144,17 @@ describe(description: 'request serialization', tests: function () use ($from, $t
             'geofenceId' => [15, 16],
             'from'       => $from->toIso8601String(),
             'to'         => $to->toIso8601String(),
+        ])->and(value: $summary->query()->all())->toBe(expected: [
+            'deviceId' => [6],
+            'from'     => $from->toIso8601String(),
+            'to'       => $to->toIso8601String(),
+            'daily'    => true,
         ]);
     });
 });
 
-describe(description: 'report results', tests: function () use ($from, $to, $positionPayload, $eventPayload, $reportGeofencePayload, $reportSummaryPayload, $reportTripsPayload, $reportStopsPayload) {
-    test(description: 'hydrates all report collections', closure: function () use ($from, $to, $positionPayload, $eventPayload, $reportGeofencePayload, $reportSummaryPayload, $reportTripsPayload, $reportStopsPayload) {
+describe(description: 'report results', tests: function () use ($from, $to, $positionPayload, $eventPayload, $reportGeofencePayload, $reportSummaryPayload, $reportTripsPayload, $reportStopsPayload, $reportCombinedPayload) {
+    test(description: 'hydrates all report collections', closure: function () use ($from, $to, $positionPayload, $eventPayload, $reportGeofencePayload, $reportSummaryPayload, $reportTripsPayload, $reportStopsPayload, $reportCombinedPayload) {
         MockClient::global(mockData: [
             GetRouteReport::class     => MockResponse::make($positionPayload()),
             GetEventsReport::class    => MockResponse::make($eventPayload()),
@@ -147,6 +162,7 @@ describe(description: 'report results', tests: function () use ($from, $to, $pos
             GetSummaryReport::class   => MockResponse::make($reportSummaryPayload()),
             GetTripsReport::class     => MockResponse::make($reportTripsPayload()),
             GetStopsReport::class     => MockResponse::make($reportStopsPayload()),
+            GetCombinedReport::class  => MockResponse::make($reportCombinedPayload()),
         ]);
 
         expect(value: Report::route(deviceIds: [6], groupIds: [], from: $from, to: $to))->toBeInstanceOf(class: Collection::class)
@@ -155,7 +171,8 @@ describe(description: 'report results', tests: function () use ($from, $to, $pos
             ->and(value: Report::geofences(deviceIds: [6], groupIds: [], from: $from, to: $to)->first())->toBeInstanceOf(class: ReportGeofencesData::class)
             ->and(value: Report::summary(deviceIds: [6], groupIds: [], from: $from, to: $to)->first())->toBeInstanceOf(class: ReportSummaryData::class)
             ->and(value: Report::trips(deviceIds: [6], groupIds: [], from: $from, to: $to)->first())->toBeInstanceOf(class: ReportTripsData::class)
-            ->and(value: Report::stops(deviceIds: [6], groupIds: [], from: $from, to: $to)->first())->toBeInstanceOf(class: ReportStopsData::class);
+            ->and(value: Report::stops(deviceIds: [6], groupIds: [], from: $from, to: $to)->first())->toBeInstanceOf(class: ReportStopsData::class)
+            ->and(value: Report::combined(deviceIds: [6], groupIds: [], from: $from, to: $to)->first())->toBeInstanceOf(class: CombinedReportData::class);
     });
 
     test(description: 'propagates errors', closure: function () use ($from, $to) {

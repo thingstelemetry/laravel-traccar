@@ -39,7 +39,7 @@ class Server extends Traccar
     /** @throws \Saloon\Exceptions\SaloonException */
     public function update(ServerData $data): ServerData
     {
-        $response = $this->connector->send(request: new UpdateServerInformation($data));
+        $response = $this->connector->send(request: new UpdateServerInformation(data: $data));
 
         return $response->dtoOrFail();
     }

@@ -9,9 +9,9 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
-use ThingsTelemetry\Traccar\Dto\ReportSummaryData;
+use ThingsTelemetry\Traccar\Dto\CombinedReportData;
 
-class GetSummaryReport extends Request
+class GetCombinedReport extends Request
 {
     protected Method $method = Method::GET;
 
@@ -24,20 +24,19 @@ class GetSummaryReport extends Request
         public array $groupIds,
         public CarbonImmutable $from,
         public CarbonImmutable $to,
-        public bool $daily = false,
     ) {
     }
 
     public function resolveEndpoint(): string
     {
-        return '/reports/summary';
+        return '/reports/combined';
     }
 
-    /** @return Collection<int, ReportSummaryData> */
+    /** @return Collection<int, CombinedReportData> */
     public function createDtoFromResponse(Response $response): Collection
     {
         return collect(value: $response->json())
-            ->map(callback: fn (array $report) => ReportSummaryData::fromArray(data: $report));
+            ->map(callback: fn (array $report) => CombinedReportData::fromArray(data: $report));
     }
 
     /** @return array<string, mixed> */
@@ -48,7 +47,6 @@ class GetSummaryReport extends Request
             'groupId'  => $this->groupIds,
             'from'     => $this->from->toIso8601String(),
             'to'       => $this->to->toIso8601String(),
-            'daily'    => $this->daily,
-        ], static fn (mixed $value): bool => $value !== [] && $value !== null);
+        ], static fn (mixed $value): bool => $value !== null && $value !== []);
     }
 }

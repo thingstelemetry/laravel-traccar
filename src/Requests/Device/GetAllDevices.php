@@ -15,6 +15,22 @@ class GetAllDevices extends Request
 {
     protected Method $method = Method::GET;
 
+    /**
+     * @param  array<int, int>|null  $ids
+     * @param  array<int, string>|null  $uniqueIds
+     */
+    public function __construct(
+        public ?int $userId = null,
+        public ?array $ids = null,
+        public ?array $uniqueIds = null,
+        public ?bool $all = null,
+        public ?bool $excludeAttributes = null,
+        public ?int $limit = null,
+        public ?int $offset = null,
+        public ?string $keyword = null,
+    ) {
+    }
+
     public function resolveEndpoint(): string
     {
         return '/devices';
@@ -27,7 +43,22 @@ class GetAllDevices extends Request
      */
     public function createDtoFromResponse(Response $response): Collection
     {
-        return collect($response->json())
-            ->map(fn ($device) => DeviceData::fromArray($device));
+        return collect(value: $response->json())
+            ->map(callback: fn ($device) => DeviceData::fromArray(data: (array) $device));
+    }
+
+    /** @return array<string, mixed> */
+    protected function defaultQuery(): array
+    {
+        return array_filter(array: [
+            'userId'            => $this->userId,
+            'id'                => $this->ids,
+            'uniqueId'          => $this->uniqueIds,
+            'all'               => $this->all,
+            'excludeAttributes' => $this->excludeAttributes,
+            'limit'             => $this->limit,
+            'offset'            => $this->offset,
+            'keyword'           => $this->keyword,
+        ], callback: static fn (mixed $value): bool => $value !== null);
     }
 }
