@@ -10,6 +10,7 @@ use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\DriverData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Facades\Driver;
+use Saloon\Exceptions\Request\RequestException;
 use ThingsTelemetry\Traccar\Requests\Driver\CreateDriver;
 use ThingsTelemetry\Traccar\Requests\Driver\DeleteDriver;
 use ThingsTelemetry\Traccar\Requests\Driver\UpdateDriver;
@@ -57,7 +58,7 @@ describe(description: 'all', tests: function () use ($getDriverData) {
         ]);
 
         expect(value: fn () => Driver::all())
-            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+            ->toThrow(exception: RequestException::class);
     });
 });
 
@@ -87,7 +88,7 @@ describe(description: 'create', tests: function () use ($getDriverData) {
         ]);
 
         expect(value: fn () => Driver::create(data: DriverData::fromArray(data: $getDriverData())))
-            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+            ->toThrow(exception: RequestException::class);
     });
 });
 
@@ -117,7 +118,7 @@ describe(description: 'update', tests: function () use ($getDriverData) {
         ]);
 
         expect(value: fn () => Driver::update(data: DriverData::fromArray(data: $getDriverData())))
-            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+            ->toThrow(exception: RequestException::class);
     });
 });
 
@@ -147,6 +148,6 @@ describe(description: 'delete', tests: function () {
         ]);
 
         expect(value: fn () => Driver::delete(id: 9))
-            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+            ->toThrow(exception: RequestException::class);
     });
 });

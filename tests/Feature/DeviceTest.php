@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Saloon\Enums\Method;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
@@ -10,6 +11,7 @@ use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Facades\Device;
+use Saloon\Exceptions\Request\RequestException;
 use ThingsTelemetry\Traccar\Requests\Device\GetDevice;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
 use ThingsTelemetry\Traccar\Requests\Device\CreateDevice;
@@ -226,11 +228,11 @@ describe(description: 'update image', tests: function () {
             UpdateDeviceImage::class => MockResponse::make(body: '/media/device/6.png', status: 200),
         ]);
 
-        $file = \Illuminate\Http\UploadedFile::fake()->create(name: 'device.png', kilobytes: 10, mimeType: 'image/png');
+        $file = UploadedFile::fake()->create(name: 'device.png', kilobytes: 10, mimeType: 'image/png');
 
         $result = Device::updateImage(deviceId: 6, file: $file);
 
-        expect(value: $result)->toBeString();
+        expect(value: $result)->toBe(expected: '/media/device/6.png');
     });
 
     test(description: 'propagates errors', closure: function () {
@@ -238,9 +240,9 @@ describe(description: 'update image', tests: function () {
             UpdateDeviceImage::class => MockResponse::make(body: [], status: 400),
         ]);
 
-        $file = \Illuminate\Http\UploadedFile::fake()->create(name: 'device.png', kilobytes: 10, mimeType: 'image/png');
+        $file = UploadedFile::fake()->create(name: 'device.png', kilobytes: 10, mimeType: 'image/png');
 
         expect(value: fn () => Device::updateImage(deviceId: 6, file: $file))
-            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+            ->toThrow(exception: RequestException::class);
     });
 });

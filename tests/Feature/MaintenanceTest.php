@@ -8,6 +8,7 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\StatusData;
+use Saloon\Exceptions\Request\RequestException;
 use ThingsTelemetry\Traccar\Dto\MaintenanceData;
 use ThingsTelemetry\Traccar\Facades\Maintenance;
 use ThingsTelemetry\Traccar\Requests\Maintenance\CreateMaintenance;
@@ -59,7 +60,7 @@ describe(description: 'all', tests: function () use ($getMaintenanceData) {
         ]);
 
         expect(value: fn () => Maintenance::all())
-            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+            ->toThrow(exception: RequestException::class);
     });
 });
 
@@ -89,7 +90,7 @@ describe(description: 'create', tests: function () use ($getMaintenanceData) {
         ]);
 
         expect(value: fn () => Maintenance::create(data: MaintenanceData::fromArray(data: $getMaintenanceData())))
-            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+            ->toThrow(exception: RequestException::class);
     });
 });
 
@@ -119,7 +120,7 @@ describe(description: 'update', tests: function () use ($getMaintenanceData) {
         ]);
 
         expect(value: fn () => Maintenance::update(data: MaintenanceData::fromArray(data: $getMaintenanceData())))
-            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+            ->toThrow(exception: RequestException::class);
     });
 });
 
@@ -149,6 +150,6 @@ describe(description: 'delete', tests: function () {
         ]);
 
         expect(value: fn () => Maintenance::delete(id: 11))
-            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+            ->toThrow(exception: RequestException::class);
     });
 });
