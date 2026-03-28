@@ -57,17 +57,11 @@ class GetAllDevices extends Request
         }
 
         if ($this->ids !== null && $this->ids !== []) {
-            $query['id'] = array_map(
-                callback: static fn (int $id): int => $id,
-                array: $this->ids,
-            );
+            $query['id'] = $this->ids;
         }
 
         if ($this->uniqueIds !== null && $this->uniqueIds !== []) {
-            $query['uniqueId'] = array_map(
-                callback: static fn (string $id): string => $id,
-                array: $this->uniqueIds,
-            );
+            $query['uniqueId'] = $this->uniqueIds;
         }
 
         if ($this->all !== null) {

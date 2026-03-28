@@ -17,4 +17,14 @@ class Event extends Traccar
 
         return $response->dtoOrFail();
     }
+
+    /**
+     * @deprecated Use get() instead. Will be removed in the next major version.
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function find(int $id): EventData
+    {
+        return $this->get(id: $id);
+    }
 }

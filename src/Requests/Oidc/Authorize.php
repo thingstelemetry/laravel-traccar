@@ -30,7 +30,7 @@ class Authorize extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter([
+        return array_filter(array: [
             'client_id'             => $this->clientId,
             'redirect_uri'          => $this->redirectUri,
             'state'                 => $this->state,
@@ -39,6 +39,6 @@ class Authorize extends Request
             'code_challenge'        => $this->codeChallenge,
             'code_challenge_method' => $this->codeChallengeMethod,
             'nonce'                 => $this->nonce,
-        ]);
+        ], callback: fn (mixed $v): bool => $v !== null);
     }
 }

@@ -148,11 +148,28 @@ class Server extends Traccar
     }
 
     /**
+     * @return ServerStatisticsData
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function statistics(CarbonInterface $from, CarbonInterface $to): ServerStatisticsData
+    {
+        $response = $this->connector->send(
+            request: new GetServerStatistics(from: $from, to: $to)
+        );
+
+        /** @var Collection<int, ServerStatisticsData> $collection */
+        $collection = $response->dtoOrFail();
+
+        return $collection->first();
+    }
+
+    /**
      * @return Collection<int, ServerStatisticsData>
      *
      * @throws \Saloon\Exceptions\SaloonException
      */
-    public function statistics(CarbonInterface $from, CarbonInterface $to): Collection
+    public function statisticsCollection(CarbonInterface $from, CarbonInterface $to): Collection
     {
         $response = $this->connector->send(
             request: new GetServerStatistics(from: $from, to: $to)
