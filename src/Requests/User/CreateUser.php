@@ -4,20 +4,12 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\User;
 
-use JsonException;
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
 use ThingsTelemetry\Traccar\Dto\UserData;
+use ThingsTelemetry\Traccar\Requests\Abstract\CreateRequest;
 
-class CreateUser extends Request implements HasBody
+class CreateUser extends CreateRequest
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::POST;
-
     public function __construct(public UserData $data)
     {
     }
@@ -27,15 +19,8 @@ class CreateUser extends Request implements HasBody
         return '/users';
     }
 
-    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): UserData
     {
-        return UserData::fromArray($response->json());
-    }
-
-    /** @return array<string, mixed> */
-    protected function defaultBody(): array
-    {
-        return $this->data->toArray();
+        return UserData::fromArray(data: $response->json());
     }
 }

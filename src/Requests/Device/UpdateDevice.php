@@ -4,21 +4,13 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\Device;
 
-use JsonException;
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\Http\Response;
 use InvalidArgumentException;
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
+use ThingsTelemetry\Traccar\Requests\Abstract\UpdateRequest;
 
-class UpdateDevice extends Request implements HasBody
+class UpdateDevice extends UpdateRequest
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::PUT;
-
     public function __construct(public DeviceData $data)
     {
         if (is_null($data->id)) {
@@ -31,15 +23,8 @@ class UpdateDevice extends Request implements HasBody
         return "/devices/{$this->data->id}";
     }
 
-    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): DeviceData
     {
         return DeviceData::fromArray(data: $response->json());
-    }
-
-    /** @return array<string, mixed> */
-    protected function defaultBody(): array
-    {
-        return $this->data->toArray();
     }
 }

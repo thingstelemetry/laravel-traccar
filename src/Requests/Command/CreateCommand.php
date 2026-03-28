@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\Command;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
 use ThingsTelemetry\Traccar\Dto\CommandData;
+use ThingsTelemetry\Traccar\Requests\Abstract\CreateRequest;
 
-class CreateCommand extends Request implements HasBody
+class CreateCommand extends CreateRequest
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::POST;
-
     public function __construct(public CommandData $data)
     {
     }
@@ -29,11 +22,5 @@ class CreateCommand extends Request implements HasBody
     public function createDtoFromResponse(Response $response): CommandData
     {
         return CommandData::fromArray(data: $response->json());
-    }
-
-    /** @return array<string, mixed> */
-    protected function defaultBody(): array
-    {
-        return $this->data->toArray();
     }
 }

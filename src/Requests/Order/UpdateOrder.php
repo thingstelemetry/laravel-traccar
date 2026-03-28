@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\Order;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\Http\Response;
 use InvalidArgumentException;
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
 use ThingsTelemetry\Traccar\Dto\OrderData;
+use ThingsTelemetry\Traccar\Requests\Abstract\UpdateRequest;
 
-class UpdateOrder extends Request implements HasBody
+class UpdateOrder extends UpdateRequest
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::PUT;
-
     public function __construct(public OrderData $data)
     {
         if (is_null($data->id)) {
@@ -33,11 +26,5 @@ class UpdateOrder extends Request implements HasBody
     public function createDtoFromResponse(Response $response): OrderData
     {
         return OrderData::fromArray(data: $response->json());
-    }
-
-    /** @return array<string, mixed> */
-    protected function defaultBody(): array
-    {
-        return $this->data->toArray();
     }
 }

@@ -23,9 +23,7 @@ class GetAllGroups extends Request
 
     public function resolveEndpoint(): string
     {
-        $query = $this->buildQuery();
-
-        return '/groups'.($query ? "?{$query}" : '');
+        return '/groups';
     }
 
     /** @return Collection<int, GroupData> */
@@ -35,22 +33,13 @@ class GetAllGroups extends Request
             ->map(callback: fn ($group) => GroupData::fromArray(data: $group));
     }
 
-    private function buildQuery(): string
+    /** @return array<string, bool|int|string> */
+    protected function defaultQuery(): array
     {
-        $params = [];
-
-        if ($this->all !== null) {
-            $params[] = 'all='.($this->all ? 'true' : 'false');
-        }
-
-        if ($this->userId !== null) {
-            $params[] = "userId={$this->userId}";
-        }
-
-        if ($this->excludeAttributes !== null) {
-            $params[] = 'excludeAttributes='.($this->excludeAttributes ? 'true' : 'false');
-        }
-
-        return implode('&', $params);
+        return array_filter([
+            'all'               => $this->all,
+            'userId'            => $this->userId,
+            'excludeAttributes' => $this->excludeAttributes,
+        ], static fn (mixed $value): bool => $value !== null);
     }
 }

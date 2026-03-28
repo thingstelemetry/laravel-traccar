@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\Group;
 
-use JsonException;
+use Throwable;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -24,21 +24,31 @@ class GetGroup extends Request
         return "/groups/{$this->id}";
     }
 
-    /**
-     * @throws JsonException
-     * @throws NotFoundException
-     */
-    public function createDtoFromResponse(Response $response): GroupData
+    public function hasRequestFailed(Response $response): ?bool
     {
-        $json = $response->json();
-
-        if (! is_array($json) || $json === []) {
-            throw new NotFoundException(
-                response: $response,
-                message: 'Traccar group was not found. Check the group ID and try again.'
-            );
+        if ($response->status() !== 200) {
+            return null;
         }
 
-        return GroupData::fromArray(data: $json);
+        $json = $response->json();
+
+        return ! is_array($json) || $json === [];
+    }
+
+    public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
+    {
+        if ($response->status() !== 200) {
+            return null;
+        }
+
+        return new NotFoundException(
+            response: $response,
+            message: 'Traccar group was not found. Check the group ID and try again.'
+        );
+    }
+
+    public function createDtoFromResponse(Response $response): GroupData
+    {
+        return GroupData::fromArray(data: $response->json());
     }
 }

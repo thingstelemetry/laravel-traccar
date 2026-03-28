@@ -4,24 +4,16 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\User;
 
-use JsonException;
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\Http\Response;
 use InvalidArgumentException;
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
 use ThingsTelemetry\Traccar\Dto\UserData;
+use ThingsTelemetry\Traccar\Requests\Abstract\UpdateRequest;
 
-class UpdateUser extends Request implements HasBody
+class UpdateUser extends UpdateRequest
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::PUT;
-
     public function __construct(public UserData $data)
     {
-        if ($data->id <= 0) {
+        if (is_null($data->id)) {
             throw new InvalidArgumentException(message: 'User ID is required for update operations.');
         }
     }
@@ -31,15 +23,8 @@ class UpdateUser extends Request implements HasBody
         return "/users/{$this->data->id}";
     }
 
-    /** @throws JsonException */
     public function createDtoFromResponse(Response $response): UserData
     {
         return UserData::fromArray(data: $response->json());
-    }
-
-    /** @return array<string, mixed> */
-    protected function defaultBody(): array
-    {
-        return $this->data->toArray();
     }
 }
