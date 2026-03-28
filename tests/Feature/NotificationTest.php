@@ -18,6 +18,7 @@ use ThingsTelemetry\Traccar\Requests\Notification\CreateNotification;
 use ThingsTelemetry\Traccar\Requests\Notification\DeleteNotification;
 use ThingsTelemetry\Traccar\Requests\Notification\UpdateNotification;
 use ThingsTelemetry\Traccar\Requests\Notification\GetAllNotifications;
+use ThingsTelemetry\Traccar\Requests\Notification\GetNotificators;
 use ThingsTelemetry\Traccar\Requests\Notification\GetNotificationTypes;
 use ThingsTelemetry\Traccar\Requests\Notification\SendTestNotification;
 
@@ -115,7 +116,7 @@ describe(description: 'create and update', tests: function () use ($getNotificat
     });
 });
 
-describe(description: 'delete and types', tests: function () {
+describe(description: 'delete, types and notificators', tests: function () {
     test(description: 'delete request resolves the correct endpoint', closure: function () {
         $request = new DeleteNotification(id: 41);
 
@@ -130,14 +131,24 @@ describe(description: 'delete and types', tests: function () {
             ->and(value: $request->getMethod())->toBe(expected: Method::GET);
     });
 
-    test(description: 'deletes a notification and returns types', closure: function () {
+    test(description: 'notificators request resolves the correct endpoint', closure: function () {
+        $request = new GetNotificators(announcement: true);
+
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/notifications/notificators')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET)
+            ->and(value: $request->query()->all())->toBe(expected: ['announcement' => true]);
+    });
+
+    test(description: 'deletes a notification and returns types/notificators', closure: function () {
         MockClient::global(mockData: [
             DeleteNotification::class   => MockResponse::make(body: '', status: 204),
             GetNotificationTypes::class => MockResponse::make([['type' => 'ignitionOn']]),
+            GetNotificators::class      => MockResponse::make([['type' => 'mail']]),
         ]);
 
         expect(value: Notification::delete(id: 41))->toBeInstanceOf(class: StatusData::class)
-            ->and(value: Notification::types()->first())->toBeInstanceOf(class: NotificationTypeData::class);
+            ->and(value: Notification::types()->first())->toBeInstanceOf(class: NotificationTypeData::class)
+            ->and(value: Notification::notificators()->first())->toBeInstanceOf(class: NotificationTypeData::class);
     });
 
     test(description: 'propagates delete error', closure: function () {
@@ -163,6 +174,11 @@ describe(description: 'send', tests: function () {
 
         expect(value: $request->resolveEndpoint())->toBe(expected: '/notifications/test')
             ->and(value: $request->getMethod())->toBe(expected: Method::POST);
+
+        $requestWithNotificator = new SendTestNotification(notificator: 'mail');
+
+        expect(value: $requestWithNotificator->resolveEndpoint())->toBe(expected: '/notifications/test/mail')
+            ->and(value: $requestWithNotificator->getMethod())->toBe(expected: Method::POST);
     });
 
     test(description: 'send notification request serializes query and body', closure: function () {

@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static \ThingsTelemetry\Traccar\Dto\NotificationData update(\ThingsTelemetry\Traccar\Dto\NotificationData $data)
  * @method static \ThingsTelemetry\Traccar\Dto\StatusData delete(int $id)
  * @method static \Illuminate\Support\Collection types()
- * @method static \ThingsTelemetry\Traccar\Dto\StatusData sendTest()
+ * @method static \Illuminate\Support\Collection notificators(?bool $announcement = null)
+ * @method static \ThingsTelemetry\Traccar\Dto\StatusData sendTest(?string $notificator = null)
  * @method static \ThingsTelemetry\Traccar\Dto\StatusData send(string $notificator, \ThingsTelemetry\Traccar\Dto\NotificationMessageData $message, ?array $userIds = null)
  *
  * @see \ThingsTelemetry\Traccar\Endpoints\Notification

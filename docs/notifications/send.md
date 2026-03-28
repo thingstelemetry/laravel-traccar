@@ -18,6 +18,14 @@ $result = Notification::send(
 );
 ```
 
+## Parameters
+
+| Parameter     | Type                      | Description                                                                 |
+|---------------|---------------------------|-----------------------------------------------------------------------------|
+| `notificator` | `string`                  | Required. Notificator type (e.g., "mail", "telegram").                       |
+| `message`     | `NotificationMessageData` | Required. The message to send.                                              |
+| `userIds`     | `array<int>`              | Optional. List of user IDs. If omitted, sends to all users permitted for current user. |
+
 ## Result
 
 Returns `ThingsTelemetry\Traccar\Dto\StatusData`.

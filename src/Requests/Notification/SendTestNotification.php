@@ -14,8 +14,16 @@ class SendTestNotification extends Request
 {
     protected Method $method = Method::POST;
 
+    public function __construct(protected ?string $notificator = null)
+    {
+    }
+
     public function resolveEndpoint(): string
     {
+        if ($this->notificator !== null) {
+            return "/notifications/test/{$this->notificator}";
+        }
+
         return '/notifications/test';
     }
 
