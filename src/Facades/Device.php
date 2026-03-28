@@ -12,7 +12,7 @@ use ThingsTelemetry\Traccar\Dto\StatusData;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * @method static Collection all(?int $userId = null, ?array $ids = null, ?array $uniqueIds = null)
+ * @method static Collection all(?int $userId = null, ?array $ids = null, ?array $uniqueIds = null, ?bool $all = null, ?bool $excludeAttributes = null, ?int $limit = null, ?int $offset = null, ?string $keyword = null)
  * @method static DeviceData find(int $id)
  * @method static DeviceData create(DeviceData $data)
  * @method static DeviceData update(DeviceData $data)

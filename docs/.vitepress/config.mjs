@@ -142,6 +142,7 @@ export default defineConfig({
                     {text: 'All', link: '/attributes/all'},
                     {text: 'Create Attribute', link: '/attributes/create'},
                     {text: 'Update Attribute', link: '/attributes/update'},
+                    {text: 'Test Attribute', link: '/attributes/test'},
                     {text: 'Delete Attribute', link: '/attributes/delete'},
                 ]
             },

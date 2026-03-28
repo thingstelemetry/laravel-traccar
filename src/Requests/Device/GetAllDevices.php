@@ -50,15 +50,46 @@ class GetAllDevices extends Request
     /** @return array<string, mixed> */
     protected function defaultQuery(): array
     {
-        return array_filter(array: [
-            'userId'            => $this->userId,
-            'id'                => $this->ids,
-            'uniqueId'          => $this->uniqueIds,
-            'all'               => $this->all,
-            'excludeAttributes' => $this->excludeAttributes,
-            'limit'             => $this->limit,
-            'offset'            => $this->offset,
-            'keyword'           => $this->keyword,
-        ], callback: static fn (mixed $value): bool => $value !== null);
+        $query = [];
+
+        if ($this->userId !== null) {
+            $query['userId'] = $this->userId;
+        }
+
+        if ($this->ids !== null && $this->ids !== []) {
+            $query['id'] = array_map(
+                callback: static fn (int $id): int => $id,
+                array: $this->ids,
+            );
+        }
+
+        if ($this->uniqueIds !== null && $this->uniqueIds !== []) {
+            $query['uniqueId'] = array_map(
+                callback: static fn (string $id): string => $id,
+                array: $this->uniqueIds,
+            );
+        }
+
+        if ($this->all !== null) {
+            $query['all'] = $this->all;
+        }
+
+        if ($this->excludeAttributes !== null) {
+            $query['excludeAttributes'] = $this->excludeAttributes;
+        }
+
+        if ($this->limit !== null) {
+            $query['limit'] = $this->limit;
+        }
+
+        if ($this->offset !== null) {
+            $query['offset'] = $this->offset;
+        }
+
+        if ($this->keyword !== null) {
+            $query['keyword'] = $this->keyword;
+        }
+
+        return $query;
     }
 }
