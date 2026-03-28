@@ -23,16 +23,15 @@ The command logs its results to your Laravel log file.
 
 To automate the garbage collection process, you can schedule the command in your application's `bootstrap/app.php`.
 
-### Laravel 12+
-
-Add the following to your `bootstrap/app.php` file:
-
 ```php
+
+use ThingsTelemetry\Traccar\Console\RunGarbageCollectorCommand;
+use Illuminate\Support\Facades\Schedule;
 
 return Application::configure(basePath: dirname(path: __DIR__))
     // ... other configurations (withMiddleware(), withExceptions)
     ->withSchedule(function (Schedule $schedule) {
-        $schedule->command(command: \ThingsTelemetry\Traccar\Console\RunGarbageCollectorCommand::class)->daily();
+        $schedule->command(command: RunGarbageCollectorCommand::class)->daily();
     });
 ```
 

@@ -38,6 +38,17 @@ class Group extends Traccar
         return $response->dtoOrFail();
     }
 
+    /**
+     * @deprecated Use get(int $id) instead.
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function find(int $id): GroupData
+    {
+        trigger_error(message: 'Group::find() is deprecated. Use Group::get() instead.', error_level: E_USER_DEPRECATED);
+
+        return $this->get(id: $id);
+    }
+
     /** @throws \Saloon\Exceptions\SaloonException */
     public function create(GroupData $data): GroupData
     {

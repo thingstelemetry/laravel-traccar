@@ -30,3 +30,37 @@ The email address of the user.
 ```php
 $userInfo->email; // "admin@example.com"
 ```
+
+## Serialization
+
+The `OidcUserInfoData` class provides methods for converting the DTO to and from arrays.
+
+### `fromArray(array $data)`
+
+Create an instance from an associative array. This is typically used when receiving data from the Traccar API.
+
+```php
+use ThingsTelemetry\Traccar\Dto\OidcUserInfoData;
+
+$userInfo = OidcUserInfoData::fromArray([
+    'sub'   => '1',
+    'name'  => 'Admin',
+    'email' => 'admin@example.com',
+]);
+```
+
+### `toArray()`
+
+Convert the DTO instance back into an associative array.
+
+```php
+$data = $userInfo->toArray();
+
+/*
+[
+    'sub'   => '1',
+    'name'  => 'Admin',
+    'email' => 'admin@example.com',
+]
+*/
+```

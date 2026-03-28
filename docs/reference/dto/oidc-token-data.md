@@ -9,8 +9,8 @@ The `ThingsTelemetry\Traccar\Dto\OidcTokenData` represents the response from the
 | `accessToken` | `string` | The access token. |
 | `tokenType` | `string` | The token type (e.g., `Bearer`). |
 | `expiresIn` | `int` | The expiration time in seconds. |
-| `idToken` | `string?` | The ID token. |
-| `scope` | `string?` | The scope of the access token. |
+| `idToken` | `string|null` | The ID token. |
+| `scope` | `string|null` | The scope of the access token. |
 
 ## `accessToken` → `string`
 The access token string.

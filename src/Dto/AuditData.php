@@ -30,14 +30,14 @@ class AuditData
             try {
                 $actionTime = CarbonImmutable::parse($rawActionTime);
             } catch (Throwable $e) {
-                Log::info('Failed to parse Audit actionTime: '.$e->getMessage());
+                Log::warning('Failed to parse Audit actionTime: '.$e->getMessage());
             }
         }
 
         return new self(
             id: (int) ($data['id'] ?? 0),
             userId: (int) ($data['userId'] ?? 0),
-            userEmail: array_key_exists('userEmail', $data) ? (is_null($data['userEmail']) ? null : (string) $data['userEmail']) : null,
+            userEmail: $data['userEmail'] ?? null,
             type: (string) ($data['type'] ?? ''),
             actionTime: $actionTime,
             attributes: is_array($data['attributes'] ?? null) ? $data['attributes'] : [],

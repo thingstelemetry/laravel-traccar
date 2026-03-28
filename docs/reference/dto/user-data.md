@@ -15,23 +15,23 @@ $user = User::get(42); // UserData
 | `id` | `int` | Unique user identifier. |
 | `name` | `string` | User full name. |
 | `email` | `string` | User email. |
-| `phone` | `string?` | Contact phone. |
+| `phone` | `string|null` | Contact phone. |
 | `readonly` | `bool` | Whether the user is read-only. |
 | `administrator` | `bool` | Admin flag. |
 | `map` | `Map` | Preferred map provider. |
 | `latitude` | `float` | Default map center latitude. |
 | `longitude` | `float` | Default map center longitude. |
 | `zoom` | `int` | Default map zoom. |
-| `password` | `string?` | Password field. |
+| `password` | `string|null` | Password field. |
 | `coordinateFormat` | `CoordinateFormat` | Preferred coordinate format. |
 | `disabled` | `bool` | If the user is disabled. |
-| `expirationTime` | `CarbonImmutable?` | Account expiration timestamp. |
+| `expirationTime` | `CarbonImmutable|null` | Account expiration timestamp. |
 | `deviceLimit` | `int` | Assigned limit for devices. |
 | `userLimit` | `int` | Assigned limit for sub-users. |
 | `deviceReadonly` | `bool` | Device read-only permission flag. |
 | `limitCommands` | `bool` | Limit commands permission flag. |
 | `fixedEmail` | `bool` | Fixed email permission flag. |
-| `poiLayer` | `string?` | Points-of-interest layer ID. |
+| `poiLayer` | `string|null` | Points-of-interest layer ID. |
 | `attributes` | `UserAttributesData` | User attribute bag. |
 
 ## `id` → `integer`

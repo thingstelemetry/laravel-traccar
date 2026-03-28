@@ -8,7 +8,7 @@ Upload or update a device image on your Traccar server.
 
 > [!IMPORTANT]
 > - Only the following image types are supported: `image/jpeg`, `image/png`, `image/gif`, `image/webp`, `image/svg+xml`.
-> - Maximum image size is 500000 bytes (about 488 KB). Larger images will be rejected before the request is sent.
+> - Maximum image size is 512000 bytes (500 KB). Larger images will be rejected before the request is sent.
 
 ## Usage (application)
 
@@ -47,7 +47,7 @@ Before sending the request, Laravel validation ensures:
 | Field | Rules |
 |-------|-------|
 | `device_id` | `required`, `integer`, `min:1` |
-| `file` | `required`, `image`, `mimes:jpeg,png,gif,webp,svg+xml`, `max:500` (KB). Actual validator: `File::image(allowSvg: true)->max(500)` |
+| `file` | `required`, `image`, `max:500` (KB). JPEG, PNG, GIF, WebP, or SVG images up to 500 KB (max 500 KB as enforced by `File::image(allowSvg: true)->max(500)`). |
 
 If validation fails, an `Illuminate\Validation\ValidationException` is thrown. Make sure to catch it.
 

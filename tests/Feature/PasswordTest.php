@@ -30,6 +30,15 @@ describe(description: 'reset', tests: function () {
 
         expect(value: $response->status())->toBe(expected: 200);
     });
+
+    test(description: 'returns error via facade', closure: function () {
+        MockClient::global(mockData: [
+            ResetPassword::class => MockResponse::make(body: [], status: 400),
+        ]);
+
+        expect(value: fn () => Password::reset(email: 'user@example.com'))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'update', tests: function () {
