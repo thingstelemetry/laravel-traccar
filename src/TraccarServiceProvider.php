@@ -31,5 +31,11 @@ class TraccarServiceProvider extends ServiceProvider
         $this->publishes(paths: [
             __DIR__ . '/../config/traccar.php' => config_path('traccar.php'),
         ], groups: 'config');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands(commands: [
+                \ThingsTelemetry\Traccar\Console\RunGarbageCollectorCommand::class,
+            ]);
+        }
     }
 }
