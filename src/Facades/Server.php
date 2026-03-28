@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * @method static Collection timezones()
  * @method static string geocode(float $latitude, float $longitude)
  * @method static \ThingsTelemetry\Traccar\Dto\ServerStatisticsData statistics(CarbonInterface $from, CarbonInterface $to)
- * @method static Collection<int, \ThingsTelemetry\Traccar\Dto\ServerStatisticsData> statisticsCollection(CarbonInterface $from, CarbonInterface $to)
+ * @method static \Illuminate\Support\Collection<int, \ThingsTelemetry\Traccar\Dto\ServerStatisticsData> statisticsCollection(CarbonInterface $from, CarbonInterface $to)
  */
 class Server extends Facade
 {

@@ -50,6 +50,32 @@ describe('authorize', function () {
 
         expect($location)->toBe('https://example.com/callback?code=abc&state=state-123');
     });
+
+    test('surfaces error for a missing Location header in authorize', function () {
+        MockClient::global([
+            Authorize::class => MockResponse::make(
+                body: '',
+                status: 200,
+                headers: [],
+            ),
+        ]);
+
+        expect(fn () => Oidc::authorize(
+            clientId: 'client-id',
+            redirectUri: 'https://example.com/callback',
+        ))->toThrow(\Saloon\Exceptions\Request\FatalRequestException::class, 'OIDC authorize failed: Location header is missing from the response.');
+    });
+
+    test('propagates errors in authorize', function () {
+        MockClient::global([
+            Authorize::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(fn () => Oidc::authorize(
+            clientId: 'client-id',
+            redirectUri: 'https://example.com/callback',
+        ))->toThrow(\Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe('getToken', function () {
@@ -90,6 +116,17 @@ describe('getToken', function () {
         expect($response)->toBeInstanceOf(OidcTokenData::class)
             ->and($response->accessToken)->toBe('access-token')
             ->and($response->expiresIn)->toBe(3600);
+    });
+
+    test('propagates errors in get token', function () {
+        MockClient::global([
+            GetToken::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(fn () => Oidc::getToken(
+            grantType: 'authorization_code',
+            code: 'abc',
+        ))->toThrow(\Saloon\Exceptions\Request\RequestException::class);
     });
 });
 

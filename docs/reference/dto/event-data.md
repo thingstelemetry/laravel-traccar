@@ -5,7 +5,7 @@ The `ThingsTelemetry\Traccar\Dto\EventData` represents a Traccar event entity. E
 ```php
 use ThingsTelemetry\Traccar\Facades\Event;
 
-$event = Event::get(1234); // EventData
+$event = Event::get(id: 1234); // EventData
 ```
 
 ## Properties
@@ -16,10 +16,10 @@ $event = Event::get(1234); // EventData
 | `type` | `string` | Traccar event type string. |
 | `eventTime` | `CarbonImmutable` | Time the event occurred. |
 | `deviceId` | `int` | The device associated with this event. |
-| `positionId` | `int?` | Associated position record ID. |
-| `geofenceId` | `int?` | Associated geofence ID. |
-| `maintenanceId` | `int?` | Associated maintenance record ID. |
-| `attributes` | `array` | Event-specific attributes payload. |
+| `positionId` | `int|null` | Associated position record ID. |
+| `geofenceId` | `int|null` | Associated geofence ID. |
+| `maintenanceId` | `int|null` | Associated maintenance record ID. |
+| `attributes` | `array<string, mixed>` | Event-specific attributes payload. |
 
 ## `id` → `integer`
 Unique event identifier in Traccar.

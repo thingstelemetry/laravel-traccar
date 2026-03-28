@@ -138,6 +138,26 @@ describe(description: 'test', tests: function () use ($getAttributeData) {
         expect(value: $response)->toBe(expected: 'some-result');
     });
 
+    test(description: 'tests an attribute returning a JSON object/array', closure: function () use ($getAttributeData) {
+        MockClient::global(mockData: [
+            TestAttribute::class => MockResponse::make('{"key":"value"}'),
+        ]);
+
+        $response = Attribute::test(deviceId: 6, data: AttributeData::fromArray(data: $getAttributeData()));
+
+        expect(value: $response)->toBe(expected: ['key' => 'value']);
+    });
+
+    test(description: 'tests an attribute returning a float number', closure: function () use ($getAttributeData) {
+        MockClient::global(mockData: [
+            TestAttribute::class => MockResponse::make('123.45'),
+        ]);
+
+        $response = Attribute::test(deviceId: 6, data: AttributeData::fromArray(data: $getAttributeData()));
+
+        expect(value: $response)->toBe(expected: 123.45);
+    });
+
     test(description: 'propagates error for a non-2xx response', closure: function () use ($getAttributeData) {
         MockClient::global(mockData: [
             TestAttribute::class => MockResponse::make(body: ['error' => 'Invalid expression'], status: 400),

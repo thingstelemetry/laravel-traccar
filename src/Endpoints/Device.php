@@ -22,7 +22,12 @@ use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceTotals;
 
 class Device extends Traccar
 {
-    /** @throws \Saloon\Exceptions\SaloonException */
+    /**
+     * @param  int[]|null  $ids
+     * @param  string[]|null  $uniqueIds
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
     public function all(
         ?int $userId = null,
         ?array $ids = null,
@@ -120,7 +125,7 @@ class Device extends Traccar
             'file'      => ['required', File::image(allowSvg: true)->max(500)],
         ];
 
-        Validator::make($data, $rules)->validate();
+        Validator::make(data: $data, rules: $rules)->validate();
 
         $mimeType = $file instanceof SymfonyFile
             ? ($file->getMimeType() ?? 'application/octet-stream')

@@ -10,6 +10,7 @@ use ThingsTelemetry\Traccar\Dto\JwksResponseDto;
 use ThingsTelemetry\Traccar\Dto\OidcUserInfoData;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetJwks;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetToken;
+use Saloon\Exceptions\Request\FatalRequestException;
 use ThingsTelemetry\Traccar\Requests\Oidc\Authorize;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetUserInfo;
 
@@ -25,7 +26,7 @@ class Oidc extends Traccar
         ?string $codeChallengeMethod = null,
         ?string $nonce = null,
     ): string {
-        return $this->connector->send(request: new Authorize(
+        $response = $this->connector->send(request: new Authorize(
             clientId: $clientId,
             redirectUri: $redirectUri,
             state: $state,
@@ -34,7 +35,18 @@ class Oidc extends Traccar
             codeChallenge: $codeChallenge,
             codeChallengeMethod: $codeChallengeMethod,
             nonce: $nonce,
-        ))->header(header: 'Location') ?? '';
+        ));
+
+        $location = $response->header(header: 'Location');
+
+        if (is_null($location) || $location === '') {
+            throw new FatalRequestException(
+                new \Exception('OIDC authorize failed: Location header is missing from the response.'),
+                $response->getPendingRequest()
+            );
+        }
+
+        return $location;
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
