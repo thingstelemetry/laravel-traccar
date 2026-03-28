@@ -13,7 +13,7 @@ use ThingsTelemetry\Traccar\Facades\Device;
 $serverInfo = Server::get();
 // Returns: ThingsTelemetry\Traccar\Dto\ServerData
 
-$device = Device::find(id: 1);
+$device = Device::get(id: 1);
 // Returns: ThingsTelemetry\Traccar\Dto\DeviceData
 ```
 
@@ -69,7 +69,7 @@ foreach ($devices as $device) {
 Use `toArray()` method to serialize DTOs back to array format:
 
 ```php
-$device = Device::find(id: 1);
+$device = Device::get(id: 1);
 $array = $device->toArray();
 
 /*
@@ -92,7 +92,7 @@ Some DTO properties are backed enums for type safety:
 use ThingsTelemetry\Traccar\Enums\DeviceStatus;
 use ThingsTelemetry\Traccar\Enums\Map;
 
-$device = Device::find(id: 1);
+$device = Device::get(id: 1);
 
 // Enum value
 echo $device->status->value;    // 'online'

@@ -5,7 +5,7 @@ The `ThingsTelemetry\Traccar\Dto\EventData` represents a Traccar event entity. E
 ```php
 use ThingsTelemetry\Traccar\Facades\Event;
 
-$event = Event::find(1234); // EventData
+$event = Event::get(1234); // EventData
 ```
 
 ## Properties

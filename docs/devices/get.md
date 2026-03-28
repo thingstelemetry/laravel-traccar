@@ -1,4 +1,4 @@
-# Find Device
+# Get Device
 
 Fetch a specific device by ID from your Traccar server.
 
@@ -8,12 +8,12 @@ Fetch a specific device by ID from your Traccar server.
 
 ## Usage
 
-Use the `ThingsTelemetry\Traccar\Facades\Device::find(int $id)` method to retrieve a single device.
+Use the `ThingsTelemetry\Traccar\Facades\Device::get(int $id)` method to retrieve a single device.
 
 ```php
 use ThingsTelemetry\Traccar\Facades\Device;
 
-$device = Device::find(6); // ThingsTelemetry\Traccar\Dto\DeviceData
+$device = Device::get(6); // ThingsTelemetry\Traccar\Dto\DeviceData
 ```
 
 ## Result

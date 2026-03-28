@@ -16,7 +16,7 @@ use ThingsTelemetry\Traccar\Dto\GroupData;
 use ThingsTelemetry\Traccar\Facades\Group;
 
 // 1) Get an existing group
-$group = Group::find(1); // ThingsTelemetry\Traccar\Dto\GroupData
+$group = Group::get(1); // ThingsTelemetry\Traccar\Dto\GroupData
 
 // 2) Create a copy with updated values
 $updatedData = new GroupData(
@@ -48,7 +48,7 @@ $updated->attributes;  // ['color' => 'green', ...]
 You can update only the attributes while preserving other fields:
 
 ```php
-$group = Group::find(1);
+$group = Group::get(1);
 
 $updatedData = new GroupData(
     id: $group->id,
@@ -69,7 +69,7 @@ $updated = Group::update($updatedData);
 Move a group to a different parent:
 
 ```php
-$group = Group::find(2);
+$group = Group::get(2);
 
 $updatedData = new GroupData(
     id: $group->id,
@@ -113,7 +113,7 @@ The specified `groupId` (parent) does not exist.
 ## Related Operations
 
 - [Get All Groups](./all) - Fetch all accessible groups
-- [Get Group](./find) - Fetch a single group
+- [Get Group](./get) - Fetch a single group
 - [Create Group](./create) - Create a new group
 - [Delete Group](./delete) - Remove a group
 

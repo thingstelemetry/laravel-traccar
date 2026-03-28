@@ -9,7 +9,7 @@ use ThingsTelemetry\Traccar\Dto\EventData;
 use ThingsTelemetry\Traccar\Facades\Event;
 use ThingsTelemetry\Traccar\Requests\Event\GetEvent;
 
-describe(description: 'find', tests: function () {
+describe(description: 'get', tests: function () {
     test(description: 'request resolves the correct endpoint', closure: function () {
         $request = new GetEvent(id: 1234);
 
@@ -36,7 +36,7 @@ describe(description: 'find', tests: function () {
             GetEvent::class => MockResponse::make(body: $payload),
         ]);
 
-        $event = Event::find(id: 1234);
+        $event = Event::get(id: 1234);
 
         expect(value: $event)
             ->toBeInstanceOf(class: EventData::class)

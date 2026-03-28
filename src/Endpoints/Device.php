@@ -50,7 +50,7 @@ class Device extends Traccar
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function find(int $id): DeviceData
+    public function get(int $id): DeviceData
     {
         $response = $this->connector->send(request: new GetDevice(id: $id));
 

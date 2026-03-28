@@ -158,7 +158,7 @@ $children = $groups->filter(fn ($g) => $g->groupId === $fleet->id);
 ## Related Operations
 
 - [Get All Groups](./../../groups/all) - Fetch all accessible groups
-- [Get Group](./../../groups/find) - Fetch a single group
+- [Get Group](./../../groups/get) - Fetch a single group
 - [Create Group](./../../groups/create) - Create a new group
 - [Update Group](./../../groups/update) - Update an existing group
 - [Delete Group](./../../groups/delete) - Remove a group

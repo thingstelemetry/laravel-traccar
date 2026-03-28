@@ -31,7 +31,7 @@ class Group extends Traccar
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function find(int $id): GroupData
+    public function get(int $id): GroupData
     {
         $response = $this->connector->send(request: new GetGroup(id: $id));
 

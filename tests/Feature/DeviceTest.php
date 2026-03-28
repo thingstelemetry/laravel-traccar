@@ -47,7 +47,7 @@ describe(description: 'all', tests: function () use ($getDeviceData) {
     });
 });
 
-describe(description: 'find', tests: function () use ($getDeviceData) {
+describe(description: 'get', tests: function () use ($getDeviceData) {
     test(description: 'request resolves the correct endpoint', closure: function () {
         $request = new GetDevice(id: 6);
 
@@ -60,7 +60,7 @@ describe(description: 'find', tests: function () use ($getDeviceData) {
             GetDevice::class => MockResponse::make($getDeviceData()),
         ]);
 
-        $device = Device::find(id: 6);
+        $device = Device::get(id: 6);
 
         expect(value: $device)
             ->toBeInstanceOf(class: DeviceData::class)
@@ -72,7 +72,7 @@ describe(description: 'find', tests: function () use ($getDeviceData) {
             GetDevice::class => MockResponse::make(body: [], status: 200),
         ]);
 
-        expect(value: fn () => Device::find(id: 999))
+        expect(value: fn () => Device::get(id: 999))
             ->toThrow(exception: NotFoundException::class, exceptionMessage: 'Traccar device was not found. Check the device ID and try again.');
     });
 });

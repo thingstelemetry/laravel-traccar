@@ -42,7 +42,7 @@ When you delete a group:
 ## Related Operations
 
 - [Get All Groups](./all) - Fetch all accessible groups
-- [Get Group](./find) - Fetch a single group
+- [Get Group](./get) - Fetch a single group
 - [Create Group](./create) - Create a new group
 - [Update Group](./update) - Update an existing group
 

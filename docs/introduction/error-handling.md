@@ -9,7 +9,7 @@ use ThingsTelemetry\Traccar\Facades\Device;
 use Saloon\Exceptions\Request\RequestException;
 
 try {
-    $device = Device::find(id: 999);
+    $device = Device::get(id: 999);
 } catch (RequestException $e) {
     // Handle API error
     $statusCode = $e->response->status();  // 404
@@ -37,7 +37,7 @@ use ThingsTelemetry\Traccar\Facades\Device;
 use Saloon\Exceptions\Request\RequestException;
 
 try {
-    $device = Device::find(id: 1);
+    $device = Device::get(id: 1);
 } catch (RequestException $e) {
     match ($e->response->status()) {
         401 => logger()->warning('Unauthorized - check API key'),

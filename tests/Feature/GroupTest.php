@@ -43,7 +43,7 @@ describe(description: 'all', tests: function () use ($getGroupData) {
     });
 });
 
-describe(description: 'find', tests: function () use ($getGroupData) {
+describe(description: 'get', tests: function () use ($getGroupData) {
     test(description: 'request resolves the correct endpoint', closure: function () {
         $request = new GetGroup(id: 1);
 
@@ -56,7 +56,7 @@ describe(description: 'find', tests: function () use ($getGroupData) {
             GetGroup::class => MockResponse::make($getGroupData()),
         ]);
 
-        $response = Group::find(id: 1);
+        $response = Group::get(id: 1);
 
         expect(value: $response)
             ->toBeInstanceOf(class: GroupData::class)
@@ -68,7 +68,7 @@ describe(description: 'find', tests: function () use ($getGroupData) {
             GetGroup::class => MockResponse::make(body: [], status: 200),
         ]);
 
-        expect(value: fn () => Group::find(id: 999))
+        expect(value: fn () => Group::get(id: 999))
             ->toThrow(exception: NotFoundException::class, exceptionMessage: 'Traccar group was not found. Check the group ID and try again.');
     });
 });
