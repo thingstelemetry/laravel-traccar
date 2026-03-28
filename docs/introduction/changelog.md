@@ -12,38 +12,14 @@ All notable changes to this project will be documented in this file.
 - **Implemented Endpoints**:
   - `Attribute`, `Audit`, `Calendar`, `Command`, `Device`, `Driver`, `Event`, `Geofence`, `Group`, `Health`, `Maintenance`, `Notification`, `Oidc`, `Order`, `Password`, `Permission`, `Position`, `Report`, `Server`, `Session`, `Share`, `User`.
 
-## [v1.0.0-beta.4] - 2026-03-28
+## [v1.0.0-beta.x] - Beta Releases
 
-### Breaking Changes
-- Renamed `find(int $id)` method to `get(int $id)` in `Device`, `Event`, and `Group` endpoint classes and facades for better API consistency.
-
-### Added
-- `UpdateServerInformation` endpoint integration and related features.
-- Enum references for `Altitude`, `Distance`, `Speed`, `Volume`, and `CoordinateFormat`.
-- `Device` endpoint implementation.
-
-### Changed
-- Migrated documentation from Astro/Starlight to VitePress.
-- Improved error handling and response processing.
-
-## [v1.0.0-beta.3] - 2026-02-21
-
-### Changed
-- Updated Saloon PHP dependencies.
-- Refactored internal request handling for better performance.
-
-## [v1.0.0-beta.2] - 2026-02-18
-
-### Fixed
-- Issue with DTO hydration for nested attributes.
-- Corrected base URL resolution in `TraccarConnector`.
-
-## [v1.0.0-beta.1] - 2026-02-17
-
-### Added
-- Initial beta release with core Traccar API support.
-- Support for Devices, Groups, Users, and Server information.
-- Laravel facades for all major endpoints.
+- Initial beta releases (beta.1 to beta.4) focused on core API implementation.
+- Implemented core endpoints: `Device`, `Event`, `Group`, `User`, and `Server`.
+- Added Laravel facades for streamlined API access.
+- Integrated Saloon PHP for HTTP client foundation.
+- Established DTO and Enum patterns for type safety.
+- Migrated documentation to VitePress.
 
 ## [v0.7.6-alpha] and earlier
 
