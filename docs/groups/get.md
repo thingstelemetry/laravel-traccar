@@ -7,12 +7,12 @@ Fetch a specific group by ID from your Traccar server.
 
 ## Usage
 
-Use the `ThingsTelemetry\Traccar\Facades\Group::find(int $id)` method to retrieve a single group.
+Use the `ThingsTelemetry\Traccar\Facades\Group::get(int $id)` method to retrieve a single group.
 
 ```php
 use ThingsTelemetry\Traccar\Facades\Group;
 
-$group = Group::find(1); // ThingsTelemetry\Traccar\Dto\GroupData
+$group = Group::get(1); // ThingsTelemetry\Traccar\Dto\GroupData
 ```
 
 ## Result

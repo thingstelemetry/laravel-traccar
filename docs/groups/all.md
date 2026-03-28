@@ -80,7 +80,7 @@ $children = $groups->filter(fn ($g) => $g->groupId === 1);
 
 ## Related Operations
 
-- [Get Group](./find) - Fetch a single group by ID
+- [Get Group](./get) - Fetch a single group by ID
 - [Create Group](./create) - Create a new group
 - [Update Group](./update) - Update an existing group
 - [Delete Group](./delete) - Remove a group

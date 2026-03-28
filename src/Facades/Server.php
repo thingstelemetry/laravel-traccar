@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Facade;
 use ThingsTelemetry\Traccar\Dto\ServerData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use Symfony\Component\HttpFoundation\File\File;
-use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
 
 /**
  * @method static ServerData get()
@@ -22,7 +21,7 @@ use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
  * @method static StatusData uploadFile(string $path, UploadedFile|File|string $file)
  * @method static Collection timezones()
  * @method static string geocode(float $latitude, float $longitude)
- * @method static ServerStatisticsData statistics(CarbonInterface $from, CarbonInterface $to)
+ * @method static Collection statistics(CarbonInterface $from, CarbonInterface $to)
  */
 class Server extends Facade
 {

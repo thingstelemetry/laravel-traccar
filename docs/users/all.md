@@ -32,12 +32,14 @@ $users = User::all(
 
 ### Available Parameters
 
-- `userId`: Return users managed by a specific user.
-- `deviceId`: Return users linked to a specific device.
-- `excludeAttributes`: Exclude the `attributes` field from the response.
-- `limit`: Limit the number of returned records.
-- `offset`: Skip a number of records before returning results.
-- `keyword`: Search users by name or email.
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `userId` | `?int` | Return users managed by a specific user. |
+| `deviceId` | `?int` | Return users linked to a specific device. |
+| `excludeAttributes` | `?bool` | Exclude the `attributes` field from the response. |
+| `limit` | `?int` | Limit the number of returned records. |
+| `offset` | `?int` | Skip a number of records before returning results. |
+| `keyword` | `?string` | Search users by name or email. |
 
 ## Result
 

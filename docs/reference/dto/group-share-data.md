@@ -9,6 +9,15 @@ use ThingsTelemetry\Traccar\Facades\Share;
 $share = Share::group(groupId: 2, expiration: CarbonImmutable::now()->addHours(12));
 ```
 
+## Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `groupId` | `int` | Identifier of the shared group. |
+| `token` | `string` | Share token string returned by the server. |
+| `expiration` | `CarbonImmutable` | Token expiration time as a Carbon instance. |
+| `url` | `string` | Computed share URL for the Traccar UI. |
+
 ## `groupId` → `integer`
 
 Identifier of the shared group.

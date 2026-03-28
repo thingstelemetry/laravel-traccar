@@ -93,7 +93,7 @@ This means the specified `groupId` (parent) does not exist. Use the groups API t
 ## Related Operations
 
 - [Get All Groups](./all) - Fetch all accessible groups
-- [Get Group](./find) - Fetch a single group
+- [Get Group](./get) - Fetch a single group
 - [Update Group](./update) - Update an existing group
 - [Delete Group](./delete) - Remove a group
 

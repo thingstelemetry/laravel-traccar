@@ -1,0 +1,150 @@
+<?php
+
+declare(strict_types=1);
+
+use Saloon\Enums\Method;
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
+use ThingsTelemetry\Traccar\Facades\Oidc;
+use ThingsTelemetry\Traccar\Dto\OidcTokenData;
+use ThingsTelemetry\Traccar\Dto\OidcUserInfoData;
+use ThingsTelemetry\Traccar\Requests\Oidc\GetJwks;
+use ThingsTelemetry\Traccar\Requests\Oidc\GetToken;
+use ThingsTelemetry\Traccar\Requests\Oidc\Authorize;
+use ThingsTelemetry\Traccar\Requests\Oidc\GetUserInfo;
+
+describe('authorize', function () {
+    test('request resolves the correct endpoint', function () {
+        $request = new Authorize(
+            clientId: 'client-id',
+            redirectUri: 'https://example.com/callback',
+            state: 'state-123',
+            scope: 'openid profile',
+        );
+
+        expect($request->resolveEndpoint())->toBe('/oidc/authorize')
+            ->and($request->getMethod())->toBe(Method::GET)
+            ->and($request->query()->all())->toMatchArray([
+                'client_id'    => 'client-id',
+                'redirect_uri' => 'https://example.com/callback',
+                'state'        => 'state-123',
+                'scope'        => 'openid profile',
+            ]);
+    });
+
+    test('returns authorize location via facade', function () {
+        MockClient::global([
+            Authorize::class => MockResponse::make(
+                body: '',
+                status: 303,
+                headers: ['Location' => 'https://example.com/callback?code=abc&state=state-123'],
+            ),
+        ]);
+
+        $location = Oidc::authorize(
+            clientId: 'client-id',
+            redirectUri: 'https://example.com/callback',
+            state: 'state-123',
+        );
+
+        expect($location)->toBe('https://example.com/callback?code=abc&state=state-123');
+    });
+});
+
+describe('getToken', function () {
+    test('request resolves the correct endpoint', function () {
+        $request = new GetToken(
+            grantType: 'authorization_code',
+            code: 'abc',
+            redirectUri: 'https://example.com/callback',
+        );
+
+        expect($request->resolveEndpoint())->toBe('/oidc/token')
+            ->and($request->getMethod())->toBe(Method::POST)
+            ->and($request->body()->all())->toMatchArray([
+                'grant_type'   => 'authorization_code',
+                'code'         => 'abc',
+                'redirect_uri' => 'https://example.com/callback',
+            ]);
+    });
+
+    test('returns token information via facade', function () {
+        $payload = [
+            'access_token' => 'access-token',
+            'token_type'   => 'Bearer',
+            'expires_in'   => 3600,
+            'id_token'     => 'id-token',
+            'scope'        => 'openid profile',
+        ];
+
+        MockClient::global([
+            GetToken::class => MockResponse::make($payload),
+        ]);
+
+        $response = Oidc::getToken(
+            grantType: 'authorization_code',
+            code: 'abc',
+        );
+
+        expect($response)->toBeInstanceOf(OidcTokenData::class)
+            ->and($response->accessToken)->toBe('access-token')
+            ->and($response->expiresIn)->toBe(3600);
+    });
+});
+
+describe('getUserInfo', function () {
+    test('request resolves the correct endpoint', function () {
+        $request = new GetUserInfo();
+
+        expect($request->resolveEndpoint())->toBe('/oidc/userinfo')
+            ->and($request->getMethod())->toBe(Method::GET);
+    });
+
+    test('returns user info via facade', function () {
+        $payload = [
+            'sub'   => '1',
+            'name'  => 'Admin',
+            'email' => 'admin@example.com',
+        ];
+
+        MockClient::global([
+            GetUserInfo::class => MockResponse::make($payload),
+        ]);
+
+        $response = Oidc::getUserInfo();
+
+        expect($response)->toBeInstanceOf(OidcUserInfoData::class)
+            ->and($response->sub)->toBe('1')
+            ->and($response->name)->toBe('Admin');
+    });
+});
+
+describe('getJwks', function () {
+    test('request resolves the correct endpoint', function () {
+        $request = new GetJwks();
+
+        expect($request->resolveEndpoint())->toBe('/oidc/jwks')
+            ->and($request->getMethod())->toBe(Method::GET);
+    });
+
+    test('returns jwks via facade', function () {
+        $payload = [
+            'keys' => [
+                [
+                    'kty' => 'RSA',
+                    'alg' => 'RS256',
+                    'use' => 'sig',
+                ],
+            ],
+        ];
+
+        MockClient::global([
+            GetJwks::class => MockResponse::make($payload),
+        ]);
+
+        $response = Oidc::getJwks();
+
+        expect($response)->toBeArray()
+            ->and($response)->toHaveKey('keys');
+    });
+});

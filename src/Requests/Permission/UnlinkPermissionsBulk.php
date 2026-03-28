@@ -38,7 +38,7 @@ class UnlinkPermissionsBulk extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/permissions';
+        return '/permissions/bulk';
     }
 
     public function createDtoFromResponse(Response $response): StatusData

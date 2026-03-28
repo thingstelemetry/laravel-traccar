@@ -10,6 +10,7 @@ use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Dto\AttributeData;
 use ThingsTelemetry\Traccar\Facades\Attribute;
+use ThingsTelemetry\Traccar\Requests\Attribute\TestAttribute;
 use ThingsTelemetry\Traccar\Requests\Attribute\CreateAttribute;
 use ThingsTelemetry\Traccar\Requests\Attribute\DeleteAttribute;
 use ThingsTelemetry\Traccar\Requests\Attribute\UpdateAttribute;
@@ -93,6 +94,48 @@ describe(description: 'update', tests: function () use ($getAttributeData) {
         $response = Attribute::update(data: AttributeData::fromArray(data: $getAttributeData()));
 
         expect(value: $response)->toBeInstanceOf(class: AttributeData::class);
+    });
+});
+
+describe(description: 'test', tests: function () use ($getAttributeData) {
+    test(description: 'request sends the correct query and body', closure: function () use ($getAttributeData) {
+        $data = AttributeData::fromArray(data: $getAttributeData());
+        $request = new TestAttribute(deviceId: 6, data: $data);
+
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/attributes/computed/test')
+            ->and(value: $request->getMethod())->toBe(expected: Method::POST)
+            ->and(value: $request->query()->all())->toBe(expected: ['deviceId' => 6])
+            ->and(value: $request->body()->all())->toBe(expected: $data->toArray());
+    });
+
+    test(description: 'tests an attribute returning a number', closure: function () use ($getAttributeData) {
+        MockClient::global(mockData: [
+            TestAttribute::class => MockResponse::make('123'),
+        ]);
+
+        $response = Attribute::test(deviceId: 6, data: AttributeData::fromArray(data: $getAttributeData()));
+
+        expect(value: $response)->toBe(expected: 123);
+    });
+
+    test(description: 'tests an attribute returning a boolean', closure: function () use ($getAttributeData) {
+        MockClient::global(mockData: [
+            TestAttribute::class => MockResponse::make('true'),
+        ]);
+
+        $response = Attribute::test(deviceId: 6, data: AttributeData::fromArray(data: $getAttributeData()));
+
+        expect(value: $response)->toBe(expected: true);
+    });
+
+    test(description: 'tests an attribute returning a string', closure: function () use ($getAttributeData) {
+        MockClient::global(mockData: [
+            TestAttribute::class => MockResponse::make('some-result'),
+        ]);
+
+        $response = Attribute::test(deviceId: 6, data: AttributeData::fromArray(data: $getAttributeData()));
+
+        expect(value: $response)->toBe(expected: 'some-result');
     });
 });
 

@@ -9,6 +9,15 @@ use ThingsTelemetry\Traccar\Facades\Share;
 $share = Share::device(deviceId: 6, expiration: CarbonImmutable::now()->addHours(12));
 ```
 
+## Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `deviceId` | `int` | Identifier of the shared device. |
+| `token` | `string` | Share token string returned by the server. |
+| `expiration` | `CarbonImmutable` | Token expiration time as a Carbon instance. |
+| `url` | `string` | Computed share URL for the Traccar UI. |
+
 ## `deviceId` → `integer`
 
 Identifier of the shared device.

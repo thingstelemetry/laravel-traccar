@@ -216,7 +216,19 @@ describe(description: 'send', tests: function () use ($getCommandData, $getQueue
             ->and(value: $result->queuedCommands)->toHaveCount(count: 0);
     });
 
-    test(description: 'normalizes queued command responses', closure: function () use ($getCommandData, $getQueuedCommandData) {
+    test(description: 'normalizes single queued command response', closure: function () use ($getCommandData, $getQueuedCommandData) {
+        MockClient::global(mockData: [
+            SendCommand::class => MockResponse::make($getQueuedCommandData()),
+        ]);
+
+        $result = Command::send(data: CommandData::fromArray(data: $getCommandData()));
+
+        expect(value: $result->sentCommand)->toBeNull()
+            ->and(value: $result->queuedCommands->first())->toBeInstanceOf(class: QueuedCommandData::class)
+            ->and(value: $result->queuedCommands)->toHaveCount(count: 1);
+    });
+
+    test(description: 'normalizes multiple queued command responses', closure: function () use ($getCommandData, $getQueuedCommandData) {
         MockClient::global(mockData: [
             SendCommand::class => MockResponse::make([$getQueuedCommandData(), $getQueuedCommandData()]),
         ]);

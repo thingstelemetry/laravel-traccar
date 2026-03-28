@@ -39,7 +39,7 @@ class Server extends Traccar
     /** @throws \Saloon\Exceptions\SaloonException */
     public function update(ServerData $data): ServerData
     {
-        $response = $this->connector->send(request: new UpdateServerInformation($data));
+        $response = $this->connector->send(request: new UpdateServerInformation(data: $data));
 
         return $response->dtoOrFail();
     }
@@ -147,8 +147,12 @@ class Server extends Traccar
         return $response->dtoOrFail();
     }
 
-    /** @throws \Saloon\Exceptions\SaloonException */
-    public function statistics(CarbonInterface $from, CarbonInterface $to): ServerStatisticsData
+    /**
+     * @return Collection<int, ServerStatisticsData>
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function statistics(CarbonInterface $from, CarbonInterface $to): Collection
     {
         $response = $this->connector->send(
             request: new GetServerStatistics(from: $from, to: $to)

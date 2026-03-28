@@ -19,6 +19,7 @@ class GetEventsReport extends Request
      * @param  array<int>  $deviceIds
      * @param  array<int>  $groupIds
      * @param  array<string>|null  $types
+     * @param  array<string>|null  $alarms
      */
     public function __construct(
         public array $deviceIds,
@@ -26,6 +27,7 @@ class GetEventsReport extends Request
         public CarbonImmutable $from,
         public CarbonImmutable $to,
         public ?array $types = null,
+        public ?array $alarms = null,
     ) {
     }
 
@@ -48,6 +50,7 @@ class GetEventsReport extends Request
             'deviceId' => $this->deviceIds,
             'groupId'  => $this->groupIds,
             'type'     => $this->types,
+            'alarm'    => $this->alarms,
             'from'     => $this->from->toIso8601String(),
             'to'       => $this->to->toIso8601String(),
         ], static fn (mixed $value): bool => $value !== null && $value !== []);

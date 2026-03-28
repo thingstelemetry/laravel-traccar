@@ -167,11 +167,13 @@ Whether text/SMS notifications are enabled.
 $info->textEnabled; // false
 ```
 
-## `storageSpace` → `StorageInfo`
+## `storageSpace` → `StorageInfo|null`
 
-Instance of `ThingsTelemetry\Traccar\Support` structured storage class.
+Instance of `ThingsTelemetry\Traccar\Support\StorageInfo` class or `null` if the user lacks permissions or the server doesn't return it.
 ```php
-$info->storageSpace->formatted();
+if ($info->storageSpace) {
+    $info->storageSpace->formatted();
+}
 // [
 //   [
 //      'free' => '9.23 GB',
@@ -184,7 +186,7 @@ $info->storageSpace->formatted();
 
 ## `newServer` → `boolean`
 
-Indicates the server is new.
+Indicates if the server is a fresh installation. Defaults to `false` if not provided by the server.
 ```php
 $info->newServer; // false
 ```

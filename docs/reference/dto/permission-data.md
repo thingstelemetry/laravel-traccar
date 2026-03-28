@@ -23,6 +23,7 @@ $permission = new PermissionData(userId: 5, deviceId: 10);
 | `driverId` | `?int` | Driver identifier |
 | `managedUserId` | `?int` | Managed user identifier |
 | `commandId` | `?int` | Command identifier |
+| `maintenanceId` | `?int` | Maintenance identifier |
 
 ## Rules
 
@@ -30,17 +31,19 @@ $permission = new PermissionData(userId: 5, deviceId: 10);
 - **Order matters**: First parameter is the subject, second is the object
 
 ### Valid First Parameters (Subject)
-- `userId`
-- `deviceId`
-- `groupId`
+
+| Parameter | Description |
+|-----------|-------------|
+| `userId` | User identifier |
+| `deviceId` | Device identifier |
+| `groupId` | Group identifier |
 
 ### Valid Second Parameters (Object)
 
-When first parameter is `userId`:
-- `deviceId`, `groupId`, `geofenceId`, `notificationId`, `calendarId`, `attributeId`, `driverId`, `managedUserId`, `commandId`
-
-When first parameter is `deviceId` or `groupId`:
-- `geofenceId`, `notificationId`, `attributeId`, `driverId`, `commandId`
+| When First Parameter is | Valid Second Parameters |
+|-------------------------|-------------------------|
+| `userId` | `deviceId`, `groupId`, `geofenceId`, `notificationId`, `calendarId`, `attributeId`, `driverId`, `managedUserId`, `commandId`, `maintenanceId` |
+| `deviceId` or `groupId` | `geofenceId`, `notificationId`, `attributeId`, `driverId`, `commandId`, `maintenanceId` |
 
 ## Validation
 
@@ -84,6 +87,9 @@ $permission = new PermissionData(userId: 5, managedUserId: 8);
 
 // User to Command
 $permission = new PermissionData(userId: 5, commandId: 9);
+
+// User to Maintenance
+$permission = new PermissionData(userId: 5, maintenanceId: 10);
 ```
 
 ### Device/Group Permissions
@@ -106,6 +112,9 @@ $permission = new PermissionData(groupId: 2, notificationId: 7);
 
 // Group to Command
 $permission = new PermissionData(groupId: 2, commandId: 9);
+
+// Device to Maintenance
+$permission = new PermissionData(deviceId: 10, maintenanceId: 5);
 ```
 
 ## Serialization

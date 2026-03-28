@@ -13,7 +13,7 @@ use ThingsTelemetry\Traccar\Facades\User;
 
 // GET requests
 $serverInfo = Server::get();
-$device = Device::find(id: 1);
+$device = Device::get(id: 1);
 $devices = Device::all();
 $user = User::get(id: 5);
 ```
@@ -43,7 +43,7 @@ $device = Device::create(data: $deviceData);
 Pass a modified DTO to update methods:
 
 ```php
-$device = Device::find(id: 1);
+$device = Device::get(id: 1);
 $device->name = 'Updated Name';
 
 $updatedDevice = Device::update(data: $device);

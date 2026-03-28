@@ -16,6 +16,7 @@ $from = CarbonImmutable::parse('2025-11-22T18:30:00Z');
 $to   = CarbonImmutable::parse('2025-11-23T18:30:00Z');
 
 $history = Position::all(deviceId: 6, from: $from, to: $to);
+$geofence = Position::all(deviceId: 6, from: $from, to: $to, geofenceId: 10);
 $selected = Position::all(ids: [12345, 67890]);
 ```
 

@@ -1,4 +1,4 @@
-# Find Device
+# Get Device
 
 Fetch a specific device by ID from your Traccar server.
 
@@ -8,12 +8,12 @@ Fetch a specific device by ID from your Traccar server.
 
 ## Usage
 
-Use the `ThingsTelemetry\Traccar\Facades\Device::find(int $id)` method to retrieve a single device.
+Use the `ThingsTelemetry\Traccar\Facades\Device::get(int $id)` method to retrieve a single device.
 
 ```php
 use ThingsTelemetry\Traccar\Facades\Device;
 
-$device = Device::find(6); // ThingsTelemetry\Traccar\Dto\DeviceData
+$device = Device::get(6); // ThingsTelemetry\Traccar\Dto\DeviceData
 ```
 
 ## Result
@@ -55,7 +55,6 @@ $device->attributes->fuelIncreaseThreshold; // 10.0
 ## Related Operations
 
 - [Get All Devices](./all) - Fetch all accessible devices
-- [All Devices With Filters](./all-filters) - Fetch devices with filters
 - [Create Device](./create) - Create a new device
 - [Update Device](./update) - Update an existing device
 - [Delete Device](./delete) - Remove a device

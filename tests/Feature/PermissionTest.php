@@ -76,7 +76,7 @@ describe(description: 'link bulk', tests: function () {
         ];
         $request = new LinkPermissionsBulk(permissions: $permissions);
 
-        expect(value: $request->resolveEndpoint())->toBe(expected: '/permissions')
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/permissions/bulk')
             ->and(value: $request->getMethod())->toBe(expected: Method::POST)
             ->and(value: $request->body()->all())->toBe(expected: [
                 ['userId' => 1, 'deviceId' => 5],
@@ -109,7 +109,7 @@ describe(description: 'unlink bulk', tests: function () {
         ];
         $request = new UnlinkPermissionsBulk(permissions: $permissions);
 
-        expect(value: $request->resolveEndpoint())->toBe(expected: '/permissions')
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/permissions/bulk')
             ->and(value: $request->getMethod())->toBe(expected: Method::DELETE)
             ->and(value: $request->body()->all())->toBe(expected: [
                 ['userId' => 1, 'deviceId' => 5],

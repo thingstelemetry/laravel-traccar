@@ -3,16 +3,76 @@
 Fetch the list of devices from your Traccar server.
 
 > [!WARNING]
-> This operation can only be used by admins or managers to fetch all entities.
+> - Standard users can only use this operation with their own `userId`. Admins or managers may request devices for any user.
+> - Without any params, returns a list of the user's devices
 
 ## Request
 
-Use the `ThingsTelemetry\Traccar\Facades\Device::all()` method to retrieve all devices.
+Use the `ThingsTelemetry\Traccar\Facades\Device::all()` method to retrieve devices.
 
 ```php
 use ThingsTelemetry\Traccar\Facades\Device;
 
+// Returns a list of the user's devices
 $devices = Device::all(); // Illuminate\Support\Collection of DeviceData
+```
+
+## Usage
+
+### 1) For a given user
+
+```php
+use ThingsTelemetry\Traccar\Facades\Device;
+
+$userId = 123;
+$devices = Device::all(userId: $userId); // Illuminate\Support\Collection of DeviceData
+```
+
+### 2) By device IDs
+
+```php
+use ThingsTelemetry\Traccar\Facades\Device;
+
+$devices = Device::all(ids: [6, 7]); // Illuminate\Support\Collection of DeviceData
+```
+
+### 3) By uniqueIds
+
+```php
+use ThingsTelemetry\Traccar\Facades\Device;
+
+$devices = Device::all(uniqueIds: ['ABC123', 'XYZ789']); // Illuminate\Support\Collection of DeviceData
+```
+
+### 4) Combined filters (userId + ids + uniqueIds)
+
+```php
+use ThingsTelemetry\Traccar\Facades\Device;
+
+$devices = Device::all(userId: 123, ids: [6], uniqueIds: ['ABC123']); // Illuminate\Support\Collection of DeviceData
+```
+
+### 5) Pagination and Search
+
+```php
+use ThingsTelemetry\Traccar\Facades\Device;
+
+$devices = Device::all(
+    limit: 10,
+    offset: 0,
+    keyword: 'truck'
+);
+```
+
+### 6) Advanced Flags
+
+```php
+use ThingsTelemetry\Traccar\Facades\Device;
+
+$devices = Device::all(
+    all: true, // Fetch all devices (Admin only)
+    excludeAttributes: true // Exclude attributes from the response
+);
 ```
 
 ## Results

@@ -24,6 +24,7 @@ class GetSummaryReport extends Request
         public array $groupIds,
         public CarbonImmutable $from,
         public CarbonImmutable $to,
+        public bool $daily = false,
     ) {
     }
 
@@ -47,6 +48,7 @@ class GetSummaryReport extends Request
             'groupId'  => $this->groupIds,
             'from'     => $this->from->toIso8601String(),
             'to'       => $this->to->toIso8601String(),
-        ], static fn (mixed $value): bool => $value !== []);
+            'daily'    => $this->daily,
+        ], static fn (mixed $value): bool => $value !== [] && $value !== null);
     }
 }

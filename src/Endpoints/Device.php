@@ -17,22 +17,32 @@ use ThingsTelemetry\Traccar\Requests\Device\DeleteDevice;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDevice;
 use ThingsTelemetry\Traccar\Requests\Device\GetAllDevices;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
-use ThingsTelemetry\Traccar\Requests\Device\GetForUserDevices;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceImage;
 use ThingsTelemetry\Traccar\Requests\Device\UpdateDeviceTotals;
 
 class Device extends Traccar
 {
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function all(?int $userId = null, ?array $ids = null, ?array $uniqueIds = null): Collection
-    {
-        $request = $userId !== null || $ids !== null || $uniqueIds !== null
-            ? new GetForUserDevices(
-                userId: $userId,
-                ids: $ids,
-                uniqueIds: $uniqueIds,
-            )
-            : new GetAllDevices();
+    public function all(
+        ?int $userId = null,
+        ?array $ids = null,
+        ?array $uniqueIds = null,
+        ?bool $all = null,
+        ?bool $excludeAttributes = null,
+        ?int $limit = null,
+        ?int $offset = null,
+        ?string $keyword = null,
+    ): Collection {
+        $request = new GetAllDevices(
+            userId: $userId,
+            ids: $ids,
+            uniqueIds: $uniqueIds,
+            all: $all,
+            excludeAttributes: $excludeAttributes,
+            limit: $limit,
+            offset: $offset,
+            keyword: $keyword,
+        );
 
         $response = $this->connector->send(request: $request);
 
@@ -40,7 +50,7 @@ class Device extends Traccar
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function find(int $id): DeviceData
+    public function get(int $id): DeviceData
     {
         $response = $this->connector->send(request: new GetDevice(id: $id));
 

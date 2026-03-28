@@ -33,9 +33,9 @@ class ShareDevice extends Request implements HasBody
     {
         return DeviceShareData::fromToken(
             deviceId: $this->deviceId,
-            token: $response->body(),
+            token: mb_trim(string: $response->body(), characters: '"'),
             expiration: $this->expiration,
-            apiBaseUrl: config('traccar.base_url'),
+            apiBaseUrl: $response->getPendingRequest()->getConnector()->resolveBaseUrl(),
         );
     }
 

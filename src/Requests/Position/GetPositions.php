@@ -23,6 +23,7 @@ class GetPositions extends Request
         private ?int $deviceId = null,
         private ?CarbonInterface $from = null,
         private ?CarbonInterface $to = null,
+        private ?int $geofenceId = null,
         private ?array $ids = null,
     ) {
     }
@@ -58,6 +59,10 @@ class GetPositions extends Request
 
         if ($this->to !== null) {
             $query['to'] = $this->to->toIso8601String();
+        }
+
+        if ($this->geofenceId !== null) {
+            $query['geofenceId'] = $this->geofenceId;
         }
 
         if ($this->ids !== null && $this->ids !== []) {

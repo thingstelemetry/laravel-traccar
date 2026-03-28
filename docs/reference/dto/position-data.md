@@ -8,6 +8,28 @@ use ThingsTelemetry\Traccar\Facades\Position;
 $pos = Position::all(ids: [12345])->first(); // PositionData
 ```
 
+## Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Unique position identifier. |
+| `deviceId` | `int` | The device that produced this position. |
+| `protocol` | `string` | Connector/protocol name. |
+| `deviceTime` | `CarbonImmutable` | Timestamp when the device recorded the position. |
+| `fixTime` | `CarbonImmutable` | Timestamp of the GPS fix. |
+| `serverTime` | `CarbonImmutable` | Timestamp when the server stored the position. |
+| `valid` | `bool` | Whether the position is considered valid. |
+| `latitude` | `float` | Latitude in decimal degrees. |
+| `longitude` | `float` | Longitude in decimal degrees. |
+| `altitude` | `float` | Altitude in meters. |
+| `speed` | `float` | Speed in knots. |
+| `course` | `float` | Heading/course in degrees. |
+| `address` | `string` | Resolved human-readable address. |
+| `accuracy` | `float` | Estimated accuracy. |
+| `network` | `array` | Raw network-related information. |
+| `geofenceIds` | `array` | IDs of geofences related to this position. |
+| `attributes` | `array` | Additional attributes returned by Traccar. |
+
 ## `id` → `integer`
 Unique position identifier in Traccar.
 

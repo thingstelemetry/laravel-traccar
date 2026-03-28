@@ -11,7 +11,14 @@ use ThingsTelemetry\Traccar\Facades\Report;
 $from = CarbonImmutable::parse('2025-11-22T18:30:00Z');
 $to = CarbonImmutable::parse('2025-11-23T18:30:00Z');
 
-$report = Report::events(deviceIds: [6], groupIds: [], from: $from, to: $to, types: ['ignitionOn']);
+$report = Report::events(
+    deviceIds: [6], 
+    groupIds: [], 
+    from: $from, 
+    to: $to, 
+    types: ['ignitionOn'], 
+    alarms: ['vibration']
+);
 ```
 
 ## Result

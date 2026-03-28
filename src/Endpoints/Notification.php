@@ -10,6 +10,7 @@ use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Dto\NotificationData;
 use ThingsTelemetry\Traccar\Dto\NotificationTypeData;
 use ThingsTelemetry\Traccar\Dto\NotificationMessageData;
+use ThingsTelemetry\Traccar\Requests\Notification\GetNotificators;
 use ThingsTelemetry\Traccar\Requests\Notification\SendNotification;
 use ThingsTelemetry\Traccar\Requests\Notification\CreateNotification;
 use ThingsTelemetry\Traccar\Requests\Notification\DeleteNotification;
@@ -65,10 +66,20 @@ class Notification extends Traccar
         return $this->connector->send(request: new GetNotificationTypes())->dtoOrFail();
     }
 
-    /** @throws \Saloon\Exceptions\SaloonException */
-    public function sendTest(): StatusData
+    /**
+     * @return Collection<int, NotificationTypeData>
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function notificators(?bool $announcement = null): Collection
     {
-        return $this->connector->send(request: new SendTestNotification())->dtoOrFail();
+        return $this->connector->send(request: new GetNotificators(announcement: $announcement))->dtoOrFail();
+    }
+
+    /** @throws \Saloon\Exceptions\SaloonException */
+    public function sendTest(?string $notificator = null): StatusData
+    {
+        return $this->connector->send(request: new SendTestNotification(notificator: $notificator))->dtoOrFail();
     }
 
     /**
