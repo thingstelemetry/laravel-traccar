@@ -28,6 +28,7 @@ export default defineConfig({
         nav: [
             {text: 'Home', link: '/'},
             {text: 'Guide', link: '/introduction/getting-started'},
+            {text: 'Changelog', link: '/introduction/changelog'},
         ],
 
         sidebar: [
@@ -40,6 +41,7 @@ export default defineConfig({
                     {text: 'Making Requests', link: '/introduction/making-request'},
                     {text: 'Handling Responses', link: '/introduction/handling-response'},
                     {text: 'Error Handling', link: '/introduction/error-handling'},
+                    {text: 'Changelog', link: '/introduction/changelog'},
                 ]
             },
             {
@@ -87,7 +89,7 @@ export default defineConfig({
                         text: 'Devices',
                         collapsed: true,
                         items: [
-                            {text: 'Find', link: '/devices/find'},
+                            {text: 'Get', link: '/devices/get'},
                             {text: 'All', link: '/devices/all'},
                             {text: 'Create Device', link: '/devices/create'},
                             {text: 'Update Device', link: '/devices/update'},
@@ -100,7 +102,7 @@ export default defineConfig({
                         text: 'Groups',
                         collapsed: true,
                         items: [
-                            {text: 'Find', link: '/groups/find'},
+                            {text: 'Get', link: '/groups/get'},
                             {text: 'All', link: '/groups/all'},
                             {text: 'Create Group', link: '/groups/create'},
                             {text: 'Update Group', link: '/groups/update'},
@@ -119,7 +121,7 @@ export default defineConfig({
                         text: 'Users',
                         collapsed: true,
                         items: [
-                            {text: 'Find', link: '/users/find'},
+                            {text: 'Get', link: '/users/get'},
                             {text: 'All', link: '/users/all'},
                             {text: 'Create User', link: '/users/create'},
                             {text: 'Update User', link: '/users/update'},
@@ -202,7 +204,7 @@ export default defineConfig({
                         text: 'Events',
                         collapsed: true,
                         items: [
-                            {text: 'Find', link: '/events/find'},
+                            {text: 'Get', link: '/events/get'},
                         ]
                     },
                     {

@@ -1,28 +1,28 @@
 # Getting Started
 
-**Things Telemetry Laravel Traccar** is a Laravel specific composer package that simplifies integration with the Traccar GPS tracking platform. It provides an elegant, expressive API to interact with Traccar’s REST endpoints.
+**Things Telemetry Laravel Traccar** is a Laravel-specific composer package that simplifies integration with the Traccar GPS tracking platform. It provides an elegant, expressive API to interact with Traccar’s REST endpoints.
 
 
 ## Why This Package?
 
-- 🚀 Integrate Fast – Quick setup with your Traccar API key.
-- ✅ Full API Coverage – Access all Traccar endpoints from Laravel.
-- 🧑🏾‍💻 Built for Developers – DTOs, consistent error handling, and smooth setup.
-- 🧭 Documented & Tested – Clear docs and robust test coverage.
-- 🔄 Real-Time Sync – Fetch and sync devices, positions, and events easily.
-- 🔐 Secure Authentication – Token-based or credential-based API access.
-- ⚙️ Configurable Endpoints – Manage URLs and API keys via .env.
-- 🧩 Extendable Architecture – Override or extend core functionality.
-- 🕵🏾‍♂️ Detailed Logging – Track API requests, responses, and errors.
-- 🧱 Fluent API Design – Chainable, expressive methods like native Laravel syntax.
-- 🧰 Helper Commands – Artisan tools for quick testing and syncing.
-- 📦 Production Ready – Reliable and scalable for enterprise use.
+- **Integrate Fast** – Quick setup with your Traccar API key.
+- **Full API Coverage** – Access all Traccar endpoints from Laravel.
+- **Built for Developers** – DTOs, consistent error handling, and smooth setup.
+- **Documented & Tested** – Clear docs and robust test coverage.
+- **Real-Time Sync** – Fetch and sync devices, positions, and events easily.
+- **Secure Authentication** – Token-based or credential-based API access.
+-  **Configurable Endpoints** – Manage URLs and API keys via .env.
+- **Extendable Architecture** – Override or extend core functionality.
+- **Detailed Logging** – Track API requests, responses, and errors.
+- **Fluent API Design** – Chainable, expressive methods like native Laravel syntax.
+- **Helper Commands** – Artisan tools for quick testing and syncing.
+- **Production Ready** – Reliable and scalable for enterprise use.
 
 ## Requirements
 
-| Version | PHP    | Composer | Laravel |
-|---------|--------|----------|---------|
-| 1.x     | >= 8.4 | Required | >= 11.x |
+| Version | PHP      | Composer | Laravel    |
+|---------|----------|----------|------------|
+| 1.x     | 8.4, 8.5 | Required | 12.x, 13.x |
 
 > [!IMPORTANT]
 > This package supports Laravel package auto-discovery - no need to register the service provider.
