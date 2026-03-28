@@ -13,7 +13,6 @@ use ThingsTelemetry\Traccar\Dto\ServerData;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Facades\Server;
 use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
-use Saloon\Exceptions\Request\Statuses\NotFoundException;
 use ThingsTelemetry\Traccar\Requests\Server\RebootServer;
 use ThingsTelemetry\Traccar\Requests\Server\GetServerCache;
 use ThingsTelemetry\Traccar\Requests\Server\ReverseGeocode;
@@ -253,18 +252,7 @@ describe(description: 'statistics', tests: function () {
         $stats = Server::statistics(from: $from, to: $to);
 
         expect(value: $stats)
-            ->toBeInstanceOf(class: ServerStatisticsData::class);
-    });
-
-    test(description: 'throws not found when the statistics response is empty', closure: function () {
-        MockClient::global(mockData: [
-            GetServerStatistics::class => MockResponse::make(body: [], status: 200),
-        ]);
-
-        $from = CarbonImmutable::parse(time: '2019-08-24T00:00:00Z');
-        $to = CarbonImmutable::parse(time: '2019-08-25T00:00:00Z');
-
-        expect(value: fn () => Server::statistics(from: $from, to: $to))
-            ->toThrow(exception: NotFoundException::class, exceptionMessage: 'Statistics were not found. Check the date range and try again.');
+            ->toBeInstanceOf(class: Collection::class)
+            ->and(value: $stats->first())->toBeInstanceOf(class: ServerStatisticsData::class);
     });
 });

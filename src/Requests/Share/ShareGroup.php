@@ -33,7 +33,7 @@ class ShareGroup extends Request implements HasBody
     {
         return GroupShareData::fromToken(
             groupId: $this->groupId,
-            token: trim(string: $response->body(), characters: '"'),
+            token: mb_trim(string: $response->body(), characters: '"'),
             expiration: $this->expiration,
             apiBaseUrl: $response->getPendingRequest()->getConnector()->resolveBaseUrl(),
         );

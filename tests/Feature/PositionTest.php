@@ -42,15 +42,16 @@ describe(description: 'all', tests: function () use ($getPositionData) {
     test(description: 'request sends the correct query parameters', closure: function () {
         $from = CarbonImmutable::parse(time: '2026-11-22T18:30:00Z');
         $to = CarbonImmutable::parse(time: '2026-11-23T18:30:00Z');
-        $request = new GetPositions(deviceId: 6, from: $from, to: $to, ids: [123, 456]);
+        $request = new GetPositions(deviceId: 6, from: $from, to: $to, geofenceId: 789, ids: [123, 456]);
 
         expect(value: $request->resolveEndpoint())->toBe(expected: '/positions')
             ->and(value: $request->getMethod())->toBe(expected: Method::GET)
             ->and(value: $request->query()->all())->toBe(expected: [
-                'deviceId' => 6,
-                'from'     => $from->toIso8601String(),
-                'to'       => $to->toIso8601String(),
-                'id'       => [123, 456],
+                'deviceId'   => 6,
+                'from'       => $from->toIso8601String(),
+                'to'         => $to->toIso8601String(),
+                'geofenceId' => 789,
+                'id'         => [123, 456],
             ]);
     });
 
@@ -59,7 +60,7 @@ describe(description: 'all', tests: function () use ($getPositionData) {
             GetPositions::class => MockResponse::make([$getPositionData()]),
         ]);
 
-        $positions = Position::all(ids: [12345]);
+        $positions = Position::all(geofenceId: 789, ids: [12345]);
 
         expect(value: $positions)
             ->toBeInstanceOf(class: Collection::class)

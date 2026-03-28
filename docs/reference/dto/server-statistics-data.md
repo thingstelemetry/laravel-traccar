@@ -3,7 +3,8 @@
 Represents one statistics record returned by the Traccar `/statistics` endpoint.
 
 ```php
-$first = Server::statistics($from, $to);
+$stats = Server::statistics($from, $to);
+$first = $stats->first();
 ```
 
 ## `captureTime` → `CarbonImmutable`

@@ -36,8 +36,8 @@ While most fields are cast into a string or ints, some are cast into a DTO/Servi
 - **`coordinateFormat`** → [`ThingsTelemetry\Traccar\Enums\CoordinateFormat`](./../reference/enums/coordinate-format)  
   *Enum defining how coordinates are displayed or formatted.*
 
-- **`storage`** → [`ThingsTelemetry\Traccar\Support\StorageInfo`](./../reference/enums/map)  
-  *Service class representing storage information (total, free, etc.).*
+- **`storage`** → [`ThingsTelemetry\Traccar\Support\StorageInfo`](./../reference/dto/server-data)  
+  *Service class representing storage information (total, free, etc.). Can be `null` if the user lacks permissions.*
 > [!IMPORTANT]
 > Refer to the [ServerData DTO documentation](./../reference/dto/server-data) for more details on the DTO structure.
 

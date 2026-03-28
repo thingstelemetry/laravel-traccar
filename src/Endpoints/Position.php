@@ -30,6 +30,7 @@ class Position extends Traccar
         ?int $deviceId = null,
         ?CarbonInterface $from = null,
         ?CarbonInterface $to = null,
+        ?int $geofenceId = null,
         ?array $ids = null,
     ): Collection {
         $this->guardOptionalRange(from: $from, to: $to);
@@ -43,6 +44,7 @@ class Position extends Traccar
                 deviceId: $deviceId,
                 from: $from,
                 to: $to,
+                geofenceId: $geofenceId,
                 ids: $ids,
             )
         );

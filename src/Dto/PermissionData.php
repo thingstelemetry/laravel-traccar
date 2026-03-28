@@ -19,6 +19,7 @@ class PermissionData
         public ?int $driverId = null,
         public ?int $managedUserId = null,
         public ?int $commandId = null,
+        public ?int $maintenanceId = null,
     ) {
     }
 
@@ -35,6 +36,7 @@ class PermissionData
             driverId: array_key_exists('driverId', $data) ? (is_null($data['driverId']) ? null : (int) $data['driverId']) : null,
             managedUserId: array_key_exists('managedUserId', $data) ? (is_null($data['managedUserId']) ? null : (int) $data['managedUserId']) : null,
             commandId: array_key_exists('commandId', $data) ? (is_null($data['commandId']) ? null : (int) $data['commandId']) : null,
+            maintenanceId: array_key_exists('maintenanceId', $data) ? (is_null($data['maintenanceId']) ? null : (int) $data['maintenanceId']) : null,
         );
     }
 
@@ -51,6 +53,7 @@ class PermissionData
             'driverId'       => $this->driverId,
             'managedUserId'  => $this->managedUserId,
             'commandId'      => $this->commandId,
+            'maintenanceId'  => $this->maintenanceId,
         ], fn ($value) => $value !== null);
     }
 
@@ -67,6 +70,7 @@ class PermissionData
             $this->driverId,
             $this->managedUserId,
             $this->commandId,
+            $this->maintenanceId,
         ], fn ($value) => $value !== null);
 
         if (count($nonNullProperties) !== 2) {

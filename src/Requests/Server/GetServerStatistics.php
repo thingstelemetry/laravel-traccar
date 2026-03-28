@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\Server;
 
-use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Carbon\CarbonInterface;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
-use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 class GetServerStatistics extends Request
 {
@@ -28,20 +26,13 @@ class GetServerStatistics extends Request
         return '/statistics';
     }
 
-    /** @throws JsonException */
-    public function createDtoFromResponse(Response $response): ServerStatisticsData
+    /**
+     * @return Collection<int, ServerStatisticsData>
+     */
+    public function createDtoFromResponse(Response $response): Collection
     {
-        $json = $response->json();
-
-        if ($json === []) {
-            throw new NotFoundException(
-                response: $response,
-                message: 'Statistics were not found. Check the date range and try again.'
-            );
-        }
-
-        return ServerStatisticsData::fromArray(
-            data: Arr::first(array: $json)
+        return $response->collect()->map(
+            fn (array $data) => ServerStatisticsData::fromArray(data: $data)
         );
     }
 

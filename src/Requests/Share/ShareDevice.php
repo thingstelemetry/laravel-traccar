@@ -33,7 +33,7 @@ class ShareDevice extends Request implements HasBody
     {
         return DeviceShareData::fromToken(
             deviceId: $this->deviceId,
-            token: trim(string: $response->body(), characters: '"'),
+            token: mb_trim(string: $response->body(), characters: '"'),
             expiration: $this->expiration,
             apiBaseUrl: $response->getPendingRequest()->getConnector()->resolveBaseUrl(),
         );

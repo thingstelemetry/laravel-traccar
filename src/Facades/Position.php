@@ -11,7 +11,7 @@ use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Dto\PositionData;
 
 /**
- * @method static Collection<int, PositionData> all(?int $deviceId = null, CarbonInterface|null $from = null, CarbonInterface|null $to = null, ?array $ids = null)
+ * @method static Collection<int, PositionData> all(?int $deviceId = null, CarbonInterface|null $from = null, CarbonInterface|null $to = null, ?int $geofenceId = null, ?array $ids = null)
  * @method static StatusData delete(int $id)
  * @method static StatusData deleteForDeviceInRange(int $deviceId, CarbonInterface $from, CarbonInterface $to)
  * @method static string exportKml(int $deviceId, CarbonInterface $from, CarbonInterface $to)
