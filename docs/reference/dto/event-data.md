@@ -8,6 +8,19 @@ use ThingsTelemetry\Traccar\Facades\Event;
 $event = Event::find(1234); // EventData
 ```
 
+## Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Unique event identifier. |
+| `type` | `string` | Traccar event type string. |
+| `eventTime` | `CarbonImmutable` | Time the event occurred. |
+| `deviceId` | `int` | The device associated with this event. |
+| `positionId` | `int?` | Associated position record ID. |
+| `geofenceId` | `int?` | Associated geofence ID. |
+| `maintenanceId` | `int?` | Associated maintenance record ID. |
+| `attributes` | `array` | Event-specific attributes payload. |
+
 ## `id` → `integer`
 Unique event identifier in Traccar.
 

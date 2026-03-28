@@ -194,6 +194,13 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Audit',
+                collapsed: true,
+                items: [
+                    {text: 'Get', link: '/audit/get'},
+                ]
+            },
+            {
                 text: 'Commands',
                 collapsed: true,
                 items: [
@@ -270,6 +277,7 @@ export default defineConfig({
                     {text: 'Session Token Data', link: '/reference/dto/session-token-data'},
                     {text: 'Group Share Data', link: '/reference/dto/group-share-data'},
                     {text: 'Combined Report Data', link: '/reference/dto/combined-report-data'},
+                    {text: 'Audit Data', link: '/reference/dto/audit-data'},
                 ]
             },
             {

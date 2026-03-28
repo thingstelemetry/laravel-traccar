@@ -43,9 +43,11 @@ $filename; // 'device.png'
 ## Validation
 
 Before sending the request, Laravel validation ensures:
-- `device_id`: required, integer, min:1
-- `file`: required, image type must be one of jpeg/png/gif/webp/svg+xml
-- `file size`: must not exceed 500000 bytes
+
+| Field | Rules |
+|-------|-------|
+| `device_id` | `required`, `integer`, `min:1` |
+| `file` | `required`, `image`, `mimes:jpeg,png,gif,webp,svg+xml`, `max:500` (KB) |
 
 If validation fails, an `Illuminate\Validation\ValidationException` is thrown. Make sure to catch it.
 

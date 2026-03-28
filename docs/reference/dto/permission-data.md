@@ -31,17 +31,19 @@ $permission = new PermissionData(userId: 5, deviceId: 10);
 - **Order matters**: First parameter is the subject, second is the object
 
 ### Valid First Parameters (Subject)
-- `userId`
-- `deviceId`
-- `groupId`
+
+| Parameter | Description |
+|-----------|-------------|
+| `userId` | User identifier |
+| `deviceId` | Device identifier |
+| `groupId` | Group identifier |
 
 ### Valid Second Parameters (Object)
 
-When first parameter is `userId`:
-- `deviceId`, `groupId`, `geofenceId`, `notificationId`, `calendarId`, `attributeId`, `driverId`, `managedUserId`, `commandId`, `maintenanceId`
-
-When first parameter is `deviceId` or `groupId`:
-- `geofenceId`, `notificationId`, `attributeId`, `driverId`, `commandId`, `maintenanceId`
+| When First Parameter is | Valid Second Parameters |
+|-------------------------|-------------------------|
+| `userId` | `deviceId`, `groupId`, `geofenceId`, `notificationId`, `calendarId`, `attributeId`, `driverId`, `managedUserId`, `commandId`, `maintenanceId` |
+| `deviceId` or `groupId` | `geofenceId`, `notificationId`, `attributeId`, `driverId`, `commandId`, `maintenanceId` |
 
 ## Validation
 

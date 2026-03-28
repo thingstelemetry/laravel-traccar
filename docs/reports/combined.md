@@ -19,9 +19,12 @@ $report = Report::combined(deviceIds: [6], groupIds: [], from: $from, to: $to);
 Returns an `Illuminate\Support\Collection<int, ThingsTelemetry\Traccar\Dto\CombinedReportData>`.
 
 The `CombinedReportData` object contains:
-- `deviceId`: `int`
-- `route`: `Illuminate\Support\Collection<int, ThingsTelemetry\Traccar\Dto\PositionData>`
-- `events`: `Illuminate\Support\Collection<int, ThingsTelemetry\Traccar\Dto\EventData>`
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `deviceId` | `int` | Device identifier |
+| `route` | `Collection<PositionData>` | List of positions |
+| `events` | `Collection<EventData>` | List of events |
 
 ## Important Links
 - [Traccar Reports](https://www.traccar.org/api-reference/#tag/Reports/paths/~1reports~1combined/get)
