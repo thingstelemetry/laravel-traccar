@@ -14,4 +14,12 @@ class NotificationTypeData
     {
         return new self(type: (string) ($data['type'] ?? ''));
     }
+
+    /** @return array<string, string> */
+    public function toArray(): array
+    {
+        return [
+            'type' => $this->type,
+        ];
+    }
 }

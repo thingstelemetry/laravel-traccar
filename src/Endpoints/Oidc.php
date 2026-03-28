@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Endpoints;
 
+use Exception;
 use ThingsTelemetry\Traccar\Traccar;
 use ThingsTelemetry\Traccar\Dto\OidcTokenData;
 use ThingsTelemetry\Traccar\Dto\JwksResponseDto;
@@ -41,7 +42,7 @@ class Oidc extends Traccar
 
         if (is_null($location) || $location === '') {
             throw new FatalRequestException(
-                new \Exception('OIDC authorize failed: Location header is missing from the response.'),
+                new Exception('OIDC authorize failed: Location header is missing from the response.'),
                 $response->getPendingRequest()
             );
         }

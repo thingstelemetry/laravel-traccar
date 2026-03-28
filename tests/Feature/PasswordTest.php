@@ -7,6 +7,8 @@ namespace ThingsTelemetry\Traccar\Tests\Feature;
 use Saloon\Enums\Method;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use ThingsTelemetry\Traccar\Enums\Status;
+use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Facades\Password;
 use ThingsTelemetry\Traccar\Requests\Password\ResetPassword;
 use ThingsTelemetry\Traccar\Requests\Password\UpdatePassword;
@@ -28,10 +30,12 @@ describe(description: 'reset', tests: function () {
 
         $response = Password::reset(email: 'user@example.com');
 
-        expect(value: $response->status())->toBe(expected: 200);
+        expect(value: $response)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $response->status)->toBe(expected: Status::SUCCESS);
     });
 
-    test(description: 'returns error via facade', closure: function () {
+    test(description: 'propagates errors', closure: function () {
         MockClient::global(mockData: [
             ResetPassword::class => MockResponse::make(body: [], status: 400),
         ]);
@@ -62,7 +66,9 @@ describe(description: 'update', tests: function () {
 
         $response = Password::update(token: 'token', password: 'password');
 
-        expect(value: $response->status())->toBe(expected: 200);
+        expect(value: $response)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $response->status)->toBe(expected: Status::SUCCESS);
     });
 
     test(description: 'returns 404 when token is invalid via facade', closure: function () {

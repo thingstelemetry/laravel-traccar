@@ -41,6 +41,15 @@ describe(description: 'all', tests: function () use ($getGroupData) {
             ->toBeInstanceOf(class: Collection::class)
             ->and(value: $response)->toHaveCount(count: 1);
     });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            GetAllGroups::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => Group::all())
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'get', tests: function () use ($getGroupData) {
@@ -95,6 +104,15 @@ describe(description: 'create', tests: function () use ($getGroupData) {
             ->toBeInstanceOf(class: GroupData::class)
             ->and(value: $response->id)->toBe(expected: 1);
     });
+
+    test(description: 'propagates errors', closure: function () use ($getGroupData) {
+        MockClient::global(mockData: [
+            CreateGroup::class => MockResponse::make(body: [], status: 400),
+        ]);
+
+        expect(value: fn () => Group::create(data: GroupData::fromArray(data: $getGroupData())))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'update', tests: function () use ($getGroupData) {
@@ -119,6 +137,15 @@ describe(description: 'update', tests: function () use ($getGroupData) {
             ->toBeInstanceOf(class: GroupData::class)
             ->and(value: $response->id)->toBe(expected: 1);
     });
+
+    test(description: 'propagates errors', closure: function () use ($getGroupData) {
+        MockClient::global(mockData: [
+            UpdateGroup::class => MockResponse::make(body: [], status: 404),
+        ]);
+
+        expect(value: fn () => Group::update(data: GroupData::fromArray(data: $getGroupData())))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
+    });
 });
 
 describe(description: 'delete', tests: function () {
@@ -139,5 +166,14 @@ describe(description: 'delete', tests: function () {
         expect(value: $result)
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            DeleteGroup::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => Group::delete(id: 1))
+            ->toThrow(exception: \Saloon\Exceptions\Request\RequestException::class);
     });
 });

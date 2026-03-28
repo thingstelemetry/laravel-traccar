@@ -21,4 +21,4 @@ The response is a string address, e.g.:
 ```
 
 ## Important Links
-- [Traccar API: Geocoding](https://www.traccar.org/api-reference/#tag/Server/paths/~1geocode/post)
+- [Traccar API: Geocoding](https://www.traccar.org/api-reference/#tag/Server/paths/~1geocode/get)

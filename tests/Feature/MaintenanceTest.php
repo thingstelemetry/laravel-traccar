@@ -8,6 +8,7 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\StatusData;
+use Saloon\Exceptions\Request\RequestException;
 use ThingsTelemetry\Traccar\Dto\MaintenanceData;
 use ThingsTelemetry\Traccar\Facades\Maintenance;
 use ThingsTelemetry\Traccar\Requests\Maintenance\CreateMaintenance;
@@ -52,6 +53,15 @@ describe(description: 'all', tests: function () use ($getMaintenanceData) {
             ->toBeInstanceOf(class: Collection::class)
             ->and(value: $response->first())->toBeInstanceOf(class: MaintenanceData::class);
     });
+
+    test(description: 'throws an exception on server error', closure: function () {
+        MockClient::global(mockData: [
+            GetAllMaintenance::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => Maintenance::all())
+            ->toThrow(exception: RequestException::class);
+    });
 });
 
 describe(description: 'create', tests: function () use ($getMaintenanceData) {
@@ -72,6 +82,15 @@ describe(description: 'create', tests: function () use ($getMaintenanceData) {
         $response = Maintenance::create(data: MaintenanceData::fromArray(data: $getMaintenanceData()));
 
         expect(value: $response)->toBeInstanceOf(class: MaintenanceData::class);
+    });
+
+    test(description: 'throws an exception on validation error', closure: function () use ($getMaintenanceData) {
+        MockClient::global(mockData: [
+            CreateMaintenance::class => MockResponse::make(body: [], status: 400),
+        ]);
+
+        expect(value: fn () => Maintenance::create(data: MaintenanceData::fromArray(data: $getMaintenanceData())))
+            ->toThrow(exception: RequestException::class);
     });
 });
 
@@ -94,6 +113,15 @@ describe(description: 'update', tests: function () use ($getMaintenanceData) {
 
         expect(value: $response)->toBeInstanceOf(class: MaintenanceData::class);
     });
+
+    test(description: 'throws an exception on record not found', closure: function () use ($getMaintenanceData) {
+        MockClient::global(mockData: [
+            UpdateMaintenance::class => MockResponse::make(body: [], status: 404),
+        ]);
+
+        expect(value: fn () => Maintenance::update(data: MaintenanceData::fromArray(data: $getMaintenanceData())))
+            ->toThrow(exception: RequestException::class);
+    });
 });
 
 describe(description: 'delete', tests: function () {
@@ -114,5 +142,14 @@ describe(description: 'delete', tests: function () {
         expect(value: $result)
             ->toBeInstanceOf(class: StatusData::class)
             ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
+
+    test(description: 'throws an exception on deletion error', closure: function () {
+        MockClient::global(mockData: [
+            DeleteMaintenance::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        expect(value: fn () => Maintenance::delete(id: 11))
+            ->toThrow(exception: RequestException::class);
     });
 });
