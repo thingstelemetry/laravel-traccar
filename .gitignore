@@ -12,3 +12,4 @@ workbench/storage
 /.junie/memory
 .output.txt
 composer.phar
+/resource
