@@ -62,6 +62,18 @@ class Device extends Traccar
         return $response->dtoOrFail();
     }
 
+    /**
+     * @deprecated Use get(int $id) instead.
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function find(int $id): DeviceData
+    {
+        trigger_error(message: 'Device::find() is deprecated. Use Device::get() instead.', error_level: E_USER_DEPRECATED);
+
+        return $this->get(id: $id);
+    }
+
     /** @throws \Saloon\Exceptions\SaloonException */
     public function create(DeviceData $data): DeviceData
     {

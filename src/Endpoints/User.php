@@ -25,6 +25,18 @@ class User extends Traccar
         return $response->dtoOrFail();
     }
 
+    /**
+     * @deprecated Use get(int $id) instead.
+     *
+     * @throws \Saloon\Exceptions\SaloonException
+     */
+    public function find(int $id): UserData
+    {
+        trigger_error(message: 'User::find() is deprecated. Use User::get() instead.', error_level: E_USER_DEPRECATED);
+
+        return $this->get(id: $id);
+    }
+
     /** @throws \Saloon\Exceptions\SaloonException */
     public function all(
         ?int $userId = null,
