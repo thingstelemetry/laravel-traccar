@@ -8,6 +8,7 @@
 vendor
 build
 .phpunit.cache
-.DS_Store
 workbench/storage
 /.junie/memory
+.output.txt
+composer.phar

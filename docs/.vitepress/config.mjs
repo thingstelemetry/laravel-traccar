@@ -117,13 +117,6 @@ export default defineConfig({
                 ]
             },
             {
-                text: 'Events',
-                collapsed: true,
-                items: [
-                    {text: 'Get Information', link: '/events/get-information'},
-                ]
-            },
-            {
                 text: 'Permissions',
                 collapsed: true,
                 items: [
@@ -131,6 +124,13 @@ export default defineConfig({
                     {text: 'Unlink Permission', link: '/permissions/unlink'},
                     {text: 'Link Permissions (Bulk)', link: '/permissions/link-bulk'},
                     {text: 'Unlink Permissions (Bulk)', link: '/permissions/unlink-bulk'},
+                ]
+            },
+            {
+                text: 'Events',
+                collapsed: true,
+                items: [
+                    {text: 'Get Information', link: '/events/get-information'},
                 ]
             },
             {

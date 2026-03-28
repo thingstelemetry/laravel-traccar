@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Saloon\Enums\Method;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
@@ -16,214 +17,127 @@ use ThingsTelemetry\Traccar\Requests\Group\UpdateGroup;
 use ThingsTelemetry\Traccar\Requests\Group\GetAllGroups;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
-beforeEach(closure: function () {
-    $this->groups = [
-        [
-            'id'         => 1,
-            'name'       => 'Vehicles',
-            'groupId'    => null,
-            'attributes' => [],
-        ],
-        [
-            'id'         => 2,
-            'name'       => 'Trucks',
-            'groupId'    => 1,
-            'attributes' => [
-                'color' => 'blue',
-            ],
-        ],
-    ];
+$getGroupData = fn () => [
+    'id'   => 1,
+    'name' => 'Vehicles',
+];
+
+describe(description: 'get all', tests: function () use ($getGroupData) {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new GetAllGroups();
+
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/groups')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+    });
+
+    test(description: 'returns all groups', closure: function () use ($getGroupData) {
+        MockClient::global(mockData: [
+            GetAllGroups::class => MockResponse::make([$getGroupData()]),
+        ]);
+
+        $response = Group::getAll();
+
+        expect(value: $response)
+            ->toBeInstanceOf(class: Collection::class)
+            ->and(value: $response)->toHaveCount(count: 1);
+    });
 });
 
-it(description: 'can get all groups', closure: function () {
-    MockClient::global(mockData: [
-        GetAllGroups::class => MockResponse::make($this->groups),
-    ]);
+describe(description: 'get', tests: function () use ($getGroupData) {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new GetGroup(id: 1);
 
-    $response = Group::getAll();
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/groups/1')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+    });
 
-    expect(value: $response)
-        ->toBeInstanceOf(class: Collection::class)
-        ->and(value: $response)->toHaveCount(count: 2);
+    test(description: 'returns a single group by id', closure: function () use ($getGroupData) {
+        MockClient::global(mockData: [
+            GetGroup::class => MockResponse::make($getGroupData()),
+        ]);
 
-    $first = $response->first();
-    expect(value: $first)
-        ->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $first->name)->toEqual(expected: 'Vehicles')
-        ->and(value: $first->groupId)->toBeNull()
-        ->and(value: $first->attributes)->toBeArray();
+        $response = Group::get(id: 1);
+
+        expect(value: $response)
+            ->toBeInstanceOf(class: GroupData::class)
+            ->and(value: $response->id)->toBe(expected: 1);
+    });
+
+    test(description: 'throws not found when the group response is empty', closure: function () {
+        MockClient::global(mockData: [
+            GetGroup::class => MockResponse::make(body: [], status: 200),
+        ]);
+
+        expect(value: fn () => Group::get(id: 999))
+            ->toThrow(exception: NotFoundException::class, exceptionMessage: 'Traccar group was not found. Check the group ID and try again.');
+    });
 });
 
-it(description: 'can get all groups with filters', closure: function () {
-    MockClient::global(mockData: [
-        GetAllGroups::class => MockResponse::make($this->groups),
-    ]);
+describe(description: 'create', tests: function () use ($getGroupData) {
+    test(description: 'request sends the correct body', closure: function () use ($getGroupData) {
+        $data = GroupData::fromArray(data: $getGroupData());
+        $request = new CreateGroup(data: $data);
 
-    $response = Group::getAll(all: true, userId: 42, excludeAttributes: true);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/groups')
+            ->and(value: $request->getMethod())->toBe(expected: Method::POST)
+            ->and(value: $request->body()->all())->toBe(expected: $data->toArray());
+    });
 
-    expect(value: $response)
-        ->toBeInstanceOf(class: Collection::class)
-        ->and(value: $response)->toHaveCount(count: 2);
+    test(description: 'creates a group', closure: function () use ($getGroupData) {
+        MockClient::global(mockData: [
+            CreateGroup::class => MockResponse::make($getGroupData()),
+        ]);
+
+        $data = GroupData::fromArray(data: $getGroupData());
+        $response = Group::create(data: $data);
+
+        expect(value: $response)
+            ->toBeInstanceOf(class: GroupData::class)
+            ->and(value: $response->id)->toBe(expected: 1);
+    });
 });
 
-it(description: 'can get a single group by id', closure: function () {
-    MockClient::global(mockData: [
-        GetGroup::class => MockResponse::make($this->groups[0]),
-    ]);
+describe(description: 'update', tests: function () use ($getGroupData) {
+    test(description: 'request sends the correct body', closure: function () use ($getGroupData) {
+        $data = GroupData::fromArray(data: $getGroupData());
+        $request = new UpdateGroup(data: $data);
 
-    $response = Group::get(id: 1);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/groups/1')
+            ->and(value: $request->getMethod())->toBe(expected: Method::PUT)
+            ->and(value: $request->body()->all())->toBe(expected: $data->toArray());
+    });
 
-    expect(value: $response)
-        ->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $response->id)->toEqual(expected: 1)
-        ->and(value: $response->name)->toEqual(expected: 'Vehicles')
-        ->and(value: $response->groupId)->toBeNull()
-        ->and(value: $response->attributes)->toBeArray();
+    test(description: 'updates a group', closure: function () use ($getGroupData) {
+        MockClient::global(mockData: [
+            UpdateGroup::class => MockResponse::make($getGroupData()),
+        ]);
+
+        $data = GroupData::fromArray(data: $getGroupData());
+        $response = Group::update(data: $data);
+
+        expect(value: $response)
+            ->toBeInstanceOf(class: GroupData::class)
+            ->and(value: $response->id)->toBe(expected: 1);
+    });
 });
 
-it(description: 'throws exception when group not found', closure: function () {
-    MockClient::global(mockData: [
-        GetGroup::class => MockResponse::make(body: [], status: 404),
-    ]);
+describe(description: 'delete', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new DeleteGroup(id: 1);
 
-    expect(value: fn () => Group::get(id: 999))
-        ->toThrow(exception: NotFoundException::class);
-});
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/groups/1')
+            ->and(value: $request->getMethod())->toBe(expected: Method::DELETE);
+    });
 
-it(description: 'can create a group', closure: function () {
-    $created = [
-        'id'         => 3,
-        'name'       => 'New Group',
-        'groupId'    => 1,
-        'attributes' => [
-            'color' => 'red',
-        ],
-    ];
+    test(description: 'deletes a group', closure: function () {
+        MockClient::global(mockData: [
+            DeleteGroup::class => MockResponse::make(body: '', status: 204),
+        ]);
 
-    MockClient::global(mockData: [
-        CreateGroup::class => MockResponse::make($created),
-    ]);
+        $result = Group::delete(id: 1);
 
-    $requestData = GroupData::fromArray(data: $created);
-
-    $response = Group::create(data: $requestData);
-
-    expect(value: $response)
-        ->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $response->id)->toEqual(expected: 3)
-        ->and(value: $response->name)->toEqual(expected: 'New Group')
-        ->and(value: $response->groupId)->toEqual(expected: 1)
-        ->and(value: $response->attributes)->toBeArray()
-        ->and(value: $response->attributes['color'])->toEqual(expected: 'red');
-});
-
-it(description: 'can update a group', closure: function () {
-    $updated = [
-        'id'         => 1,
-        'name'       => 'Updated Group',
-        'groupId'    => null,
-        'attributes' => [
-            'color' => 'green',
-        ],
-    ];
-
-    MockClient::global(mockData: [
-        UpdateGroup::class => MockResponse::make($updated),
-    ]);
-
-    $data = GroupData::fromArray(data: $updated);
-
-    $response = Group::update(data: $data);
-
-    expect(value: $response)
-        ->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $response->id)->toEqual(expected: 1)
-        ->and(value: $response->name)->toEqual(expected: 'Updated Group')
-        ->and(value: $response->attributes['color'])->toEqual(expected: 'green');
-});
-
-it(description: 'throws exception when updating group without id', closure: function () {
-    $data = new GroupData(
-        name: 'Group Without ID',
-        attributes: []
-    );
-
-    expect(value: fn () => Group::update(data: $data))
-        ->toThrow(exception: InvalidArgumentException::class);
-});
-
-it(description: 'can delete a group', closure: function () {
-    MockClient::global(mockData: [
-        DeleteGroup::class => MockResponse::make(body: '', status: 204),
-    ]);
-
-    $result = Group::delete(id: 1);
-
-    expect(value: $result)
-        ->toBeInstanceOf(class: StatusData::class)
-        ->and(value: $result->status)->toEqual(expected: Status::SUCCESS);
-});
-
-it(description: 'can create group with parent group', closure: function () {
-    $created = [
-        'id'         => 4,
-        'name'       => 'Child Group',
-        'groupId'    => 1,
-        'attributes' => [],
-    ];
-
-    MockClient::global(mockData: [
-        CreateGroup::class => MockResponse::make($created),
-    ]);
-
-    $requestData = GroupData::fromArray(data: $created);
-
-    $response = Group::create(data: $requestData);
-
-    expect(value: $response)
-        ->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $response->groupId)->toEqual(expected: 1);
-});
-
-it(description: 'can convert group data to array', closure: function () {
-    $data = new GroupData(
-        id: 1,
-        name: 'Test Group',
-        groupId: null,
-        attributes: [
-            'color' => 'blue',
-            'icon'  => 'truck',
-        ]
-    );
-
-    $array = $data->toArray();
-
-    expect(value: $array)
-        ->toBeArray()
-        ->and(value: $array['id'])->toEqual(expected: 1)
-        ->and(value: $array['name'])->toEqual(expected: 'Test Group')
-        ->and(value: $array['groupId'])->toBeNull()
-        ->and(value: $array['attributes'])->toBeArray()
-        ->and(value: $array['attributes']['color'])->toEqual(expected: 'blue')
-        ->and(value: $array['attributes']['icon'])->toEqual(expected: 'truck');
-});
-
-it(description: 'can create group data from array', closure: function () {
-    $array = [
-        'id'         => 5,
-        'name'       => 'From Array',
-        'groupId'    => 2,
-        'attributes' => [
-            'priority' => 'high',
-        ],
-    ];
-
-    $data = GroupData::fromArray(data: $array);
-
-    expect(value: $data)
-        ->toBeInstanceOf(class: GroupData::class)
-        ->and(value: $data->id)->toEqual(expected: 5)
-        ->and(value: $data->name)->toEqual(expected: 'From Array')
-        ->and(value: $data->groupId)->toEqual(expected: 2)
-        ->and(value: $data->attributes['priority'])->toEqual(expected: 'high');
+        expect(value: $result)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
 });

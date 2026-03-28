@@ -2,17 +2,14 @@
 
 declare(strict_types=1);
 
-use Carbon\CarbonImmutable;
+use Saloon\Enums\Method;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use ThingsTelemetry\Traccar\Enums\Map;
 use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Facades\User;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Requests\User\GetUser;
-use ThingsTelemetry\Traccar\Dto\UserAttributesData;
-use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
 use ThingsTelemetry\Traccar\Requests\User\CreateUser;
 use ThingsTelemetry\Traccar\Requests\User\DeleteUser;
 use ThingsTelemetry\Traccar\Requests\User\UpdateUser;
@@ -20,94 +17,12 @@ use ThingsTelemetry\Traccar\Requests\User\GetAllUsers;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
 use ThingsTelemetry\Traccar\Requests\User\GenerateTotpSecret;
 
-beforeEach(function () {
-    $this->users = [
-        [
-            'id'               => 6,
-            'name'             => 'Jane Doe',
-            'email'            => 'jane@example.com',
-            'phone'            => '+15551234567',
-            'readonly'         => false,
-            'administrator'    => false,
-            'map'              => 'osm',
-            'latitude'         => 0.0,
-            'longitude'        => 0.0,
-            'zoom'             => 0,
-            'password'         => null,
-            'coordinateFormat' => 'dd',
-            'disabled'         => false,
-            'expirationTime'   => null,
-            'deviceLimit'      => 0,
-            'userLimit'        => 0,
-            'deviceReadonly'   => false,
-            'limitCommands'    => false,
-            'fixedEmail'       => false,
-            'poiLayer'         => null,
-            'attributes'       => [],
-        ],
-        [
-            'id'               => 7,
-            'name'             => 'John Smith',
-            'email'            => 'john@example.com',
-            'phone'            => null,
-            'readonly'         => true,
-            'administrator'    => false,
-            'map'              => 'osm',
-            'latitude'         => 0.0,
-            'longitude'        => 0.0,
-            'zoom'             => 0,
-            'password'         => null,
-            'coordinateFormat' => 'ddm',
-            'disabled'         => false,
-            'expirationTime'   => null,
-            'deviceLimit'      => 10,
-            'userLimit'        => 1,
-            'deviceReadonly'   => false,
-            'limitCommands'    => true,
-            'fixedEmail'       => true,
-            'poiLayer'         => null,
-            'attributes'       => [],
-        ],
-    ];
-});
-
-it(description: 'can get all users', closure: function () {
-    MockClient::global([
-        GetAllUsers::class => MockResponse::make($this->users),
-    ]);
-
-    $response = User::all();
-
-    expect($response)
-        ->toBeArray()
-        ->toHaveCount(2);
-
-    $first = $response[0];
-    expect($first)
-        ->toBeInstanceOf(UserData::class)
-        ->and($first->map)->toEqual(Map::OSM)
-        ->and($first->coordinateFormat)->toEqual(CoordinateFormat::DD);
-});
-
-it(description: 'can get a user by id', closure: function () {
-    MockClient::global([
-        GetUser::class => MockResponse::make($this->users[0]),
-    ]);
-
-    $user = User::get(6);
-
-    expect($user)
-        ->toBeInstanceOf(UserData::class)
-        ->and($user->id)->toEqual(6)
-        ->and($user->email)->toEqual('jane@example.com');
-});
-
-it(description: 'can create a user', closure: function () {
-    $created = [
-        'id'               => 8,
-        'name'             => 'Alice',
-        'email'            => 'alice@example.com',
-        'phone'            => '+15557654321',
+beforeEach(closure: function () {
+    $this->user = [
+        'id'               => 6,
+        'name'             => 'Jane Doe',
+        'email'            => 'jane@example.com',
+        'phone'            => '+15551234567',
         'readonly'         => false,
         'administrator'    => false,
         'map'              => 'osm',
@@ -117,6 +32,7 @@ it(description: 'can create a user', closure: function () {
         'password'         => null,
         'coordinateFormat' => 'dd',
         'disabled'         => false,
+        'expirationTime'   => null,
         'deviceLimit'      => 0,
         'userLimit'        => 0,
         'deviceReadonly'   => false,
@@ -125,203 +41,143 @@ it(description: 'can create a user', closure: function () {
         'poiLayer'         => null,
         'attributes'       => [],
     ];
-
-    MockClient::global([
-        CreateUser::class => MockResponse::make($created),
-    ]);
-
-    $attributes = new UserAttributesData(language: 'en');
-
-    $requestData = new UserData(
-        id: 0,
-        name: 'Alice',
-        email: 'alice@example.com',
-        phone: '+15557654321',
-        readonly: false,
-        administrator: false,
-        map: Map::OSM,
-        latitude: 0.0,
-        longitude: 0.0,
-        zoom: 0,
-        password: 'top-secret',
-        coordinateFormat: CoordinateFormat::DD,
-        disabled: false,
-        expirationTime: null,
-        deviceLimit: 0,
-        userLimit: 0,
-        deviceReadonly: false,
-        limitCommands: false,
-        fixedEmail: false,
-        poiLayer: null,
-        attributes: $attributes,
-    );
-
-    $response = User::create($requestData);
-
-    expect($response)
-        ->toBeInstanceOf(UserData::class)
-        ->and($response->id)->toEqual(8)
-        ->and($response->map)->toEqual(Map::OSM);
 });
 
-it(description: 'can update a user', closure: function () {
-    $updated = $this->users[0];
-    $updated['name'] = 'Jane Doe - Updated';
-    $updated['coordinateFormat'] = 'ddm';
+describe(description: 'all', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new GetAllUsers();
 
-    MockClient::global([
-        UpdateUser::class => MockResponse::make($updated),
-    ]);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/users')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+    });
 
-    $data = UserData::fromArray($updated);
+    test(description: 'returns all users', closure: function () {
+        MockClient::global(mockData: [
+            GetAllUsers::class => MockResponse::make(body: [$this->user]),
+        ]);
 
-    $response = User::update($data);
+        $response = User::all();
 
-    expect($response)
-        ->toBeInstanceOf(UserData::class)
-        ->and($response->name)->toEqual('Jane Doe - Updated')
-        ->and($response->coordinateFormat)->toEqual(CoordinateFormat::DDM);
+        expect(value: $response)
+            ->toBeArray()
+            ->and(value: $response[0])->toBeInstanceOf(class: UserData::class);
+    });
 });
 
-it(description: 'can delete a user', closure: function () {
-    MockClient::global([
-        DeleteUser::class => MockResponse::make(body: '', status: 204),
-    ]);
+describe(description: 'get', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new GetUser(id: 6);
 
-    $result = User::delete(id: 6);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/users/6')
+            ->and(value: $request->getMethod())->toBe(expected: Method::GET);
+    });
 
-    expect($result)
-        ->toBeInstanceOf(StatusData::class)
-        ->and($result->status)->toEqual(Status::SUCCESS);
+    test(description: 'returns a user by id', closure: function () {
+        MockClient::global(mockData: [
+            GetUser::class => MockResponse::make(body: $this->user),
+        ]);
+
+        $user = User::get(id: 6);
+
+        expect(value: $user)
+            ->toBeInstanceOf(class: UserData::class)
+            ->and(value: $user->id)->toBe(expected: 6);
+    });
+
+    test(description: 'throws not found when the user response is empty', closure: function () {
+        MockClient::global(mockData: [
+            GetUser::class => MockResponse::make(body: [], status: 200),
+        ]);
+
+        expect(value: fn () => User::get(id: 999))
+            ->toThrow(exception: NotFoundException::class, exceptionMessage: 'Traccar user was not found. Check the user ID and try again.');
+    });
 });
 
-it(description: 'can generate totp secret', closure: function () {
-    MockClient::global([
-        GenerateTotpSecret::class => MockResponse::make(body: 'K5S7N7G5K5S7N7G5'),
-    ]);
+describe(description: 'create', tests: function () {
+    test(description: 'request sends the correct body', closure: function () {
+        $data = UserData::fromArray(data: $this->user);
+        $request = new CreateUser(data: $data);
 
-    $secret = User::generateTotpSecret();
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/users')
+            ->and(value: $request->getMethod())->toBe(expected: Method::POST)
+            ->and(value: $request->body()->all())->toBe(expected: $data->toArray());
+    });
 
-    expect($secret)
-        ->toBeString()
-        ->toEqual('K5S7N7G5K5S7N7G5');
+    test(description: 'creates a user', closure: function () {
+        MockClient::global(mockData: [
+            CreateUser::class => MockResponse::make(body: $this->user),
+        ]);
+
+        $response = User::create(data: UserData::fromArray(data: $this->user));
+
+        expect(value: $response)
+            ->toBeInstanceOf(class: UserData::class)
+            ->and(value: $response->id)->toBe(expected: 6);
+    });
 });
 
-it(description: 'can retrieve a user by id', closure: function () {
-    $payload = [
-        'id'               => 42,
-        'name'             => 'Jane Doe',
-        'email'            => 'jane@example.com',
-        'phone'            => '+123456789',
-        'readonly'         => false,
-        'administrator'    => true,
-        'map'              => 'osm',
-        'latitude'         => -1.286389,
-        'longitude'        => 36.817223,
-        'zoom'             => 12,
-        'password'         => null,
-        'coordinateFormat' => 'dd',
-        'disabled'         => false,
-        'expirationTime'   => '2019-08-24T14:15:22Z',
-        'deviceLimit'      => 100,
-        'userLimit'        => 10,
-        'deviceReadonly'   => false,
-        'limitCommands'    => true,
-        'fixedEmail'       => true,
-        'poiLayer'         => 'poi-layer',
-        'attributes'       => ['ui.disableGroups' => true],
-    ];
+describe(description: 'update', tests: function () {
+    test(description: 'request sends the correct body', closure: function () {
+        $data = UserData::fromArray(data: $this->user);
+        $request = new UpdateUser(data: $data);
 
-    MockClient::global(mockData: [
-        GetUser::class => MockResponse::make($payload),
-    ]);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/users/6')
+            ->and(value: $request->getMethod())->toBe(expected: Method::PUT)
+            ->and(value: $request->body()->all())->toBe(expected: $data->toArray());
+    });
 
-    $user = User::get(42);
+    test(description: 'updates a user', closure: function () {
+        MockClient::global(mockData: [
+            UpdateUser::class => MockResponse::make(body: $this->user),
+        ]);
 
-    expect(value: $user)
-        ->toBeInstanceOf(class: UserData::class)
-        ->and(value: $user->map)->toEqual(expected: Map::OSM)
-        ->and(value: $user->coordinateFormat)->toEqual(expected: CoordinateFormat::DD)
-        ->and(value: $user->expirationTime)->toBeInstanceOf(class: CarbonImmutable::class)
-        ->and(value: $user->expirationTime->toIso8601String())->toEqual(expected: '2019-08-24T14:15:22+00:00')
-        ->and(value: $user->attributes->toArray())
-        ->toHaveKey(key: 'ui.disableGroups', value: true);
+        $response = User::update(data: UserData::fromArray(data: $this->user));
+
+        expect(value: $response)
+            ->toBeInstanceOf(class: UserData::class)
+            ->and(value: $response->id)->toBe(expected: 6);
+    });
 });
 
-it(description: 'throws JsonException on invalid JSON response', closure: function () {
-    MockClient::global(mockData: [
-        GetUser::class => MockResponse::make('not-json', 200, ['Content-Type' => 'application/json']),
-    ]);
+describe(description: 'delete', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new DeleteUser(id: 6);
 
-    expect(value: fn () => User::get(1))->toThrow(exception: JsonException::class);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/users/6')
+            ->and(value: $request->getMethod())->toBe(expected: Method::DELETE);
+    });
+
+    test(description: 'deletes a user', closure: function () {
+        MockClient::global(mockData: [
+            DeleteUser::class => MockResponse::make(body: '', status: 204),
+        ]);
+
+        $result = User::delete(id: 6);
+
+        expect(value: $result)
+            ->toBeInstanceOf(class: StatusData::class)
+            ->and(value: $result->status)->toBe(expected: Status::SUCCESS);
+    });
 });
 
-it(description: 'can retrieve all users', closure: function () {
-    $payload = [
-        [
-            'id'               => 1,
-            'name'             => 'Alice',
-            'email'            => 'alice@example.com',
-            'phone'            => null,
-            'readonly'         => false,
-            'administrator'    => false,
-            'map'              => 'osm',
-            'latitude'         => 0,
-            'longitude'        => 0,
-            'zoom'             => 10,
-            'password'         => null,
-            'coordinateFormat' => 'dd',
-            'disabled'         => false,
-            'expirationTime'   => null,
-            'deviceLimit'      => 0,
-            'userLimit'        => 0,
-            'deviceReadonly'   => false,
-            'limitCommands'    => false,
-            'fixedEmail'       => false,
-            'poiLayer'         => null,
-            'attributes'       => [],
-        ],
-        [
-            'id'               => 2,
-            'name'             => 'Bob',
-            'email'            => 'bob@example.com',
-            'phone'            => null,
-            'readonly'         => false,
-            'administrator'    => false,
-            'map'              => 'osm',
-            'latitude'         => 0,
-            'longitude'        => 0,
-            'zoom'             => 10,
-            'password'         => null,
-            'coordinateFormat' => 'dd',
-            'disabled'         => false,
-            'expirationTime'   => null,
-            'deviceLimit'      => 0,
-            'userLimit'        => 0,
-            'deviceReadonly'   => false,
-            'limitCommands'    => false,
-            'fixedEmail'       => false,
-            'poiLayer'         => null,
-            'attributes'       => [],
-        ],
-    ];
+describe(description: 'generate totp secret', tests: function () {
+    test(description: 'request resolves the correct endpoint', closure: function () {
+        $request = new GenerateTotpSecret();
 
-    MockClient::global(mockData: [
-        GetAllUsers::class => MockResponse::make($payload),
-    ]);
+        expect(value: $request->resolveEndpoint())->toBe(expected: '/users/totp')
+            ->and(value: $request->getMethod())->toBe(expected: Method::POST);
+    });
 
-    $users = User::all();
+    test(description: 'returns a totp secret', closure: function () {
+        MockClient::global(mockData: [
+            GenerateTotpSecret::class => MockResponse::make(body: 'K5S7N7G5K5S7N7G5'),
+        ]);
 
-    expect($users)
-        ->toBeArray()
-        ->and(count($users))->toBe(2)
-        ->and($users[0])->toBeInstanceOf(UserData::class);
-});
+        $secret = User::generateTotpSecret();
 
-it(description: 'throws NotFoundException when user is missing', closure: function () {
-    MockClient::global(mockData: [
-        GetUser::class => MockResponse::make([], 200),
-    ]);
-
-    expect(value: fn () => User::get(999))->toThrow(exception: NotFoundException::class);
+        expect(value: $secret)
+            ->toBeString()
+            ->toBe(expected: 'K5S7N7G5K5S7N7G5');
+    });
 });

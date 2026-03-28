@@ -182,29 +182,36 @@ class Mount
 
 Run tests: `composer test`
 
-- **`tests/Feature/`** - Integration tests (endpoint methods, HTTP cycles).
+- **`tests/Feature/`** - Primary API behavior tests. Group tests by facade method using `describe()` blocks such as `get`, `all`, `create`, `update`, and `delete`. Each method group should cover the request contract relevant to that method (endpoint, HTTP method, body/query parameters), the facade response, and error handling where applicable.
 - **`tests/Unit/`** - Unit tests (`TraccarConnectorTest.php`, `Services/` folder).
 - **`tests/Unit/Services/`** - Support class tests (`MountTest.php`, `StorageInfoTest.php`); this folder intentionally covers `src/Support/`.
 
 ### Key Patterns
 
 ```php
-// Mock HTTP requests
-MockClient::global([
-    GetServerInformation::class => MockResponse::make(['id' => 1, 'version' => '6.10'])
-]);
+describe('get', function () {
+    test('request resolves the correct endpoint', function () {
+        $request = new GetServerInformation();
 
-// Test support classes
-$mount = new Mount(free: 1024, total: 2048);
-expect($mount->free)->toBe(1024);
+        expect($request->resolveEndpoint())->toBe('/server')
+            ->and($request->getMethod()->value)->toBe('GET');
+    });
 
-// Test DTOs
-$serverData = new ServerData(id: 1, version: '6.10', attributes: new ServerAttributesData());
-expect($serverData->toArray()['id'])->toBe(1);
+    test('returns server information via facade', function () {
+        MockClient::global([
+            GetServerInformation::class => MockResponse::make(['id' => 1, 'version' => '6.10'])
+        ]);
+
+        $response = Server::getInformation();
+
+        expect($response)->toBeInstanceOf(ServerData::class);
+    });
+});
 ```
 
 - Configure in `tests/Pest.php` with `Config::preventStrayRequests()` - all HTTP requests must be mocked.
-- Use `test()` or `it()` functions with descriptive names.
+- Keep DTO hydration logic in unit tests and end-to-end facade behavior in feature tests.
+- Use `describe()` plus `test()` or `it()` with descriptive names.
 
 ## Environment Variables
 
