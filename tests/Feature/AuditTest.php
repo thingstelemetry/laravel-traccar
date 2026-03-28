@@ -57,4 +57,17 @@ describe(description: 'get', tests: function () {
             ->and(value: $auditLogs->first())->toBeInstanceOf(class: AuditData::class)
             ->and(value: $auditLogs->first()->userEmail)->toBe(expected: 'admin@example.com');
     });
+
+    test(description: 'propagates errors', closure: function () {
+        MockClient::global(mockData: [
+            GetAuditLogs::class => MockResponse::make(body: [], status: 500),
+        ]);
+
+        try {
+            Audit::get();
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(500);
+        }
+    });
 });

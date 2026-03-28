@@ -9,6 +9,7 @@ use ThingsTelemetry\Traccar\Dto\UserData;
 use ThingsTelemetry\Traccar\Enums\Status;
 use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Facades\Session;
+use Saloon\Exceptions\Request\RequestException;
 use ThingsTelemetry\Traccar\Dto\SessionTokenData;
 use ThingsTelemetry\Traccar\Requests\Session\GetSession;
 use ThingsTelemetry\Traccar\Requests\Session\CreateSession;
@@ -46,7 +47,11 @@ describe(description: 'current', tests: function () use ($getUserData) {
 
     test(description: 'returns the current session with a token', closure: function () use ($getUserData) {
         MockClient::global(mockData: [
-            GetSession::class => MockResponse::make($getUserData()),
+            GetSession::class => function ($request) use ($getUserData) {
+                expect(value: $request->query()->get(key: 'token'))->toBe(expected: 'abc123xyz789');
+
+                return MockResponse::make(body: $getUserData());
+            },
         ]);
 
         $user = Session::current(token: 'abc123xyz789');
@@ -54,6 +59,14 @@ describe(description: 'current', tests: function () use ($getUserData) {
         expect(value: $user)
             ->toBeInstanceOf(class: UserData::class)
             ->and(value: $user->id)->toBe(expected: 6);
+    });
+
+    test(description: 'surfaces error for current session failure', closure: function () {
+        MockClient::global(mockData: [
+            GetSession::class => MockResponse::make(body: ['error' => 'Unauthorized'], status: 401),
+        ]);
+
+        expect(fn () => Session::current(token: 'abc123xyz789'))->toThrow(exception: RequestException::class);
     });
 });
 
@@ -105,13 +118,13 @@ describe(description: 'create', tests: function () use ($getUserData) {
     test(description: 'creates a session with a TOTP code', closure: function () use ($getUserData) {
         MockClient::global(mockData: [
             CreateSession::class => function ($request) use ($getUserData) {
-                expect(value: $request->body()->get(key: 'code'))->toBe(expected: 123456);
+                expect(value: $request->body()->get(key: 'code'))->toBe(expected: '012345');
 
                 return MockResponse::make(body: $getUserData());
             },
         ]);
 
-        $user = Session::create(email: 'jane@example.com', password: 'secret123', code: 123456);
+        $user = Session::create(email: 'jane@example.com', password: 'secret123', code: '012345');
 
         expect(value: $user)
             ->toBeInstanceOf(class: UserData::class)

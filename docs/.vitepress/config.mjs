@@ -285,6 +285,19 @@ export default defineConfig({
                 ]
             },
             {
+                text: 'Batteries',
+                collapsed: false,
+                items: [
+                    {
+                        text: 'Commands',
+                        collapsed: true,
+                        items: [
+                            {text: 'RunGarbageCollectorCommand', link: '/batteries/commands/run-garbage-collector'},
+                        ]
+                    },
+                ]
+            },
+            {
                 text: 'References',
                 collapsed: false,
                 items: [

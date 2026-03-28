@@ -8,6 +8,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Carbon\CarbonInterface;
+use InvalidArgumentException;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Traits\Body\HasFormBody;
 use ThingsTelemetry\Traccar\Dto\GroupShareData;
@@ -31,9 +32,15 @@ class ShareGroup extends Request implements HasBody
 
     public function createDtoFromResponse(Response $response): GroupShareData
     {
+        $token = mb_trim(string: $response->body(), characters: '"');
+
+        if ($token === '') {
+            throw new InvalidArgumentException(message: 'The group share token is missing or empty.');
+        }
+
         return GroupShareData::fromToken(
             groupId: $this->groupId,
-            token: mb_trim(string: $response->body(), characters: '"'),
+            token: $token,
             expiration: $this->expiration,
             apiBaseUrl: $response->getPendingRequest()->getConnector()->resolveBaseUrl(),
         );

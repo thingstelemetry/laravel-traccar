@@ -47,7 +47,7 @@ Before sending the request, Laravel validation ensures:
 | Field | Rules |
 |-------|-------|
 | `device_id` | `required`, `integer`, `min:1` |
-| `file` | `required`, `image`, `mimes:jpeg,png,gif,webp,svg+xml`, `max:500` (KB) |
+| `file` | `required`, `image`, `mimes:jpeg,png,gif,webp,svg+xml`, `max:500` (KB). Actual validator: `File::image(allowSvg: true)->max(500)` |
 
 If validation fails, an `Illuminate\Validation\ValidationException` is thrown. Make sure to catch it.
 

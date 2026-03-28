@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Dto;
 
+use InvalidArgumentException;
+
 class OidcTokenData
 {
     public function __construct(
@@ -17,10 +19,18 @@ class OidcTokenData
 
     public static function fromArray(array $data): self
     {
+        if (! isset($data['access_token']) || $data['access_token'] === '') {
+            throw new InvalidArgumentException(message: 'The access_token is required.');
+        }
+
+        if (! isset($data['expires_in'])) {
+            throw new InvalidArgumentException(message: 'The expires_in is required.');
+        }
+
         return new self(
-            accessToken: (string) ($data['access_token'] ?? ''),
+            accessToken: (string) $data['access_token'],
             tokenType: (string) ($data['token_type'] ?? 'Bearer'),
-            expiresIn: (int) ($data['expires_in'] ?? 0),
+            expiresIn: (int) $data['expires_in'],
             idToken: (string) ($data['id_token'] ?? '') ?: null,
             scope: (string) ($data['scope'] ?? '') ?: null,
         );

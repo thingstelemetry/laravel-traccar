@@ -42,4 +42,17 @@ describe(description: 'get', tests: function () {
             ->toBeInstanceOf(class: EventData::class)
             ->and(value: $event->id)->toBe(expected: 1234);
     });
+
+    test(description: 'surfaces error for a non-2xx response in event get', closure: function () {
+        MockClient::global(mockData: [
+            GetEvent::class => MockResponse::make(body: ['error' => 'Event not found'], status: 404),
+        ]);
+
+        try {
+            Event::get(id: 1234);
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(404);
+        }
+    });
 });

@@ -46,7 +46,7 @@ class Session extends Traccar
      * @throws \Saloon\Exceptions\Request\FatalRequestException
      * @throws \Saloon\Exceptions\Request\RequestException
      */
-    public function create(string $email, string $password, ?int $code = null): UserData
+    public function create(string $email, string $password, int|string|null $code = null): UserData
     {
         $response = $this->connector->send(
             request: new CreateSession(email: $email, password: $password, code: $code)

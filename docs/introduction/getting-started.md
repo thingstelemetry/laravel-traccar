@@ -20,9 +20,9 @@
 
 ## Requirements
 
-| Version | PHP      | Composer | Laravel    |
-|---------|----------|----------|------------|
-| 1.x     | 8.4, 8.5 | Required | 12.x, 13.x |
+| Version | PHP      | Composer | Laravel |
+|---------|----------|----------|---------|
+| 1.x     | 8.4, 8.5 | Required | 13.x    |
 
 > [!IMPORTANT]
 > This package supports Laravel package auto-discovery - no need to register the service provider.

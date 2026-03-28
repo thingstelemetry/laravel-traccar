@@ -7,6 +7,7 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Facades\Oidc;
 use ThingsTelemetry\Traccar\Dto\OidcTokenData;
+use ThingsTelemetry\Traccar\Dto\JwksResponseDto;
 use ThingsTelemetry\Traccar\Dto\OidcUserInfoData;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetJwks;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetToken;
@@ -117,6 +118,19 @@ describe('getUserInfo', function () {
             ->and($response->sub)->toBe('1')
             ->and($response->name)->toBe('Admin');
     });
+
+    test('surfaces error for a non-2xx response in get user info', function () {
+        MockClient::global([
+            GetUserInfo::class => MockResponse::make(body: ['error' => 'Unauthorized'], status: 401),
+        ]);
+
+        try {
+            Oidc::getUserInfo();
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(401);
+        }
+    });
 });
 
 describe('getJwks', function () {
@@ -134,6 +148,9 @@ describe('getJwks', function () {
                     'kty' => 'RSA',
                     'alg' => 'RS256',
                     'use' => 'sig',
+                    'kid' => '1',
+                    'n'   => 'n',
+                    'e'   => 'e',
                 ],
             ],
         ];
@@ -144,7 +161,20 @@ describe('getJwks', function () {
 
         $response = Oidc::getJwks();
 
-        expect($response)->toBeArray()
-            ->and($response)->toHaveKey('keys');
+        expect($response)->toBeInstanceOf(JwksResponseDto::class)
+            ->and($response->keys->first()->kty)->toBe('RSA');
+    });
+
+    test('surfaces error for a non-2xx response in get jwks', function () {
+        MockClient::global([
+            GetJwks::class => MockResponse::make(body: ['error' => 'Bad request'], status: 400),
+        ]);
+
+        try {
+            Oidc::getJwks();
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(400);
+        }
     });
 });

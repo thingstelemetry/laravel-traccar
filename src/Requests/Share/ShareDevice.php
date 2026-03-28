@@ -8,6 +8,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Carbon\CarbonInterface;
+use InvalidArgumentException;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Traits\Body\HasFormBody;
 use ThingsTelemetry\Traccar\Dto\DeviceShareData;
@@ -31,9 +32,15 @@ class ShareDevice extends Request implements HasBody
 
     public function createDtoFromResponse(Response $response): DeviceShareData
     {
+        $token = mb_trim(string: $response->body(), characters: '"');
+
+        if ($token === '') {
+            throw new InvalidArgumentException(message: 'The device share token is missing or empty.');
+        }
+
         return DeviceShareData::fromToken(
             deviceId: $this->deviceId,
-            token: mb_trim(string: $response->body(), characters: '"'),
+            token: $token,
             expiration: $this->expiration,
             apiBaseUrl: $response->getPendingRequest()->getConnector()->resolveBaseUrl(),
         );

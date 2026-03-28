@@ -49,6 +49,32 @@ describe(description: 'device', tests: function () {
             ->toBeInstanceOf(class: DeviceShareData::class)
             ->and(value: $share->token)->toBe(expected: 'token-abc-123');
     });
+
+    test(description: 'surfaces error for a non-2xx response in device share', closure: function () {
+        MockClient::global(mockData: [
+            ShareDevice::class => MockResponse::make(body: ['error' => 'Device not found'], status: 404),
+        ]);
+
+        try {
+            Share::device(deviceId: 6, expiration: CarbonImmutable::parse('2030-12-31T23:59:59Z'));
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(404);
+        }
+    });
+
+    test(description: 'surfaces error for a malformed token in device share', closure: function () {
+        MockClient::global(mockData: [
+            ShareDevice::class => MockResponse::make(body: '', status: 200),
+        ]);
+
+        try {
+            Share::device(deviceId: 6, expiration: CarbonImmutable::parse('2030-12-31T23:59:59Z'));
+            $this->fail('Expected InvalidArgumentException was not thrown');
+        } catch (\InvalidArgumentException $e) {
+            expect($e->getMessage())->toBe('The device share token is missing or empty.');
+        }
+    });
 });
 
 describe(description: 'group', tests: function () {
@@ -87,5 +113,31 @@ describe(description: 'group', tests: function () {
         expect(value: $share)
             ->toBeInstanceOf(class: GroupShareData::class)
             ->and(value: $share->token)->toBe(expected: 'token-abc-123');
+    });
+
+    test(description: 'surfaces error for a non-2xx response in group share', closure: function () {
+        MockClient::global(mockData: [
+            ShareGroup::class => MockResponse::make(body: ['error' => 'Group not found'], status: 404),
+        ]);
+
+        try {
+            Share::group(groupId: 6, expiration: CarbonImmutable::parse('2030-12-31T23:59:59Z'));
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(404);
+        }
+    });
+
+    test(description: 'surfaces error for a malformed token in group share', closure: function () {
+        MockClient::global(mockData: [
+            ShareGroup::class => MockResponse::make(body: '', status: 200),
+        ]);
+
+        try {
+            Share::group(groupId: 6, expiration: CarbonImmutable::parse('2030-12-31T23:59:59Z'));
+            $this->fail('Expected InvalidArgumentException was not thrown');
+        } catch (\InvalidArgumentException $e) {
+            expect($e->getMessage())->toBe('The group share token is missing or empty.');
+        }
     });
 });

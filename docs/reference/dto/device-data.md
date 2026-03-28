@@ -29,18 +29,18 @@ $dto = new DeviceData(
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `id` | `int?` | Traccar device identifier. |
+| `id` | `?int` | Traccar device identifier. |
 | `name` | `string` | Human-friendly device name. |
 | `uniqueId` | `string` | Unique device identifier (IMEI/Serial). |
 | `attributes` | `DeviceAttributesData` | Typed device attribute bag. |
 | `status` | `DeviceStatus` | Device connection status. |
 | `disabled` | `bool` | Whether the device is disabled. |
-| `lastUpdate` | `CarbonImmutable?` | Timestamp of the last update. |
-| `positionId` | `int?` | Latest position record ID. |
-| `groupId` | `int?` | Group identifier. |
-| `phone` | `string?` | Associated SIM or phone number. |
-| `model` | `string?` | Device model identifier. |
-| `contact` | `string?` | Optional contact label. |
+| `lastUpdate` | `?CarbonImmutable` | Timestamp of the last update. |
+| `positionId` | `?int` | Latest position record ID. |
+| `groupId` | `?int` | Group identifier. |
+| `phone` | `?string` | Associated SIM or phone number. |
+| `model` | `?string` | Device model identifier. |
+| `contact` | `?string` | Optional contact label. |
 | `category` | `DeviceCategory` | Device category classification. |
 
 ## `id` → `integer`|`null`

@@ -34,18 +34,18 @@ class GetToken extends Request implements HasBody
 
     public function createDtoFromResponse(Response $response): OidcTokenData
     {
-        return OidcTokenData::fromArray($response->json());
+        return OidcTokenData::fromArray(data: $response->json());
     }
 
     protected function defaultBody(): array
     {
-        return array_filter([
+        return array_filter(array: [
             'grant_type'    => $this->grantType,
             'code'          => $this->code,
             'redirect_uri'  => $this->redirectUri,
             'client_id'     => $this->clientId,
             'client_secret' => $this->clientSecret,
             'code_verifier' => $this->codeVerifier,
-        ]);
+        ], callback: fn (mixed $v): bool => $v !== null);
     }
 }

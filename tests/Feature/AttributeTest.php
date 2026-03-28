@@ -137,6 +137,19 @@ describe(description: 'test', tests: function () use ($getAttributeData) {
 
         expect(value: $response)->toBe(expected: 'some-result');
     });
+
+    test(description: 'propagates error for a non-2xx response', closure: function () use ($getAttributeData) {
+        MockClient::global(mockData: [
+            TestAttribute::class => MockResponse::make(body: ['error' => 'Invalid expression'], status: 400),
+        ]);
+
+        try {
+            Attribute::test(deviceId: 6, data: AttributeData::fromArray(data: $getAttributeData()));
+            $this->fail('Expected RequestException was not thrown');
+        } catch (\Saloon\Exceptions\Request\RequestException $e) {
+            expect($e->getResponse()->status())->toBe(400);
+        }
+    });
 });
 
 describe(description: 'delete', tests: function () {

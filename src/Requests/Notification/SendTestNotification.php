@@ -21,7 +21,9 @@ class SendTestNotification extends Request
     public function resolveEndpoint(): string
     {
         if ($this->notificator !== null) {
-            return "/notifications/test/{$this->notificator}";
+            $notificator = rawurlencode(string: $this->notificator);
+
+            return "/notifications/test/{$notificator}";
         }
 
         return '/notifications/test';

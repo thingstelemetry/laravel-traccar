@@ -21,7 +21,8 @@ use Symfony\Component\HttpFoundation\File\File;
  * @method static StatusData uploadFile(string $path, UploadedFile|File|string $file)
  * @method static Collection timezones()
  * @method static string geocode(float $latitude, float $longitude)
- * @method static Collection statistics(CarbonInterface $from, CarbonInterface $to)
+ * @method static \ThingsTelemetry\Traccar\Dto\ServerStatisticsData statistics(CarbonInterface $from, CarbonInterface $to)
+ * @method static Collection<int, \ThingsTelemetry\Traccar\Dto\ServerStatisticsData> statisticsCollection(CarbonInterface $from, CarbonInterface $to)
  */
 class Server extends Facade
 {
