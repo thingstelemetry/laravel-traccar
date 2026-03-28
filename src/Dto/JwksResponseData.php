@@ -6,7 +6,7 @@ namespace ThingsTelemetry\Traccar\Dto;
 
 use Illuminate\Support\Collection;
 
-class JwksResponseDto
+class JwksResponseData
 {
     /**
      * @param  Collection<int, JwksKeyData>  $keys

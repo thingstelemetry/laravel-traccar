@@ -180,6 +180,13 @@ describe(description: 'update', tests: function () {
             ->and(value: $response->id)->toBe(expected: 6);
     });
 
+    test(description: 'throws exception for non-positive ID', closure: function () {
+        $data = UserData::fromArray(data: ['id' => 0, 'name' => 'Test']);
+
+        expect(value: fn () => new UpdateUser(data: $data))
+            ->toThrow(exception: InvalidArgumentException::class, exceptionMessage: 'User ID is required for update operations.');
+    });
+
     test(description: 'propagates errors', closure: function () {
         MockClient::global(mockData: [
             UpdateUser::class => MockResponse::make(body: [], status: 404),

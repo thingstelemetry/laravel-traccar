@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ThingsTelemetry\Traccar\Dto;
 
 use InvalidArgumentException;
+use ThingsTelemetry\Traccar\Support\DataHelper;
 
 class PermissionData
 {
@@ -26,17 +27,17 @@ class PermissionData
     public static function fromArray(array $data): self
     {
         return new self(
-            userId: array_key_exists('userId', $data) ? (is_null($data['userId']) ? null : (int) $data['userId']) : null,
-            deviceId: array_key_exists('deviceId', $data) ? (is_null($data['deviceId']) ? null : (int) $data['deviceId']) : null,
-            groupId: array_key_exists('groupId', $data) ? (is_null($data['groupId']) ? null : (int) $data['groupId']) : null,
-            geofenceId: array_key_exists('geofenceId', $data) ? (is_null($data['geofenceId']) ? null : (int) $data['geofenceId']) : null,
-            notificationId: array_key_exists('notificationId', $data) ? (is_null($data['notificationId']) ? null : (int) $data['notificationId']) : null,
-            calendarId: array_key_exists('calendarId', $data) ? (is_null($data['calendarId']) ? null : (int) $data['calendarId']) : null,
-            attributeId: array_key_exists('attributeId', $data) ? (is_null($data['attributeId']) ? null : (int) $data['attributeId']) : null,
-            driverId: array_key_exists('driverId', $data) ? (is_null($data['driverId']) ? null : (int) $data['driverId']) : null,
-            managedUserId: array_key_exists('managedUserId', $data) ? (is_null($data['managedUserId']) ? null : (int) $data['managedUserId']) : null,
-            commandId: array_key_exists('commandId', $data) ? (is_null($data['commandId']) ? null : (int) $data['commandId']) : null,
-            maintenanceId: array_key_exists('maintenanceId', $data) ? (is_null($data['maintenanceId']) ? null : (int) $data['maintenanceId']) : null,
+            userId: DataHelper::nullableInt(data: $data, key: 'userId'),
+            deviceId: DataHelper::nullableInt(data: $data, key: 'deviceId'),
+            groupId: DataHelper::nullableInt(data: $data, key: 'groupId'),
+            geofenceId: DataHelper::nullableInt(data: $data, key: 'geofenceId'),
+            notificationId: DataHelper::nullableInt(data: $data, key: 'notificationId'),
+            calendarId: DataHelper::nullableInt(data: $data, key: 'calendarId'),
+            attributeId: DataHelper::nullableInt(data: $data, key: 'attributeId'),
+            driverId: DataHelper::nullableInt(data: $data, key: 'driverId'),
+            managedUserId: DataHelper::nullableInt(data: $data, key: 'managedUserId'),
+            commandId: DataHelper::nullableInt(data: $data, key: 'commandId'),
+            maintenanceId: DataHelper::nullableInt(data: $data, key: 'maintenanceId'),
         );
     }
 

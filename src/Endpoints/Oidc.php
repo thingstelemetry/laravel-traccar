@@ -7,7 +7,7 @@ namespace ThingsTelemetry\Traccar\Endpoints;
 use Exception;
 use ThingsTelemetry\Traccar\Traccar;
 use ThingsTelemetry\Traccar\Dto\OidcTokenData;
-use ThingsTelemetry\Traccar\Dto\JwksResponseDto;
+use ThingsTelemetry\Traccar\Dto\JwksResponseData;
 use ThingsTelemetry\Traccar\Dto\OidcUserInfoData;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetJwks;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetToken;
@@ -76,7 +76,7 @@ class Oidc extends Traccar
     }
 
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function getJwks(): JwksResponseDto
+    public function getJwks(): JwksResponseData
     {
         return $this->connector->send(request: new GetJwks())->dtoOrFail();
     }

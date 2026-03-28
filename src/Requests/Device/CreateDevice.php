@@ -4,20 +4,12 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\Device;
 
-use JsonException;
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
 use ThingsTelemetry\Traccar\Dto\DeviceData;
+use ThingsTelemetry\Traccar\Requests\Abstract\CreateRequest;
 
-class CreateDevice extends Request implements HasBody
+class CreateDevice extends CreateRequest
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::POST;
-
     public function __construct(public DeviceData $data)
     {
     }
@@ -27,15 +19,8 @@ class CreateDevice extends Request implements HasBody
         return '/devices';
     }
 
-    /**  @throws JsonException */
     public function createDtoFromResponse(Response $response): DeviceData
     {
-        return DeviceData::fromArray($response->json());
-    }
-
-    /**  @return array<string, mixed> */
-    protected function defaultBody(): array
-    {
-        return $this->data->toArray();
+        return DeviceData::fromArray(data: $response->json());
     }
 }

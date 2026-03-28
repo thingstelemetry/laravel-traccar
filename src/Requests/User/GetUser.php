@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\User;
 
-use JsonException;
+use Throwable;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -24,21 +24,31 @@ class GetUser extends Request
         return "/users/{$this->id}";
     }
 
-    /**
-     * @throws JsonException
-     * @throws \Saloon\Exceptions\Request\Statuses\NotFoundException
-     */
-    public function createDtoFromResponse(Response $response): UserData
+    public function hasRequestFailed(Response $response): ?bool
     {
-        $json = $response->json();
-
-        if (! is_array($json) || $json === []) {
-            throw new NotFoundException(
-                response: $response,
-                message: 'Traccar user was not found. Check the user ID and try again.'
-            );
+        if ($response->status() !== 200) {
+            return null;
         }
 
-        return UserData::fromArray($json);
+        $json = $response->json();
+
+        return ! is_array($json) || $json === [];
+    }
+
+    public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
+    {
+        if ($response->status() !== 200) {
+            return null;
+        }
+
+        return new NotFoundException(
+            response: $response,
+            message: 'Traccar user was not found. Check the user ID and try again.'
+        );
+    }
+
+    public function createDtoFromResponse(Response $response): UserData
+    {
+        return UserData::fromArray(data: $response->json());
     }
 }

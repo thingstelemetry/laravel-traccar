@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\Position;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
-use Saloon\Http\Response;
 use Carbon\CarbonInterface;
+use ThingsTelemetry\Traccar\Requests\Abstract\GetPositionsExportRequest;
 
-class GetPositionsCsv extends Request
+class GetPositionsCsv extends GetPositionsExportRequest
 {
-    protected Method $method = Method::GET;
-
     public function __construct(
-        private int $deviceId,
-        private CarbonInterface $from,
-        private CarbonInterface $to,
+        int $deviceId,
+        CarbonInterface $from,
+        CarbonInterface $to,
         private ?int $geofenceId = null,
     ) {
+        parent::__construct(
+            deviceId: $deviceId,
+            from: $from,
+            to: $to,
+        );
     }
 
     public function resolveEndpoint(): string
@@ -26,19 +27,10 @@ class GetPositionsCsv extends Request
         return '/positions/csv';
     }
 
-    public function createDtoFromResponse(Response $response): string
-    {
-        return mb_trim(string: $response->body());
-    }
-
     /** @return array<string, int|string> */
     protected function defaultQuery(): array
     {
-        $query = [
-            'deviceId' => $this->deviceId,
-            'from'     => $this->from->toIso8601String(),
-            'to'       => $this->to->toIso8601String(),
-        ];
+        $query = parent::defaultQuery();
 
         if ($this->geofenceId !== null) {
             $query['geofenceId'] = $this->geofenceId;

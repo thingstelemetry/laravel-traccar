@@ -1,6 +1,7 @@
 {
     "preset": "psr12",
     "rules": {
+        "no_unused_imports": true,
         "declare_strict_types": true,
         "date_time_immutable": true,
         "mb_str_functions": true,

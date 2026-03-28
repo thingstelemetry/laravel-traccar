@@ -7,7 +7,7 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Facades\Oidc;
 use ThingsTelemetry\Traccar\Dto\OidcTokenData;
-use ThingsTelemetry\Traccar\Dto\JwksResponseDto;
+use ThingsTelemetry\Traccar\Dto\JwksResponseData;
 use ThingsTelemetry\Traccar\Dto\OidcUserInfoData;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetJwks;
 use ThingsTelemetry\Traccar\Requests\Oidc\GetToken;
@@ -198,7 +198,7 @@ describe('getJwks', function () {
 
         $response = Oidc::getJwks();
 
-        expect($response)->toBeInstanceOf(JwksResponseDto::class)
+        expect($response)->toBeInstanceOf(JwksResponseData::class)
             ->and($response->keys->first()->kty)->toBe('RSA');
     });
 

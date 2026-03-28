@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Dto;
 
-use Throwable;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Facades\Log;
+use ThingsTelemetry\Traccar\Support\ParsesTimestamps;
 
 class ReportStopsData
 {
+    use ParsesTimestamps;
     public function __construct(
         public int $deviceId,
         public string $deviceName,
@@ -30,11 +30,11 @@ class ReportStopsData
             deviceId: (int) ($data['deviceId'] ?? 0),
             deviceName: (string) ($data['deviceName'] ?? ''),
             duration: (int) ($data['duration'] ?? 0),
-            startTime: self::parseTime(raw: $data['startTime'] ?? null, field: 'startTime'),
+            startTime: self::parseTimestamp(raw: $data['startTime'] ?? null, field: 'startTime'),
             address: (string) ($data['address'] ?? ''),
             lat: (float) ($data['lat'] ?? 0),
             lon: (float) ($data['lon'] ?? 0),
-            endTime: self::parseTime(raw: $data['endTime'] ?? null, field: 'endTime'),
+            endTime: self::parseTimestamp(raw: $data['endTime'] ?? null, field: 'endTime'),
             spentFuel: (float) ($data['spentFuel'] ?? 0),
             engineHours: (int) ($data['engineHours'] ?? 0),
         );
@@ -54,18 +54,5 @@ class ReportStopsData
             'spentFuel'   => $this->spentFuel,
             'engineHours' => $this->engineHours,
         ];
-    }
-
-    private static function parseTime(mixed $raw, string $field): ?CarbonImmutable
-    {
-        if (is_string($raw) && $raw !== '') {
-            try {
-                return CarbonImmutable::parse($raw);
-            } catch (Throwable $e) {
-                Log::info("Failed to parse ReportStops {$field}: ".$e->getMessage());
-            }
-        }
-
-        return null;
     }
 }

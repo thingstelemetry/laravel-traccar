@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Dto;
 
-use Throwable;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Facades\Log;
+use ThingsTelemetry\Traccar\Support\ParsesTimestamps;
 
 class ServerStatisticsData
 {
+    use ParsesTimestamps;
     public function __construct(
         public ?CarbonImmutable $captureTime,
         public int $activeUsers,
@@ -22,18 +22,8 @@ class ServerStatisticsData
 
     public static function fromArray(array $data): self
     {
-        $time = null;
-        try {
-            $raw = (string) ($data['captureTime'] ?? '');
-            if ($raw !== '') {
-                $time = CarbonImmutable::parse($raw);
-            }
-        } catch (Throwable $e) {
-            Log::info('Failed to parse statistics captureTime: '.$e->getMessage());
-        }
-
         return new self(
-            captureTime: $time,
+            captureTime: self::parseTimestamp(raw: $data['captureTime'] ?? null, field: 'captureTime'),
             activeUsers: (int) ($data['activeUsers'] ?? 0),
             activeDevices: (int) ($data['activeDevices'] ?? 0),
             requests: (int) ($data['requests'] ?? 0),

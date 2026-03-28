@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Requests\Driver;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
 use ThingsTelemetry\Traccar\Dto\DriverData;
+use ThingsTelemetry\Traccar\Requests\Abstract\CreateRequest;
 
-class CreateDriver extends Request implements HasBody
+class CreateDriver extends CreateRequest
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::POST;
-
     public function __construct(public DriverData $data)
     {
     }
@@ -29,11 +22,5 @@ class CreateDriver extends Request implements HasBody
     public function createDtoFromResponse(Response $response): DriverData
     {
         return DriverData::fromArray(data: $response->json());
-    }
-
-    /** @return array<string, mixed> */
-    protected function defaultBody(): array
-    {
-        return $this->data->toArray();
     }
 }

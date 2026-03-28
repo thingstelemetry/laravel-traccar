@@ -14,9 +14,9 @@
 
 ## Requirements
 
-| Version | PHP          | Laravel    |
-|---------|--------------|------------|
-| 1.x     | 8.4.x, 8.5.x | 12.x, 13.x |
+| Version | PHP          | Laravel |
+|---------|--------------|---------|
+| 1.x     | 8.4.x, 8.5.x | 13.x    |
 
 ## Installation
 

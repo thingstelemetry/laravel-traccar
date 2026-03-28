@@ -7,7 +7,7 @@ namespace ThingsTelemetry\Traccar\Requests\Oidc;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use ThingsTelemetry\Traccar\Dto\JwksResponseDto;
+use ThingsTelemetry\Traccar\Dto\JwksResponseData;
 
 class GetJwks extends Request
 {
@@ -18,8 +18,8 @@ class GetJwks extends Request
         return '/oidc/jwks';
     }
 
-    public function createDtoFromResponse(Response $response): JwksResponseDto
+    public function createDtoFromResponse(Response $response): JwksResponseData
     {
-        return JwksResponseDto::fromArray(data: $response->json());
+        return JwksResponseData::fromArray(data: $response->json());
     }
 }
