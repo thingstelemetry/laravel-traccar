@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Dto;
 
-use Throwable;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Facades\Log;
 use ThingsTelemetry\Traccar\Enums\DeviceStatus;
+use ThingsTelemetry\Traccar\Support\DataHelper;
 use ThingsTelemetry\Traccar\Enums\DeviceCategory;
+use ThingsTelemetry\Traccar\Support\ParsesTimestamps;
 
 class DeviceData
 {
+    use ParsesTimestamps;
     public function __construct(
         public string $name,
         public string $uniqueId,
@@ -31,26 +32,15 @@ class DeviceData
 
     public static function fromArray(array $data): self
     {
-        $rawLastUpdate = $data['lastUpdate'] ?? null;
-        $lastUpdate = null;
-
-        if (is_string($rawLastUpdate) && $rawLastUpdate !== '') {
-            try {
-                $lastUpdate = CarbonImmutable::parse($rawLastUpdate);
-            } catch (Throwable $e) {
-                Log::info("Failed to parse {$data['uniqueId']} Device lastUpdate: ".$e->getMessage());
-            }
-        }
-
         return new self(
-            id: array_key_exists(key: 'id', array: $data) ? (is_null($data['id']) ? null : (int) $data['id']) : null,
+            id: DataHelper::nullableInt(data: $data, key: 'id'),
             name: (string) ($data['name'] ?? ''),
             uniqueId: (string) ($data['uniqueId'] ?? ''),
             status: DeviceStatus::tryFrom((string) ($data['status'] ?? '')) ?? DeviceStatus::default(),
             disabled: (bool) ($data['disabled'] ?? false),
-            lastUpdate: $lastUpdate,
-            positionId: array_key_exists(key: 'positionId', array: $data) ? (is_null($data['positionId']) ? null : (int) $data['positionId']) : null,
-            groupId: array_key_exists(key: 'groupId', array: $data) ? (is_null($data['groupId']) ? null : (int) $data['groupId']) : null,
+            lastUpdate: self::parseTimestamp(raw: $data['lastUpdate'] ?? null, field: 'lastUpdate'),
+            positionId: DataHelper::nullableInt(data: $data, key: 'positionId'),
+            groupId: DataHelper::nullableInt(data: $data, key: 'groupId'),
             phone: $data['phone'] ?? null,
             model: $data['model'] ?? null,
             contact: $data['contact'] ?? null,

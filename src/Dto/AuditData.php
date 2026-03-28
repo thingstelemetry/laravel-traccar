@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Dto;
 
-use Throwable;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Facades\Log;
+use ThingsTelemetry\Traccar\Support\ParsesTimestamps;
 
 class AuditData
 {
+    use ParsesTimestamps;
     public function __construct(
         public int $id,
         public int $userId,
@@ -23,23 +23,12 @@ class AuditData
 
     public static function fromArray(array $data): self
     {
-        $rawActionTime = $data['actionTime'] ?? null;
-        $actionTime = null;
-
-        if (is_string($rawActionTime) && $rawActionTime !== '') {
-            try {
-                $actionTime = CarbonImmutable::parse($rawActionTime);
-            } catch (Throwable $e) {
-                Log::warning('Failed to parse Audit actionTime: '.$e->getMessage());
-            }
-        }
-
         return new self(
             id: (int) ($data['id'] ?? 0),
             userId: (int) ($data['userId'] ?? 0),
             userEmail: $data['userEmail'] ?? null,
             type: (string) ($data['type'] ?? ''),
-            actionTime: $actionTime,
+            actionTime: self::parseTimestamp(raw: $data['actionTime'] ?? null, field: 'actionTime'),
             attributes: is_array($data['attributes'] ?? null) ? $data['attributes'] : [],
         );
     }

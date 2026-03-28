@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Dto;
 
-use Throwable;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Facades\Log;
+use ThingsTelemetry\Traccar\Support\ParsesTimestamps;
 
 class PositionData
 {
+    use ParsesTimestamps;
     /**
      * @param array<int, int> $geofenceIds
      * @param array<string, mixed> $network
@@ -38,9 +38,9 @@ class PositionData
 
     public static function fromArray(array $data): self
     {
-        $deviceTime = self::parseTime($data['deviceTime'] ?? null, 'deviceTime');
-        $fixTime = self::parseTime($data['fixTime'] ?? null, 'fixTime');
-        $serverTime = self::parseTime($data['serverTime'] ?? null, 'serverTime');
+        $deviceTime = self::parseTimestamp($data['deviceTime'] ?? null, 'deviceTime');
+        $fixTime = self::parseTimestamp($data['fixTime'] ?? null, 'fixTime');
+        $serverTime = self::parseTimestamp($data['serverTime'] ?? null, 'serverTime');
 
         $geofenceIds = [];
         if (is_array($data['geofenceIds'] ?? null)) {
@@ -91,18 +91,5 @@ class PositionData
             'geofenceIds' => $this->geofenceIds,
             'attributes'  => $this->attributes,
         ];
-    }
-
-    private static function parseTime(mixed $raw, string $field): ?CarbonImmutable
-    {
-        if (is_string($raw) && $raw !== '') {
-            try {
-                return CarbonImmutable::parse($raw);
-            } catch (Throwable $e) {
-                Log::info("Failed to parse Position {$field}: ".$e->getMessage());
-            }
-        }
-
-        return null;
     }
 }

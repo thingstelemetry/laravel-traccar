@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Dto;
 
-use Throwable;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Facades\Log;
 use ThingsTelemetry\Traccar\Enums\Map;
 use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
+use ThingsTelemetry\Traccar\Support\ParsesTimestamps;
 
 class UserData
 {
+    use ParsesTimestamps;
     public function __construct(
         public int $id,
         public string $name,
@@ -39,16 +39,6 @@ class UserData
 
     public static function fromArray(array $data): self
     {
-        $expirationTime = null;
-        $raw = $data['expirationTime'] ?? null;
-        if (is_string($raw) && $raw !== '') {
-            try {
-                $expirationTime = CarbonImmutable::parse($raw);
-            } catch (Throwable $e) {
-                Log::info('Failed to parse User expirationTime: '.$e->getMessage());
-            }
-        }
-
         return new self(
             id: (int) ($data['id'] ?? 0),
             name: (string) ($data['name'] ?? ''),
@@ -63,7 +53,7 @@ class UserData
             password: $data['password'] ?? null,
             coordinateFormat: CoordinateFormat::tryFrom((string) ($data['coordinateFormat'] ?? '')) ?? CoordinateFormat::default(),
             disabled: (bool) ($data['disabled'] ?? false),
-            expirationTime: $expirationTime,
+            expirationTime: self::parseTimestamp(raw: $data['expirationTime'] ?? null, field: 'expirationTime'),
             deviceLimit: (int) ($data['deviceLimit'] ?? 0),
             userLimit: (int) ($data['userLimit'] ?? 0),
             deviceReadonly: (bool) ($data['deviceReadonly'] ?? false),
