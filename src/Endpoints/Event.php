@@ -19,12 +19,14 @@ class Event extends Traccar
     }
 
     /**
-     * @deprecated Use get() instead. Will be removed in the next major version.
+     * @deprecated Use get(int $id) instead. Will be removed in the next major version.
      *
      * @throws \Saloon\Exceptions\SaloonException
      */
     public function find(int $id): EventData
     {
+        trigger_error(message: 'Event::find() is deprecated. Use Event::get() instead.', error_level: E_USER_DEPRECATED);
+
         return $this->get(id: $id);
     }
 }
