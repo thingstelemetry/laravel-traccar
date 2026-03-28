@@ -7,7 +7,7 @@ Fetch calendars from your Traccar server.
 ```php
 use ThingsTelemetry\Traccar\Facades\Calendar;
 
-$calendars = Calendar::getAll(all: true, limit: 20);
+$calendars = Calendar::all(all: true, limit: 20);
 ```
 
 ## Result

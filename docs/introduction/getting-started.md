@@ -87,7 +87,7 @@ php artisan vendor:publish --tag=config --provider="ThingsTelemetry\Traccar\Trac
 use ThingsTelemetry\Traccar\Facades\Server;
 
 // returns ThingsTelemetry\Traccar\Dto\ServerData
-$info = Server::getInformation(); 
+$info = Server::get(); 
 
 
 $version = $info->version; // 6.10

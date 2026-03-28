@@ -6,7 +6,7 @@ The `ThingsTelemetry\Traccar\Dto\ServerData` represents the Traccar server confi
 ```php
 use ThingsTelemetry\Traccar\Facades\Server;
 
-$info = Server::getInformation(); 
+$info = Server::get(); 
 ```
 
 ## `id` → `integer`

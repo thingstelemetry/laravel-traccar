@@ -12,10 +12,10 @@ use ThingsTelemetry\Traccar\Facades\Device;
 use ThingsTelemetry\Traccar\Facades\User;
 
 // GET requests
-$serverInfo = Server::getInformation();
+$serverInfo = Server::get();
 $device = Device::find(id: 1);
-$devices = Device::getAll();
-$user = User::find(id: 5);
+$devices = Device::all();
+$user = User::get(id: 5);
 ```
 
 ## Creating Resources with DTOs
@@ -54,6 +54,7 @@ $updatedDevice = Device::update(data: $device);
 Some methods accept additional parameters:
 
 ```php
+use ThingsTelemetry\Traccar\Facades\User;
 use ThingsTelemetry\Traccar\Facades\Server;
 use Carbon\Carbon;
 
@@ -67,6 +68,13 @@ $stats = Server::statistics(
 $address = Server::geocode(
     latitude: -1.2921,
     longitude: 36.8219
+);
+
+// With filters
+$users = User::all(
+    userId: 3,
+    keyword: 'jane',
+    limit: 10,
 );
 ```
 

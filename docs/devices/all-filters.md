@@ -14,7 +14,7 @@ Fetch devices from your Traccar server by user ID, by device IDs, by unique IDs,
 use ThingsTelemetry\Traccar\Facades\Device;
 
 $userId = 123;
-$devices = Device::get(userId: $userId); // Illuminate\Support\Collection of DeviceData
+$devices = Device::all(userId: $userId); // Illuminate\Support\Collection of DeviceData
 ```
 
 ### 2) By device IDs
@@ -22,7 +22,7 @@ $devices = Device::get(userId: $userId); // Illuminate\Support\Collection of Dev
 ```php
 use ThingsTelemetry\Traccar\Facades\Device;
 
-$devices = Device::get(ids: [6, 7]); // Illuminate\Support\Collection of DeviceData
+$devices = Device::all(ids: [6, 7]); // Illuminate\Support\Collection of DeviceData
 ```
 
 ### 3) By uniqueIds
@@ -30,7 +30,7 @@ $devices = Device::get(ids: [6, 7]); // Illuminate\Support\Collection of DeviceD
 ```php
 use ThingsTelemetry\Traccar\Facades\Device;
 
-$devices = Device::get(uniqueIds: ['ABC123', 'XYZ789']); // Illuminate\Support\Collection of DeviceData
+$devices = Device::all(uniqueIds: ['ABC123', 'XYZ789']); // Illuminate\Support\Collection of DeviceData
 ```
 
 ### 4) Combined filters (userId + ids + uniqueIds)
@@ -38,7 +38,7 @@ $devices = Device::get(uniqueIds: ['ABC123', 'XYZ789']); // Illuminate\Support\C
 ```php
 use ThingsTelemetry\Traccar\Facades\Device;
 
-$devices = Device::get(userId: 123, ids: [6], uniqueIds: ['ABC123']); // Illuminate\Support\Collection of DeviceData
+$devices = Device::all(userId: 123, ids: [6], uniqueIds: ['ABC123']); // Illuminate\Support\Collection of DeviceData
 ```
 
 ## Results

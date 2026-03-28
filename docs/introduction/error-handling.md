@@ -60,7 +60,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 
 try {
-    $info = Server::getInformation();
+    $info = Server::get();
 } catch (FatalRequestException $e) {
     // Network connectivity issues
     logger()->error('Connection failed: ' . $e->getMessage());

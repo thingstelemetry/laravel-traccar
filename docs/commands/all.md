@@ -7,7 +7,7 @@ Fetch saved commands from your Traccar server.
 ```php
 use ThingsTelemetry\Traccar\Facades\Command;
 
-$commands = Command::getAll(all: true, deviceId: 6);
+$commands = Command::all(all: true, deviceId: 6);
 ```
 
 ## Result

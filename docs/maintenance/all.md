@@ -7,7 +7,7 @@ Fetch maintenance records from your Traccar server.
 ```php
 use ThingsTelemetry\Traccar\Facades\Maintenance;
 
-$items = Maintenance::getAll(all: true, deviceId: 6);
+$items = Maintenance::all(all: true, deviceId: 6);
 ```
 
 ## Result

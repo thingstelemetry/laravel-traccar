@@ -1,4 +1,4 @@
-# Get Device Information
+# Find Device
 
 Fetch a specific device by ID from your Traccar server.
 
@@ -54,8 +54,8 @@ $device->attributes->fuelIncreaseThreshold; // 10.0
 
 ## Related Operations
 
-- [Get All Devices](./get-all) - Fetch all accessible devices
-- [Get Devices by User/IDs](./get-for-user) - Fetch devices with filters
+- [Get All Devices](./all) - Fetch all accessible devices
+- [All Devices With Filters](./all-filters) - Fetch devices with filters
 - [Create Device](./create) - Create a new device
 - [Update Device](./update) - Update an existing device
 - [Delete Device](./delete) - Remove a device

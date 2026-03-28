@@ -7,12 +7,12 @@ Fetch the list of devices from your Traccar server.
 
 ## Request
 
-Use the `ThingsTelemetry\Traccar\Facades\Device::getAll()` method to retrieve all devices.
+Use the `ThingsTelemetry\Traccar\Facades\Device::all()` method to retrieve all devices.
 
 ```php
 use ThingsTelemetry\Traccar\Facades\Device;
 
-$devices = Device::getAll(); // Illuminate\Support\Collection of DeviceData
+$devices = Device::all(); // Illuminate\Support\Collection of DeviceData
 ```
 
 ## Results

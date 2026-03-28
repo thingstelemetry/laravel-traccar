@@ -4,11 +4,11 @@ Get general about your Traccar server instance into your laravel application.
 
 ## Request
 
-Use the `ThingsTelemetry\Traccar\Facades\Server::getInformation()` method to get information about your Traccar server instance.
+Use the `ThingsTelemetry\Traccar\Facades\Server::get()` method to get information about your Traccar server instance.
 
 ```php
 
-$info = \ThingsTelemetry\Traccar\Facades\Server::getInformation(); 
+$info = \ThingsTelemetry\Traccar\Facades\Server::get(); 
 ```
 
 ## Results

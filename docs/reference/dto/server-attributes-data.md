@@ -8,7 +8,7 @@ The `ThingsTelemetry\Traccar\Dto\ServerAttributesData` represents the **configur
 ```php
 use ThingsTelemetry\Traccar\Facades\Server;
 
-$attributes = Server::getInformation()->attributes;
+$attributes = Server::get()->attributes;
 ```
 
 ## `language` → `string|null`

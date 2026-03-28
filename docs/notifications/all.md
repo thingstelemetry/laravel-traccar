@@ -7,7 +7,7 @@ Fetch notifications from your Traccar server.
 ```php
 use ThingsTelemetry\Traccar\Facades\Notification;
 
-$notifications = Notification::getAll(all: true, deviceId: 6);
+$notifications = Notification::all(all: true, deviceId: 6);
 ```
 
 ## Result

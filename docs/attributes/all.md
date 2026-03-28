@@ -7,7 +7,7 @@ Fetch computed attributes from your Traccar server.
 ```php
 use ThingsTelemetry\Traccar\Facades\Attribute;
 
-$attributes = Attribute::getAll(all: true, deviceId: 6);
+$attributes = Attribute::all(all: true, deviceId: 6);
 ```
 
 ## Result

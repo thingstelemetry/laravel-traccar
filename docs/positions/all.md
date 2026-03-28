@@ -10,13 +10,13 @@ Without filters, Traccar returns the latest known positions for the devices the 
 use Carbon\CarbonImmutable;
 use ThingsTelemetry\Traccar\Facades\Position;
 
-$latestPositions = Position::get();
+$latestPositions = Position::all();
 
 $from = CarbonImmutable::parse('2025-11-22T18:30:00Z');
 $to   = CarbonImmutable::parse('2025-11-23T18:30:00Z');
 
-$history = Position::get(deviceId: 6, from: $from, to: $to);
-$selected = Position::get(ids: [12345, 67890]);
+$history = Position::all(deviceId: 6, from: $from, to: $to);
+$selected = Position::all(ids: [12345, 67890]);
 ```
 
 > [!IMPORTANT]

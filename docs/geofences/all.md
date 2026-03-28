@@ -7,7 +7,7 @@ Fetch geofences from your Traccar server.
 ```php
 use ThingsTelemetry\Traccar\Facades\Geofence;
 
-$geofences = Geofence::getAll(all: true, deviceId: 6);
+$geofences = Geofence::all(all: true, deviceId: 6);
 ```
 
 ## Result
@@ -15,4 +15,4 @@ $geofences = Geofence::getAll(all: true, deviceId: 6);
 Returns an `Illuminate\Support\Collection<int, ThingsTelemetry\Traccar\Dto\GeofenceData>`.
 
 ## Important Links
-- [Traccar Geofences](https://www.traccar.org/api-reference/#tag/Geofences/paths/~1geofences/get)
+- [Traccar Geofences](https://www.traccar.org/api-reference/)

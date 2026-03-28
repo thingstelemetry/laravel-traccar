@@ -12,7 +12,7 @@ To update Traccar server information, follow the steps below.
 #### 1. Get the current server information.
 
 ```php
-$data = \ThingsTelemetry\Traccar\Facades\Server::getInformation();
+$data = \ThingsTelemetry\Traccar\Facades\Server::get();
 ```
 
 #### 2. Update the new DTO as needed.
@@ -27,14 +27,14 @@ $data->attributes->speedUnit = \ThingsTelemetry\Traccar\Enums\SpeedUnit::KILOMET
 #### 3. Send the updated DTO to the server  method.
 
 ```php
-$response = \ThingsTelemetry\Traccar\Facades\Server::updateInformation($data);
+$response = \ThingsTelemetry\Traccar\Facades\Server::update($data);
 ```
 
 ## Full Example
 
 ```php
 // Get the current server information
-$data = \ThingsTelemetry\Traccar\Facades\Server::updateInformation();
+$data = \ThingsTelemetry\Traccar\Facades\Server::get();
 
 // Updated
 $data->map = \ThingsTelemetry\Traccar\Enums\Map::LOCATION_IQ_DARK;
@@ -50,7 +50,7 @@ $data->fixedEmail = false;
 $data->bingKey = 'your-bing-key';
 
 // Send
-$response = \ThingsTelemetry\Traccar\Facades\Server::updateInformation($data);
+$response = \ThingsTelemetry\Traccar\Facades\Server::update($data);
 ```
 
 > [!IMPORTANT]
@@ -70,7 +70,7 @@ $timezone = $info->attributes->timezone; // "Africa/Nairobi"
 
 ## Traccar UI Side Effect
 
-When `updateInformation` is called, some configuration values are updated to default `null` or `false` values. 
+When `update` is called, some configuration values are updated to default `null` or `false` values. 
 
 ### Before: Null & False Attributes Hidden
 ![Traccar UI Side Effect](./../images/traccar-server-attributes-before-running-update.webp)

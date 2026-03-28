@@ -4,7 +4,7 @@ Fetch the current authenticated user's session information.
 
 ## Overview
 
-The `Session::get()` method retrieves details about the currently authenticated user. If no valid session exists (i.e., the user is not logged in), the API returns a 404 error.
+The `Session::current()` method retrieves details about the currently authenticated user. If no valid session exists (i.e., the user is not logged in), the API returns a 404 error.
 
 ## Usage
 
@@ -15,7 +15,7 @@ Retrieve the current user's session information:
 ```php
 use ThingsTelemetry\Traccar\Facades\Session;
 
-$user = Session::get();
+$user = Session::current();
 ```
 
 ### With Token Verification
@@ -26,7 +26,7 @@ Optionally pass a token to verify its validity:
 use ThingsTelemetry\Traccar\Facades\Session;
 
 $token = 'abc123...';
-$user = Session::get($token);
+$user = Session::current($token);
 ```
 
 ## Result

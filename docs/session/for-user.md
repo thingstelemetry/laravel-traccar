@@ -4,7 +4,7 @@ Create a session for a specific user by their ID.
 
 ## Overview
 
-The `Session::getById()` method creates a new session for the specified user. This endpoint is primarily used for administrative purposes such as user impersonation or support scenarios.
+The `Session::forUser()` method creates a new session for the specified user. This endpoint is primarily used for administrative purposes such as user impersonation or support scenarios.
 
 > [!WARNING]
 > This endpoint requires administrative or manager permissions. Regular users will receive a 403 Forbidden error.
@@ -15,7 +15,7 @@ The `Session::getById()` method creates a new session for the specified user. Th
 use ThingsTelemetry\Traccar\Facades\Session;
 
 $userId = 42;
-$user = Session::getById($userId);
+$user = Session::forUser($userId);
 ```
 
 ## Result

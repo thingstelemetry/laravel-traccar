@@ -9,12 +9,12 @@ Fetch the list of groups from your Traccar server.
 
 ### Basic Usage
 
-Use the `ThingsTelemetry\Traccar\Facades\Group::getAll()` method to retrieve all accessible groups.
+Use the `ThingsTelemetry\Traccar\Facades\Group::all()` method to retrieve all accessible groups.
 
 ```php
 use ThingsTelemetry\Traccar\Facades\Group;
 
-$groups = Group::getAll(); // Illuminate\Support\Collection of GroupData
+$groups = Group::all(); // Illuminate\Support\Collection of GroupData
 ```
 
 ### With Filters
@@ -23,16 +23,16 @@ $groups = Group::getAll(); // Illuminate\Support\Collection of GroupData
 use ThingsTelemetry\Traccar\Facades\Group;
 
 // Get all groups (admin/manager only)
-$groups = Group::getAll(all: true);
+$groups = Group::all(all: true);
 
 // Get groups for a specific user
-$groups = Group::getAll(userId: 42);
+$groups = Group::all(userId: 42);
 
 // Get groups without attributes (lighter response)
-$groups = Group::getAll(excludeAttributes: true);
+$groups = Group::all(excludeAttributes: true);
 
 // Combine filters
-$groups = Group::getAll(all: true, userId: 42, excludeAttributes: true);
+$groups = Group::all(all: true, userId: 42, excludeAttributes: true);
 ```
 
 ## Query Parameters
@@ -72,7 +72,7 @@ $attributes = $first->attributes; // ['color' => 'blue']
 Groups can be nested. Check the `groupId` property to determine parent-child relationships:
 
 ```php
-$groups = Group::getAll();
+$groups = Group::all();
 
 $topLevel = $groups->filter(fn ($g) => $g->groupId === null);
 $children = $groups->filter(fn ($g) => $g->groupId === 1);
@@ -80,7 +80,7 @@ $children = $groups->filter(fn ($g) => $g->groupId === 1);
 
 ## Related Operations
 
-- [Get Group](./get-information) - Fetch a single group by ID
+- [Get Group](./find) - Fetch a single group by ID
 - [Create Group](./create) - Create a new group
 - [Update Group](./update) - Update an existing group
 - [Delete Group](./delete) - Remove a group

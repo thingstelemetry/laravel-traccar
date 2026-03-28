@@ -15,4 +15,4 @@ $result = Maintenance::delete(id: 11);
 Returns `ThingsTelemetry\Traccar\Dto\StatusData`.
 
 ## Important Links
-- [Traccar Maintenance](https://www.traccar.org/api-reference/#tag/Maintenance/paths/~1maintenance~1%7Bid%7D/delete)
+- [Traccar Maintenance](https://www.traccar.org/api-reference/)

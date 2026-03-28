@@ -7,7 +7,7 @@ Fetch drivers from your Traccar server.
 ```php
 use ThingsTelemetry\Traccar\Facades\Driver;
 
-$drivers = Driver::getAll(all: true, deviceId: 6);
+$drivers = Driver::all(all: true, deviceId: 6);
 ```
 
 ## Result

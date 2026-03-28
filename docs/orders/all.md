@@ -7,7 +7,7 @@ Fetch orders from your Traccar server.
 ```php
 use ThingsTelemetry\Traccar\Facades\Order;
 
-$orders = Order::getAll(all: true, excludeAttributes: true);
+$orders = Order::all(all: true, excludeAttributes: true);
 ```
 
 ## Result
