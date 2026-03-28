@@ -14,8 +14,8 @@ class ReportGeofencesData
         public int $deviceId,
         public string $deviceName,
         public int $geofenceId,
-        public CarbonImmutable $startTime,
-        public CarbonImmutable $endTime,
+        public ?CarbonImmutable $startTime,
+        public ?CarbonImmutable $endTime,
     ) {
     }
 
@@ -30,7 +30,18 @@ class ReportGeofencesData
         );
     }
 
-    private static function parseTime(mixed $raw, string $field): CarbonImmutable
+    public function toArray(): array
+    {
+        return [
+            'deviceId'   => $this->deviceId,
+            'deviceName' => $this->deviceName,
+            'geofenceId' => $this->geofenceId,
+            'startTime'  => $this->startTime?->toIso8601String(),
+            'endTime'    => $this->endTime?->toIso8601String(),
+        ];
+    }
+
+    private static function parseTime(mixed $raw, string $field): ?CarbonImmutable
     {
         if (is_string($raw) && $raw !== '') {
             try {
@@ -40,6 +51,6 @@ class ReportGeofencesData
             }
         }
 
-        return CarbonImmutable::now();
+        return null;
     }
 }

@@ -18,11 +18,11 @@ class ReportTripsData
         public float $distance,
         public float $spentFuel,
         public int $duration,
-        public CarbonImmutable $startTime,
+        public ?CarbonImmutable $startTime,
         public string $startAddress,
         public float $startLat,
         public float $startLon,
-        public CarbonImmutable $endTime,
+        public ?CarbonImmutable $endTime,
         public string $endAddress,
         public float $endLat,
         public float $endLon,
@@ -54,7 +54,30 @@ class ReportTripsData
         );
     }
 
-    private static function parseTime(mixed $raw, string $field): CarbonImmutable
+    public function toArray(): array
+    {
+        return [
+            'deviceId'       => $this->deviceId,
+            'deviceName'     => $this->deviceName,
+            'maxSpeed'       => $this->maxSpeed,
+            'averageSpeed'   => $this->averageSpeed,
+            'distance'       => $this->distance,
+            'spentFuel'      => $this->spentFuel,
+            'duration'       => $this->duration,
+            'startTime'      => $this->startTime?->toIso8601String(),
+            'startAddress'   => $this->startAddress,
+            'startLat'       => $this->startLat,
+            'startLon'       => $this->startLon,
+            'endTime'        => $this->endTime?->toIso8601String(),
+            'endAddress'     => $this->endAddress,
+            'endLat'         => $this->endLat,
+            'endLon'         => $this->endLon,
+            'driverUniqueId' => $this->driverUniqueId,
+            'driverName'     => $this->driverName,
+        ];
+    }
+
+    private static function parseTime(mixed $raw, string $field): ?CarbonImmutable
     {
         if (is_string($raw) && $raw !== '') {
             try {
@@ -64,6 +87,6 @@ class ReportTripsData
             }
         }
 
-        return CarbonImmutable::now();
+        return null;
     }
 }

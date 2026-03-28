@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Endpoints;
 
-use Carbon\CarbonInterface;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use ThingsTelemetry\Traccar\Traccar;
 use Illuminate\Validation\ValidationException;
@@ -24,7 +24,7 @@ class Report extends Traccar
      * @throws \Saloon\Exceptions\SaloonException
      * @throws ValidationException
      */
-    public function route(array $deviceIds, array $groupIds, CarbonInterface $from, CarbonInterface $to): Collection
+    public function route(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to): Collection
     {
         $this->guardReportArguments(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to);
 
@@ -41,7 +41,7 @@ class Report extends Traccar
      * @throws \Saloon\Exceptions\SaloonException
      * @throws ValidationException
      */
-    public function events(array $deviceIds, array $groupIds, CarbonInterface $from, CarbonInterface $to, ?array $types = null): Collection
+    public function events(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to, ?array $types = null): Collection
     {
         $this->guardReportArguments(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to);
 
@@ -58,7 +58,7 @@ class Report extends Traccar
      * @throws \Saloon\Exceptions\SaloonException
      * @throws ValidationException
      */
-    public function geofences(array $deviceIds, array $groupIds, CarbonInterface $from, CarbonInterface $to, ?array $geofenceIds = null): Collection
+    public function geofences(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to, ?array $geofenceIds = null): Collection
     {
         $this->guardReportArguments(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to);
 
@@ -74,7 +74,7 @@ class Report extends Traccar
      * @throws \Saloon\Exceptions\SaloonException
      * @throws ValidationException
      */
-    public function summary(array $deviceIds, array $groupIds, CarbonInterface $from, CarbonInterface $to): Collection
+    public function summary(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to): Collection
     {
         $this->guardReportArguments(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to);
 
@@ -90,7 +90,7 @@ class Report extends Traccar
      * @throws \Saloon\Exceptions\SaloonException
      * @throws ValidationException
      */
-    public function trips(array $deviceIds, array $groupIds, CarbonInterface $from, CarbonInterface $to): Collection
+    public function trips(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to): Collection
     {
         $this->guardReportArguments(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to);
 
@@ -106,7 +106,7 @@ class Report extends Traccar
      * @throws \Saloon\Exceptions\SaloonException
      * @throws ValidationException
      */
-    public function stops(array $deviceIds, array $groupIds, CarbonInterface $from, CarbonInterface $to): Collection
+    public function stops(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to): Collection
     {
         $this->guardReportArguments(deviceIds: $deviceIds, groupIds: $groupIds, from: $from, to: $to);
 
@@ -121,7 +121,7 @@ class Report extends Traccar
      *
      * @throws ValidationException
      */
-    private function guardReportArguments(array $deviceIds, array $groupIds, CarbonInterface $from, CarbonInterface $to): void
+    private function guardReportArguments(array $deviceIds, array $groupIds, CarbonImmutable $from, CarbonImmutable $to): void
     {
         if ($deviceIds === [] && $groupIds === []) {
             throw ValidationException::withMessages([

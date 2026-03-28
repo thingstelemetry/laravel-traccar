@@ -16,7 +16,7 @@ use ThingsTelemetry\Traccar\Requests\Order\GetAllOrders;
 class Order extends Traccar
 {
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function getAll(?bool $all = null, ?int $userId = null, ?bool $excludeAttributes = null, ?int $limit = null, ?int $offset = null, ?string $keyword = null): Collection
+    public function all(?bool $all = null, ?int $userId = null, ?bool $excludeAttributes = null, ?int $limit = null, ?int $offset = null, ?string $keyword = null): Collection
     {
         $response = $this->connector->send(
             request: new GetAllOrders(

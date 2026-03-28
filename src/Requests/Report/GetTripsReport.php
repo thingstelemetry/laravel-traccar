@@ -7,7 +7,7 @@ namespace ThingsTelemetry\Traccar\Requests\Report;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Carbon\CarbonInterface;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use ThingsTelemetry\Traccar\Dto\ReportTripsData;
 
@@ -22,8 +22,8 @@ class GetTripsReport extends Request
     public function __construct(
         public array $deviceIds,
         public array $groupIds,
-        public CarbonInterface $from,
-        public CarbonInterface $to,
+        public CarbonImmutable $from,
+        public CarbonImmutable $to,
     ) {
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
 use ThingsTelemetry\Traccar\Dto\EventData;
 
 /**
- * @method static EventData get(int $id)
+ * @method static EventData find(int $id)
  */
 class Event extends Facade
 {

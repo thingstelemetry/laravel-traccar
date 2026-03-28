@@ -13,7 +13,7 @@ class EventData
     public function __construct(
         public int $id,
         public string $type,
-        public CarbonImmutable $eventTime,
+        public ?CarbonImmutable $eventTime,
         public int $deviceId,
         public ?int $positionId = null,
         public ?int $geofenceId = null,
@@ -26,7 +26,7 @@ class EventData
     public static function fromArray(array $data): self
     {
         $rawEventTime = $data['eventTime'] ?? null;
-        $eventTime = CarbonImmutable::now();
+        $eventTime = null;
 
         if (is_string($rawEventTime) && $rawEventTime !== '') {
             try {
@@ -53,7 +53,7 @@ class EventData
         return [
             'id'            => $this->id,
             'type'          => $this->type,
-            'eventTime'     => $this->eventTime->toIso8601String(),
+            'eventTime'     => $this->eventTime?->toIso8601String(),
             'deviceId'      => $this->deviceId,
             'positionId'    => $this->positionId,
             'geofenceId'    => $this->geofenceId,

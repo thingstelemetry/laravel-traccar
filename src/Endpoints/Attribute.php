@@ -16,7 +16,7 @@ use ThingsTelemetry\Traccar\Requests\Attribute\GetAllAttributes;
 class Attribute extends Traccar
 {
     /** @throws \Saloon\Exceptions\SaloonException */
-    public function getAll(?bool $all = null, ?int $userId = null, ?int $deviceId = null, ?int $groupId = null, ?bool $refresh = null, ?int $limit = null, ?int $offset = null, ?string $keyword = null): Collection
+    public function all(?bool $all = null, ?int $userId = null, ?int $deviceId = null, ?int $groupId = null, ?bool $refresh = null, ?int $limit = null, ?int $offset = null, ?string $keyword = null): Collection
     {
         $response = $this->connector->send(
             request: new GetAllAttributes(

@@ -11,8 +11,8 @@ use ThingsTelemetry\Traccar\Dto\StatusData;
 use ThingsTelemetry\Traccar\Dto\SessionTokenData;
 
 /**
- * @method static UserData get(string|null $token = null)
- * @method static UserData getById(int $userId)
+ * @method static UserData current(string|null $token = null)
+ * @method static UserData forUser(int $userId)
  * @method static UserData create(string $email, string $password, int|null $code = null)
  * @method static StatusData delete()
  * @method static SessionTokenData generateToken(CarbonInterface|null $expiration = null)

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class ServerStatisticsData
 {
     public function __construct(
-        public CarbonImmutable $captureTime,
+        public ?CarbonImmutable $captureTime,
         public int $activeUsers,
         public int $activeDevices,
         public int $requests,
@@ -22,7 +22,7 @@ class ServerStatisticsData
 
     public static function fromArray(array $data): self
     {
-        $time = CarbonImmutable::now();
+        $time = null;
         try {
             $raw = (string) ($data['captureTime'] ?? '');
             if ($raw !== '') {
@@ -45,7 +45,7 @@ class ServerStatisticsData
     public function toArray(): array
     {
         return [
-            'captureTime'      => $this->captureTime->toIso8601String(),
+            'captureTime'      => $this->captureTime?->toIso8601String(),
             'activeUsers'      => $this->activeUsers,
             'activeDevices'    => $this->activeDevices,
             'requests'         => $this->requests,

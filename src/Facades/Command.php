@@ -7,7 +7,7 @@ namespace ThingsTelemetry\Traccar\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Illuminate\Support\Collection getAll(?bool $all = null, ?int $userId = null, ?int $deviceId = null, ?int $groupId = null, ?bool $refresh = null, ?int $limit = null, ?int $offset = null, ?string $keyword = null)
+ * @method static \Illuminate\Support\Collection all(?bool $all = null, ?int $userId = null, ?int $deviceId = null, ?int $groupId = null, ?bool $refresh = null, ?int $limit = null, ?int $offset = null, ?string $keyword = null)
  * @method static \ThingsTelemetry\Traccar\Dto\CommandData create(\ThingsTelemetry\Traccar\Dto\CommandData $data)
  * @method static \ThingsTelemetry\Traccar\Dto\CommandData update(\ThingsTelemetry\Traccar\Dto\CommandData $data)
  * @method static \ThingsTelemetry\Traccar\Dto\StatusData delete(int $id)

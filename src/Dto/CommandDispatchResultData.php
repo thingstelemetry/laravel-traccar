@@ -41,4 +41,21 @@ class CommandDispatchResultData
             ]),
         );
     }
+
+    public function toArray(): array
+    {
+        if ($this->sentCommand !== null) {
+            return $this->sentCommand->toArray();
+        }
+
+        if ($this->queuedCommands->isEmpty()) {
+            return [];
+        }
+
+        if ($this->queuedCommands->count() === 1) {
+            return $this->queuedCommands->first()->toArray();
+        }
+
+        return $this->queuedCommands->map(fn (QueuedCommandData $c) => $c->toArray())->values()->all();
+    }
 }

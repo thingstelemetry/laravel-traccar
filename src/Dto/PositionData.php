@@ -19,9 +19,9 @@ class PositionData
         public int $id,
         public int $deviceId,
         public string $protocol,
-        public CarbonImmutable $deviceTime,
-        public CarbonImmutable $fixTime,
-        public CarbonImmutable $serverTime,
+        public ?CarbonImmutable $deviceTime,
+        public ?CarbonImmutable $fixTime,
+        public ?CarbonImmutable $serverTime,
         public bool $valid,
         public float $latitude,
         public float $longitude,
@@ -76,9 +76,9 @@ class PositionData
             'id'          => $this->id,
             'deviceId'    => $this->deviceId,
             'protocol'    => $this->protocol,
-            'deviceTime'  => $this->deviceTime->toIso8601String(),
-            'fixTime'     => $this->fixTime->toIso8601String(),
-            'serverTime'  => $this->serverTime->toIso8601String(),
+            'deviceTime'  => $this->deviceTime?->toIso8601String(),
+            'fixTime'     => $this->fixTime?->toIso8601String(),
+            'serverTime'  => $this->serverTime?->toIso8601String(),
             'valid'       => $this->valid,
             'latitude'    => $this->latitude,
             'longitude'   => $this->longitude,
@@ -93,7 +93,7 @@ class PositionData
         ];
     }
 
-    private static function parseTime(mixed $raw, string $field): CarbonImmutable
+    private static function parseTime(mixed $raw, string $field): ?CarbonImmutable
     {
         if (is_string($raw) && $raw !== '') {
             try {
@@ -103,6 +103,6 @@ class PositionData
             }
         }
 
-        return CarbonImmutable::now();
+        return null;
     }
 }
