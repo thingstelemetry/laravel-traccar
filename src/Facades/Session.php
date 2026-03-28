@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Facades;
 
+use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\Facade;
+use ThingsTelemetry\Traccar\Dto\UserData;
+use ThingsTelemetry\Traccar\Dto\StatusData;
+use ThingsTelemetry\Traccar\Dto\SessionTokenData;
 
 /**
- * @see \ThingsTelemetry\Traccar\Endpoints\Session
- *
- * @method static \ThingsTelemetry\Traccar\Dto\UserData get(string|null $token = null)
- * @method static \ThingsTelemetry\Traccar\Dto\UserData getById(int $userId)
- * @method static \ThingsTelemetry\Traccar\Dto\UserData create(string $email, string $password, int|null $code = null)
- * @method static \ThingsTelemetry\Traccar\Dto\StatusData delete()
- * @method static \ThingsTelemetry\Traccar\Dto\SessionTokenData generateToken(\Carbon\CarbonInterface|null $expiration = null)
- * @method static \ThingsTelemetry\Traccar\Dto\StatusData revokeToken(string $token)
+ * @method static UserData get(string|null $token = null)
+ * @method static UserData getById(int $userId)
+ * @method static UserData create(string $email, string $password, int|null $code = null)
+ * @method static StatusData delete()
+ * @method static SessionTokenData generateToken(CarbonInterface|null $expiration = null)
+ * @method static StatusData revokeToken(string $token)
  * @method static string getOpenIdAuthUrl()
  * @method static string handleOpenIdCallback(string $queryString)
  */

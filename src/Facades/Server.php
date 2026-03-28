@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace ThingsTelemetry\Traccar\Facades;
 
+use Carbon\CarbonInterface;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use ThingsTelemetry\Traccar\Dto\ServerData;
+use ThingsTelemetry\Traccar\Dto\StatusData;
+use Symfony\Component\HttpFoundation\File\File;
+use ThingsTelemetry\Traccar\Dto\ServerStatisticsData;
 
 /**
- * @method static \ThingsTelemetry\Traccar\Dto\ServerData getInformation()
- * @method static \ThingsTelemetry\Traccar\Dto\ServerData updateInformation(\ThingsTelemetry\Traccar\Dto\ServerData $data)
- * @method static \ThingsTelemetry\Traccar\Dto\StatusData reboot()
+ * @method static ServerData getInformation()
+ * @method static ServerData updateInformation(ServerData $data)
+ * @method static StatusData reboot()
  * @method static string cache()
- * @method static \ThingsTelemetry\Traccar\Dto\StatusData gc()
- * @method static \ThingsTelemetry\Traccar\Dto\StatusData uploadFile(string $path, \Illuminate\Http\UploadedFile|\Symfony\Component\HttpFoundation\File\File|string $file)
- * @method static \Illuminate\Support\Collection timezones()
+ * @method static StatusData gc()
+ * @method static StatusData uploadFile(string $path, UploadedFile|File|string $file)
+ * @method static Collection timezones()
  * @method static string geocode(float $latitude, float $longitude)
- * @method static \ThingsTelemetry\Traccar\Dto\ServerStatisticsData statistics(\Carbon\CarbonInterface $from, \Carbon\CarbonInterface $to)
- *
- * @see \ThingsTelemetry\Traccar\Endpoints\Server
+ * @method static ServerStatisticsData statistics(CarbonInterface $from, CarbonInterface $to)
  */
 class Server extends Facade
 {
