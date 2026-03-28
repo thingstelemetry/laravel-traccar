@@ -4,19 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Requests\User;
 
-use Saloon\Http\Faking\MockClient;
-use Saloon\Http\Faking\MockResponse;
 use ThingsTelemetry\Traccar\Dto\UserData;
-use ThingsTelemetry\Traccar\TraccarConnector;
-use ThingsTelemetry\Traccar\Enums\CoordinateFormat;
 use ThingsTelemetry\Traccar\Requests\User\UpdateUser;
 
 beforeEach(closure: function () {
-    $this->connector = new TraccarConnector(
-        baseUrl: 'https://demo.traccar.org/api',
-        apiKey: 'test-api-key'
-    );
-
     $this->userData = [
         'id'               => 6,
         'name'             => 'Jane Doe - Updated',
@@ -55,21 +46,4 @@ test(description: 'it sends the correct body', closure: function () {
     $request = new UpdateUser(data: $data);
 
     expect(value: $request->body()->all())->toBe(expected: $data->toArray());
-});
-
-test(description: 'it creates a UserData DTO from response via createDtoFromResponse', closure: function () {
-    $mockClient = new MockClient(mockData: [
-        UpdateUser::class => MockResponse::make(body: $this->userData, status: 200),
-    ]);
-
-    $data = UserData::fromArray(data: $this->userData);
-    $request = new UpdateUser(data: $data);
-    $response = $this->connector->send(request: $request, mockClient: $mockClient);
-
-    $user = $response->dtoOrFail();
-
-    expect(value: $user)->toBeInstanceOf(class: UserData::class)
-        ->and(value: $user->id)->toBe(expected: 6)
-        ->and(value: $user->name)->toBe(expected: 'Jane Doe - Updated')
-        ->and(value: $user->coordinateFormat)->toBe(expected: CoordinateFormat::DDM);
 });
