@@ -3066,16 +3066,16 @@
         },
         {
             "name": "saloonphp/saloon",
-            "version": "v4.4.0",
+            "version": "v4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/saloonphp/saloon.git",
-                "reference": "fb65cd7f84de266dc7b61f74480b23c3ecd64e03"
+                "reference": "2f45e526f9d1d10a138f864492b074b046d2e52e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/saloonphp/saloon/zipball/fb65cd7f84de266dc7b61f74480b23c3ecd64e03",
-                "reference": "fb65cd7f84de266dc7b61f74480b23c3ecd64e03",
+                "url": "https://api.github.com/repos/saloonphp/saloon/zipball/2f45e526f9d1d10a138f864492b074b046d2e52e",
+                "reference": "2f45e526f9d1d10a138f864492b074b046d2e52e",
                 "shasum": ""
             },
             "require": {
@@ -3136,7 +3136,7 @@
             ],
             "support": {
                 "issues": "https://github.com/saloonphp/saloon/issues",
-                "source": "https://github.com/saloonphp/saloon/tree/v4.4.0"
+                "source": "https://github.com/saloonphp/saloon/tree/v4.5.0"
             },
             "funding": [
                 {
@@ -3144,7 +3144,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-02T21:12:00+00:00"
+            "time": "2026-10-03T14:00:29+00:00"
         },
         {
             "name": "symfony/clock",
